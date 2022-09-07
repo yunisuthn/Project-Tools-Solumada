@@ -1,0 +1,232 @@
+var agentDataTable = $('#agentDataTable').DataTable(
+    {
+        "ajax": {"url": "/allAgent", "dataSrc": ""},
+        "columns": [
+            {'data': 'name'},
+            {'data': "usualName"},
+            {'data': 'mcode'},
+            {'data': 'number'},
+            {'data': "shift"},
+            {'data': 'project'},
+            {'data': 'site'},
+            {'data': "quartier"},
+            {'data': 'tel'},
+            {
+                'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateAgent' data-toggle='modal' data-target='#modalUpdateAgent' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteAgent'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+            }
+        ]
+    }
+)
+
+
+
+$("#saveAgent").on('click', function () {
+    addAgent = {
+        name: $('#name').val(),
+        usualName: $('#usual-name').val(),
+        mcode: $('#m-code').val(),
+        number: $('#number').val(),
+        shift: $('#shift').val(),
+        project: $('#project').val(),
+        site: $('#site').val(),
+        quartier: $('#quartier').val(),
+        phon: $('#phon').val(),
+    }
+    console.log("addAgent", addAgent);
+    $.ajax({
+        url: '/addAgent',
+        method: 'post',
+        data: addAgent,
+        success: function (response) {
+            if (response == 'error') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'This Agent is already exist'
+                })
+                //clearForm()
+                //window.location = "/agent"
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'New Agent saved',
+                    text: `Agent ${addAgent.usualName} saved successfully`,
+                    timer: 2000
+                })
+                clearForm()
+                $('#agentDataTable').DataTable().ajax.reload(null, false)
+                window.location = "/agent"
+
+            }
+        }
+    })
+})
+
+function clearForm() {
+    $("#name").val('')
+    $('#usual-name').val('')
+    $('#m-code').val('')
+    $('#number').val('')
+    $("#shift").val('')
+    $('#project').val('')
+    $("#site").val('')
+    $('#quartier').val('')
+    $('#phon').val('')
+    $('#cancelAgent').click()
+}
+
+$(document).on('click', '#cancelAgent', function () {
+    $("#name").val('')
+    $('#usual-name').val('')
+    $('#m-code').val('')
+    $('#number').val('')
+    $("#shift").val('')
+    $('#project').val('')
+    $("#site").val('')
+    $('#quartier').val('')
+    $('#phon').val('')
+    
+})
+// get user to update
+var mcode = ""
+$(document).on('click', '.btnUpdateAgent', function () {
+    console.log("btnUpdateAgent");
+    var getCol = $(this).closest('tr')
+    mcode = getCol.find('td:eq(2)').text()
+    var name = getCol.find('td:eq(0)').text()
+    var usualName = getCol.find('td:eq(1)').text()
+    var number = getCol.find('td:eq(3)').text()
+    var shift = getCol.find('td:eq(4)').text()
+    var project = getCol.find('td:eq(5)').text()
+    var site = getCol.find('td:eq(6)').text()
+    var quartier = getCol.find('td:eq(7)').text()
+    var phon = getCol.find('td:eq(8)').text()
+
+    $("#nameUpdat").val(name)
+    $("#usualNameUpdat").val(usualName)
+    $("#numberUpdat").val(number)
+    $("#shiftUpdat").val(shift)
+    $("#projectUpdat").val(project)
+    $("#siteUpdat").val(site)
+    $("#quartierUpdat").val(quartier)
+    $("#telUpdat").val(phon)
+    // console.log("mcode", mcode);
+    // UserUpdat = {
+    //     name: $()
+    // }
+})
+
+//save update user
+$(document).on('click', '#saveUpdatUser', function(){
+    var nameUpd = $('#nameUpdat').val();
+    var usualNameUpdat = $('#usualNameUpdat').val();
+    var numberUpd = $('#numberUpdat').val();
+    var shiftUpdat = $('#shiftUpdat').val();
+    var projectUpdat = $('#projectUpdat').val();
+    var siteUpdat = $('#siteUpdat').val();
+    var quartierUpdat = $('#quartierUpdat').val();
+    var telUpdat = $('#telUpdat').val();
+
+    var userUpdate = {
+        mcodeOld: mcode,
+        name: nameUpd,
+        usualName: usualNameUpdat,
+        number: numberUpd,
+        shift: shiftUpdat,
+        project: projectUpdat,
+        site: siteUpdat,
+        quartier: quartierUpdat,
+        tel: telUpdat,
+    }
+
+    console.log("userUpdate", userUpdate.tel);
+
+    $.ajax({
+        url: '/updateAgent',
+        method: "post",
+        data: userUpdate,
+        success: function (res) {
+            console.log("res", res);
+            if (res == "error") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'This agent is already exist'
+                })
+                clearForm()
+                window.location = "/agent"
+                
+            } else {
+                Swal.fire(
+                    'Update',
+                    'Update User succesfully ! ',
+                    'sucess',
+                    {
+                        confirmButtonText: 'OK'
+                    }
+                )
+                $('#nameUpdat').val("");
+                $('#usualNameUpdat').val("");
+                $('#numberUpdat').val("");
+                $('#shiftUpdat').val("");
+                $('#projectUpdat').val("");
+                $('#siteUpdat').val("");
+                $('#quartierUpdat').val("");
+                $('#telUpdat').val("");
+                $('#cancelUpdatAgent').click()
+                window.location = '/agent'
+                
+            }
+
+        }
+    })
+})
+
+$(document).on('click', '.btnDeleteAgent', function() {
+    Swal.fire({
+        title: 'Delete User',
+        text: 'Are you sure to delete this user?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'red',
+        cancelButtonColor: 'green',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) =>{
+        if (result.isConfirmed) {
+            var getCol = $(this).closest('tr');
+            var codeDelete = getCol.find('td:eq(2)').text();
+            deleteMaterial = {
+                mcode: codeDelete
+            }
+            $.ajax({
+                url: '/deleteAgent',
+                method: 'post',
+                data: deleteMaterial,
+                success: function (res) {
+                    responseTxt = 'User deleted successfully!';
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: responseTxt,
+                        showConfirmButton: true
+                    })
+                    $("#agentDataTable").DataTable().ajax.reload(null, false)
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'error',
+                        title: resp,
+                        showConfirmButton: false,
+                        timer: 1700
+                    })
+                }
+            })
+        } 
+    })
+})

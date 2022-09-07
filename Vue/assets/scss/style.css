@@ -1738,7 +1738,7 @@ header .form-inline {
 
 .login-content {
   max-width: 540px;
-  margin: 8vh auto; }
+  margin: 20vh auto; }
 
 .login-form {
   background: #ffffff;
@@ -2051,7 +2051,8 @@ header .form-inline {
     margin-left: 100px; }
   .stat-widget-five .stat-text {
     color: #455a64;
-    font-size: 20px; }
+    font-size: 20px;
+    font-family: "Lucida Console", "Courier New", monospace }
   .stat-widget-five .stat-heading {
     color: #99abb4;
     font-size: 14px; }

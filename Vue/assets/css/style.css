@@ -1735,7 +1735,7 @@ header .form-inline {
 
 .login-content {
   max-width: 540px;
-  margin: 8vh auto; }
+  margin: 20vh auto; }
 
 .login-form {
   background: #ffffff;
@@ -2048,7 +2048,8 @@ header .form-inline {
     margin-left: 100px; }
   .stat-widget-five .stat-text {
     color: #455a64;
-    font-size: 20px; }
+    font-size: 20px; 
+    font-family: "Lucida Console", "Courier New", monospace;}
   .stat-widget-five .stat-heading {
     color: #99abb4;
     font-size: 14px; }
@@ -2508,3 +2509,45 @@ footer.site-footer {
     right: 20px !important; }
 
 /*# sourceMappingURL=style.css.map */
+
+
+
+
+
+
+.add{
+  background-color: #789BDA;
+  color: #f0f3f5;
+  border: #A0B9E5;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+.modalTitre{
+  font-size: 24px;
+  font-weight: 100;
+}
+
+.addInstruct{
+  background-color:#000;
+  color: #f0f3f5;
+  border: #A0B9E5;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+#error{
+  color: red;
+}
+
+.sufee-login{
+  top: 20%;
+}
+
+.profil{
+  padding-top: 8rem;
+}
+
+.instruction-hidden{
+  display: none;
+}

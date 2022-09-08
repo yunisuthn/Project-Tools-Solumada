@@ -1317,12 +1317,13 @@ routeExp.route("/allPlanning").get(async function (req, res) {
 })
 
 routeExp.route("/udpatePlanning").post(async function (req, res) {
-    var mcode = req.body.mcode;
+    var mcodeAncien = req.body.mcodeAncien;
+    var mcodeNouv = req.body.mcodeNouv;
     var shift = req.body.shift;
     var project = req.body.projet;
     var start = req.body.start;
     var end = req.body.end;
-
+    var prenomUpdat = req.body.prenomUpdat
     //console.log("req", req.body);
     mongoose
         .connect(
@@ -1336,7 +1337,7 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
             if (shift=="" || project=="") {
                 res.send("error")
             } else {
-                var planUpd = await PlanningModel.findOneAndUpdate({mcode: mcode}, {shift: shift, start: start, end: end, project: project})
+                var planUpd = await PlanningModel.findOneAndUpdate({mcode: mcodeAncien}, {mcode: mcodeNouv, usualName: prenomUpdat, shift: shift, start: start, end: end, project: project})
                 //console.log("planUpd", planUpd);
                 res.send("success")
             }

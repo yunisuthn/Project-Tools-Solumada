@@ -512,7 +512,20 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
 routeExp.route('/planning').get(async function(req, res){
     var session = req.session
     //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
-        res.render("./production/planning.html")
+
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async()=>{
+                
+                var allPlaning = await PlanningModel.find()
+                res.render("./production/planning.html", {plan: allPlaning})
+            })
     // } else {
     //     res.redirect("/")
     // }
@@ -1313,6 +1326,47 @@ routeExp.route("/allPlanning").get(async function (req, res) {
             });
             //console.log("allPlanning", planning);
             res.send(planning)
+        })
+})
+
+routeExp.route("/allPlannigView").get(async function (req, res) {
+    
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var allPlanning = await PlanningModel.find()
+            
+            //console.log("allPlanning", allPlanning);
+            res.send(allPlanning)
+        })
+})
+
+routeExp.route("/planning/project/shift").get(async function (req, res) {
+    var shift = req.params.shift;
+    var project = req.params.project;
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var allPlanningShift = await PlanningModel.find({shift: shift, project: project})
+            
+            var allPlaning = await PlanningModel.find()
+            console.log("allPlanningShift", allPlanningShift);
+            res.send(allPlanningShift)
+
+            //res.render("./production/planning.html", {plan: allPlaning})
+
         })
 })
 

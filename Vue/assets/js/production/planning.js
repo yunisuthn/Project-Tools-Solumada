@@ -282,154 +282,236 @@ $(document).on('click', '.btnDeletePlanning', function () {
 
 
 
-google.charts.load('current', {'packages':['timeline']});
-google.charts.setOnLoadCallback(drawChart);
 
 
-function drawChart() {
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Shift');
-  data.addColumn('string', 'Nom');
-//   data.addColumn('string', 'M-Code');
-//   data.addColumn('string', 'Projet');
-  data.addColumn('date', 'Season Start Date');
-  data.addColumn('date', 'Season End Date');
+$.ajax({
+    url: "/allPlannigView",
+    method: "get",
+    success: function (resp) {
+        google.charts.load('current', { 'packages': ['timeline'] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Shift');
+            data.addColumn('string', 'Nom');
+            //   data.addColumn('string', 'M-Code');
+            //   data.addColumn('string', 'Projet');
+            data.addColumn('date', 'Season Start Date');
+            data.addColumn('date', 'Season End Date');
 
-  data.addRows([
-    ['Nom1','mcodem',    new Date(2022, 7, 5), new Date(2022, 7, 5)],
-    ['Nom','mcode',   new Date(2022, 5, 4), new Date(2022, 5, 4)],
-    ['Nom3','mcode1',   new Date(2022, 6, 5), new Date(2022, 6, 5)],
-    ['Nom7','mcodeZ',  new Date(2022, 6, 5), new Date(2022, 6, 17)],
-    // ['Seattle Seahawks', new Date(2022, 8, 5), new Date(2022, 9, 5)],
-    // ['Pittsburgh Steelers',  new Date(2022, 8, 5), new Date(2022, 9, 5)],
-    // ['Indianapolis Colts',   new Date(2006, 8, 5), new Date(2007, 1, 5)],
-    // ['New York Giants',      new Date(2007, 8, 5), new Date(2008, 1, 5)],
-    // ['Pittsburgh Steelers',  new Date(2008, 8, 5), new Date(2009, 1, 5)],
-    // ['New Orleans Saints',   new Date(2009, 8, 5), new Date(2010, 1, 5)],
-    // ['Green Bay Packers',    new Date(2010, 8, 5), new Date(2011, 1, 5)],
-    // ['New York Giants',      new Date(2011, 8, 5), new Date(2012, 1, 5)],
-    // ['Baltimore Ravens',     new Date(2012, 8, 5), new Date(2013, 1, 5)],
-    // ['Seattle Seahawks',     new Date(2013, 8, 5), new Date(2014, 1, 5)],
-  ]);
 
-  var options = {
-    height: 450,
-    timeline: {
-      groupByRowLabel: true
+            resp.forEach(el => {
+                console.log("el.mcode", el.mcode);
+                console.log("el.start", el.start);
+                console.log("el.end", el.end);
+                data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+            });
+
+
+
+            var options = {
+                height: 450,
+                timeline: {
+                    groupByRowLabel: true
+                }
+            };
+
+            var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+            chart.draw(data, options);
+
+        }
+
+
     }
-  };
-
-  var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
-
-  chart.draw(data, options);
-}
+})
 
 
+$(document).on("click", "#filterPlan", function () {
+    
+    var project = $('#filterProj').val()
+    var shift = $('#filterShift').val()
+
+    var donner = {
+        project: project,
+        shift: shift
+    }
+    if (project=="all" && shift=="all") {
+        $.ajax({
+            url: "/allPlannigView",
+            method: "get",
+            success: function (resp) {
+                google.charts.load('current', { 'packages': ['timeline'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Shift');
+                    data.addColumn('string', 'Nom');
+                    //   data.addColumn('string', 'M-Code');
+                    //   data.addColumn('string', 'Projet');
+                    data.addColumn('date', 'Season Start Date');
+                    data.addColumn('date', 'Season End Date');
+
+
+                    resp.forEach(el => {
+                        console.log("el.mcode", el.mcode);
+                        console.log("el.start", el.start);
+                        console.log("el.end", el.end);
+                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                    });
 
 
 
-///////EXAMPLE
-// $(document).ready(function () {
+                    var options = {
+                        height: 450,
+                        timeline: {
+                            groupByRowLabel: true
+                        }
+                    };
 
-//     var dataset = [
-//         {
-//             prenom: 'data',
-//             dateData_1: 'Date A1',
-//             dateData_2: 'Date A2',
-//             dateData_3: 'Date A3',
-//             dateData_4: 'Date A4',
-//             dateData_5: 'Date A5',
-//             dateData_6: 'Date A4',
-//             dateData_7: 'Date A5',
-//             dateData_8: 'Date A5',
-//         },
-//         {
-//             prenom: 'data',
-//             dateData_1: 'Date B1',
-//             dateData_2: 'Date B2',
-//             dateData_3: 'Date B3',
-//             dateData_4: 'Date B4',
-//             dateData_5: 'Date B5',
-//             dateData_6: 'Date A4',
-//             dateData_7: 'Date A5',
-//             dateData_8: 'Date A5',
-//         },
-//         {
-//             prenom: 'data',
-//             dateData_1: 'Date C1',
-//             dateData_2: 'Date C2',
-//             dateData_3: 'Date C3',
-//             dateData_4: 'Date C4',
-//             dateData_5: 'Date C5',
-//             dateData_6: 'Date A4',
-//             dateData_7: 'Date A5',
-//             dateData_8: 'Date A5',
-//         },
-//         {
-//             prenom: 'data',
-//             dateData_1: 'Date D1',
-//             dateData_2: 'Date D2',
-//             dateData_3: 'Date D3',
-//             dateData_4: 'Date D4',
-//             dateData_5: 'Date D5',
-//             dateData_6: 'Date A4',
-//             dateData_7: 'Date A5',
-//             dateData_8: 'Date A5',
-//         },
-//         {
-//             prenom: 'dataS',
-//             dateData_1: 'Date E1',
-//             dateData_2: '',
-//             dateData_3: 'Date E3',
-//             dateData_4: 'Date E4',
-//             dateData_5: 'Date E5',
-//             dateData_6: 'Date A4',
-//             dateData_7: 'Date A5',
-//             dateData_8: 'Date A5',
-//         }
-//     ]
-//     var donner= [{
-//         shift: 'shift 1',
-//         mcode: 'mcodem',
-//         usualName: 'nom',
-//         project: 'porjce',
-//         start: "2022-09-01",
-//         end: "2022-09-05",
-//         // _id: new ObjectId("63198e82bff58a50a2eb9a86"),
-//         // __v: 0
+                    var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
 
-//     }]
-//     console.log("donner", donner);
-//     var columns = [{title: 'shift', data: "shift"},{title: 'mcode', data: "mcode"},{title: 'usualName', data: "usualName"}, {title: 'project', data: "project"}]//, "mcode", "shift"];
+                    chart.draw(data, options);
 
-//     donner.forEach(d => {
-//         var ddateS = new Date(d.start)
-//         var ddateF = new Date(d.end)
+                }
 
-//         var jStart = ddateS.getDate()
-//         var jEnd = ddateF.getDate()
-//         console.log("ddate", ddateS.getDate());
-//         console.log("ddateF", ddateF.getDate());
-//         for (let i = jStart; i < jEnd.length; i++) {
-//             const element = array[i];
-//             donner[0].push({date: "date"})
-//         }
-//     });
-//     console.log("EXAMPLE EXAMPLE EXAMPLE", donner);
-//     //var columns = [];
-//     // for (var i = 1; i <= 8; i++) {
-//     //     var date = new Date(2022, 8, i);
-//     //     columns.push({
-//     //         title: date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear(),
-//     //         data: 'dateData_' + i
-//     //     });
-//     // }
 
-//     console.log("columns", columns);
+            }
+        })
+    } else if(project=="all" && shift!=="all") {
+        
+        $.ajax({
+            url: "/allProjectView",
+            method: "get",
+            data: donner,
+            success: function (resp) {
+                google.charts.load('current', { 'packages': ['timeline'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Shift');
+                    data.addColumn('string', 'Nom');
+                    //   data.addColumn('string', 'M-Code');
+                    //   data.addColumn('string', 'Projet');
+                    data.addColumn('date', 'Season Start Date');
+                    data.addColumn('date', 'Season End Date');
 
-//     var myTable = $('#exampleDataT').DataTable({
-//         data: donner,
-//         columns: columns
-//     });
 
-// });
+                    resp.forEach(el => {
+                        console.log("el.mcode", el.mcode);
+                        console.log("el.start", el.start);
+                        console.log("el.end", el.end);
+                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                    });
+
+
+
+                    var options = {
+                        height: 450,
+                        timeline: {
+                            groupByRowLabel: true
+                        }
+                    };
+
+                    var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                    chart.draw(data, options);
+
+                }
+
+
+            }
+        })
+    } else if(project!=="all" && shift=="all"){
+
+        $.ajax({
+            url: "/allPlannigView",
+            method: "get",
+            success: function (resp) {
+                google.charts.load('current', { 'packages': ['timeline'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Shift');
+                    data.addColumn('string', 'Nom');
+                    //   data.addColumn('string', 'M-Code');
+                    //   data.addColumn('string', 'Projet');
+                    data.addColumn('date', 'Season Start Date');
+                    data.addColumn('date', 'Season End Date');
+
+
+                    resp.forEach(el => {
+                        console.log("el.mcode", el.mcode);
+                        console.log("el.start", el.start);
+                        console.log("el.end", el.end);
+                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                    });
+
+
+
+                    var options = {
+                        height: 450,
+                        timeline: {
+                            groupByRowLabel: true
+                        }
+                    };
+
+                    var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                    chart.draw(data, options);
+
+                }
+
+
+            }
+        })
+    }else if (project!=="all" && shift!=="all") {
+        
+        $.ajax({
+            url: "/allPlannigView",
+            method: "get",
+            success: function (resp) {
+                google.charts.load('current', { 'packages': ['timeline'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Shift');
+                    data.addColumn('string', 'Nom');
+                    //   data.addColumn('string', 'M-Code');
+                    //   data.addColumn('string', 'Projet');
+                    data.addColumn('date', 'Season Start Date');
+                    data.addColumn('date', 'Season End Date');
+
+
+                    resp.forEach(el => {
+                        console.log("el.mcode", el.mcode);
+                        console.log("el.start", el.start);
+                        console.log("el.end", el.end);
+                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                    });
+
+
+
+                    var options = {
+                        height: 450,
+                        timeline: {
+                            groupByRowLabel: true
+                        }
+                    };
+
+                    var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                    chart.draw(data, options);
+
+                }
+
+
+            }
+        })
+    }
+
+})

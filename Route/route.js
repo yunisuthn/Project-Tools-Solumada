@@ -524,7 +524,39 @@ routeExp.route('/planning').get(async function(req, res){
             .then(async()=>{
                 
                 var allPlaning = await PlanningModel.find()
-                res.render("./production/planning.html", {plan: allPlaning})
+                var agent = await AgentModel.find()
+                //console.log("agent", agent);
+                res.render("./production/planning.html", {plan: allPlaning, agent: agent})
+                //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
+            })
+    // } else {
+    //     res.redirect("/")
+    // }
+})
+
+//get planning
+routeExp.route('/planning/:project/:shift').get(async function(req, res){
+    var session = req.session
+    var shift = req.params.shift
+    var project = req.params.project;
+    console.log("shift", shift);
+    console.log("project", project);
+    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async()=>{
+                
+                var allPlaning = await PlanningModel.find()
+                var agent = await AgentModel.find()
+                console.log("agent", shift , " ", project);
+                res.render("./production/planning.html", {plan: allPlaning, agent: agent})
             })
     // } else {
     //     res.redirect("/")
@@ -897,10 +929,11 @@ function randomPassword() {
 
 //get one Agent
 routeExp.route("/getOneAgent").post(async function (req, res) {
-    var mcode1 = req.body.mcode
+    var mcode1 = req.body.mcode1
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    //console.log("mcode1", req.body.mcode1);
+    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -911,12 +944,12 @@ routeExp.route("/getOneAgent").post(async function (req, res) {
             )
             .then(async()=>{
                 var agent = await AgentModel.findOne({ mcode: mcode1 })
-                // console.log("user", agent);
+                //console.log("user", agent);
                 res.send(agent)
             })
-    } else {
-        res.redirect("/")
-    }
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //get one TL
@@ -1247,7 +1280,7 @@ routeExp.route("/addPlanning").post(async function (req, res) {
     var start = req.body.start;
     var end = req.body.end;
 
-    console.log("req.body", req.body);
+    //console.log("req.body", req.body);
 
     mongoose
         .connect(
@@ -1273,7 +1306,7 @@ routeExp.route("/addPlanning").post(async function (req, res) {
                 }
 
                 var plan = await PlanningModel(data).save()
-                console.log("plan", plan);
+                //console.log("plan", plan);
                 res.send("success")
             }
         })

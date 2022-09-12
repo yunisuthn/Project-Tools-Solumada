@@ -36,9 +36,9 @@ var planningDataTable = $("#planningDataTable").DataTable({
 
 
 $(document).on("click", '#savePlanning', function () {
-    console.log("savePlanning");
+    //console.log("savePlanning");
     var shift = $("#shift").val()
-    var mcode = $("#mcode").val()
+    var mcode = $("#mcode-plan").val()
     var nom = $("#nom").val()
     var project = $("#projet").val()
     var start = $("#start").val()
@@ -76,7 +76,7 @@ $(document).on("click", '#savePlanning', function () {
             }
         }
     })
-    console.log("shift", addPlanning);
+    //console.log("shift", addPlanning);
 })
 
 function clearForm() {
@@ -91,7 +91,7 @@ function clearForm() {
 var mcodeUpdat = ""
 var prenomUpdat = ""
 $(document).on("click", '.btnUpdatePlanning', function () {
-    console.log("btnUpdatePlanning");
+    //console.log("btnUpdatePlanning");
     var getCol = $(this).closest('tr')
     var shift = getCol.find('td:eq(0)').text()
     prenomUpdat = getCol.find('td:eq(1)').text()
@@ -102,7 +102,7 @@ $(document).on("click", '.btnUpdatePlanning', function () {
 
     start = start.split("/").reverse().join("-")
     end = end.split("/").reverse().join("-")
-    console.log("start", start);
+    //console.log("start", start);
     $('#shiftUpdat').val(shift)
     $('#mcodeUpdate').val(mcodeUpdat);
     $('#nomUpdat').val(prenomUpdat);
@@ -301,9 +301,9 @@ $.ajax({
 
 
             resp.forEach(el => {
-                console.log("el.mcode", el.mcode);
-                console.log("el.start", el.start);
-                console.log("el.end", el.end);
+                // console.log("el.mcode", el.mcode);
+                // console.log("el.start", el.start);
+                // console.log("el.end", el.end);
                 data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
             });
 
@@ -327,15 +327,11 @@ $.ajax({
 })
 
 
-$(document).on("click", "#filterPlan", function () {
-    
+$(document).on('change', '#filterProj', function (){
     var project = $('#filterProj').val()
     var shift = $('#filterShift').val()
-
-    var donner = {
-        project: project,
-        shift: shift
-    }
+    $('#filterProj').val(project)
+    $('#filterShift').val(shift)
     if (project=="all" && shift=="all") {
         $.ajax({
             url: "/allPlannigView",
@@ -354,9 +350,6 @@ $(document).on("click", "#filterPlan", function () {
 
 
                     resp.forEach(el => {
-                        console.log("el.mcode", el.mcode);
-                        console.log("el.start", el.start);
-                        console.log("el.end", el.end);
                         data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
 
                     });
@@ -380,11 +373,9 @@ $(document).on("click", "#filterPlan", function () {
             }
         })
     } else if(project=="all" && shift!=="all") {
-        
         $.ajax({
-            url: "/allProjectView",
+            url: "/allPlannigView",
             method: "get",
-            data: donner,
             success: function (resp) {
                 google.charts.load('current', { 'packages': ['timeline'] });
                 google.charts.setOnLoadCallback(drawChart);
@@ -392,18 +383,14 @@ $(document).on("click", "#filterPlan", function () {
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Shift');
                     data.addColumn('string', 'Nom');
-                    //   data.addColumn('string', 'M-Code');
-                    //   data.addColumn('string', 'Projet');
                     data.addColumn('date', 'Season Start Date');
                     data.addColumn('date', 'Season End Date');
 
 
                     resp.forEach(el => {
-                        console.log("el.mcode", el.mcode);
-                        console.log("el.start", el.start);
-                        console.log("el.end", el.end);
-                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-
+                        if (el.shift == shift) {
+                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        }
                     });
 
 
@@ -425,7 +412,6 @@ $(document).on("click", "#filterPlan", function () {
             }
         })
     } else if(project!=="all" && shift=="all"){
-
         $.ajax({
             url: "/allPlannigView",
             method: "get",
@@ -443,10 +429,10 @@ $(document).on("click", "#filterPlan", function () {
 
 
                     resp.forEach(el => {
-                        console.log("el.mcode", el.mcode);
-                        console.log("el.start", el.start);
-                        console.log("el.end", el.end);
-                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        if (el.project == project) {
+                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                        }
 
                     });
 
@@ -469,7 +455,6 @@ $(document).on("click", "#filterPlan", function () {
             }
         })
     }else if (project!=="all" && shift!=="all") {
-        
         $.ajax({
             url: "/allPlannigView",
             method: "get",
@@ -487,10 +472,10 @@ $(document).on("click", "#filterPlan", function () {
 
 
                     resp.forEach(el => {
-                        console.log("el.mcode", el.mcode);
-                        console.log("el.start", el.start);
-                        console.log("el.end", el.end);
-                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        if (el.shift == shift || el.project == project) {
+                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                        }
 
                     });
 
@@ -513,5 +498,218 @@ $(document).on("click", "#filterPlan", function () {
             }
         })
     }
+    // else{
+        
+    //     var err = document.getElementById("error");
+    //     var errValue = '<h5>Donner indispensable</h5>';
+    //     //console.log(errValue);
+    //     err.innerHTML = errValue;
+    // }
 
+
+})
+
+
+$(document).on('change', '#filterShift', function (){
+    var project = $('#filterProj').val()
+    var shift = $('#filterShift').val()
+    $('#filterProj').val(project)
+    $('#filterShift').val(shift)
+    if (project=="all" && shift=="all") {
+        $.ajax({
+            url: "/allPlannigView",
+            method: "get",
+            success: function (resp) {
+                google.charts.load('current', { 'packages': ['timeline'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Shift');
+                    data.addColumn('string', 'Nom');
+                    //   data.addColumn('string', 'M-Code');
+                    //   data.addColumn('string', 'Projet');
+                    data.addColumn('date', 'Season Start Date');
+                    data.addColumn('date', 'Season End Date');
+
+
+                    resp.forEach(el => {
+                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                    });
+
+
+
+                    var options = {
+                        height: 450,
+                        timeline: {
+                            groupByRowLabel: true
+                        }
+                    };
+
+                    var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                    chart.draw(data, options);
+
+                }
+
+
+            }
+        })
+    } else if(project=="all" && shift!=="all") {
+        $.ajax({
+            url: "/allPlannigView",
+            method: "get",
+            success: function (resp) {
+                google.charts.load('current', { 'packages': ['timeline'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Shift');
+                    data.addColumn('string', 'Nom');
+                    //   data.addColumn('string', 'M-Code');
+                    //   data.addColumn('string', 'Projet');
+                    data.addColumn('date', 'Season Start Date');
+                    data.addColumn('date', 'Season End Date');
+
+
+                    resp.forEach(el => {
+                        if (el.shift == shift) {
+                            if (el.shift == shift) {
+                                data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                            }
+                        }
+                    });
+
+
+
+                    var options = {
+                        height: 450,
+                        timeline: {
+                            groupByRowLabel: true
+                        }
+                    };
+
+                    var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                    chart.draw(data, options);
+
+                }
+
+
+            }
+        })
+    } else if(project!=="all" && shift=="all"){
+        $.ajax({
+            url: "/allPlannigView",
+            method: "get",
+            success: function (resp) {
+                google.charts.load('current', { 'packages': ['timeline'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Shift');
+                    data.addColumn('string', 'Nom');
+                    //   data.addColumn('string', 'M-Code');
+                    //   data.addColumn('string', 'Projet');
+                    data.addColumn('date', 'Season Start Date');
+                    data.addColumn('date', 'Season End Date');
+
+
+                    resp.forEach(el => {
+                        if (el.project == project) {
+                            if (el.project == project) {
+                                data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            }
+
+                        }
+
+                    });
+
+
+
+                    var options = {
+                        height: 450,
+                        timeline: {
+                            groupByRowLabel: true
+                        }
+                    };
+
+                    var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                    chart.draw(data, options);
+
+                }
+
+
+            }
+        })
+    }else if (project!=="all" && shift!=="all") {
+        $.ajax({
+            url: "/allPlannigView",
+            method: "get",
+            success: function (resp) {
+                google.charts.load('current', { 'packages': ['timeline'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Shift');
+                    data.addColumn('string', 'Nom');
+                    data.addColumn('date', 'Season Start Date');
+                    data.addColumn('date', 'Season End Date');
+
+
+                    resp.forEach(el => {
+                        if (el.project == project && el.shift == shift) {
+                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                        }
+
+                    });
+
+
+
+                    var options = {
+                        height: 450,
+                        timeline: {
+                            groupByRowLabel: true
+                        }
+                    };
+
+                    var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                    chart.draw(data, options);
+
+                }
+
+
+            }
+        })
+    }else{
+        $("#error").append("<h3>Error</h3>")
+        // var err = document.getElementById("error");
+        // var errValue = 'Donner indispensable';
+        // //console.log(errValue);
+        // err.innerHTML = errValue;
+    }
+
+
+})
+
+$(document).on('change', '#mcode-plan', function () {
+    var mcode = $('#mcode-plan').val()
+    var donner = {
+        mcode1: mcode
+    }
+    $.ajax({
+        url: '/getOneAgent',
+        method: "post",
+        data: donner,
+        success: function (res) {
+            $("#nom").val(res.name);
+            $("#shift").val(res.shift);
+            $("#projet").val(res.project);
+
+        }
+    })
 })

@@ -1444,7 +1444,7 @@ routeExp.route("/deletePlanning").post(async function (req, res) {
         )
         .then(async () => {
             var deletePlan = await PlanningModel.findOneAndDelete({mcode: mcode})
-            console.log("deletePlan", deletePlan);
+            // console.log("deletePlan", deletePlan);
             res.send("success")
         })
 })

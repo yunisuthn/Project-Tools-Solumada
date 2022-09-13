@@ -2551,3 +2551,7 @@ footer.site-footer {
 .instruction-hidden{
   display: none;
 }
+
+.filtre{
+  font-weight: bold;
+}

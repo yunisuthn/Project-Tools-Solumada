@@ -526,7 +526,7 @@ routeExp.route('/planning').get(async function(req, res){
                 var allPlaning = await PlanningModel.find()
                 var agent = await AgentModel.find()
                 //console.log("agent", agent);
-                res.render("./production/planning.html", {plan: allPlaning, agent: agent})
+                res.render("./production/planning1.html", {plan: allPlaning, agent: agent})
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
     // } else {

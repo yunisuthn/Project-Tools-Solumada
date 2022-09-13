@@ -280,16 +280,13 @@ $(document).on('click', '.btnDeletePlanning', function () {
 
 
 
-
-
-
-
 $.ajax({
     url: "/allPlannigView",
     method: "get",
     success: function (resp) {
-        google.charts.load('current', { 'packages': ['timeline'] });
+        google.charts.load('current', {'packages':['timeline']});
         google.charts.setOnLoadCallback(drawChart);
+
         function drawChart() {
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Shift');
@@ -299,32 +296,67 @@ $.ajax({
             data.addColumn('date', 'Season Start Date');
             data.addColumn('date', 'Season End Date');
 
-
             resp.forEach(el => {
-                // console.log("el.mcode", el.mcode);
-                // console.log("el.start", el.start);
-                // console.log("el.end", el.end);
                 data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
             });
-
-
 
             var options = {
                 height: 450,
                 timeline: {
-                    groupByRowLabel: true
+                groupByRowLabel: true
                 }
             };
 
             var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
 
             chart.draw(data, options);
-
         }
 
 
     }
 })
+
+// $.ajax({
+//     url: "/allPlannigView",
+//     method: "get",
+//     success: function (resp) {
+//         google.charts.load('current', { 'packages': ['timeline'] });
+//         google.charts.setOnLoadCallback(drawChart);
+//         function drawChart() {
+//             var data = new google.visualization.DataTable();
+//             data.addColumn('string', 'Shift');
+//             data.addColumn('string', 'Nom');
+//             //   data.addColumn('string', 'M-Code');
+//             //   data.addColumn('string', 'Projet');
+//             data.addColumn('date', 'Season Start Date');
+//             data.addColumn('date', 'Season End Date');
+
+
+//             resp.forEach(el => {
+//                 // console.log("el.mcode", el.mcode);
+//                 // console.log("el.start", el.start);
+//                 // console.log("el.end", el.end);
+//                 data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+//             });
+
+
+
+//             var options = {
+//                 height: 450,
+//                 timeline: {
+//                     groupByRowLabel: true
+//                 }
+//             };
+
+//             var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+//             chart.draw(data, options);
+
+//         }
+
+
+//     }
+// })
 
 
 $(document).on('change', '#filterProj', function (){
@@ -337,8 +369,10 @@ $(document).on('change', '#filterProj', function (){
             url: "/allPlannigView",
             method: "get",
             success: function (resp) {
-                google.charts.load('current', { 'packages': ['timeline'] });
+
+                google.charts.load('current', {'packages':['timeline']});
                 google.charts.setOnLoadCallback(drawChart);
+
                 function drawChart() {
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Shift');
@@ -348,26 +382,53 @@ $(document).on('change', '#filterProj', function (){
                     data.addColumn('date', 'Season Start Date');
                     data.addColumn('date', 'Season End Date');
 
-
                     resp.forEach(el => {
                         data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-
                     });
-
-
 
                     var options = {
                         height: 450,
                         timeline: {
-                            groupByRowLabel: true
+                        groupByRowLabel: true
                         }
                     };
 
                     var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
 
                     chart.draw(data, options);
-
                 }
+                
+                // google.charts.load('current', { 'packages': ['timeline'] });
+                // google.charts.setOnLoadCallback(drawChart);
+                // function drawChart() {
+                //     var data = new google.visualization.DataTable();
+                //     data.addColumn('string', 'Shift');
+                //     data.addColumn('string', 'Nom');
+                //     //   data.addColumn('string', 'M-Code');
+                //     //   data.addColumn('string', 'Projet');
+                //     data.addColumn('date', 'Season Start Date');
+                //     data.addColumn('date', 'Season End Date');
+
+
+                //     resp.forEach(el => {
+                //         data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                //     });
+
+
+
+                //     var options = {
+                //         height: 450,
+                //         timeline: {
+                //             groupByRowLabel: true
+                //         }
+                //     };
+
+                //     var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                //     chart.draw(data, options);
+
+                // }
 
 
             }
@@ -377,36 +438,66 @@ $(document).on('change', '#filterProj', function (){
             url: "/allPlannigView",
             method: "get",
             success: function (resp) {
-                google.charts.load('current', { 'packages': ['timeline'] });
+                google.charts.load('current', {'packages':['timeline']});
                 google.charts.setOnLoadCallback(drawChart);
+        
                 function drawChart() {
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Shift');
                     data.addColumn('string', 'Nom');
+                    //   data.addColumn('string', 'M-Code');
+                    //   data.addColumn('string', 'Projet');
                     data.addColumn('date', 'Season Start Date');
                     data.addColumn('date', 'Season End Date');
-
-
+        
                     resp.forEach(el => {
                         if (el.shift == shift) {
                             data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
                         }
                     });
-
-
-
+        
                     var options = {
                         height: 450,
                         timeline: {
-                            groupByRowLabel: true
+                        groupByRowLabel: true
                         }
                     };
-
+        
                     var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
-
+        
                     chart.draw(data, options);
-
                 }
+                // google.charts.load('current', { 'packages': ['timeline'] });
+                // google.charts.setOnLoadCallback(drawChart);
+                // function drawChart() {
+                //     var data = new google.visualization.DataTable();
+                //     data.addColumn('string', 'Shift');
+                //     data.addColumn('string', 'Nom');
+                //     data.addColumn('date', 'Season Start Date');
+                //     data.addColumn('date', 'Season End Date');
+
+
+                //     resp.forEach(el => {
+                //         if (el.shift == shift) {
+                //             data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                //         }
+                //     });
+
+
+
+                //     var options = {
+                //         height: 450,
+                //         timeline: {
+                //             groupByRowLabel: true
+                //         }
+                //     };
+
+                //     var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                //     chart.draw(data, options);
+
+                // }
 
 
             }
@@ -459,52 +550,77 @@ $(document).on('change', '#filterProj', function (){
             url: "/allPlannigView",
             method: "get",
             success: function (resp) {
-                google.charts.load('current', { 'packages': ['timeline'] });
+
+                google.charts.load('current', {'packages':['timeline']});
                 google.charts.setOnLoadCallback(drawChart);
+
                 function drawChart() {
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Shift');
                     data.addColumn('string', 'Nom');
-                    //   data.addColumn('string', 'M-Code');
-                    //   data.addColumn('string', 'Projet');
                     data.addColumn('date', 'Season Start Date');
                     data.addColumn('date', 'Season End Date');
 
-
                     resp.forEach(el => {
-                        if (el.shift == shift || el.project == project) {
+                        // console.log("el.shift", el.shift, 'shf ', shift);
+                        // console.log("el.project", el.project, 'shf ', project);
+                        if (el.shift == shift && el.project == project) {
                             data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
 
                         }
-
                     });
-
-
 
                     var options = {
                         height: 450,
                         timeline: {
-                            groupByRowLabel: true
+                        groupByRowLabel: true
                         }
                     };
 
                     var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
 
                     chart.draw(data, options);
-
                 }
+                // google.charts.load('current', { 'packages': ['timeline'] });
+                // google.charts.setOnLoadCallback(drawChart);
+                // function drawChart() {
+                //     var data = new google.visualization.DataTable();
+                //     data.addColumn('string', 'Shift');
+                //     data.addColumn('string', 'Nom');
+                //     //   data.addColumn('string', 'M-Code');
+                //     //   data.addColumn('string', 'Projet');
+                //     data.addColumn('date', 'Season Start Date');
+                //     data.addColumn('date', 'Season End Date');
+
+
+                //     resp.forEach(el => {
+                //         if (el.shift == shift || el.project == project) {
+                //             data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+
+                //         }
+
+                //     });
+                //     var options = {
+                //         height: 450,
+                //         timeline: {
+                //             groupByRowLabel: true
+                //         }
+                //     };
+
+                //     var chart = new google.visualization.Timeline(document.getElementById('chart_div1'));
+
+                //     chart.draw(data, options);
+
+                // }
 
 
             }
         })
     }
-    // else{
+    else{
         
-    //     var err = document.getElementById("error");
-    //     var errValue = '<h5>Donner indispensable</h5>';
-    //     //console.log(errValue);
-    //     err.innerHTML = errValue;
-    // }
+        $("#error").append("<h3>Error</h3>")
+    }
 
 
 })

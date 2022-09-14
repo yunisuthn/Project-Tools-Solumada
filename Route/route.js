@@ -511,7 +511,7 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
 //get planning
 routeExp.route('/planning').get(async function(req, res){
     var session = req.session
-    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
 
         mongoose
             .connect(
@@ -548,9 +548,9 @@ routeExp.route('/planning').get(async function(req, res){
                 res.render("./production/planning.html", {plan: planning, agent: agent})
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
-    // } else {
-    //     res.redirect("/")
-    // }
+    } else {
+        res.redirect("/")
+    }
 })
 
 //get planning

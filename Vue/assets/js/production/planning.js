@@ -195,7 +195,9 @@ $(document).on('click', '.btnDeletePlanning', function () {
                         title: responseTxt,
                         showConfirmButton: true
                     })
-                    $("#planningDataTable").DataTable().ajax.reload(null, false)
+                    //$("#planningDataTable").DataTable().ajax.reload(null, false)
+                    //planningView()
+                    window.location = "/planning"
                 },
                 error: function (resp) {
                     Swal.fire({
@@ -211,7 +213,8 @@ $(document).on('click', '.btnDeletePlanning', function () {
     })
 })
 
-
+planningView()
+function planningView() {
 $.ajax({
     url: "/allPlannigView",
     method: 'get',
@@ -318,6 +321,8 @@ $.ajax({
         
     }
 })
+    
+}
 
 
 $(document).on('change', '#filterProj', function () {

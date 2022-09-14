@@ -523,10 +523,29 @@ routeExp.route('/planning').get(async function(req, res){
             )
             .then(async()=>{
                 
-                var allPlaning = await PlanningModel.find()
+                var planning = await PlanningModel.aggregate([
+                    {
+                      $sort: {
+                        project: 1
+                      }
+                    },
+                    {
+                      $group: {
+                        _id: "$project",
+                        
+                      }
+                    },
+                    {
+                      $project: {
+                        _id: 0,
+                        project: "$_id",
+                        
+                      }
+                    }
+                  ])
                 var agent = await AgentModel.find()
                 //console.log("agent", agent);
-                res.render("./production/planning.html", {plan: allPlaning, agent: agent})
+                res.render("./production/planning.html", {plan: planning, agent: agent})
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
     // } else {
@@ -1292,7 +1311,7 @@ routeExp.route("/addPlanning").post(async function (req, res) {
         )
         .then(async () => {
             //var plan = await PlanningModel.
-            if (await PlanningModel.findOne({mcode: mcode})){//}  || shift=="" || mcode=="" || prenom=="" || project=="" ) {
+            if (mcode==""){//}  || shift=="" || mcode=="" || prenom=="" || project=="" ) {
                 console.log("error");
                 res.send("error")
             } else {

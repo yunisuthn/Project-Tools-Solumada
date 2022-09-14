@@ -256,13 +256,22 @@ $.ajax({
                     //'state': {'range': {'start': new Date(1380740460000), 'end': new Date(1380740480000)}}
                 });
 
+
+                //google.visualization.events.addListener(chart, 'error', function (err) { google.visualization.errors.removeError(err.id); }); 
+                //After this Line 
+                //var chart = new google.visualization.Dashboard(document.getElementById('dashboard')). bind([categoryPicker], [table,pie]);
                 var chart = new google.visualization.ChartWrapper({
                     'chartType': 'Timeline',
                         'containerId': 'chart',
                         'options': {
                         // 'width': 900,
-                        //     'height': 600,
-                        //     'chartArea': {
+                        // 'height': 600,
+
+                        // 'width': 1650,
+                        //'width': 1600,
+                        'height': 350,
+
+                        // 'chartArea': {
                         //     width: '80%', // make sure this is the same for the chart and control so the axes align right
                         //     height: '80%'
                         // },
@@ -295,27 +304,17 @@ $.ajax({
                 resp.forEach(el => {
                     data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                 });
-                // data.addRows([
-
-                //     ['Baltimore Ravens', 'shift4',    new Date(2000, 8, 5), new Date(2001, 1, 5)],
-                //     ['New England Patriots','shift2', new Date(2001, 8, 5), new Date(2002, 1, 5)],
-                //     ['Tampa Bay Buccaneers','shift4',  new Date(2002, 8, 5), new Date(2003, 1, 5)],
-                //     ['New England Patriots','shift1',  new Date(2003, 8, 5), new Date(2004, 1, 5)],
-                //     ['New England Patriots', 'shift3', new Date(2004, 8, 5), new Date(2005, 1, 5)],
-                //     ['Pittsburgh Steelers',  'shift2', new Date(2005, 8, 5), new Date(2006, 1, 5)],
-                //     ['Indianapolis Colts',  'shift1',  new Date(2006, 8, 5), new Date(2007, 1, 5)],
-                //     ['New York Giants',    'shift3',   new Date(2007, 8, 5), new Date(2008, 1, 5)],
-                //     ['Pittsburgh Steelers', 'shift1',  new Date(2008, 8, 5), new Date(2009, 1, 5)],
-                //     ['New Orleans Saints',  'shift4',  new Date(2009, 8, 5), new Date(2010, 1, 5)],
-                //     ['Green Bay Packers',  'shift2',   new Date(2010, 8, 5), new Date(2011, 1, 5)],
-                //     ['New York Giants',    'shift3',   new Date(2011, 8, 5), new Date(2012, 1, 5)],
-                //     ['Baltimore Ravens',   'shift4',   new Date(2012, 8, 5), new Date(2013, 1, 5)],
-                //     ['Seattle Seahawks',  'shift4',    new Date(2013, 8, 5), new Date(2014, 1, 5)],
-                //     ]);
-
                 dashboard.bind(control, chart);
+
+
                 dashboard.draw(data);
+
+                
             }
+
+            $(window).resize(function () {
+                drawVisualization()
+            })
         
     }
 })
@@ -370,12 +369,16 @@ $(document).on('change', '#filterProj', function () {
                         'chartType': 'Timeline',
                         'containerId': 'chart',
                         'options': {
-                            // 'width': 900,
-                            // 'height': 600,
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
                             // 'chartArea': {
                             //     width: '80%',
                             //     height: '80%'
                             // },
+
+                            'height': 350,
                             'backgroundColor': '#ffd'
                         },
                         'view': {
@@ -433,8 +436,10 @@ $(document).on('change', '#filterProj', function () {
                             'ui': {
                                 'chartType': 'LineChart',
                                 'chartOptions': {
-                                    'width': 985,
-                                    'height': 70,
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
                                     'chartArea':{
                                         width: '80%',
                                         height: '80%'
@@ -455,12 +460,16 @@ $(document).on('change', '#filterProj', function () {
                         'chartType': 'Timeline',
                         'containerId': 'chart',
                         'options': {
-                            // 'width': 900,
-                            // 'height': 600,
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
                             // 'chartArea': {
                             //     width: '80%',
                             //     height: '80%'
                             // },
+
+                            'height': 350,
                             'backgroundColor': '#ffd'
                         },
                         'view': {
@@ -547,10 +556,15 @@ $(document).on('change', '#filterProj', function () {
                         'options': {
                             // 'width': 900,
                             // 'height': 600,
+                            // 'width': 1100,
+                            // 'height': 400,
                             // 'chartArea': {
                             //     width: '80%',
                             //     height: '80%'
                             // },
+
+
+                            'height': 350,
                             'backgroundColor': '#ffd'
                         },
                         'view': {
@@ -632,16 +646,23 @@ $(document).on('change', '#filterProj', function () {
 
                     })
 
+
+
+
                     var chart = new google.visualization.ChartWrapper({
                         'chartType': 'Timeline',
                         'containerId': 'chart',
                         'options': {
                             // 'width': 900,
                             // 'height': 600,
+                            // 'width': 1100,
+                            // 'height': 400,
                             // 'chartArea': {
                             //     width: '80%',
                             //     height: '80%'
                             // },
+
+                            'height': 350,
                             'backgroundColor': '#ffd'
                         },
                         'view': {
@@ -678,13 +699,15 @@ $(document).on('change', '#filterProj', function () {
                     })
 
                     dashboard.bind(control, chart);
+
+                    
                     dashboard.draw(data)
                 }
             }
         })
     }
     else{
-        
+        console.log("else non data");
         $("#error").append("<h3>Error</h3>")
     }
 })
@@ -718,6 +741,7 @@ $(document).on('change', '#filterShift', function () {
                             'ui': {
                                 'chartType': 'LineChart',
                                 'chartOptions': {
+
                                     'width': 985,
                                     'height': 70,
                                     'chartArea':{
@@ -739,12 +763,18 @@ $(document).on('change', '#filterShift', function () {
                         'chartType': 'Timeline',
                         'containerId': 'chart',
                         'options': {
-                            // 'width': 900,
-                            // 'height': 600,
+
+                            // 'width': 1100,
+                            // 'height': 400,
+
+                            // // 'width': 900,
+                            // // 'height': 600,
                             // 'chartArea': {
                             //     width: '80%',
                             //     height: '80%'
                             // },
+
+                            'height': 350,
                             'backgroundColor': '#ffd'
                         },
                         'view': {
@@ -826,10 +856,14 @@ $(document).on('change', '#filterShift', function () {
                         'options': {
                             // 'width': 900,
                             // 'height': 600,
+                            // 'width': 1100,
+                            // 'height': 400,
                             // 'chartArea': {
                             //     width: '80%',
                             //     height: '80%'
                             // },
+
+                            'height': 350,
                             'backgroundColor': '#ffd'
                         },
                         'view': {
@@ -920,6 +954,8 @@ $(document).on('change', '#filterShift', function () {
                             //     width: '80%',
                             //     height: '80%'
                             // },
+
+                            'height': 350,
                             'backgroundColor': '#ffd'
                         },
                         'view': {
@@ -1007,10 +1043,14 @@ $(document).on('change', '#filterShift', function () {
                         'options': {
                             // 'width': 900,
                             // 'height': 600,
+                            // 'width': 1100,
+                            // 'height': 400,
                             // 'chartArea': {
                             //     width: '80%',
                             //     height: '80%'
                             // },
+
+                            'height': 350,
                             'backgroundColor': '#ffd'
                         },
                         'view': {

@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>Tools Solumada</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -44,6 +44,7 @@
 
     <div id="right-panel" class="right-panel">
 
+        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
@@ -62,8 +63,9 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i>My Profile</a>
-                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/utilisateur" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 
@@ -80,7 +82,7 @@
                     <div class="col-sm-4">
                         <div class="page-header float-left">
                             <div class="page-title">
-                                <h1>Operation</h1>
+                                <h1>Opération</h1>
                             </div>
                         </div>
                     </div>
@@ -88,9 +90,9 @@
                         <div class="page-header float-right">
                             <div class="page-title">
                                 <ol class="breadcrumb text-right">
-                                    <li><a href="/operation">Operation</a></li>
+                                    <li><a href="/operation">Opération</a></li>
                                     <li> </li>
-                                    <li class="active">> User</li>
+                                    <li class="active">> Utilisateur</li>
                                 </ol>
                             </div>
                         </div>
@@ -104,10 +106,10 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <strong class="card-title">User</strong>
+                            <strong class="card-title">Utilisateur</strong>
                             <span class="float-right">
                                 <button class="add" data-toggle="modal" data-target="#addUser">
-                                    <i class="fa fa-plus"></i> add
+                                    <i class="fa fa-plus"></i> ajout
                                 </button>
                             </span>
                         </div>
@@ -116,7 +118,7 @@
                                 <thead>
                                     <tr>
                                         <th>M-Code</th>
-                                        <th>Name</th>
+                                        <th>Nom</th>
                                         <th>Email</th>
                                         <th>Type</th>
                                         <th>Action</th>
@@ -139,20 +141,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">New User</h5>
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Nouveau Utilisateur</h5>
                 </div>
                 <div class="modal-body">
                     <form id="updateUserLevel" method="post">
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">User type </label>
+                                <label for="name" class="form-control-label">Type d'Utilisateur</label>
                             </div>
                             <div class="col-12 col-md-9">
 
                                 <select name="typ_util" id="type_util" class="form-control">
                                     <option disabled selected>Select Type</option>
                                     <!--option value="Participant">Participant</option-->
-                                    <option value="Operation">Operation</option>
+                                    <option value="Operation">Opération</option>
                                     <option value="TL">T.L</option>
                                     <option value="IT">I.T</option>
                                 </select>                            
@@ -167,7 +169,7 @@
                                 <input type="text" name="" id="m-code" class="form-control">
 
                                 <select name="" id="m-codeTL" class="form-control">
-                                    <option value="" disabled selected>choose</option>
+                                    <option value="" disabled selected>choisir</option>
                                     <% allTL.forEach((tl)=>{  %>
                                         <option value="<%= tl.mcode %>"><%= tl.mcode %></option>
                                         <%
@@ -177,7 +179,7 @@
 
                         </div>
                         <div class="row form-group">
-                            <div class="col col-md-3"><label for="name" class="form-control-label">Name</label>
+                            <div class="col col-md-3"><label for="name" class="form-control-label">Nom</label>
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="text" id="name" placeholder="" class="form-control">
@@ -195,8 +197,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelAgent">Close</button>
-                    <button type="button" class="btn btn-success" id="saveUser">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelAgent">Fermer</button>
+                    <button type="button" class="btn btn-success" id="saveUser">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -207,14 +209,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Update User</h5>
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Mis à jour Utilisateur</h5>
                 </div>
                 <div class="modal-body">
                     <form action="" id="updateUser" method="post">
 
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Name</label>
+                                <label for="name" class="form-control-label">Nom</label>
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="text" name="" id="nameUpdat" class="form-control">
@@ -235,7 +237,7 @@
                             <div class="col-12 col-md-9">
                                 <select name="typ_util" id="type_utilUpdat" class="form-control">
                                     <option disabled selected>Select Type</option>
-                                    <option value="Operation">Operation</option>
+                                    <option value="Operation">Opération</option>
                                     <option value="TL">T.L</option>
                                     <option value="IT">I.T</option>
                                 </select>                              
@@ -245,8 +247,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelUpdatAgent">Close</button>
-                    <button type="button" class="btn btn-success" id="saveUpdatUser">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelUpdatAgent">Fermer</button>
+                    <button type="button" class="btn btn-success" id="saveUpdatUser">Enregistrer</button>
                 </div>
             </div>
         </div>

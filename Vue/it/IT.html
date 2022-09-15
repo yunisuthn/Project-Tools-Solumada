@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Project Tools</title>
+    <title>Tools Solumada</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,12 +23,13 @@
     <link rel="stylesheet" href="./assets/fontawesome/fontawesome-free/css/all.min.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
     <link rel="stylesheet" href="../assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/fontawesome/css/all.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
@@ -82,6 +83,7 @@
 <body>
     <div id="right-panel" class="right-panel">
         <!-- Header-->
+        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
@@ -99,13 +101,14 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="/profil"><i class="fa fa-user"></i>My Profile</a>
+                            <a class="nav-link" href="/profil"><i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/utilisateur" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
 
                             <!--a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
 
                             <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a-->
 
-                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 
@@ -120,12 +123,30 @@
         <div class="animated fadeIn">
             <!-- Widgets  -->
             <div class="row card-lef">
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <a href="/inventaire">
-                                    <div class="stat-icon dib flat-color-1">
+                <div class="col-lg-4 col-md-6">
+                    <a href="/">
+                        <div class="card cardClick">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-5">
+                                        <i class="fa-sharp fa-solid fa-house"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text filtre">Accueil</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <a href="/inventaire">
+                        <div class="card cardClick">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-3">
                                         <i class="menu-icon fa fa-tasks"></i>
                                     </div>
                                     <div class="stat-content">
@@ -133,32 +154,32 @@
                                             <div class="stat-text filtre">Inventaire matériel</div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <a href="/instruction">
-                                <div class="stat-icon dib flat-color-2">
-                                    <i class="menu-icon fa fa-pencil-square"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <div class="text-left dib">
-                                        <div class="stat-text filtre">Instruction intervention</div>
-                                        <!-- <div class="stat-heading">Opérations</div> -->
-                                        <!--div class="stat-text"><span class="count">3435</span></div>
+                <div class="col-lg-4 col-md-6">
+                    <a href="/instruction">
+                        <div class="card cardClick">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-2">
+                                        <i class="menu-icon fa fa-pencil-square"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text filtre">Instruction intervention</div>
+                                            <!-- <div class="stat-heading">Opérations</div> -->
+                                            <!--div class="stat-text"><span class="count">3435</span></div>
                                             <div class="stat-heading">Sales</div-->
+                                        </div>
                                     </div>
                                 </div>
-                                </a>    
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
 
@@ -191,6 +212,7 @@
     <script src="../assets/js/init/weather-init.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+    <script src="../assets/js/acceuil.js"></script>
 
 </body>
 

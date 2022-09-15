@@ -39,15 +39,15 @@ $("#saveTL").on('click', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'This TL is already exist'
+                    text: 'Ce TL est déjà existe'
                 })
                 clearForm()
                 window.location = "/evaluationTL"
             } else {
                 Swal.fire({
-                    icon: 'success',
-                    title: 'New Team Leader saved',
-                    text: `Team Leader ${addTL.name} saved successfully`,
+                    icon: 'réussi',
+                    title: 'Nouveau Team Leader sauvegardé',
+                    text: `Team Leader ${addTL.name} sauvegardé avec succès`,
                     timer: 2000
                 })
                 clearForm()
@@ -109,7 +109,7 @@ $(document).on('click', '#saveUpdatTL', function(){
         threats: threatsUpdat
     }
 
-    console.log("userUpdate", userUpdate);
+    //console.log("userUpdate", userUpdate);
 
     $.ajax({
         url: '/updateTl',
@@ -118,8 +118,8 @@ $(document).on('click', '#saveUpdatTL', function(){
         success: function (res) {
             console.log("res", res);
             Swal.fire(
-                'Update',
-                'Update User succesfully ! ',
+                'Mise à jour',
+                "Mise à jour de l'utilisateur avec succès ! ",
                 'sucess',
                 {
                     confirmButtonText: 'OK'
@@ -136,93 +136,16 @@ $(document).on('click', '#saveUpdatTL', function(){
     })
 })
 
-//delete TL
-// $(document).on('click', '.btnDeleteEvaluationTL', function () {
-//     Swal.fire({
-//         title: 'Delete User',
-//         text: 'Are you sure to delete this user?',
-//         icon: 'warning',
-//         showCancelButton: true,
-//         confirmButtonColor: 'red',
-//         cancelButtonColor: 'green',
-//         confirmButtonText: 'Yes, delete it!'
-//     }).then((res)=>{
-//         if (res.isConfirmed) {
-//             var getCol = $(this).closest('tr');
-//             var mcodeDel = getCol.find('td:eq(1)').text();
-//             deleteUser = {
-//                 mcode: mcodeDel
-//             }
-//             $.ajax({
-//                 url: '/deleteTeamLeader',
-//                 method: 'post',
-//                 data: deleteUser,
-
-//                 success: function (res) {
-//                     responseTxt = 'Material deleted successfully!';
-//                     Swal.fire({
-//                         position: 'center',
-//                         icon: 'success',
-//                         title: responseTxt,
-//                         showConfirmButton: true
-//                     })
-//                     $("#evaluationDataTable").DataTable().ajax.reload(null, false)
-//                 },
-//                 error: function (resp) {
-//                     Swal.fire({
-//                         position: 'top-center',
-//                         icon: 'error',
-//                         title: resp,
-//                         showConfirmButton: false,
-//                         timer: 1700
-//                     })
-//                 }
-//                 // success: function (res) {
-//                 //     responseTxt = 'Material deleted successfully!';
-//                 //     console.log("response",res);
-//                 //     Swal.fire({
-//                 //         position: 'center',
-//                 //         icon: 'success',
-//                 //         title: responseTxt,
-//                 //         showConfirmButton: true
-//                 //     })
-//                 //     console.log("evaluationDataTable");
-//                 //     $("#evaluationDataTable").DataTable().ajax.reload(null, false)
-//                 // },
-//                 // //     textResp = 'User deleted successfully!';
-//                 // //     Swal.fire({
-//                 // //         position: 'center',
-//                 // //         icon: 'success',
-//                 // //         title: textResp,
-//                 // //         showConfirmButton: true
-//                 // //     })
-//                 // //     $("#evaluationDataTable").DataTable().ajax.reload(null, false)
-//                 // //     //window.location = '/operation'
-//                 // // },
-//                 // error: function (resp) {
-//                 //     Swal.fire({
-//                 //         position: 'top-center',
-//                 //         icon: 'error',
-//                 //         title: resp,
-//                 //         showConfirmButton: false,
-//                 //         timer: 2000
-//                 //     })
-//                 // }
-//             })
-//         } 
-//     })
-// })
-
 
 $(document).on('click', '.btnDeleteEvaluationTL', function() {
     Swal.fire({
-        title: 'Delete User',
-        text: 'Are you sure to delete this user?',
+        title: "Supprimer l'utilisateur",
+        text: 'Etes-vous sûr de vouloir supprimer cet utilisateur?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: 'red',
         cancelButtonColor: 'green',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Oui'
     }).then((result) =>{
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
@@ -235,7 +158,7 @@ $(document).on('click', '.btnDeleteEvaluationTL', function() {
                 method: 'post',
                 data: deleteMaterial,
                 success: function (res) {
-                    responseTxt = 'User deleted successfully!';
+                    responseTxt = 'Utilisateur supprimé avec succès!';
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -257,3 +180,13 @@ $(document).on('click', '.btnDeleteEvaluationTL', function() {
         } 
     })
 })
+
+var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+
+if (type.trim() == "IT") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page IT");
+} else if (type.trim() == "TL") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page TL");
+} 

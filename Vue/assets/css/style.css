@@ -355,6 +355,7 @@ body {
 
   .card-lef{
     margin-left: 10%;
+    margin-right: 10%;
   }
 p {
   font-size: 16px;
@@ -2556,6 +2557,9 @@ footer.site-footer {
   font-weight: bold;
 }
 
-#control{
-  
+.cardClick:hover{
+  background-color: #e0ecf3;
 }
+/* .iconCol{
+  color: #dee0e4;
+} */

@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Project Tools</title>
+    <title>Tools Solumada</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -100,6 +100,7 @@
 
     <div id="right-panel" class="right-panel">
         <!-- Header-->
+        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
@@ -117,13 +118,14 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i>My Profile</a>
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/utilisateur" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
 
                             <!--a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
 
                             <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a-->
 
-                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 

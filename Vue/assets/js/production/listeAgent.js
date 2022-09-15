@@ -47,15 +47,15 @@ $("#saveAgent").on('click', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'This Agent is already exist'
+                    text: 'Cet utilisateur existe déjà'
                 })
                 //clearForm()
                 //window.location = "/agent"
             } else {
                 Swal.fire({
                     icon: 'success',
-                    title: 'New Agent saved',
-                    text: `Agent ${addAgent.usualName} saved successfully`,
+                    title: 'Nouveau utilisateur sauvegarder',
+                    text: `Agent ${addAgent.usualName} sauvegarder avec succès`,
                     timer: 2000
                 })
                 clearForm()
@@ -95,7 +95,7 @@ $(document).on('click', '#cancelAgent', function () {
 // get user to update
 var mcode = ""
 $(document).on('click', '.btnUpdateAgent', function () {
-    console.log("btnUpdateAgent");
+    //console.log("btnUpdateAgent");
     var getCol = $(this).closest('tr')
     mcode = getCol.find('td:eq(2)').text()
     var name = getCol.find('td:eq(0)').text()
@@ -115,6 +115,7 @@ $(document).on('click', '.btnUpdateAgent', function () {
     $("#siteUpdat").val(site)
     $("#quartierUpdat").val(quartier)
     $("#telUpdat").val(phon)
+    $("#mcodeUpdat").val(mcode)
     // console.log("mcode", mcode);
     // UserUpdat = {
     //     name: $()
@@ -131,9 +132,11 @@ $(document).on('click', '#saveUpdatUser', function(){
     var siteUpdat = $('#siteUpdat').val();
     var quartierUpdat = $('#quartierUpdat').val();
     var telUpdat = $('#telUpdat').val();
+    var mcodeNew = $('#mcodeUpdat').val();
 
     var userUpdate = {
         mcodeOld: mcode,
+        mcodeNew: mcodeNew,
         name: nameUpd,
         usualName: usualNameUpdat,
         number: numberUpd,
@@ -144,7 +147,7 @@ $(document).on('click', '#saveUpdatUser', function(){
         tel: telUpdat,
     }
 
-    console.log("userUpdate", userUpdate.tel);
+    //console.log("userUpdate", userUpdate.tel);
 
     $.ajax({
         url: '/updateAgent',
@@ -156,15 +159,15 @@ $(document).on('click', '#saveUpdatUser', function(){
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'This agent is already exist'
+                    text: 'Cet utilisateur existe déjà'
                 })
                 clearForm()
                 window.location = "/agent"
                 
             } else {
                 Swal.fire(
-                    'Update',
-                    'Update User succesfully ! ',
+                    'Mis à jour',
+                    'Mis à jour avec succès ! ',
                     'sucess',
                     {
                         confirmButtonText: 'OK'
@@ -189,13 +192,13 @@ $(document).on('click', '#saveUpdatUser', function(){
 
 $(document).on('click', '.btnDeleteAgent', function() {
     Swal.fire({
-        title: 'Delete User',
-        text: 'Are you sure to delete this user?',
+        title: 'Supprimer User',
+        text: 'Etes-vous sûr de vouloir supprimer cet utilisateur?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: 'red',
         cancelButtonColor: 'green',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Oui'
     }).then((result) =>{
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
@@ -208,7 +211,7 @@ $(document).on('click', '.btnDeleteAgent', function() {
                 method: 'post',
                 data: deleteMaterial,
                 success: function (res) {
-                    responseTxt = 'User deleted successfully!';
+                    responseTxt = 'Utilisateur supprimé avec succès!';
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -230,3 +233,14 @@ $(document).on('click', '.btnDeleteAgent', function() {
         } 
     })
 })
+
+
+var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+
+if (type.trim() == "IT") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page IT");
+} else if (type.trim() == "TL") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page TL");
+} 

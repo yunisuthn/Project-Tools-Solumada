@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>Tools Solumada</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -44,6 +44,7 @@
 
     <div id="right-panel" class="right-panel">
 
+        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
@@ -62,8 +63,9 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i>My Profile</a>
-                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/utilisateur" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 
@@ -107,7 +109,7 @@
                             <strong class="card-title">Agent</strong>
                             <span class="float-right">
                                 <button class="add" data-toggle="modal" data-target="#addAgent">
-                                    <i class="fa fa-plus"></i> add
+                                    <i class="fa fa-plus"></i> ajout
                                 </button>
                             </span>
                         </div>
@@ -116,9 +118,9 @@
                                 <thead>
                                     <tr>
                                         <th>M-Code</th>
-                                        <th>Name</th>
+                                        <th>Nom</th>
                                         <th>Production</th>
-                                        <th>Quality</th>
+                                        <th>Qualité</th>
                                         <th>Comportement</th>
                                         <th>Action</th>
                                     </tr>
@@ -149,19 +151,20 @@
                                 <label for="name" class="form-control-label">M-code</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <select name="" id="mcode" class="form-control standarSelect memberSelect"> 
-                                <option value=""></option>
-                                <% listAgent.forEach((listeAgent) => {  %>
-                                    <option value="<%= listeAgent.mcode %> ">
-                                        <%= listeAgent.mcode %> </option>
-                                <% }); %>
+                                <select name="" id="mcode" class="form-control standarSelect memberSelect">
+                                    <option value="" disabled selected>choisir mcode</option>
+                                    <% listAgent.forEach((listeAgent)=> { %>
+                                        <option value="<%= listeAgent.mcode %> ">
+                                            <%= listeAgent.mcode %>
+                                        </option>
+                                        <% }); %>
                                 </select>
                             </div>
 
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Name</label>
+                                <label for="name" class="form-control-label">Nom</label>
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="text" name="" id="name" class="form-control" readonly>
@@ -172,15 +175,15 @@
                                 <label for="name" class="form-control-label">Production</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="production" class="form-control">
+                                <textarea rows="3" type="text" name="" id="production" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Quality</label>
+                                <label for="name" class="form-control-label">Qualité</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="quality" class="form-control">
+                                <textarea rows="3" type="text" name="" id="quality" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -188,14 +191,16 @@
                                 <label for="name" class="form-control-label">Comportement</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="comportement" class="form-control">
+                                <textarea rows="3" type="text" name="" id="comportement"
+                                    class="form-control"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelEvalAgent">Close</button>
-                    <button type="button" class="btn btn-success" id="saveEvalAgent">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="cancelEvalAgent">Fermer</button>
+                    <button type="button" class="btn btn-success" id="saveEvalAgent">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -206,7 +211,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Update User Evaluation</h5>
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Mis à jours</h5>
                 </div>
                 <div class="modal-body">
                     <form action="" id="updateUser" method="post">
@@ -222,15 +227,16 @@
                                 <label for="" class="form-control-label">Production</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" id="productionUdp" class="form-control">
+                                <textarea rows="3" type="text" id="productionUdp" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Quality</label>
+                                <label for="name" class="form-control-label">Qualité</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="qualityUpdat" class="form-control">
+                                <textarea rows="3" type="text" name="" id="qualityUpdat"
+                                    class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -238,14 +244,16 @@
                                 <label for="name" class="form-control-label">Comportement</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="comportementUpdat" class="form-control">
+                                <textarea rows="3" type="text" name="" id="comportementUpdat"
+                                    class="form-control"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelUpdatAgent">Close</button>
-                    <button type="button" class="btn btn-success" id="saveUpdatUser">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="cancelUpdatAgent">Fermer</button>
+                    <button type="button" class="btn btn-success" id="saveUpdatUser">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -284,7 +292,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"></script>
 
     <!-- <script src="../assets/js/production/evaluationAgent.js"></script> -->
-<script src="../assets/js/production/evaluationAgent.js"></script>
+    <script src="../assets/js/production/evaluationAgent.js"></script>
 
 
 

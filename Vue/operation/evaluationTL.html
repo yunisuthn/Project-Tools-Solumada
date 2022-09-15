@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ela Admin - HTML5 Admin Template</title>
+    <title>Tools Solumada</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -44,6 +44,7 @@
 
     <div id="right-panel" class="right-panel">
 
+        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
@@ -62,13 +63,13 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i>My Profile</a>
-
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/utilisateur" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
                             <!--a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
 
                             <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a-->
 
-                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 
@@ -112,7 +113,7 @@
                             <strong class="card-title">Team Leader</strong>
                             <span class="float-right">
                                 <button class="add" data-toggle="modal" data-target="#addTL">
-                                    <i class="fa fa-plus"></i> add
+                                    <i class="fa fa-plus"></i> Ajout
                                 </button>
                             </span>
                         </div>
@@ -120,12 +121,12 @@
                             <table id="evaluationDataTable" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Usual name</th>
+                                        <th>Nom</th>
                                         <th>M-Code</th>
-                                        <th>Strengths</th>
-                                        <th>Weaknesses</th>
-                                        <th>Opportunities</th>
-                                        <th>Threats</th>
+                                        <th>Points forts</th>
+                                        <th>Faiblesses</th>
+                                        <th>Opportunités</th>
+                                        <th>Menaces</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -163,18 +164,18 @@
 
     <div class="modal fade" id="addTL" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
 
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">New Team Leader</h5>
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Nouveau Team Leader</h5>
                 </div>
                 <div class="modal-body">
                     <form id="updateUserLevel" method="post">
                         <div class="row form-group">
-                            <div class="col col-md-3"><label for="name" class="form-control-label">Usual name</label>
+                            <div class="col col-md-3"><label for="name" class="form-control-label">Nom</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" id="nameTL" placeholder="" class="form-control">
+                                <input type="text" id="nameTL" placeholder="nom" class="form-control">
                                 <small id="" style="color: red; font-size: smaller; display: none;"></small>
                             </div>
                         </div>
@@ -183,47 +184,47 @@
                                 <label for="name" class="form-control-label">M-code</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="m-code" class="form-control">
+                                <input type="text" name="" id="m-code" class="form-control" placeholder="m-code">
                             </div>
 
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Strengths</label>
+                                <label for="name" class="form-control-label"><!--Strengths-->Points forts</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="strengths" class="form-control">
+                                <textarea type="text" name="" id="strengths" rows="3" class="form-control" placeholder="Point fort"> </textarea>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Weaknesses</label>
+                                <label for="name" class="form-control-label"><!--Weaknesses-->Faiblesses</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="weaknesses" class="form-control">
+                                <textarea type="text" name="" id="weaknesses" rows="3" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Opportunities</label>
+                                <label for="name" class="form-control-label">Opportunités</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="opportunities" class="form-control">
+                                <textarea type="text" name="" id="opportunities" rows="3" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Threats</label>
+                                <label for="name" class="form-control-label"><!--Threats-->Menaces</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="threats" class="form-control">
+                                <textarea type="text" name="" id="threats" rows="3" class="form-control"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelTL">Close</button>
-                    <button type="button" class="btn btn-success" id="saveTL">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelTL">Fermer</button>
+                    <button type="button" class="btn btn-success" id="saveTL">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -234,13 +235,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Update User</h5>
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Mis à jours TL</h5>
                 </div>
                 <div class="modal-body">
                     <form action="" id="updateUser" method="post">
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="" class="form-control-label">Name</label>
+                                <label for="" class="form-control-label" >Nom</label>
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="text" id="nameUpdat" class="form-control">
@@ -257,41 +258,41 @@
                         </div> -->
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Strengths</label>
+                                <label for="name" class="form-control-label">Points forts</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="strengthsUpdatTL" class="form-control">
+                                <textarea rows="3" type="text" name="" id="strengthsUpdatTL" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Weaknesses</label>
+                                <label for="name" class="form-control-label">Faiblesses</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="weaknessesUpdat" class="form-control">
+                                <textarea rows="3" type="text" name="" id="weaknessesUpdat" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Opportunities</label>
+                                <label for="name" class="form-control-label">Opportunités</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="opportunitiesUpdatTL" class="form-control">
+                                <textarea rows="3" type="text" name="" id="opportunitiesUpdatTL" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Threats</label>
+                                <label for="name" class="form-control-label">Menaces</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="threatsUpdat" class="form-control">
+                                <textarea rows="3" type="text" name="" id="threatsUpdat" class="form-control"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelTL">Close</button>
-                    <button type="button" class="btn btn-success" id="saveUpdatTL">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelTL">Fermer</button>
+                    <button type="button" class="btn btn-success" id="saveUpdatTL">Enregistrer</button>
                 </div>
             </div>
         </div>

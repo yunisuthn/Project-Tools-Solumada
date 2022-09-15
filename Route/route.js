@@ -37,7 +37,7 @@ routeExp.route('/IT').get(async function(req, res){
     var session = req.session
     //console.log("session.typeUtil ", session.typeUtil);
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/IT.html")
+        res.render("./it/IT.html", {type_util: session.typeUtil})
     } else {
         res.redirect("/")
     }
@@ -46,7 +46,7 @@ routeExp.route('/IT').get(async function(req, res){
 routeExp.route('/operation').get( async function(req, res) {
     var session = req.session
     if (session.typeUtil == "Operation") {
-        res.render("./operation/operation.html")
+        res.render("./operation/operation.html", {type_util: session.typeUtil})
     } else {
         res.redirect("/")
     }
@@ -55,7 +55,7 @@ routeExp.route('/operation').get( async function(req, res) {
 routeExp.route('/evaluationTL').get( async function(req, res) {
     var session = req.session
     if (session.typeUtil == "Operation") {
-        res.render("./operation/evaluationTL.html")
+        res.render("./operation/evaluationTL.html", {type_util: session.typeUtil})
     } else {
         res.redirect("/")
     }
@@ -65,7 +65,7 @@ routeExp.route('/production').get(async function(req, res){
 
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
-        res.render("./production/production.html")
+        res.render("./production/production.html",{type_util: session.typeUtil})
     } else {
         res.redirect("/")
     }
@@ -74,7 +74,7 @@ routeExp.route('/production').get(async function(req, res){
 routeExp.route('/inventaire').get(async function(req, res){
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inventaire.html")
+        res.render("./it/inventaire.html", {type_util: session.typeUtil})
     } else {
         res.redirect("/")
     }
@@ -103,7 +103,7 @@ routeExp.route('/instruction').get(async function(req, res){
                 });
                 //console.log("allInstruct ", InstructAll);
                 var instructionLong = await InstructionModel.find({validation: true});
-                res.render("./it/instruction.html",{allInstruct : allInstruct, instruction: instructionLong} )
+                res.render("./it/instruction.html",{type_util: session.typeUtil, allInstruct : allInstruct, instruction: instructionLong} )
             })
     } else {
         res.redirect("/")
@@ -198,6 +198,7 @@ routeExp.route('/getInventaire').post(async function (req, res) {
 //Update Material
 routeExp.route('/updateInvent').post(async function (req, res) {
     var code = req.body.code;
+    var codeN = req.body.codeNew;
     var name = req.body.name;
     var nombre = req.body.nombre;
 
@@ -212,7 +213,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                 }
             )
             .then(async ()=>{
-                var updat = await InventaireModel.findOneAndUpdate({code: code}, {name: name, nombre: nombre})
+                var updat = await InventaireModel.findOneAndUpdate({code: code}, {code: codeN, name: name, nombre: nombre})
                 // console.log("updat ", updat);
                 res.send("success")
             })  
@@ -545,7 +546,7 @@ routeExp.route('/planning').get(async function(req, res){
                   ])
                 var agent = await AgentModel.find()
                 //console.log("agent", agent);
-                res.render("./production/planning.html", {plan: planning, agent: agent})
+                res.render("./production/planning.html",{type_util: session.typeUtil, plan: planning, agent: agent})
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
     } else {
@@ -575,7 +576,7 @@ routeExp.route('/planning/:project/:shift').get(async function(req, res){
                 var allPlaning = await PlanningModel.find()
                 var agent = await AgentModel.find()
                 console.log("agent", shift , " ", project);
-                res.render("./production/planning.html", {plan: allPlaning, agent: agent})
+                res.render("./production/planning.html",{type_util: session.typeUtil, plan: allPlaning, agent: agent})
             })
     // } else {
     //     res.redirect("/")
@@ -587,7 +588,7 @@ routeExp.route('/agent').get(async function(req, res){
 
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
-        res.render("./production/listeAgent.html")
+        res.render("./production/listeAgent.html",{type_util: session.typeUtil})
     } else {
         res.redirect("/")
     }
@@ -609,7 +610,7 @@ routeExp.route('/evaluationAgent').get(async function(req, res){
             .then(async()=>{
                 var listAgent = await AgentModel.find();
                 //console.log("listAgent", listAgent);
-                res.render("./production/evaluationAgent.html", {listAgent: listAgent})
+                res.render("./production/evaluationAgent.html",{type_util: session.typeUtil, listAgent: listAgent})
 
             })
     } else {
@@ -757,6 +758,7 @@ routeExp.route('/allEvaluationAgent').get(async function (req, res) {
 //Update Agent
 routeExp.route("/updateAgent").post(async function (req, res) {
     var oldMCode = req.body.mcodeOld;
+    var mcodeNew = req.body.mcodeNew;
     var name = req.body.name;
     var usualName = req.body.usualName;
     var number = req.body.number;
@@ -765,6 +767,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
     var site = req.body.site;
     var quartier = req.body.quartier;
     var phon = req.body.tel;
+    
 
     // console.log("phon", phon);
     var session = req.session
@@ -781,7 +784,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
                 if (name=="") {
                     res.send('error')
                 } else {
-                    var agent = await AgentModel.findOneAndUpdate({mcode: oldMCode}, {name: name, usualName: usualName,  number: number, shift: shift, project: project, site: site, quartier: quartier, tel: phon})
+                    var agent = await AgentModel.findOneAndUpdate({mcode: oldMCode}, {mcode: mcodeNew, name: name, usualName: usualName,  number: number, shift: shift, project: project, site: site, quartier: quartier, tel: phon})
                     //console.log("agent", agent);
                     res.send("success")
                     
@@ -888,7 +891,7 @@ routeExp.route('/user').get(async function(req, res){
             .then(async()=>{
                 var allTL = await TLModel.find()
                 //console.log("allTL ", allTL);
-                res.render("./operation/user.html", {allTL: allTL})
+                res.render("./operation/user.html",{type_util: session.typeUtil, allTL: allTL})
             })
     } else {
         res.redirect("/")
@@ -1137,7 +1140,7 @@ routeExp.route("/profil").get( async function (req, res) {
         .then(async ()=>{
             var profil = await UserModel.findOne({mcode: session.mcode})
             // console.log("profil", profil);
-            res.render("profil.html", {profil: profil})
+            res.render("profil.html", {type_util: session.typeUtil, profil: profil})
         })
     } else {
         res.redirect("/")

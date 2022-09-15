@@ -34,14 +34,14 @@ $('#saveMateriel').on("click", function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'This material is already exist'
+                    text: 'Ce matériel est déjà existant'
                 })
                 clearForm()
             } else {
                 Swal.fire({
                     icon: 'success',
-                    title: 'New material saved',
-                    text: `Material ${Inventaire.name} saved successfully`,
+                    title: 'Nouveau matériel sauvegardé',
+                    text: `Matériel ${Inventaire.name} sauvegardé avec succès`,
                 })
                 clearForm()
                 $("#inventaireDataT").DataTable().ajax.reload(null, false)
@@ -85,6 +85,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
             // console.log("respData", respData);
             $("#nameUpdatMat").val(respData.name);
             $("#nombreUpdatMat").val(respData.nombre)
+            $("#refUpdatMat").val(respData.code)
         }
     })
 })
@@ -94,8 +95,10 @@ $(document).on('click', '.btnUpdateInventaire', function () {
 $(document).on('click', '#saveUpdateMat', function () {
     var nameMatUpd = $('#nameUpdatMat').val();
     var nbreMatUpd = $('#nombreUpdatMat').val();
+    var refMatUpd = $('#refUpdatMat').val();
     var matUpd = {
         code: codeMat,
+        codeNew: refMatUpd,
         name: nameMatUpd,
         nombre: nbreMatUpd
     }
@@ -108,7 +111,7 @@ $(document).on('click', '#saveUpdateMat', function () {
             console.log("res", res);
             Swal.fire(
                 'Update',
-                'Update Materiel successfuly ! ',
+                'Mise à jour réussie du matériel ! ',
                 'success',
                 {
                     confirmButtonText: 'OK',
@@ -126,13 +129,13 @@ $(document).on('click', '#saveUpdateMat', function () {
 //Delete material in inventary
 $(document).on('click', '.btnDeleteInventaire', function() {
     Swal.fire({
-        title: 'Delete Material',
-        text: 'Are you sure to delete this material?',
+        title: 'Supprimer',
+        text: 'Etes-vous sûr de vouloir supprimer ce matériel?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: 'red',
         cancelButtonColor: 'green',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Oui!'
     }).then((result) =>{
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
@@ -145,7 +148,7 @@ $(document).on('click', '.btnDeleteInventaire', function() {
                 method: 'post',
                 data: deleteMaterial,
                 success: function (res) {
-                    responseTxt = 'Material deleted successfully!';
+                    responseTxt = 'Matériel supprimé avec succès!';
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -167,3 +170,14 @@ $(document).on('click', '.btnDeleteInventaire', function() {
         } 
     })
 })
+
+
+var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+
+if (type.trim() == "IT") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page IT");
+} else if (type.trim() == "TL") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page TL");
+} 

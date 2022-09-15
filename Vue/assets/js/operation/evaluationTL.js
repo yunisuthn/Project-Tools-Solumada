@@ -180,3 +180,13 @@ $(document).on('click', '.btnDeleteEvaluationTL', function() {
         } 
     })
 })
+
+var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+
+if (type.trim() == "IT") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page IT");
+} else if (type.trim() == "TL") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page TL");
+} 

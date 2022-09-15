@@ -87,6 +87,7 @@
 <body>
 
     <div id="right-panel" class="right-panel">
+        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
@@ -105,13 +106,14 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i>My Profile</a>
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/utilisateur" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
 
                             <!--a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
 
                             <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a-->
 
-                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 
@@ -128,9 +130,27 @@
             <div class="row card-lef">
 
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
+                    <a href="/">
+                        <div class="card cardClick">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-5">
+                                        <i class="fa-sharp fa-solid fa-house"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text filtre">Accueil</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6">
                     <a href="/evaluationTL">
-                        <div class="card">
+                        <div class="card cardClick">
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-3">
@@ -154,7 +174,7 @@
 
                 <div class="col-lg-4 col-md-6">
                     <a href="/user">
-                        <div class="card">
+                        <div class="card cardClick">
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-4">
@@ -162,7 +182,7 @@
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text filtre">User</div>
+                                            <div class="stat-text filtre">Historiques</div>
                                             <!-- <div class="stat-heading">Opérations & Productions </div> -->
                                             <!--div class="stat-text"><span class="count">349</span></div>
                                             <div class="stat-heading">Templates</div-->
@@ -201,7 +221,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
-    <script src="assets/js/init/weather-init.js"></script>
+    <script src="../assets/js/init/weather-init.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
 

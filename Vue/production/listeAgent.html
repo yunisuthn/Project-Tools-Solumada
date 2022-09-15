@@ -44,6 +44,7 @@
 
     <div id="right-panel" class="right-panel">
 
+        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
@@ -62,8 +63,9 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i>My Profile</a>
-                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/utilisateur" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 
@@ -245,7 +247,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Mis à jours Utilisateur</h5>
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Mis à jours</h5>
                 </div>
                 <div class="modal-body">
                     <form action="" id="updateUser" method="post">
@@ -267,6 +269,14 @@
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
+                                <label for="" class="form-control-label">M-Code</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" name="" id="mcodeUpdat" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
                                 <label for="" class="form-control-label">Number</label>
                             </div>
                             <div class="col-12 col-md-9">
@@ -278,7 +288,14 @@
                                 <label for="name" class="form-control-label">Shift</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="" id="shiftUpdat" class="form-control">
+                                <select name="" id="shiftUpdat" class="form-control">
+                                    <option value="" selected disabled>Choose shift </option>
+                                    <option value="shift 1">Shift 1</option>
+                                    <option value="shift 2">Shift 2</option>
+                                    <option value="shift 3">Shift 3</option>
+                                    <option value="shift weekend">Shift Weekend</option>
+                                </select>
+                                <!-- <input type="text" name="" id="" class="form-control"> -->
                             </div>
                         </div>
                         <div class="row form-group">

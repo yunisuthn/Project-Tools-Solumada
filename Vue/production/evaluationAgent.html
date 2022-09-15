@@ -44,6 +44,7 @@
 
     <div id="right-panel" class="right-panel">
 
+        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
@@ -62,8 +63,9 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i>My Profile</a>
-                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/utilisateur" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
 
@@ -149,12 +151,13 @@
                                 <label for="name" class="form-control-label">M-code</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <select name="" id="mcode" class="form-control standarSelect memberSelect"> 
-                                <option value="" disabled selected>choisir mcode</option>
-                                <% listAgent.forEach((listeAgent) => {  %>
-                                    <option value="<%= listeAgent.mcode %> ">
-                                        <%= listeAgent.mcode %> </option>
-                                <% }); %>
+                                <select name="" id="mcode" class="form-control standarSelect memberSelect">
+                                    <option value="" disabled selected>choisir mcode</option>
+                                    <% listAgent.forEach((listeAgent)=> { %>
+                                        <option value="<%= listeAgent.mcode %> ">
+                                            <%= listeAgent.mcode %>
+                                        </option>
+                                        <% }); %>
                                 </select>
                             </div>
 
@@ -173,7 +176,7 @@
                             </div>
                             <div class="col-12 col-md-9">
                                 <textarea rows="3" type="text" name="" id="production" class="form-control"></textarea>
-                            </div> 
+                            </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
@@ -188,13 +191,15 @@
                                 <label for="name" class="form-control-label">Comportement</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <textarea rows="3" type="text" name="" id="comportement" class="form-control"></textarea>
+                                <textarea rows="3" type="text" name="" id="comportement"
+                                    class="form-control"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelEvalAgent">Fermer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="cancelEvalAgent">Fermer</button>
                     <button type="button" class="btn btn-success" id="saveEvalAgent">Enregistrer</button>
                 </div>
             </div>
@@ -230,7 +235,8 @@
                                 <label for="name" class="form-control-label">Qualité</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <textarea rows="3" type="text" name="" id="qualityUpdat" class="form-control"></textarea>
+                                <textarea rows="3" type="text" name="" id="qualityUpdat"
+                                    class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -238,13 +244,15 @@
                                 <label for="name" class="form-control-label">Comportement</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <textarea rows="3" type="text" name="" id="comportementUpdat" class="form-control"></textarea>
+                                <textarea rows="3" type="text" name="" id="comportementUpdat"
+                                    class="form-control"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelUpdatAgent">Fermer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="cancelUpdatAgent">Fermer</button>
                     <button type="button" class="btn btn-success" id="saveUpdatUser">Enregistrer</button>
                 </div>
             </div>
@@ -284,7 +292,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"></script>
 
     <!-- <script src="../assets/js/production/evaluationAgent.js"></script> -->
-<script src="../assets/js/production/evaluationAgent.js"></script>
+    <script src="../assets/js/production/evaluationAgent.js"></script>
 
 
 

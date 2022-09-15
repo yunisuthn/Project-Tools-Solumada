@@ -95,7 +95,7 @@ $(document).on('click', '#cancelAgent', function () {
 // get user to update
 var mcode = ""
 $(document).on('click', '.btnUpdateAgent', function () {
-    console.log("btnUpdateAgent");
+    //console.log("btnUpdateAgent");
     var getCol = $(this).closest('tr')
     mcode = getCol.find('td:eq(2)').text()
     var name = getCol.find('td:eq(0)').text()
@@ -115,6 +115,7 @@ $(document).on('click', '.btnUpdateAgent', function () {
     $("#siteUpdat").val(site)
     $("#quartierUpdat").val(quartier)
     $("#telUpdat").val(phon)
+    $("#mcodeUpdat").val(mcode)
     // console.log("mcode", mcode);
     // UserUpdat = {
     //     name: $()
@@ -131,9 +132,11 @@ $(document).on('click', '#saveUpdatUser', function(){
     var siteUpdat = $('#siteUpdat').val();
     var quartierUpdat = $('#quartierUpdat').val();
     var telUpdat = $('#telUpdat').val();
+    var mcodeNew = $('#mcodeUpdat').val();
 
     var userUpdate = {
         mcodeOld: mcode,
+        mcodeNew: mcodeNew,
         name: nameUpd,
         usualName: usualNameUpdat,
         number: numberUpd,
@@ -144,7 +147,7 @@ $(document).on('click', '#saveUpdatUser', function(){
         tel: telUpdat,
     }
 
-    console.log("userUpdate", userUpdate.tel);
+    //console.log("userUpdate", userUpdate.tel);
 
     $.ajax({
         url: '/updateAgent',
@@ -230,3 +233,14 @@ $(document).on('click', '.btnDeleteAgent', function() {
         } 
     })
 })
+
+
+var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+
+if (type.trim() == "IT") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page IT");
+} else if (type.trim() == "TL") {
+    $("#utilisateur").css("display", "none")
+    // console.log("page TL");
+} 

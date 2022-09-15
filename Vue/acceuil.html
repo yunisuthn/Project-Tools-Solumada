@@ -26,8 +26,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css"> -->
 
-    <link rel="stylesheet" href="./assets/Icon-font-7-stroke/pe-icon-7-stroke/css/pe-icon-7-stroke.css"> 
-    <link rel="stylesheet" href="./assets/Icon-font-7-stroke/pe-icon-7-stroke/css/helper.css"> 
+    <link rel="stylesheet" href="./assets/Icon-font-7-stroke/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="./assets/Icon-font-7-stroke/pe-icon-7-stroke/css/helper.css">
 
     <link rel="stylesheet" href="./assets/css/lib/themify-icons/css/themify-icons.css">
     <link rel="stylesheet" href="./assets/css/lib/flag-icon-css/css/flag-icon.css">
@@ -85,7 +85,7 @@
 </head>
 
 <body>
-    
+
     <div id="right-panel" class="right-panel">
         <!-- Header-->
         <header id="header" class="header">
@@ -105,8 +105,10 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i>My Profile</a>
-                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i>Logout</a>
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> Mon Profile</a>
+                            <a class="nav-link" href="/utilisateur" id="utilisateur"><i
+                                    class="fa fa-solid fa-users"></i> Utilisateur</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Déconnecter</a>
                         </div>
                     </div>
 
@@ -118,80 +120,80 @@
     <!-- Content -->
     <div class="content  ">
         <!-- Animated -->
-        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
+        <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
         <div class="animated fadeIn">
             <!-- Widgets  -->
             <div class="row card-lef">
-                <div class="col-lg-3 col-md-6" id="it">
-                                <a href="/IT">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <div class="stat-icon dib flat-color-1">
-                                    <i class="fa-solid fa-plug-circle-minus"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <div class="text-left dib">
-                                        <div class="stat-text filtre">IT</div>
-                                        <!-- <div class="stat-heading">Information Technologie</div> -->
-                                        <!--div class="stat-text"><span class="count">23569</span></div>
+                <div class="col-lg-4 col-md-6" id="it">
+                    <a href="/IT">
+                        <div class="card cardClick">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-1">
+                                        <i class="fa-solid fa-plug-circle-minus"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text filtre">IT</div>
+                                            <!-- <div class="stat-heading">Information Technologie</div> -->
+                                            <!--div class="stat-text"><span class="count">23569</span></div>
                                             <div class="stat-heading">IT</div-->
+                                        </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                                </a>
+                    </a>
                 </div>
 
-                <div class="col-lg-3 col-md-6" id="operation">
-                                <a href="/operation">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <div class="stat-icon dib flat-color-2">
-                                    <i class="fa-solid fa-hourglass-half"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <div class="text-left dib">
-                                        <div class="stat-text filtre">Opérations</div>
-                                        <!-- <div class="stat-heading">Opérations</div> -->
-                                        <!--div class="stat-text"><span class="count">3435</span></div>
+                <div class="col-lg-4 col-md-6" id="operation">
+                    <a href="/operation">
+                        <div class="card cardClick">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-2">
+                                        <i class="fa-solid fa-hourglass-half"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text filtre">Opérations</div>
+                                            <!-- <div class="stat-heading">Opérations</div> -->
+                                            <!--div class="stat-text"><span class="count">3435</span></div>
                                             <div class="stat-heading">Sales</div-->
+                                        </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                                </a>
+                    </a>
                 </div>
 
-                <div class="col-lg-3 col-md-6" id="production">
-                                <a href="/production">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <div class="stat-icon dib flat-color-3">
-                                    <i class="menu-icon fa fa-cogs"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <div class="text-left dib">
-                                        <div class="stat-text filtre">Productions</div>
-                                        <!-- <div class="stat-heading">Opérations & Productions </div> -->
-                                        <!--div class="stat-text"><span class="count">349</span></div>
+                <div class="col-lg-4 col-md-6" id="production">
+                    <a href="/production">
+                        <div class="card cardClick">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-3">
+                                        <i class="menu-icon fa fa-cogs"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text filtre">Productions</div>
+                                            <!-- <div class="stat-heading">Opérations & Productions </div> -->
+                                            <!--div class="stat-text"><span class="count">349</span></div>
                                             <div class="stat-heading">Templates</div-->
+                                        </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                                </a>
+                    </a>
                 </div>
 
-                
+
             </div>
         </div>
     </div>

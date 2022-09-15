@@ -1,5 +1,5 @@
 
-console.log("saveEvalAgent");
+//console.log("saveEvalAgent");
 
 var agentEvalDataTable = $('#agentEvalDataTable').DataTable(
     {
@@ -31,7 +31,7 @@ var agentEvalDataTable = $('#agentEvalDataTable').DataTable(
 
 // $(document).on('click', '#saveEvalAgent', function () {
 $("#saveEvalAgent").on('click', function () {
-    console.log("saveEvalAgent");
+    //console.log("saveEvalAgent");
     addAgent = {
         name: $('#name').val(),
         mcode: $('#mcode').val(),
@@ -39,7 +39,7 @@ $("#saveEvalAgent").on('click', function () {
         quality: $('#quality').val(),
         comportement: $('#comportement').val()
     }
-    console.log("addAgent", addAgent);
+    //console.log("addAgent", addAgent);
     $.ajax({
         url: '/addEvaluationAgent',
         method: 'post',
@@ -49,7 +49,7 @@ $("#saveEvalAgent").on('click', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'This user is already exist',
+                    text: 'Cet utilisateur existe déjà',
                     timer: 4000
                 })
                 // clearForm()
@@ -57,8 +57,8 @@ $("#saveEvalAgent").on('click', function () {
             } else {
                 Swal.fire({
                     icon: 'success',
-                    title: 'New Agent saved',
-                    text: `Agent ${addAgent.name} saved successfully`,
+                    title: 'Nouveau agent sauvegarder',
+                    text: `Agent ${addAgent.name} sauvegarder avec succès`,
                     timer: 2000
                 })
                 //clearForm()
@@ -90,7 +90,7 @@ $(document).on("click", "#cancelEvalAgent", function () {
 // get user to update
 var mcode = ""
 $(document).on('click', '.btnUpdateAgent', function () {
-    console.log("btnUpdateAgent");
+    //console.log("btnUpdateAgent");
     var getCol = $(this).closest('tr')
     mcode = getCol.find('td:eq(0)').text()
     var production = getCol.find('td:eq(2)').text()
@@ -125,7 +125,7 @@ $(document).on('click', '#saveUpdatUser', function(){
         comportement: comportementUpdat
     }
 
-    console.log("userUpdate", userUpdate);
+    //console.log("userUpdate", userUpdate);
 
     $.ajax({
         url: '/updateEvalAgent',
@@ -145,7 +145,7 @@ $(document).on('click', '#saveUpdatUser', function(){
             } else {
                 Swal.fire(
                     'Update',
-                    'Update User succesfully ! ',
+                    'Mis à jours avec succès ! ',
                     'sucess',
                     {
                         confirmButtonText: 'OK'
@@ -166,12 +166,12 @@ $(document).on('click', '#saveUpdatUser', function(){
 $(document).on('click', '.btnDeleteAgent', function() {
     Swal.fire({
         title: 'Delete User',
-        text: 'Are you sure to delete this user?',
+        text: 'Etes-vous sûr de vouloir supprimer cet utilisateur?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: 'red',
         cancelButtonColor: 'green',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Oui'
     }).then((result) =>{
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
@@ -184,7 +184,7 @@ $(document).on('click', '.btnDeleteAgent', function() {
                 method: 'post',
                 data: deleteMaterial,
                 success: function (res) {
-                    responseTxt = 'User deleted successfully!';
+                    responseTxt = 'Utilisateur supprimer avec succès!';
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -210,7 +210,7 @@ $(document).on('click', '.btnDeleteAgent', function() {
 $('#mcode').on('change', function () {
     var mcode = $('#mcode').val();
     var user ={
-        mcode: mcode.trim()
+        mcode1: mcode.trim()
     }
     $.ajax({
         url: "/getOneAgent",

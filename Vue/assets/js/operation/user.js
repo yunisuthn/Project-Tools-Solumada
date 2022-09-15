@@ -35,83 +35,83 @@ function searchOnDatatable(datatable, value)
     datatable.search(value).draw();
 }
 
-$('#deleteSelectedUser').on('click', function(e)
-    {
-        var rows_selected = userDatatable.column(0).checkboxes.selected();
-        usersIdToDelete = new Array();
-        currentPage = parseInt(userDatatable.page.info().page);
+// $('#deleteSelectedUser').on('click', function(e)
+//     {
+//         var rows_selected = userDatatable.column(0).checkboxes.selected();
+//         usersIdToDelete = new Array();
+//         currentPage = parseInt(userDatatable.page.info().page);
 
-        $.each(rows_selected, function(rowId, userId)
-        {
-            usersIdToDelete.push(userId);
-        });
+//         $.each(rows_selected, function(rowId, userId)
+//         {
+//             usersIdToDelete.push(userId);
+//         });
 
-        if(usersIdToDelete.length > 0)
-        {
-            formDeleteMultiple = { userlistToDelete: usersIdToDelete };
-            Swal.fire(
-                {
-                    title: 'Are you sure to delete all?',
-                    text: "This action will remove all selected",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: 'red',
-                    cancelButtonColor: 'green',
-                    confirmButtonText: 'Yes, delete all!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax(
-                            {
-                                url: "/dropusers",
-                                method: 'post',
-                                data: formDeleteMultiple,
-                                success: function(response)
-                                    {
-                                        if(response === 'success')
-                                        {
-                                            Swal.fire(
-                                                {
-                                                    position: 'center',
-                                                    icon: 'success',
-                                                    title: 'Selected User are deleted successfuly!',
-                                                    showConfirmButton: false,
-                                                    timer: 1500
-                                                });
-                                            userDatatable.ajax.reload(null, false);
-                                            userDatatable.page(currentPage).draw('page');
-                                        } else {
-                                            Swal.fire(
-                                                {
-                                                    icon: 'error',
-                                                    title: 'Oops...',
-                                                    text:"Can't delete",
-                                                });
-                                            userDatatable.ajax.reload(null, false);
-                                            userDatatable.page(currentPage).draw('page');
-                                        }
-                                    },
-                                error: function(response)
-                                    {
-                                        Swal.fire(
-                                            {
-                                                icon: 'error',
-                                                title: 'Oops...',
-                                                text: 'Something went wrong!',
-                                            });
-                                        userDatatable.ajax.reload(null, false);
-                                        userDatatable.page(currentPage).draw('page');
-                                    }
-                            }
-                        )
-                    }
-                });
-        } else { 
-            Swal.fire('Please, check on table all list you want to perform this action')
-        }
+//         if(usersIdToDelete.length > 0)
+//         {
+//             formDeleteMultiple = { userlistToDelete: usersIdToDelete };
+//             Swal.fire(
+//                 {
+//                     title: 'Are you sure to delete all?',
+//                     text: "This action will remove all selected",
+//                     icon: 'warning',
+//                     showCancelButton: true,
+//                     confirmButtonColor: 'red',
+//                     cancelButtonColor: 'green',
+//                     confirmButtonText: 'Yes, delete all!'
+//                 }).then((result) => {
+//                     if (result.isConfirmed) {
+//                         $.ajax(
+//                             {
+//                                 url: "/dropusers",
+//                                 method: 'post',
+//                                 data: formDeleteMultiple,
+//                                 success: function(response)
+//                                     {
+//                                         if(response === 'success')
+//                                         {
+//                                             Swal.fire(
+//                                                 {
+//                                                     position: 'center',
+//                                                     icon: 'success',
+//                                                     title: 'Selected User are deleted successfuly!',
+//                                                     showConfirmButton: false,
+//                                                     timer: 1500
+//                                                 });
+//                                             userDatatable.ajax.reload(null, false);
+//                                             userDatatable.page(currentPage).draw('page');
+//                                         } else {
+//                                             Swal.fire(
+//                                                 {
+//                                                     icon: 'error',
+//                                                     title: 'Oops...',
+//                                                     text:"Can't delete",
+//                                                 });
+//                                             userDatatable.ajax.reload(null, false);
+//                                             userDatatable.page(currentPage).draw('page');
+//                                         }
+//                                     },
+//                                 error: function(response)
+//                                     {
+//                                         Swal.fire(
+//                                             {
+//                                                 icon: 'error',
+//                                                 title: 'Oops...',
+//                                                 text: 'Something went wrong!',
+//                                             });
+//                                         userDatatable.ajax.reload(null, false);
+//                                         userDatatable.page(currentPage).draw('page');
+//                                     }
+//                             }
+//                         )
+//                     }
+//                 });
+//         } else { 
+//             Swal.fire('Please, check on table all list you want to perform this action')
+//         }
       
         
-    }
-);
+//     }
+// );
 
 $('#btnCreateUser').on('click', function()
 {
@@ -151,15 +151,15 @@ $('#saveUser').on("click", function()
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'This User is already exist'
+                    text: 'Cet utilisateur existe déjà'
                 })
             }
             else 
             {
                 resetForm(action='add');
-                responsetxt = response + ' Saved successfully';
+                responsetxt = response + ' sauvegarder avec succès';
                 Swal.fire(
-                    'User Saved',
+                    'Utilisateur sauvegarder',
                     responsetxt,
                     'success',
                     {
@@ -268,14 +268,14 @@ $(document).on('click', '#saveUpdatUser', function(){
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'This User is already exist'
+                    text: 'Cet utilisateur existe déjà'
                 })     
             } else {
                 $('#closeModalUpdate').click();
                 resetForm(action='update');
-                responsetxt = response + ' Updated successfully';
+                responsetxt = response + ' mis à jour avec succès';
                 Swal.fire(
-                    'User Updated',
+                    "Mis à jour d'utilisateur",
                     responsetxt,
                     'success',
                     {
@@ -313,15 +313,15 @@ $(document).on('click', '.btnDeleteUser', function()
             success: function(user){
                 // console.log("userONe", user);
                     var name = user.name
-                    var txt = "Are you sure to delete " + name +"?";
+                    var txt = "Etes-vous sûr de vouloir supprimer " + name +"?";
                         Swal.fire({
-                            title: 'Delete User',
+                            title: 'Supprimer '+name,
                             text: txt,
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: 'red',
                             cancelButtonColor: 'green',
-                            confirmButtonText: 'Yes, delete it!'
+                            confirmButtonText: 'Oui'
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -329,7 +329,7 @@ $(document).on('click', '.btnDeleteUser', function()
                                     method: 'post',
                                     data: { mcode: mcode },
                                     success: function(){
-                                        responsetxt = name + ' Deleted successfully';
+                                        responsetxt = name + ' supprimer avec succès';
                                         Swal.fire({
                                             position: 'center',
                                             icon: 'success',

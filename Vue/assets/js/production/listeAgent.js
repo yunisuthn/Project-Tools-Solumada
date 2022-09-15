@@ -47,15 +47,15 @@ $("#saveAgent").on('click', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'This Agent is already exist'
+                    text: 'Cet utilisateur existe déjà'
                 })
                 //clearForm()
                 //window.location = "/agent"
             } else {
                 Swal.fire({
                     icon: 'success',
-                    title: 'New Agent saved',
-                    text: `Agent ${addAgent.usualName} saved successfully`,
+                    title: 'Nouveau utilisateur sauvegarder',
+                    text: `Agent ${addAgent.usualName} sauvegarder avec succès`,
                     timer: 2000
                 })
                 clearForm()
@@ -156,15 +156,15 @@ $(document).on('click', '#saveUpdatUser', function(){
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'This agent is already exist'
+                    text: 'Cet utilisateur existe déjà'
                 })
                 clearForm()
                 window.location = "/agent"
                 
             } else {
                 Swal.fire(
-                    'Update',
-                    'Update User succesfully ! ',
+                    'Mis à jour',
+                    'Mis à jour avec succès ! ',
                     'sucess',
                     {
                         confirmButtonText: 'OK'
@@ -189,13 +189,13 @@ $(document).on('click', '#saveUpdatUser', function(){
 
 $(document).on('click', '.btnDeleteAgent', function() {
     Swal.fire({
-        title: 'Delete User',
-        text: 'Are you sure to delete this user?',
+        title: 'Supprimer User',
+        text: 'Etes-vous sûr de vouloir supprimer cet utilisateur?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: 'red',
         cancelButtonColor: 'green',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Oui'
     }).then((result) =>{
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
@@ -208,7 +208,7 @@ $(document).on('click', '.btnDeleteAgent', function() {
                 method: 'post',
                 data: deleteMaterial,
                 success: function (res) {
-                    responseTxt = 'User deleted successfully!';
+                    responseTxt = 'Utilisateur supprimé avec succès!';
                     Swal.fire({
                         position: 'center',
                         icon: 'success',

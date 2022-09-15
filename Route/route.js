@@ -198,6 +198,7 @@ routeExp.route('/getInventaire').post(async function (req, res) {
 //Update Material
 routeExp.route('/updateInvent').post(async function (req, res) {
     var code = req.body.code;
+    var codeN = req.body.codeNew;
     var name = req.body.name;
     var nombre = req.body.nombre;
 
@@ -212,7 +213,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                 }
             )
             .then(async ()=>{
-                var updat = await InventaireModel.findOneAndUpdate({code: code}, {name: name, nombre: nombre})
+                var updat = await InventaireModel.findOneAndUpdate({code: code}, {code: codeN, name: name, nombre: nombre})
                 // console.log("updat ", updat);
                 res.send("success")
             })  

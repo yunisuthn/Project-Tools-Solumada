@@ -89,26 +89,26 @@ $(document).on("click", "#cancelEvalAgent", function () {
 
 // get user to update
 var mcode = ""
+var nameA = ""
+var productionA = ""
+var qualityA = ""
+var comportementA  = ""
 $(document).on('click', '.btnUpdateAgent', function () {
-    //console.log("btnUpdateAgent");
+    console.log("btnUpdateAgent");
     var getCol = $(this).closest('tr')
     mcode = getCol.find('td:eq(0)').text()
-    var production = getCol.find('td:eq(2)').text()
-    var quality = getCol.find('td:eq(3)').text()
-    var comportement = getCol.find('td:eq(4)').text()
+    nameA = getCol.find('td:eq(1)').text()
+    productionA = getCol.find('td:eq(2)').text()
+    qualityA = getCol.find('td:eq(3)').text()
+    comportementA = getCol.find('td:eq(4)').text()
 
     const addname = document.getElementById("text-center")
-    const text = document.createTextNode(getCol.find('td:eq(1)').text())
-    addname.appendChild(text)
 
-
-    $("#productionUdp").val(production)
-    $("#qualityUpdat").val(quality)
-    $("#comportementUpdat").val(comportement)
-    // console.log("mcode", mcode);
-    // UserUpdat = {
-    //     name: $()
-    // }
+    $("#mcodeUdpat").val(mcode)
+    $("#nameUpdat").val(nameA)
+    $("#productionUdp").val(productionA)
+    $("#qualityUpdat").val(qualityA)
+    $("#comportementUpdat").val(comportementA)
 })
 
 //save update user
@@ -116,13 +116,23 @@ $(document).on('click', '#saveUpdatUser', function(){
     var productionUdp = $('#productionUdp').val();
     var qualityUpdat = $('#qualityUpdat').val();
     var comportementUpdat = $('#comportementUpdat').val();
+    var mcodeN = $('#mcodeUdpat').val();
+    var nameUpdat = $('#nameUpdat').val();
 
+    console.log("mcodeN ", mcodeN, " ", nameUpdat);
     var userUpdate = {
         mcodeOld: mcode,
         production: productionUdp,
-        //mcode: mcodeUpd,
         quality: qualityUpdat,
-        comportement: comportementUpdat
+        comportement: comportementUpdat,
+
+
+        mcodeN: mcodeN,
+        productionA: productionA,
+        nameA: nameA,
+        name: nameUpdat,
+        qualityA: qualityA,
+        comportementA: comportementA
     }
 
     //console.log("userUpdate", userUpdate);
@@ -223,6 +233,22 @@ $('#mcode').on('change', function () {
     })
 })
 
+
+$('#mcodeUdpat').on('change', function () {
+    var mcode = $('#mcodeUdpat').val();
+    var user ={
+        mcode1: mcode.trim()
+    }
+    $.ajax({
+        url: "/getOneAgent",
+        data :  user,
+        method: "post",
+        success : function (res) {
+            //console.log("res ", res);
+            $("#nameUpdat").val(res.usualName)
+        }
+    })
+})
 
 var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
 

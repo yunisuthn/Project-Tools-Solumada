@@ -94,20 +94,29 @@ $(document).on('click', '#cancelAgent', function () {
 })
 // get user to update
 var mcode = ""
+var nameA = ""
+var usualName = ""
+var number = ""
+var shift = ""
+var project  = ""
+var site = ""
+var quartier = ""
+var phon = ""
+
 $(document).on('click', '.btnUpdateAgent', function () {
     //console.log("btnUpdateAgent");
     var getCol = $(this).closest('tr')
     mcode = getCol.find('td:eq(2)').text()
-    var name = getCol.find('td:eq(0)').text()
-    var usualName = getCol.find('td:eq(1)').text()
-    var number = getCol.find('td:eq(3)').text()
-    var shift = getCol.find('td:eq(4)').text()
-    var project = getCol.find('td:eq(5)').text()
-    var site = getCol.find('td:eq(6)').text()
-    var quartier = getCol.find('td:eq(7)').text()
-    var phon = getCol.find('td:eq(8)').text()
+    nameA = getCol.find('td:eq(0)').text()
+    usualName = getCol.find('td:eq(1)').text()
+    number = getCol.find('td:eq(3)').text()
+    shift = getCol.find('td:eq(4)').text()
+    project = getCol.find('td:eq(5)').text()
+    site = getCol.find('td:eq(6)').text()
+    quartier = getCol.find('td:eq(7)').text()
+    phon = getCol.find('td:eq(8)').text()
 
-    $("#nameUpdat").val(name)
+    $("#nameUpdat").val(nameA)
     $("#usualNameUpdat").val(usualName)
     $("#numberUpdat").val(number)
     $("#shiftUpdat").val(shift)
@@ -145,6 +154,15 @@ $(document).on('click', '#saveUpdatUser', function(){
         site: siteUpdat,
         quartier: quartierUpdat,
         tel: telUpdat,
+
+        nameA: nameA,
+        usualNameA: usualName,
+        numberA: number,
+        shiftA: shift,
+        projectA: project,
+        siteA: site,
+        quartierA: quartier,
+        telA: phon,
     }
 
     //console.log("userUpdate", userUpdate.tel);

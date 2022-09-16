@@ -194,27 +194,29 @@ function videForm() {
 }
 
 var ancien_mcod = ""
+var emailA = ""
+var typeA = ""
+var nameA = ""
 $(document).on('click', '.btnUpdateUser', function(){
     var column = $(this).closest('tr');
-    var email = column.find('td:eq(2)').text();
+    emailA = column.find('td:eq(2)').text();
     ancien_mcod = column.find('td:eq(0)').text();
-    var type = column.find('td:eq(3)').text()
-    var nameUpd = column.find('td:eq(1)').text()
+    typeA = column.find('td:eq(3)').text()
+    nameA = column.find('td:eq(1)').text()
 
-    $("#emailUpdat").val(email);
-    $('#type_utilUpdat').val(type);
-    $('#nameUpdat').val(nameUpd);
+    $("#emailUpdat").val(emailA);
+    $('#type_utilUpdat').val(typeA);
+    $('#nameUpdat').val(nameA);
+    $('#mcodeUpdat').val(ancien_mcod);
 });
 
 $('#m-codeTL').css('display', 'none')
 //on change type utilisateur
 $('#type_util').on('change', function () {
     var typeUtil = $('#type_util').val();
-    // console.log("typeUtil", typeUtil);
     if (typeUtil == "TL") {
         $('#m-code').css("display", 'none')
         $('#m-codeTL').css('display', 'block')
-        // console.log("typeUtil typeUtil");
         $.ajax({
             url: "/allTL",
             method: 'get',
@@ -256,7 +258,12 @@ $(document).on('click', '#saveUpdatUser', function(){
         username: $('#nameUpdat').val(),
         email: $('#emailUpdat').val(),
         type_util: $('#type_utilUpdat').val(),
-        ancien_mcod: ancien_mcod
+        mcode: $('#mcodeUpdat').val(),
+        ancien_mcod: ancien_mcod,
+
+        nameA: nameA,
+        typeA: typeA,
+        emailA: emailA
     }
 
     $.ajax({

@@ -89,15 +89,20 @@ function clearForm() {
 
 var mcodeUpdat = ""
 var prenomUpdat = ""
+var project = ""
+var start = ""
+var end = ""
+var shift = ""
+
 $(document).on("click", '.btnUpdatePlanning', function () {
     //console.log("btnUpdatePlanning");
     var getCol = $(this).closest('tr')
-    var shift = getCol.find('td:eq(0)').text()
+    shift = getCol.find('td:eq(0)').text()
     prenomUpdat = getCol.find('td:eq(1)').text()
     mcodeUpdat = getCol.find('td:eq(2)').text()
-    var project = getCol.find('td:eq(3)').text()
-    var start = getCol.find('td:eq(4)').text()
-    var end = getCol.find('td:eq(5)').text()
+    project = getCol.find('td:eq(3)').text()
+    start = getCol.find('td:eq(4)').text()
+    end = getCol.find('td:eq(5)').text()
 
     start = start.split("/").reverse().join("-")
     end = end.split("/").reverse().join("-")
@@ -125,7 +130,13 @@ $(document).on("click", "#saveUpdatPlanning", function () {
         prenomUpdat: nomUpd,
         projet: projectUpd,
         start: startUpd,
-        end: endUpd
+        end: endUpd,
+
+        shiftA: shift,
+        prenomA: prenomUpdat,
+        projetA: project,
+        startA: start,
+        endA: end
     }
 
     $.ajax({
@@ -1120,6 +1131,23 @@ $(document).on('change', '#mcode-plan', function () {
 })
 
 
+$(document).on('change', '#mcodeUpdate', function () {
+    var mcode = $('#mcodeUpdate').val()
+    var donner = {
+        mcode1: mcode
+    }
+    $.ajax({
+        url: '/getOneAgent',
+        method: "post",
+        data: donner,
+        success: function (res) {
+            $("#nomUpdat").val(res.name);
+            $("#shiftUpdat").val(res.shift);
+            $("#projectUpdat").val(res.project);
+
+        }
+    })
+})
 var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
 
 if (type.trim() == "IT") {

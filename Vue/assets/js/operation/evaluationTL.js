@@ -69,22 +69,28 @@ function clearForm() {
 
 // get user to update
 var mcode = ""
+var nameA = ""
+var strengthsUpdatTL = ""
+var weaknessesUpdat = ""
+var opportunitiesUpdatTL = ""
+var threatsUpdat = ""
+
 $(document).on('click', '.btnUpdateEvaluationTL', function () {
-    console.log("btnUpdateEvaluationTL");
+    //console.log("btnUpdateEvaluationTL");
     var getCol = $(this).closest('tr')
     mcode = getCol.find('td:eq(1)').text()
-    var name = getCol.find('td:eq(0)').text()
-    var strengthsUpdatTL = getCol.find('td:eq(2)').text()
-    var weaknessesUpdat = getCol.find('td:eq(3)').text()
-    var opportunitiesUpdatTL = getCol.find('td:eq(4)').text()
-    var threatsUpdat = getCol.find('td:eq(5)').text()
+    nameA = getCol.find('td:eq(0)').text()
+    strengthsUpdatTLA = getCol.find('td:eq(2)').text()
+    weaknessesUpdatA = getCol.find('td:eq(3)').text()
+    opportunitiesUpdatTLA = getCol.find('td:eq(4)').text()
+    threatsUpdatA = getCol.find('td:eq(5)').text()
     
-    $("#nameUpdat").val(name)
-    // $("#mcodeUpdate").val(mcode)
-    $("#strengthsUpdatTL").val(strengthsUpdatTL)
-    $("#weaknessesUpdat").val(weaknessesUpdat)
-    $("#opportunitiesUpdatTL").val(opportunitiesUpdatTL)
-    $("#threatsUpdat").val(threatsUpdat)
+    $("#nameUpdat").val(nameA)
+    $("#mcodeUpdate").val(mcode)
+    $("#strengthsUpdatTL").val(strengthsUpdatTLA)
+    $("#weaknessesUpdat").val(weaknessesUpdatA)
+    $("#opportunitiesUpdatTL").val(opportunitiesUpdatTLA)
+    $("#threatsUpdat").val(threatsUpdatA)
     // console.log("mcode", mcode);
     // UserUpdat = {
     //     name: $()
@@ -94,7 +100,7 @@ $(document).on('click', '.btnUpdateEvaluationTL', function () {
 //save update user
 $(document).on('click', '#saveUpdatTL', function(){
     var nameUpd = $('#nameUpdat').val();
-    // var mcodeUpd = $('#mcodeUpdate').val();
+    var mcodeUpd = $('#mcodeUpdate').val();
     var strengthsUpdatTL = $('#strengthsUpdatTL').val();
     var weaknessesUpdat = $('#weaknessesUpdat').val();
     var opportunitiesUpdatTL = $('#opportunitiesUpdatTL').val();
@@ -102,11 +108,18 @@ $(document).on('click', '#saveUpdatTL', function(){
 
     var userUpdate = {
         mcodeOld: mcode,
+        mcodeN: mcodeUpd,
         name: nameUpd,
+        nameA : nameA,
         strengths: strengthsUpdatTL,
         weaknesses: weaknessesUpdat,
         opportunities :opportunitiesUpdatTL,
-        threats: threatsUpdat
+        threats: threatsUpdat,
+
+        strengthsA: strengthsUpdatTLA,
+        weaknessesA: weaknessesUpdatA,
+        opportunitiesA :opportunitiesUpdatTLA,
+        threatsA: threatsUpdatA
     }
 
     //console.log("userUpdate", userUpdate);

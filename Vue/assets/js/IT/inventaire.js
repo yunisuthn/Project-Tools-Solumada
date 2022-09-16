@@ -68,6 +68,8 @@ function searchOnDatatable(dataTab, value) {
 
 //Update Inventaire
 var codeMat = ''
+var nameInventA = ""
+var nombreInventA = ""
 $(document).on('click', '.btnUpdateInventaire', function () {
     var getCol = $(this).closest('tr');
     codeMat = getCol.find('td:eq(1)').text()
@@ -83,6 +85,8 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         success: function (res) {
             var respData = JSON.parse(JSON.stringify(res))
             // console.log("respData", respData);
+            nameInventA = respData.name;
+            nombreInventA = respData.nombre;
             $("#nameUpdatMat").val(respData.name);
             $("#nombreUpdatMat").val(respData.nombre)
             $("#refUpdatMat").val(respData.code)
@@ -100,7 +104,9 @@ $(document).on('click', '#saveUpdateMat', function () {
         code: codeMat,
         codeNew: refMatUpd,
         name: nameMatUpd,
-        nombre: nbreMatUpd
+        nombre: nbreMatUpd,
+        nameInventA: nameInventA,
+        nombreInventA: nombreInventA
     }
 
     $.ajax({

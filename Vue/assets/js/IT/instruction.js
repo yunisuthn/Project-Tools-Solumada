@@ -63,22 +63,36 @@ function clearForm() {
 
 //Update Instruction
 var updateInst = ""
+var titreInstA = ""
+var instructInstA = ""
+
 $(document).on('click', '.updateInstruct', function () {
-  // var btn = $(this);
   // console.log("updateInstruct");
   var updateInstruct = {
-    name: $(this).parent().find('.instructName').val(),// $(this).parent().find(".instru-name").val().trim(),
-    titre: $(this).parent().find(".card-title").text().trim(),
-    instruct : $(this).parent().find(".card-text").text().trim()
+    name: $(this).parent().find(".instruction-hidden").text().trim()
   }
 
   updateInst = updateInstruct.name
 
-  $('#nameUpdatInst').val(updateInstruct.name)
-  $('#TitleUpdatInst').val(updateInstruct.titre)
-  $('#updateInstruction').val(updateInstruct.instruct)
 
-  // console.log("updateInstruct", updateInstruct);
+  $.ajax({
+    url: '/getInstruction',
+    method: "post",
+    data: updateInstruct,
+    dataType: 'json',
+    success: function (res) {
+      var respData = JSON.parse(JSON.stringify(res))
+      //console.log("respData", respData);
+      titreInstA = respData.title
+      instructInstA = respData.instruction
+
+      $('#nameUpdatInst').val(respData.name)
+      $('#TitleUpdatInst').val(respData.title)
+      $('#updateInstruction').val(respData.instruction)
+    }
+  })
+
+
 })
 
 
@@ -92,7 +106,9 @@ $(document).on('click', '#saveUpdatInstruction', function () {
     nameOld : updateInst,
     name: nameInstUpdat,
     title: titleInstUpdat,
-    instruct: instUpdat
+    titleOld : titreInstA,
+    instruct: instUpdat,
+    instructOld: instructInstA
   }
 
   $.ajax({

@@ -11,6 +11,7 @@ const EvaluationAgent = require('../Model/EvaluationAgentModel')
 const PlanningModel = require("../Model/PlanningModel")
 const HistoriqueModel = require("../Model/HistoriqueModel")
 
+var dateTime = require('node-datetime');
 const nodemailer = require("nodemailer")
 // const { route } = require('express/lib/application')
 //login
@@ -144,12 +145,12 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     } else {
         res.redirect("/")
     }
-})   
+})
 
 
 // Get all Material in inventary
 routeExp.route('/allInventaire').get(async function (req, res) {
-    
+
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
@@ -187,7 +188,7 @@ routeExp.route('/getInventaire').post(async function (req, res) {
             )
             .then(async ()=>{
                 var invent = await InventaireModel.findOne({code: codeM})
-                
+
                 // console.log("codeM", invent);
                 res.send(invent)
             })
@@ -213,7 +214,7 @@ routeExp.route('/getInstruction').post(async function (req, res) {
             .then(async ()=>{
                 console.log("name", name);
                 var instru = await InstructionModel.findOne({name: name})
-                
+
                 console.log("instru", instru);
                 res.send(instru)
             })
@@ -232,7 +233,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var nameInventA = req.body.nameInventA;
     var nombreInventA = req.body.nombreInventA;
 
-    console.log("nombreInventA ", nombreInventA, " nameInventA ", nameInventA);
+    //console.log("nombreInventA ", nombreInventA, " nameInventA ", nameInventA);
     //console.log("session", session);
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
@@ -244,31 +245,32 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                 }
             )
             .then(async ()=>{
-                
+
                 var updat = await InventaireModel.findOneAndUpdate({code: code}, {code: codeN, name: name, nombre: nombre})
                 // console.log("updat ", updat);
                 if (code == codeN && name == nameInventA && nombre == nombreInventA) {
-                    
+
                 }else{
                     var historique = {
                         user: session.name,
                         model: "Inventaire",
+                        heure: Date.now(),
                         old: {
                             "code": code,
-                            "name": name,
-                            "nombre": nombre
+                            "name": nameInventA,
+                            "nombre": nombreInventA
                         },
                         new: {
                             "code": codeN,
-                            "name": nameInventA,
-                            "nombre": nombreInventA
+                            "name": name,
+                            "nombre": nombre
                         }
                     }
                     var historie = await HistoriqueModel(historique).save()
-                    // console.log("historique", historie);
+                     //console.log("historique", historie);
                 }
                 res.send("success")
-            })  
+            })
     } else {
         res.redirect("/")
     }
@@ -329,7 +331,7 @@ routeExp.route('/addInstruction').post(async function (req, res) {
                         instruction: instruct
                     }
                     var inst = await InstructionModel(newInst).save()
-                    // console.log("instruction", inst);   
+                    // console.log("instruction", inst);
                     res.send("success")
                 }
             })
@@ -361,7 +363,7 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
                 var instructUpdat = await InstructionModel.findOneAndUpdate({name: oldName}, {name: name, title: title, instruction: instruct})
                 // console.log("instructUpdat", instructUpdat);
                 if (name == oldName && title == titleOld && instruct == instructOld) {
-                    
+
                 }else{
                     var historique = {
                         user: session.name,
@@ -414,7 +416,7 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
 
 //all Team Leader
 routeExp.route('/allTL').get(async function (req, res) {
-    
+
     var session = req.session
     if ( session.typeUtil == "Operation") {
         mongoose
@@ -428,7 +430,7 @@ routeExp.route('/allTL').get(async function (req, res) {
             .then(async ()=>{
                 var all = await TLModel.find()
                 // console.log("all", all);
-                res.send(all) 
+                res.send(all)
             })
     } else {
         res.redirect("/")
@@ -437,7 +439,7 @@ routeExp.route('/allTL').get(async function (req, res) {
 
 //all user to login
 routeExp.route('/allUser').get(async function (req, res) {
-    
+
     var session = req.session
     if ( session.typeUtil == "Operation") {
         mongoose
@@ -451,7 +453,7 @@ routeExp.route('/allUser').get(async function (req, res) {
             .then(async ()=>{
                 var all = await UserModel.find()
                 // console.log("all", all);
-                res.send(all) 
+                res.send(all)
             })
     } else {
         res.redirect("/")
@@ -460,7 +462,7 @@ routeExp.route('/allUser').get(async function (req, res) {
 
 //all history
 routeExp.route('/allHistory').get(async function (req, res) {
-    
+
     var session = req.session
     if ( session.typeUtil == "Operation") {
         mongoose
@@ -474,7 +476,7 @@ routeExp.route('/allHistory').get(async function (req, res) {
             .then(async ()=>{
                 var all = await HistoriqueModel.find()
                 console.log("all", all);
-                res.send(all) 
+                res.send(all)
             })
     } else {
         res.redirect("/")
@@ -522,7 +524,7 @@ routeExp.route('/addTL').post(async function (req, res) {
     } else {
         res.redirect("/")
     }
-}) 
+})
 
 //get one instruction
 routeExp.route("/updateTl").post(async function (req, res) {
@@ -540,9 +542,9 @@ routeExp.route("/updateTl").post(async function (req, res) {
     var opportunitiesA = req.body.opportunitiesA;
     var threatsA = req.body.threatsA;
 
-    console.log("threatsA ", threatsA, " opportunitiesA ", opportunitiesA);
-    console.log("weaknessesA ", weaknessesA, " strengthsA ", strengthsA);
-    console.log("nameA ", nameA, " mcode ", oldMCode);
+    // console.log("threatsA ", threatsA, " opportunitiesA ", opportunitiesA);
+    // console.log("weaknessesA ", weaknessesA, " strengthsA ", strengthsA);
+    // console.log("nameA ", nameA, " mcode ", oldMCode);
     var session = req.session
     if (session.typeUtil == "Operation") {
         mongoose
@@ -557,7 +559,7 @@ routeExp.route("/updateTl").post(async function (req, res) {
                 var TLUpdat = await TLModel.findOneAndUpdate({mcode: oldMCode}, {mcode: mcode, name: name, strengths: strengths, weaknesses: weaknesses, opportunities: opportunities, threats: threats})
                 // console.log("TLUpdat", TLUpdat);
                 if (mcode == oldMCode && name == nameA && strengths == strengthsA && weaknesses == weaknessesA && opportunities == opportunitiesA && threats == threatsA) {
-                    
+
                 }else{
                     var historique = {
                         user: session.name,
@@ -627,7 +629,7 @@ routeExp.route('/planning').get(async function(req, res){
                 }
             )
             .then(async()=>{
-                
+
                 var planning = await PlanningModel.aggregate([
                     {
                       $sort: {
@@ -637,14 +639,14 @@ routeExp.route('/planning').get(async function(req, res){
                     {
                       $group: {
                         _id: "$project",
-                        
+
                       }
                     },
                     {
                       $project: {
                         _id: 0,
                         project: "$_id",
-                        
+
                       }
                     }
                   ])
@@ -676,7 +678,7 @@ routeExp.route('/planning/:project/:shift').get(async function(req, res){
                 }
             )
             .then(async()=>{
-                
+
                 var allPlaning = await PlanningModel.find()
                 var agent = await AgentModel.find()
                 console.log("agent", shift , " ", project);
@@ -722,7 +724,7 @@ routeExp.route('/evaluationAgent').get(async function(req, res){
     }
 })
 
-// Add agent 
+// Add agent
 routeExp.route('/addAgent').post(async function (req, res) {
     var name = req.body.name
     var usuelName = req.body.usualName
@@ -769,11 +771,11 @@ routeExp.route('/addAgent').post(async function (req, res) {
     } else {
         res.redirect("/")
     }
-}) 
+})
 
 
 
-// Add Evaluation Agent 
+// Add Evaluation Agent
 routeExp.route('/addEvaluationAgent').post(async function (req, res) {
     var mcode = req.body.mcode
     var name = req.body.name
@@ -811,10 +813,10 @@ routeExp.route('/addEvaluationAgent').post(async function (req, res) {
     } else {
         res.redirect("/")
     }
-}) 
+})
 // get all Agent
 routeExp.route('/allAgent').get(async function (req, res) {
-    
+
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
         mongoose
@@ -828,7 +830,7 @@ routeExp.route('/allAgent').get(async function (req, res) {
             .then(async ()=>{
                 var all = await AgentModel.find()
                 // console.log("all", all);
-                res.send(all) 
+                res.send(all)
             })
     } else {
         res.redirect("/")
@@ -838,7 +840,7 @@ routeExp.route('/allAgent').get(async function (req, res) {
 
 // get all evaluation Agent
 routeExp.route('/allEvaluationAgent').get(async function (req, res) {
-    
+
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
         mongoose
@@ -852,7 +854,7 @@ routeExp.route('/allEvaluationAgent').get(async function (req, res) {
             .then(async ()=>{
                 var all = await EvaluationAgent.find()
                 // console.log("all", all);
-                res.send(all) 
+                res.send(all)
             })
     } else {
         res.redirect("/")
@@ -871,7 +873,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
     var site = req.body.site;
     var quartier = req.body.quartier;
     var phon = req.body.tel;
-    
+
     var nameA = req.body.nameA;
     var usualNameA = req.body.usualNameA;
     var numberA = req.body.numberA;
@@ -880,8 +882,8 @@ routeExp.route("/updateAgent").post(async function (req, res) {
     var siteA = req.body.siteA;
     var quartierA = req.body.quartierA;
     var phonA = req.body.telA;
-    
-    console.log("req.body", req.body);
+
+    //console.log("req.body", req.body);
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
         mongoose
@@ -899,7 +901,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
                     var agent = await AgentModel.findOneAndUpdate({mcode: oldMCode}, {mcode: mcodeNew, name: name, usualName: usualName,  number: number, shift: shift, project: project, site: site, quartier: quartier, tel: phon})
                     //console.log("agent", agent);
                     if (mcodeNew == oldMCode && name == nameA && usualName == usualNameA && numberA == number && shiftA == shift && projectA == project && siteA == site && quartierA == quartier && phonA == phon) {
-                    
+
                     }else{
                         var historique = {
                             user: session.name,
@@ -932,7 +934,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
                     }
 
                     res.send("success")
-                    
+
                 }
             })
     } else {
@@ -957,9 +959,9 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
 
     var session = req.session
 
-    console.log("req.body", req.body);
-    console.log("name", name);
-    console.log("mcodeN", mcodeN);
+    // console.log("req.body", req.body);
+    // console.log("name", name);
+    // console.log("mcodeN", mcodeN);
     //console.log("req.body", req.body);
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
         mongoose
@@ -978,7 +980,7 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
                     // console.log("agent", agent);
 
                     if (mcodeN == oldMCode && name == nameA && productionA == production && quality == qualityA && comportementA == comportement) {
-                    
+
                     }else{
                         var historique = {
                             user: session.name,
@@ -1002,7 +1004,7 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
                         //console.log("historique", historie);
                     }
                     res.send("success")
-                    
+
                 }
             })
     } else {
@@ -1097,12 +1099,37 @@ routeExp.route('/historique').get(async function(req, res){
             .then(async()=>{
                 var allHistory = await HistoriqueModel.find()
                 //console.log("allTL ", allTL);
-                res.render("./operation/historique.html",{type_util: session.typeUtil, history: allHistory})
+                var newAllHistory = [];
+                // var time = require('time');
+                // var a = new time.Date(1337324400000);
+
+                // a.setTimezone('Europe/Amsterdam');
+                //console.log(a.toString());
+                allHistory.forEach(element => {
+                    //console.log("element", element.heure);
+                    
+                    var dt = dateTime.create(element.heure);
+                    var formatted = dt.format('d-m-Y H:M:S');
+                    //formatted.setTimezone('Europe/Amsterdam');
+                    var user = {
+                        user: element.user,
+                        model: element.model,
+                        heure: formatted,
+                        old: element.old,
+                        new:element.new
+                    }
+                    newAllHistory.push(user)
+                });
+                //console.log(newAllHistory);
+
+
+                res.render("./operation/historique.html",{type_util: session.typeUtil, history: newAllHistory})
             })
     } else {
         res.redirect("/")
     }
 })
+
 //add user
 routeExp.route("/signup").post(async function (req, res) {
     var type = req.body.type_util;
@@ -1217,7 +1244,7 @@ routeExp.route('/updateUser').post(async function (req, res) {
 
     var session = req.session
 
-    console.log("mcode", req.body);
+    //console.log("mcode", req.body);
     if (session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -1229,9 +1256,9 @@ routeExp.route('/updateUser').post(async function (req, res) {
             )
             .then(async()=>{
                 var userUpd = await UserModel.findOneAndUpdate({mcode: mcodeA}, {mcode: mcode, name: name, email:email, typeUtil: type_util})
-                
+
                 if (mcode == mcodeA && name == nameA && emailA == email && type_util == typeA ) {
-                    
+
                 }else{
                     var historique = {
                         user: session.name,
@@ -1285,7 +1312,7 @@ routeExp.route("/getOneUser").post(async function (req, res) {
     }
 })
 
-//delete User 
+//delete User
 routeExp.route("/deleteUser").post(async function (req, res) {
     var mcode = req.body.mcode;
 
@@ -1311,7 +1338,7 @@ routeExp.route("/deleteUser").post(async function (req, res) {
 })
 
 
-//post login    
+//post login
 routeExp.route('/login').post(async function(req, res) {
     var session = req.session;
     var email = req.body.email;
@@ -1508,7 +1535,7 @@ routeExp.route("/changePassword").post(async function (req, res) {
             session.mailconfirm = null;
             session.code = null;
 
-           
+
             // console.log("success", up);
             res.send("success");
         });
@@ -1584,7 +1611,7 @@ class Plannings{
 
 }
 routeExp.route("/allPlanning").get(async function (req, res) {
-    
+
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1615,7 +1642,7 @@ routeExp.route("/allPlanning").get(async function (req, res) {
                 var newP = new Plannings(shift, usualName, mcode, project, dateS, dateF)
                 planning.push(newP)
                 //
-                
+
             });
             //console.log("allPlanning", planning);
             res.send(planning)
@@ -1623,7 +1650,7 @@ routeExp.route("/allPlanning").get(async function (req, res) {
 })
 
 routeExp.route("/allPlannigView").get(async function (req, res) {
-    
+
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1634,7 +1661,7 @@ routeExp.route("/allPlannigView").get(async function (req, res) {
         )
         .then(async () => {
             var allPlanning = await PlanningModel.find()
-            
+
             //console.log("allPlanning", allPlanning);
             res.send(allPlanning)
         })
@@ -1653,9 +1680,9 @@ routeExp.route("/planning/project/shift").get(async function (req, res) {
         )
         .then(async () => {
             var allPlanningShift = await PlanningModel.find({shift: shift, project: project})
-            
+
             var allPlaning = await PlanningModel.find()
-            console.log("allPlanningShift", allPlanningShift);
+            //console.log("allPlanningShift", allPlanningShift);
             res.send(allPlanningShift)
 
             //res.render("./production/planning.html", {plan: allPlaning})
@@ -1680,6 +1707,7 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
     //console.log("req", req.body);
 
 
+    var session = req.session
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1695,11 +1723,12 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
                 var planUpd = await PlanningModel.findOneAndUpdate({mcode: mcodeAncien}, {mcode: mcodeNouv, usualName: prenomUpdat, shift: shift, start: start, end: end, project: project})
                 //console.log("planUpd", planUpd);
                 if (mcodeAncien == mcodeNouv && shift == shiftA && project == projectA && start == startA && endA == end && prenomA == prenomUpdat) {
-                        
+
                 }else{
                     var historique = {
                         user: session.name,
                         model: "Planning",
+                        heure: new Date(),
                         old: {
                             "mcode": mcodeAncien,
                             "prenom": prenomA,
@@ -1718,7 +1747,7 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
                         }
                     }
                     var historie = await HistoriqueModel(historique).save()
-                    //console.log("historique", historie);
+                    console.log("historique", historie);
                 }
                 res.send("success")
             }

@@ -65,6 +65,7 @@
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
                             <a class="nav-link" href="/user" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
+                            <a class="nav-link" href="/historique" id="historique"><i class="fa fa-solid fa-users"></i> Historiques</a>
                             <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
@@ -129,11 +130,53 @@
                                     <tr>
                                         <th>Nom</th>
                                         <th>Titre</th>
-                                        <th>Ancien</th>
-                                        <th>Nouveau</th>
+                                        <th>Date et heure de Modification</th>
+                                        <th>Avant Modification</th>
+                                        <th>Après Modification</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+
+                                    <% history.forEach(element => {
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <%= element.user %>
+                                            </td>
+                                            <td>
+                                                <%= element.model %>
+                                            </td>
+                                            <td>
+                                                <%= element.heure %>
+                                            </td>
+                                            <td>
+                                                <%
+                                                    for ( var i in element.old){
+                                                        %>
+                                                            <ul>
+                                                                <ol><%= i %> : <%= element.old[i] %></ol>
+                                                                
+                                                            </ul>
+                                                        <%
+                                                    }
+                                                %>
+                                            </td>
+                                            <td>
+                                                <%
+                                                    for ( var i in element.new){
+                                                        %>
+                                                            <ul>
+                                                                <ol><%= i %> : <%= element.new[i] %></ol>
+                                                                
+                                                            </ul>
+                                                        <%
+                                                    }
+                                                %>
+                                            </td>
+                                        </tr>
+                                    <%
+                                    }); %> 
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -164,7 +207,7 @@
     <script src="../assets/js/lib/data-table/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"></script>
 
-    <script src="../assets/js/operation/historique.js"></script>
+    <script src="../assets/js/acceuil.js"></script>
 
 
 

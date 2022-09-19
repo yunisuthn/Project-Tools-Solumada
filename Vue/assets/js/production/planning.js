@@ -1102,7 +1102,11 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     dashboard.bind(control, chart);
-                    dashboard.draw(data)
+                    dashboard.draw(data, {
+                        hAxis: {
+                            format: 'Y,M,d'
+                        }
+                    })
                 }
             }
         })
@@ -1152,8 +1156,10 @@ var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#type
 
 if (type.trim() == "IT") {
     $("#utilisateur").css("display", "none")
+    $("#historique").css("display", "none")
     // console.log("page IT");
 } else if (type.trim() == "TL") {
     $("#utilisateur").css("display", "none")
+    $("#historique").css("display", "none")
     // console.log("page TL");
 } 

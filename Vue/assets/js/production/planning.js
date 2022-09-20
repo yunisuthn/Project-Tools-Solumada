@@ -296,7 +296,27 @@ $.ajax({
                     }
 
                 });
-
+                var options = {
+                    title: "",
+                    width: '100%',
+                    height: '100%',
+                    axisTitlesPosition: 'out',
+                    'isStacked': true,
+                    pieSliceText: 'percentage',
+                    colors: ['#0598d8', '#f97263'],
+                    chartArea: {
+                        left: "25%",
+                        top: "3%",
+                        height: "80%",
+                        width: "100%"
+                    },
+                    vAxis: {
+                        title: ""
+                    },
+                    hAxis: {
+                        title: "Total Results"
+                    }
+                };
                 var data = new google.visualization.DataTable();
                 data.addColumn({
                     type: 'string',
@@ -323,12 +343,15 @@ $.ajax({
 
                 dashboard.draw(data);
 
-                
+                // draw(data,options);
             }
 
             $(window).resize(function () {
                 drawVisualization()
             })
+            // $(window).resize(function () {
+            //     drawVisualization()
+            // })
         
     }
 })
@@ -1104,7 +1127,7 @@ $(document).on('change', '#filterShift', function () {
                     dashboard.bind(control, chart);
                     dashboard.draw(data, {
                         hAxis: {
-                            format: 'Y,M,d'
+                            format: 'd,M,Y'//Y,M,d'
                         }
                     })
                 }

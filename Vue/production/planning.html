@@ -268,7 +268,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">New Planning</h5>
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Nouveau Planning</h5>
                 </div>
                 <div class="modal-body">
                     <form id="updateUserLevel" method="post">
@@ -279,7 +279,7 @@
                             <div class="col-12 col-md-9">
 
                                 <select name="" id="mcode-plan" class="form-control">
-                                    <option value="" disabled selected>Choose mcode</option>
+                                    <option value="" disabled selected>Choisir mcode</option>
 
                                     <% agent.forEach(a=>{%>
                                         <option value="<%= a.mcode %>">
@@ -318,7 +318,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="" class="form-control-label">Start</label>
+                                <label for="" class="form-control-label">Début</label>
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="date" id="start" class="form-control">
@@ -326,7 +326,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="" class="form-control-label">End</label>
+                                <label for="" class="form-control-label">Fin</label>
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="date" id="end" class="form-control">
@@ -336,8 +336,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="cancelPlanning">Close</button>
-                    <button type="button" class="btn btn-success" id="savePlanning">Save</button>
+                        id="cancelPlanning">Fermer</button>
+                    <button type="button" class="btn btn-success" id="savePlanning">Enregistrer</button>
                 </div>
             </div>
         </div>
@@ -348,7 +348,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Update Planning</h5>
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Mis à jours Planning</h5>
                 </div>
                 <div class="modal-body">
                     <form action="" id="updateUser" method="post">
@@ -358,7 +358,7 @@
                             </div>
                             <div class="col-12 col-md-9">
                                 <select name="" id="mcodeUpdate" class="form-control">
-                                    <option value="" disabled selected>Choose mcode</option>
+                                    <option value="" disabled selected>Choisir mcode</option>
 
                                     <% agent.forEach(a=>{%>
                                         <option value="<%= a.mcode %>">
@@ -396,7 +396,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Project</label>
+                                <label for="name" class="form-control-label">Projet</label>
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="text" name="" disabled="disabled" id="projectUpdat" class="form-control">
@@ -404,7 +404,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">Start</label>
+                                <label for="name" class="form-control-label">Début</label>
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="date" name="" id="startUpdat" class="form-control">
@@ -412,7 +412,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3">
-                                <label for="name" class="form-control-label">End</label>
+                                <label for="name" class="form-control-label">Fin</label>
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="date" name="" id="endUpdat" class="form-control">
@@ -422,8 +422,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="cancelUpdatePlan">Close</button>
-                    <button type="button" class="btn btn-success" id="saveUpdatPlanning">Save</button>
+                        id="cancelUpdatePlan">Fermer</button>
+                    <button type="button" class="btn btn-success" id="saveUpdatPlanning">Enregistrer</button>
                 </div>
             </div>
         </div>

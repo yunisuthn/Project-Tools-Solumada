@@ -1097,8 +1097,17 @@ routeExp.route('/historique').get(async function(req, res){
                 }
             )
             .then(async()=>{
-                var allHistory = await HistoriqueModel.find()
+                var allHistoryDelet = await HistoriqueModel.find()
                 //console.log("allTL ", allTL);
+
+                //console.log("allHistory", allHistory.length);
+                if (allHistoryDelet.length == 10) {
+                    for (let i = 0; i < 5; i++) {
+                        var deleteHist = await HistoriqueModel.findOneAndDelete({_id : allHistoryDelet[i]._id})
+                        //console.log("deleteHist", deleteHist);
+                    }
+                } 
+                var allHistory = await HistoriqueModel.find()
                 var newAllHistory = [];
                 // var time = require('time');
                 // var a = new time.Date(1337324400000);

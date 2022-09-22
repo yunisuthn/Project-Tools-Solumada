@@ -10,80 +10,81 @@ const UserModel = require('../Model/UserModel')
 const EvaluationAgent = require('../Model/EvaluationAgentModel')
 const PlanningModel = require("../Model/PlanningModel")
 const HistoriqueModel = require("../Model/HistoriqueModel")
+const ProjectModel = require("../Model/ProjectModel")
 
 var dateTime = require('node-datetime');
 const nodemailer = require("nodemailer")
 // const { route } = require('express/lib/application')
 //login
-routeExp.route('/').get(async function(req, res) {
+routeExp.route('/').get(async function (req, res) {
     var session = req.session
     if (session.name) {
         res.redirect("/acceuil")
     } else {
-        res.render("page-login.html", {erreur: ""})
+        res.render("page-login.html", { erreur: "" })
     }
 })
 
 //acceuil
-routeExp.route('/acceuil').get(async function(req, res) {
+routeExp.route('/acceuil').get(async function (req, res) {
     var session = req.session;
     //console.log("session", session);
     if (session.email) {
-        res.render("acceuil.html", {type_util: session.typeUtil})
+        res.render("acceuil.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
     }
 })
 
-routeExp.route('/IT').get(async function(req, res){
+routeExp.route('/IT').get(async function (req, res) {
     var session = req.session
     //console.log("session.typeUtil ", session.typeUtil);
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/IT.html", {type_util: session.typeUtil})
+        res.render("./it/IT.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
     }
 })
 
-routeExp.route('/operation').get( async function(req, res) {
+routeExp.route('/operation').get(async function (req, res) {
     var session = req.session
     if (session.typeUtil == "Operation") {
-        res.render("./operation/operation.html", {type_util: session.typeUtil})
+        res.render("./operation/operation.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
     }
 })
 
-routeExp.route('/evaluationTL').get( async function(req, res) {
+routeExp.route('/evaluationTL').get(async function (req, res) {
     var session = req.session
     if (session.typeUtil == "Operation") {
-        res.render("./operation/evaluationTL.html", {type_util: session.typeUtil})
+        res.render("./operation/evaluationTL.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
     }
 })
 
-routeExp.route('/production').get(async function(req, res){
+routeExp.route('/production').get(async function (req, res) {
 
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
-        res.render("./production/production.html",{type_util: session.typeUtil})
+        res.render("./production/production.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
     }
 })
 
-routeExp.route('/inventaire').get(async function(req, res){
+routeExp.route('/inventaire').get(async function (req, res) {
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inventaire.html", {type_util: session.typeUtil})
+        res.render("./it/inventaire.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
     }
 })
 
 // all instruction
-routeExp.route('/instruction').get(async function(req, res){
+routeExp.route('/instruction').get(async function (req, res) {
 
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
@@ -95,17 +96,17 @@ routeExp.route('/instruction').get(async function(req, res){
                     UseNewUrlParser: true,
                 }
             )
-            .then(async ()=>{
-                var allInstruct = await InstructionModel.find({validation: true});
+            .then(async () => {
+                var allInstruct = await InstructionModel.find({ validation: true });
                 var InstructAll = [];
 
                 allInstruct.forEach(instr => {
-                    instr.instruction = instr.instruction.substr(0,50) + " ..."
+                    instr.instruction = instr.instruction.substr(0, 50) + " ..."
                     //InstructAll.push(instr)
                 });
                 //console.log("allInstruct ", InstructAll);
-                var instructionLong = await InstructionModel.find({validation: true});
-                res.render("./it/instruction.html",{type_util: session.typeUtil, allInstruct : allInstruct, instruction: instructionLong} )
+                var instructionLong = await InstructionModel.find({ validation: true });
+                res.render("./it/instruction.html", { type_util: session.typeUtil, allInstruct: allInstruct, instruction: instructionLong })
             })
     } else {
         res.redirect("/")
@@ -128,8 +129,8 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                     UseNewUrlParser: true,
                 }
             )
-            .then(async ()=>{
-                if ((await InventaireModel.findOne({code: code})) || name == "" || code == "" || nombre == "") {
+            .then(async () => {
+                if ((await InventaireModel.findOne({ code: code })) || name == "" || code == "" || nombre == "") {
                     res.send('error')
                 } else {
                     var newMat = {
@@ -161,7 +162,7 @@ routeExp.route('/allInventaire').get(async function (req, res) {
                     UseNewUrlParser: true,
                 }
             )
-            .then(async ()=>{
+            .then(async () => {
                 var allInv = await InventaireModel.find()
                 // console.log("al", allInv);
                 res.send(allInv)
@@ -186,8 +187,8 @@ routeExp.route('/getInventaire').post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
-                var invent = await InventaireModel.findOne({code: codeM})
+            .then(async () => {
+                var invent = await InventaireModel.findOne({ code: codeM })
 
                 // console.log("codeM", invent);
                 res.send(invent)
@@ -211,9 +212,9 @@ routeExp.route('/getInstruction').post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
+            .then(async () => {
                 console.log("name", name);
-                var instru = await InstructionModel.findOne({name: name})
+                var instru = await InstructionModel.findOne({ name: name })
 
                 console.log("instru", instru);
                 res.send(instru)
@@ -244,13 +245,13 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
+            .then(async () => {
 
-                var updat = await InventaireModel.findOneAndUpdate({code: code}, {code: codeN, name: name, nombre: nombre})
+                var updat = await InventaireModel.findOneAndUpdate({ code: code }, { code: codeN, name: name, nombre: nombre })
                 // console.log("updat ", updat);
                 if (code == codeN && name == nameInventA && nombre == nombreInventA) {
 
-                }else{
+                } else {
                     var historique = {
                         user: session.name,
                         model: "Inventaire",
@@ -267,7 +268,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         }
                     }
                     var historie = await HistoriqueModel(historique).save()
-                     //console.log("historique", historie);
+                    //console.log("historique", historie);
                 }
                 res.send("success")
             })
@@ -278,7 +279,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
 
 //delete material in inventary
 routeExp.route('/deleteMaterial').post(async function (req, res) {
-    var code= req.body.code;
+    var code = req.body.code;
 
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
@@ -290,8 +291,8 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
-                var delet = await InventaireModel.findOneAndDelete({code: code})
+            .then(async () => {
+                var delet = await InventaireModel.findOneAndDelete({ code: code })
                 // console.log("delet", delet);
                 res.send("success")
             })
@@ -302,7 +303,7 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
 
 //new instruction
 routeExp.route('/addInstruction').post(async function (req, res) {
-    var name= req.body.name;
+    var name = req.body.name;
     var titre = req.body.titre;
     var instruct = req.body.instruct;
 
@@ -316,11 +317,11 @@ routeExp.route('/addInstruction').post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
+            .then(async () => {
                 // console.log("name ",name);
                 // console.log("titre ",titre);
                 // console.log("instruct ",instruct);
-                if ((await InstructionModel.findOne({name: name})) || name == "" || titre == "" || instruct == ""){
+                if ((await InstructionModel.findOne({ name: name })) || name == "" || titre == "" || instruct == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -359,12 +360,12 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                var instructUpdat = await InstructionModel.findOneAndUpdate({name: oldName}, {name: name, title: title, instruction: instruct})
+            .then(async () => {
+                var instructUpdat = await InstructionModel.findOneAndUpdate({ name: oldName }, { name: name, title: title, instruction: instruct })
                 // console.log("instructUpdat", instructUpdat);
                 if (name == oldName && title == titleOld && instruct == instructOld) {
 
-                }else{
+                } else {
                     var historique = {
                         user: session.name,
                         model: "Instruction",
@@ -392,7 +393,7 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
 
 //delete material in inventary
 routeExp.route('/deleteInstruction').post(async function (req, res) {
-    var name= req.body.name;
+    var name = req.body.name;
 
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
@@ -404,8 +405,8 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
-                var delet = await InstructionModel.findOneAndDelete({name: name})
+            .then(async () => {
+                var delet = await InstructionModel.findOneAndDelete({ name: name })
                 // console.log("delet", delet);
                 res.send("success")
             })
@@ -418,7 +419,7 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
 routeExp.route('/allTL').get(async function (req, res) {
 
     var session = req.session
-    if ( session.typeUtil == "Operation") {
+    if (session.typeUtil == "Operation") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -427,7 +428,7 @@ routeExp.route('/allTL').get(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
+            .then(async () => {
                 var all = await TLModel.find()
                 // console.log("all", all);
                 res.send(all)
@@ -441,7 +442,7 @@ routeExp.route('/allTL').get(async function (req, res) {
 routeExp.route('/allUser').get(async function (req, res) {
 
     var session = req.session
-    if ( session.typeUtil == "Operation") {
+    if (session.typeUtil == "Operation") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -450,7 +451,7 @@ routeExp.route('/allUser').get(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
+            .then(async () => {
                 var all = await UserModel.find()
                 // console.log("all", all);
                 res.send(all)
@@ -464,7 +465,7 @@ routeExp.route('/allUser').get(async function (req, res) {
 routeExp.route('/allHistory').get(async function (req, res) {
 
     var session = req.session
-    if ( session.typeUtil == "Operation") {
+    if (session.typeUtil == "Operation") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -473,7 +474,7 @@ routeExp.route('/allHistory').get(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
+            .then(async () => {
                 var all = await HistoriqueModel.find()
                 console.log("all", all);
                 res.send(all)
@@ -503,8 +504,8 @@ routeExp.route('/addTL').post(async function (req, res) {
                     UseNewUrlParser: true,
                 }
             )
-            .then(async ()=>{
-                if ((await TLModel.findOne({mcode: mcode})) || name == "" || mcode == "" || strengths == "") {
+            .then(async () => {
+                if ((await TLModel.findOne({ mcode: mcode })) || name == "" || mcode == "" || strengths == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -555,12 +556,12 @@ routeExp.route("/updateTl").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                var TLUpdat = await TLModel.findOneAndUpdate({mcode: oldMCode}, {mcode: mcode, name: name, strengths: strengths, weaknesses: weaknesses, opportunities: opportunities, threats: threats})
+            .then(async () => {
+                var TLUpdat = await TLModel.findOneAndUpdate({ mcode: oldMCode }, { mcode: mcode, name: name, strengths: strengths, weaknesses: weaknesses, opportunities: opportunities, threats: threats })
                 // console.log("TLUpdat", TLUpdat);
                 if (mcode == oldMCode && name == nameA && strengths == strengthsA && weaknesses == weaknessesA && opportunities == opportunitiesA && threats == threatsA) {
 
-                }else{
+                } else {
                     var historique = {
                         user: session.name,
                         model: "Evaluation TL",
@@ -605,8 +606,8 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                var deleteUser = await TLModel.findOneAndDelete({mcode: mcode})
+            .then(async () => {
+                var deleteUser = await TLModel.findOneAndDelete({ mcode: mcode })
                 // console.log("deleteUser", deleteUser);
                 res.send("success")
             })
@@ -616,7 +617,7 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
 })
 
 //get planning
-routeExp.route('/planning').get(async function(req, res){
+routeExp.route('/planning').get(async function (req, res) {
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
 
@@ -628,31 +629,31 @@ routeExp.route('/planning').get(async function(req, res){
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
+            .then(async () => {
 
                 var planning = await PlanningModel.aggregate([
                     {
-                      $sort: {
-                        project: 1
-                      }
+                        $sort: {
+                            project: 1
+                        }
                     },
                     {
-                      $group: {
-                        _id: "$project",
+                        $group: {
+                            _id: "$project",
 
-                      }
+                        }
                     },
                     {
-                      $project: {
-                        _id: 0,
-                        project: "$_id",
+                        $project: {
+                            _id: 0,
+                            project: "$_id",
 
-                      }
+                        }
                     }
-                  ])
+                ])
                 var agent = await AgentModel.find()
                 //console.log("agent", agent);
-                res.render("./production/planning.html",{type_util: session.typeUtil, plan: planning, agent: agent})
+                res.render("./production/planning.html", { type_util: session.typeUtil, plan: planning, agent: agent })
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
     } else {
@@ -661,7 +662,7 @@ routeExp.route('/planning').get(async function(req, res){
 })
 
 //get planning
-routeExp.route('/planning/:project/:shift').get(async function(req, res){
+routeExp.route('/planning/:project/:shift').get(async function (req, res) {
     var session = req.session
     var shift = req.params.shift
     var project = req.params.project;
@@ -669,39 +670,39 @@ routeExp.route('/planning/:project/:shift').get(async function(req, res){
     console.log("project", project);
     //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
 
-        mongoose
-            .connect(
-                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-                {
-                    useUnifiedTopology: true,
-                    UseNewUrlParser: true
-                }
-            )
-            .then(async()=>{
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
 
-                var allPlaning = await PlanningModel.find()
-                var agent = await AgentModel.find()
-                console.log("agent", shift , " ", project);
-                res.render("./production/planning.html",{type_util: session.typeUtil, plan: allPlaning, agent: agent})
-            })
+            var allPlaning = await PlanningModel.find()
+            var agent = await AgentModel.find()
+            console.log("agent", shift, " ", project);
+            res.render("./production/planning.html", { type_util: session.typeUtil, plan: allPlaning, agent: agent })
+        })
     // } else {
     //     res.redirect("/")
     // }
 })
 
 //liste agent
-routeExp.route('/agent').get(async function(req, res){
+routeExp.route('/agent').get(async function (req, res) {
 
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
-        res.render("./production/listeAgent.html",{type_util: session.typeUtil})
+        res.render("./production/listeAgent.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
     }
 })
 
 //Evaluation agent
-routeExp.route('/evaluationAgent').get(async function(req, res){
+routeExp.route('/evaluationAgent').get(async function (req, res) {
 
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
@@ -713,10 +714,10 @@ routeExp.route('/evaluationAgent').get(async function(req, res){
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
+            .then(async () => {
                 var listAgent = await AgentModel.find();
                 //console.log("listAgent", listAgent);
-                res.render("./production/evaluationAgent.html",{type_util: session.typeUtil, listAgent: listAgent})
+                res.render("./production/evaluationAgent.html", { type_util: session.typeUtil, listAgent: listAgent })
 
             })
     } else {
@@ -747,8 +748,8 @@ routeExp.route('/addAgent').post(async function (req, res) {
                     UseNewUrlParser: true,
                 }
             )
-            .then(async ()=>{
-                if ((await AgentModel.findOne({mcode: mcode})) || name == "" || mcode == "" || number == "") {
+            .then(async () => {
+                if ((await AgentModel.findOne({ mcode: mcode })) || name == "" || mcode == "" || number == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -793,8 +794,8 @@ routeExp.route('/addEvaluationAgent').post(async function (req, res) {
                     UseNewUrlParser: true,
                 }
             )
-            .then(async ()=>{
-                if ((await EvaluationAgent.findOne({mcode: mcode})) || production == "" || quality == "") {
+            .then(async () => {
+                if ((await EvaluationAgent.findOne({ mcode: mcode })) || production == "" || quality == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -827,7 +828,7 @@ routeExp.route('/allAgent').get(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
+            .then(async () => {
                 var all = await AgentModel.find()
                 // console.log("all", all);
                 res.send(all)
@@ -851,7 +852,7 @@ routeExp.route('/allEvaluationAgent').get(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async ()=>{
+            .then(async () => {
                 var all = await EvaluationAgent.find()
                 // console.log("all", all);
                 res.send(all)
@@ -894,15 +895,15 @@ routeExp.route("/updateAgent").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                if (name=="") {
+            .then(async () => {
+                if (name == "") {
                     res.send('error')
                 } else {
-                    var agent = await AgentModel.findOneAndUpdate({mcode: oldMCode}, {mcode: mcodeNew, name: name, usualName: usualName,  number: number, shift: shift, project: project, site: site, quartier: quartier, tel: phon})
+                    var agent = await AgentModel.findOneAndUpdate({ mcode: oldMCode }, { mcode: mcodeNew, name: name, usualName: usualName, number: number, shift: shift, project: project, site: site, quartier: quartier, tel: phon })
                     //console.log("agent", agent);
                     if (mcodeNew == oldMCode && name == nameA && usualName == usualNameA && numberA == number && shiftA == shift && projectA == project && siteA == site && quartierA == quartier && phonA == phon) {
 
-                    }else{
+                    } else {
                         var historique = {
                             user: session.name,
                             model: "Agent",
@@ -972,16 +973,16 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                if (production=="") {
+            .then(async () => {
+                if (production == "") {
                     res.send('error')
                 } else {
-                    var agent = await EvaluationAgent.findOneAndUpdate({mcode: oldMCode}, {mcode: mcodeN, usualName: name, production: production, quality: quality,  comportement: comportement})
+                    var agent = await EvaluationAgent.findOneAndUpdate({ mcode: oldMCode }, { mcode: mcodeN, usualName: name, production: production, quality: quality, comportement: comportement })
                     // console.log("agent", agent);
 
                     if (mcodeN == oldMCode && name == nameA && productionA == production && quality == qualityA && comportementA == comportement) {
 
-                    }else{
+                    } else {
                         var historique = {
                             user: session.name,
                             model: "Evaluation Agent",
@@ -1026,8 +1027,8 @@ routeExp.route("/deleteAgent").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                var deleteUser = await AgentModel.findOneAndDelete({mcode: mcode})
+            .then(async () => {
+                var deleteUser = await AgentModel.findOneAndDelete({ mcode: mcode })
                 // console.log("deleteUser", deleteUser);
                 res.send("success")
             })
@@ -1050,8 +1051,8 @@ routeExp.route("/deleteEvalAgent").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                var deleteUser = await EvaluationAgent.findOneAndDelete({mcode: mcode})
+            .then(async () => {
+                var deleteUser = await EvaluationAgent.findOneAndDelete({ mcode: mcode })
                 // console.log("deleteUser", deleteUser);
                 res.send("success")
             })
@@ -1060,7 +1061,7 @@ routeExp.route("/deleteEvalAgent").post(async function (req, res) {
     }
 })
 //get user
-routeExp.route('/user').get(async function(req, res){
+routeExp.route('/user').get(async function (req, res) {
 
     var session = req.session
     if (session.typeUtil == "Operation") {
@@ -1072,10 +1073,10 @@ routeExp.route('/user').get(async function(req, res){
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
+            .then(async () => {
                 var allTL = await TLModel.find()
                 //console.log("allTL ", allTL);
-                res.render("./operation/user.html",{type_util: session.typeUtil, allTL: allTL})
+                res.render("./operation/user.html", { type_util: session.typeUtil, allTL: allTL })
             })
     } else {
         res.redirect("/")
@@ -1084,7 +1085,7 @@ routeExp.route('/user').get(async function(req, res){
 
 
 //historique
-routeExp.route('/historique').get(async function(req, res){
+routeExp.route('/historique').get(async function (req, res) {
 
     var session = req.session
     if (session.typeUtil == "Operation") {
@@ -1096,17 +1097,17 @@ routeExp.route('/historique').get(async function(req, res){
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
+            .then(async () => {
                 var allHistoryDelet = await HistoriqueModel.find()
                 //console.log("allTL ", allTL);
 
                 //console.log("allHistory", allHistory.length);
                 if (allHistoryDelet.length == 10) {
                     for (let i = 0; i < 5; i++) {
-                        var deleteHist = await HistoriqueModel.findOneAndDelete({_id : allHistoryDelet[i]._id})
+                        var deleteHist = await HistoriqueModel.findOneAndDelete({ _id: allHistoryDelet[i]._id })
                         //console.log("deleteHist", deleteHist);
                     }
-                } 
+                }
                 var allHistory = await HistoriqueModel.find()
                 var newAllHistory = [];
                 // var time = require('time');
@@ -1116,7 +1117,7 @@ routeExp.route('/historique').get(async function(req, res){
                 //console.log(a.toString());
                 allHistory.forEach(element => {
                     //console.log("element", element.heure);
-                    
+
                     var dt = dateTime.create(element.heure);
                     var formatted = dt.format('d-m-Y H:M:S');
                     //formatted.setTimezone('Europe/Amsterdam');
@@ -1125,14 +1126,14 @@ routeExp.route('/historique').get(async function(req, res){
                         model: element.model,
                         heure: formatted,
                         old: element.old,
-                        new:element.new
+                        new: element.new
                     }
                     newAllHistory.push(user)
                 });
                 //console.log(newAllHistory);
 
 
-                res.render("./operation/historique.html",{type_util: session.typeUtil, history: newAllHistory})
+                res.render("./operation/tables_dynamic.html", { type_util: session.typeUtil, history: newAllHistory })
             })
     } else {
         res.redirect("/")
@@ -1156,8 +1157,8 @@ routeExp.route("/signup").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                if ((await UserModel.findOne({mcode: mcode, email: email}))|| mcode=="" || name=="" || email=="" || type=="") {
+            .then(async () => {
+                if ((await UserModel.findOne({ mcode: mcode, email: email })) || mcode == "" || name == "" || email == "" || type == "") {
                     res.send('error')
                 } else {
                     var password = randomPassword()
@@ -1183,8 +1184,8 @@ function randomPassword() {
     var code = ""
     let v = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!é&#"
     for (let i = 0; i < 6; i++) {
-        const char = v.charAt(Math.random() * v.length -1 )
-        code +=char;
+        const char = v.charAt(Math.random() * v.length - 1)
+        code += char;
     }
     return code
 }
@@ -1197,19 +1198,19 @@ routeExp.route("/getOneAgent").post(async function (req, res) {
     var session = req.session
     //console.log("mcode1", req.body.mcode1);
     //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
-        mongoose
-            .connect(
-                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-                {
-                    useUnifiedTopology: true,
-                    UseNewUrlParser: true
-                }
-            )
-            .then(async()=>{
-                var agent = await AgentModel.findOne({ mcode: mcode1 })
-                //console.log("user", agent);
-                res.send(agent)
-            })
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var agent = await AgentModel.findOne({ mcode: mcode1 })
+            //console.log("user", agent);
+            res.send(agent)
+        })
     // } else {
     //     res.redirect("/")
     // }
@@ -1229,7 +1230,7 @@ routeExp.route("/getOneTL").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
+            .then(async () => {
                 var tl = await TLModel.findOne({ mcode: mcode1 })
                 // console.log("user", tl);
                 res.send(tl)
@@ -1263,12 +1264,12 @@ routeExp.route('/updateUser').post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                var userUpd = await UserModel.findOneAndUpdate({mcode: mcodeA}, {mcode: mcode, name: name, email:email, typeUtil: type_util})
+            .then(async () => {
+                var userUpd = await UserModel.findOneAndUpdate({ mcode: mcodeA }, { mcode: mcode, name: name, email: email, typeUtil: type_util })
 
-                if (mcode == mcodeA && name == nameA && emailA == email && type_util == typeA ) {
+                if (mcode == mcodeA && name == nameA && emailA == email && type_util == typeA) {
 
-                }else{
+                } else {
                     var historique = {
                         user: session.name,
                         model: "Utilisateur",
@@ -1311,7 +1312,7 @@ routeExp.route("/getOneUser").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
+            .then(async () => {
                 var userONe = await UserModel.findOne({ mcode: mcode1 })
                 //console.log("user", userONe);
                 res.send(userONe)
@@ -1335,8 +1336,8 @@ routeExp.route("/deleteUser").post(async function (req, res) {
                     UseNewUrlParser: true
                 }
             )
-            .then(async()=>{
-                var deletUser = await UserModel.findOneAndDelete({mcode: mcode})
+            .then(async () => {
+                var deletUser = await UserModel.findOneAndDelete({ mcode: mcode })
                 //console.log("deletUser", deletUser);
                 res.send("success")
             })
@@ -1348,7 +1349,7 @@ routeExp.route("/deleteUser").post(async function (req, res) {
 
 
 //post login
-routeExp.route('/login').post(async function(req, res) {
+routeExp.route('/login').post(async function (req, res) {
     var session = req.session;
     var email = req.body.email;
     var password = req.body.password;
@@ -1366,7 +1367,7 @@ async function login(email, password, session, res) {
                 UseNewUrlParser: true
             }
         )
-        .then(async ()=>{
+        .then(async () => {
             var logger = await UserModel.findOne({
                 email: email,
                 password: password
@@ -1380,7 +1381,7 @@ async function login(email, password, session, res) {
                 session.mcode = logger.mcode;
                 res.redirect("/acceuil")
             } else {
-                res.render("page-login.html",{
+                res.render("page-login.html", {
                     erreur: "Email ou mot de passe incorrect"
                 })
             }
@@ -1397,22 +1398,22 @@ routeExp.route("/logout").get(async function (req, res) {
     res.redirect("/")
 })
 
-routeExp.route("/profil").get( async function (req, res) {
+routeExp.route("/profil").get(async function (req, res) {
     var session = req.session
     if (session.name) {
         mongoose
-        .connect(
-            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-            {
-                useUnifiedTopology: true,
-                UseNewUrlParser: true
-            }
-        )
-        .then(async ()=>{
-            var profil = await UserModel.findOne({mcode: session.mcode})
-            // console.log("profil", profil);
-            res.render("profil.html", {type_util: session.typeUtil, profil: profil})
-        })
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+                var profil = await UserModel.findOne({ mcode: session.mcode })
+                // console.log("profil", profil);
+                res.render("profil.html", { type_util: session.typeUtil, profil: profil })
+            })
     } else {
         res.redirect("/")
     }
@@ -1425,7 +1426,7 @@ routeExp.route("/resetPassword").get(async function (req, res) {
     if (session.mailconfirm) {
         res.redirect('/sendMail')
     } else {
-        res.render("pages-forget.html", {err: ""})
+        res.render("pages-forget.html", { err: "" })
     }
 })
 
@@ -1435,34 +1436,34 @@ routeExp.route("/sendMail").post(async function (req, res) {
     var email = req.body.email
     // console.log("email", email);
     mongoose
-    .connect(
-        "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-        {
-            useUnifiedTopology: true,
-            UseNewUrlParser: true
-        }
-    )
-    .then(async ()=>{
-        if (await UserModel.findOne({email: email})) {
-            session.mailconfirm = email
-            session.code = randomCode()
-            sendEmail(
-                session.mailconfirm,
-                "Verification code project tools solumada",
-                htmlVerification(session.code)
-            )
-            res.redirect("/sendMail");
-        } else {
-            res.render("pages-forget.html", {err: "Username does not exist"})
-        }
-    })
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            if (await UserModel.findOne({ email: email })) {
+                session.mailconfirm = email
+                session.code = randomCode()
+                sendEmail(
+                    session.mailconfirm,
+                    "Verification code project tools solumada",
+                    htmlVerification(session.code)
+                )
+                res.redirect("/sendMail");
+            } else {
+                res.render("pages-forget.html", { err: "Username does not exist" })
+            }
+        })
 })
 
-routeExp.route("/sendMail").get(async function (req, res){
+routeExp.route("/sendMail").get(async function (req, res) {
     var session = req.session;
-    if(session.mailconfirm){
-        res.render("resetPassword1.html", {err: ""})
-    }else{
+    if (session.mailconfirm) {
+        res.render("resetPassword1.html", { err: "" })
+    } else {
         res.redirect("/")
     }
 })
@@ -1470,7 +1471,7 @@ function randomCode() {
     var code = "";
     let variable = "0123456789";
     for (let i = 0; i < 6; i++) {
-        const char = variable.charAt(Math.random() * variable.length -1)
+        const char = variable.charAt(Math.random() * variable.length - 1)
         code += char;
     }
     return code
@@ -1550,7 +1551,7 @@ routeExp.route("/changePassword").post(async function (req, res) {
         });
 })
 
-routeExp.route("/getOneInstruction").post(async function(req, res){
+routeExp.route("/getOneInstruction").post(async function (req, res) {
     var nameInstruct = req.body.instructionName
     // console.log("nameInstruct", nameInstruct);
     mongoose
@@ -1562,7 +1563,7 @@ routeExp.route("/getOneInstruction").post(async function(req, res){
             }
         )
         .then(async () => {
-            var instruct = await InstructionModel.findOne({name: nameInstruct})
+            var instruct = await InstructionModel.findOne({ name: nameInstruct })
             // console.log("instruct", instruct);
             res.send(instruct)
         })
@@ -1588,7 +1589,7 @@ routeExp.route("/addPlanning").post(async function (req, res) {
         )
         .then(async () => {
             //var plan = await PlanningModel.
-            if (mcode==""){//}  || shift=="" || mcode=="" || prenom=="" || project=="" ) {
+            if (mcode == "") {//}  || shift=="" || mcode=="" || prenom=="" || project=="" ) {
                 console.log("error");
                 res.send("error")
             } else {
@@ -1608,8 +1609,8 @@ routeExp.route("/addPlanning").post(async function (req, res) {
         })
 })
 
-class Plannings{
-    constructor(shift, usualName, mcode, project, start, end){
+class Plannings {
+    constructor(shift, usualName, mcode, project, start, end) {
         this.shift = shift;
         this.usualName = usualName;
         this.mcode = mcode;
@@ -1633,7 +1634,7 @@ routeExp.route("/allPlanning").get(async function (req, res) {
             var allPlanning = await PlanningModel.find()
             var planning = []
             allPlanning.forEach(plan => {
-                var usualName =  plan.usualName;
+                var usualName = plan.usualName;
                 var shift = plan.shift;
                 var mcode = plan.mcode;
                 var project = plan.project;
@@ -1644,7 +1645,7 @@ routeExp.route("/allPlanning").get(async function (req, res) {
                     dateF = dateF.toLocaleDateString("fr")
 
                     plan.start = dateS
-                }else{
+                } else {
                     var dateS = null;
                     var dateF = null
                 }
@@ -1688,7 +1689,7 @@ routeExp.route("/planning/project/shift").get(async function (req, res) {
             }
         )
         .then(async () => {
-            var allPlanningShift = await PlanningModel.find({shift: shift, project: project})
+            var allPlanningShift = await PlanningModel.find({ shift: shift, project: project })
 
             var allPlaning = await PlanningModel.find()
             //console.log("allPlanningShift", allPlanningShift);
@@ -1726,14 +1727,14 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
             }
         )
         .then(async () => {
-            if (shift=="" || project=="") {
+            if (shift == "" || project == "") {
                 res.send("error")
             } else {
-                var planUpd = await PlanningModel.findOneAndUpdate({mcode: mcodeAncien}, {mcode: mcodeNouv, usualName: prenomUpdat, shift: shift, start: start, end: end, project: project})
+                var planUpd = await PlanningModel.findOneAndUpdate({ mcode: mcodeAncien }, { mcode: mcodeNouv, usualName: prenomUpdat, shift: shift, start: start, end: end, project: project })
                 //console.log("planUpd", planUpd);
                 if (mcodeAncien == mcodeNouv && shift == shiftA && project == projectA && start == startA && endA == end && prenomA == prenomUpdat) {
 
-                }else{
+                } else {
                     var historique = {
                         user: session.name,
                         model: "Planning",
@@ -1775,9 +1776,150 @@ routeExp.route("/deletePlanning").post(async function (req, res) {
             }
         )
         .then(async () => {
-            var deletePlan = await PlanningModel.findOneAndDelete({mcode: mcode})
+            var deletePlan = await PlanningModel.findOneAndDelete({ mcode: mcode })
             // console.log("deletePlan", deletePlan);
             res.send("success")
+        })
+})
+
+//get projet
+routeExp.route('/projet').get(async function (req, res) {
+
+    var session = req.session
+    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var allP = await ProjectModel.find()
+            //console.log('allP', allP);
+            res.render("./projet.html", { type_util: session.typeUtil, allProj: allP })
+        })
+    // } else {
+    //     res.redirect("/")
+    // }
+})
+
+//get reporting
+routeExp.route('/reporting').get(async function (req, res) {
+
+    var session = req.session
+    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+        res.render("./reporting.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+//New Projet
+routeExp.route('/newProjet').post(async function (req, res) {
+    var name = req.body.name;
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+
+            mongoose
+                .connect(
+                    "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                    {
+                        useUnifiedTopology: true,
+                        UseNewUrlParser: true,
+                    }
+                )
+                .then(async () => {
+                    if ((await ProjectModel.findOne({ name: name })) || name == "") {
+                        res.send('error')
+                    } else {
+                        var newP = {
+                            name: name
+                        }
+                        var Proj = await ProjectModel(newP).save()
+                        //console.log("proje", Proj);
+                        res.send("success")
+                    }
+                })
+        })
+})
+
+//Update Projet
+routeExp.route('/updateProjet').post(async function (req, res) {
+    var nameOld = req.body.nameOld;
+    var nameNew = req.body.nameNew;
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+
+            mongoose
+                .connect(
+                    "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                    {
+                        useUnifiedTopology: true,
+                        UseNewUrlParser: true,
+                    }
+                )
+                .then(async () => {
+                    if ((await ProjectModel.findOne({ name: nameNew })) || nameNew == "") {
+                        res.send('error')
+                    } else {
+                        var Proj = await ProjectModel.findOneAndUpdate({ name: nameOld }, { name: nameNew })
+                        console.log("proje", Proj);
+                        res.send("success")
+                    }
+                })
+        })
+})
+
+//Delete Projet
+routeExp.route('/deleteProjet').post(async function (req, res) {
+    var name = req.body.name;
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+
+            mongoose
+                .connect(
+                    "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                    {
+                        useUnifiedTopology: true,
+                        UseNewUrlParser: true,
+                    }
+                )
+                .then(async () => {
+                    // if ((await ProjectModel.findOne({ name: nameNew })) || nameNew == "") {
+                    //     res.send('error')
+                    // } else {
+                    var Proj = await ProjectModel.findOneAndDelete({ name: name })
+                    console.log("proje", Proj);
+                    res.send("success")
+                    //}
+                })
         })
 })
 module.exports = routeExp

@@ -1922,4 +1922,11 @@ routeExp.route('/deleteProjet').post(async function (req, res) {
                 })
         })
 })
+
+routeExp.route('/projet/:projet').get(async function (req, res) {
+    var session = req.session
+    var projet = req.params.projet
+    console.log("projet", projet);
+    res.render('./production/projetPDF.html', { type_util: session.typeUtil, projet: projet })
+})
 module.exports = routeExp

@@ -59,8 +59,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/"><img src="images/logo.jpg" alt="Logo"></a>
-                    <a class="navbar-brand hidden" href="/"><img src="images/logo 2.jpg" alt="Logo"></a>
+                    <a class="navbar-brand" href="/"><img src="../images/logo.jpg" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="/"><img src="../images/logo 2.jpg" alt="Logo"></a>
                     <!--a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a-->
                 </div>
             </div>
@@ -69,7 +69,7 @@
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="images/admin.png" alt="User Avatar">
+                            <img class="user-avatar rounded-circle" src="../images/admin.png" alt="User Avatar">
                         </a>
 
                         <div class="user-menu dropdown-menu">
@@ -101,7 +101,7 @@
                         <div class="page-header float-left">
                             <div class="page-title">
                                 <h1>
-                                    Projet
+                                    <%= projet %> consigne
                                 </h1>
                             </div>
                         </div>
@@ -110,9 +110,10 @@
                         <div class="page-header float-right">
                             <div class="page-title">
                                 <ol class="breadcrumb text-right">
-                                    <li><a href="/production">production</a></li>
+                                    <li><a href="/projet">Projet</a></li>
                                     <li> </li>
-                                    <li class="active">> Projet</li>
+                                    <li class="active">> <%= projet %>
+                                    </li>
                                 </ol>
                             </div>
                         </div>
@@ -128,7 +129,7 @@
                         <div class="card-header">
 
                             <strong class="card-title">
-                                <a href="/production">
+                                <a href="/projet">
                                     <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
                                     <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
                                 </a>
@@ -138,39 +139,6 @@
                                     data-target="#addInventaire">
                                     <i class="fa fa-plus"></i> add
                                 </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-columns">
-                                <% allProj.forEach( function(proj){ %>
-                                    <div class="card card-projet">
-                                        <div class="card-header">
-                                            <div class="">
-                                                <span data-toggle="modal" id="" data-target="#updateProj">
-                                                    <span class="nameProjCard">
-                                                        <%= proj.name %>
-                                                    </span>
-                                                    <i class="fa-sharp fa-solid fa-pen updatProj"></i>
-                                                </span>
-                                                <span data-toggle="modal" id="" class="">
-                                                    <span class="nameProjCard">
-                                                        <%= proj.name %>
-                                                    </span>
-                                                    <i class="fa-sharp fa-solid fa-delete-left deleteProj"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <a href="/projet/<%= proj.name%>">
-                                            <div class="card-body text-center">
-                                                <p class="card-text ">
-                                                    <%= proj.name %>
-                                                </p>
-                                            </div>
-
-                                        </a>
-                                    </div>
-
-                                    <% }) %>
                             </div>
                         </div>
                     </div>
@@ -194,7 +162,7 @@
                                 <div class="col col-md-3"><label for="name" class="form-control-label">Nom</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" id="nameProj" placeholder="" class="form-control">
+                                    <input type="file" id="fileProjet" placeholder="" class="form-control">
                                     <small id="" style="color: red; font-size: smaller; display: none;"></small>
                                 </div>
                             </div>

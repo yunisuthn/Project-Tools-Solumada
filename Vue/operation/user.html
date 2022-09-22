@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="../assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="../assets/css/lib/datatable/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="./assets/fontawesome/fontawesome-free/css/fontawesome.min.css">
+    <link rel="stylesheet" href="./assets/fontawesome/fontawesome-free/css/all.min.css">
 
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
@@ -44,7 +46,7 @@
 
     <div id="right-panel" class="right-panel">
 
-        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
+        <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
@@ -64,8 +66,10 @@
 
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
-                            <a class="nav-link" href="/user" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
-                            <a class="nav-link" href="/historique" id="historique"><i class="fa fa-solid fa-users"></i> Historiques</a>
+                            <a class="nav-link" href="/user" id="utilisateur"><i class="fa fa-solid fa-users"></i>
+                                Utilisateur</a>
+                            <a class="nav-link" href="/historique" id="historique"><i
+                                    class="fa fa-thin fa-calendar-check"></i> Historiques</a>
                             <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
@@ -81,7 +85,7 @@
             <div class="breadcrumbs-inner">
                 <div class="row m-0">
                     <div class="col-sm-4 col-md-4 col-2">
-                        <a href="/" >
+                        <a href="/">
                             <i class="fa fa-home fa-3x iconCol" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -163,7 +167,7 @@
                                     <option value="Operation">Opération</option>
                                     <option value="TL">T.L</option>
                                     <option value="IT">I.T</option>
-                                </select>                            
+                                </select>
                             </div>
 
                         </div>
@@ -176,10 +180,11 @@
 
                                 <select name="" id="m-codeTL" class="form-control">
                                     <option value="" disabled selected>choisir</option>
-                                    <% allTL.forEach((tl)=>{  %>
-                                        <option value="<%= tl.mcode %>"><%= tl.mcode %></option>
-                                        <%
-                                    }) %> 
+                                    <% allTL.forEach((tl)=>{ %>
+                                        <option value="<%= tl.mcode %>">
+                                            <%= tl.mcode %>
+                                        </option>
+                                        <% }) %>
                                 </select>
                             </div>
 
@@ -203,7 +208,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelAgent">Fermer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="cancelAgent">Fermer</button>
                     <button type="button" class="btn btn-success" id="saveUser">Enregistrer</button>
                 </div>
             </div>
@@ -254,14 +260,15 @@
                                     <option value="Operation">Opération</option>
                                     <option value="TL">T.L</option>
                                     <option value="IT">I.T</option>
-                                </select>                              
+                                </select>
                             </div>
 
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelUpdatAgent">Fermer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="cancelUpdatAgent">Fermer</button>
                     <button type="button" class="btn btn-success" id="saveUpdatUser">Enregistrer</button>
                 </div>
             </div>

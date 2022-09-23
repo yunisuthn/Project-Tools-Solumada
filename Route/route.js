@@ -11,6 +11,9 @@ const EvaluationAgent = require('../Model/EvaluationAgentModel')
 const PlanningModel = require("../Model/PlanningModel")
 const HistoriqueModel = require("../Model/HistoriqueModel")
 const ProjectModel = require("../Model/ProjectModel")
+const ProjetFileModel = require("../Model/ProjetFileModel")
+const pdfParse = require("pdf-parse")
+const fs = require("fs")
 
 var dateTime = require('node-datetime');
 const nodemailer = require("nodemailer")
@@ -1903,30 +1906,100 @@ routeExp.route('/deleteProjet').post(async function (req, res) {
         )
         .then(async () => {
 
-            mongoose
-                .connect(
-                    "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-                    {
-                        useUnifiedTopology: true,
-                        UseNewUrlParser: true,
-                    }
-                )
-                .then(async () => {
-                    // if ((await ProjectModel.findOne({ name: nameNew })) || nameNew == "") {
-                    //     res.send('error')
-                    // } else {
-                    var Proj = await ProjectModel.findOneAndDelete({ name: name })
-                    console.log("proje", Proj);
-                    res.send("success")
-                    //}
-                })
+            // mongoose
+            //     .connect(
+            //         "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            //         {
+            //             useUnifiedTopology: true,
+            //             UseNewUrlParser: true,
+            //         }
+            //     )
+            //     .then(async () => {
+            // if ((await ProjectModel.findOne({ name: nameNew })) || nameNew == "") {
+            //     res.send('error')
+            // } else {
+            var Proj = await ProjectModel.findOneAndDelete({ name: name })
+            console.log("proje", Proj);
+            res.send("success")
+            //}
+            //})
         })
 })
 
 routeExp.route('/projet/:projet').get(async function (req, res) {
     var session = req.session
     var projet = req.params.projet
-    console.log("projet", projet);
+    //console.log("projet", projet);
     res.render('./production/projetPDF.html', { type_util: session.typeUtil, projet: projet })
+})
+
+//const express = require('express');
+
+// default options
+//app.use(fileUpload());
+
+routeExp.route('/upload').post(async function (req, res) {
+    // console.log("log", req.files.avatar);
+    // console.log("req", req.body.name);
+
+    var filename = ""
+    var nameProjet = req.body.name
+    if (req.files) {
+        //console.log(req.files);
+        var file = req.files.avatar
+        filename = file.name
+        //console.log("filename", filename);
+
+        file.mv('./Vue/uploads/' + filename, function (err) {
+            if (err) {
+                console.log("error");
+                res.send('error ', err)
+            } else {
+                // console.log("succes");
+                mongoose
+                    .connect(
+                        "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                        {
+                            useUnifiedTopology: true,
+                            UseNewUrlParser: true,
+                        }
+                    )
+                    .then(async () => {
+                        var fileData = {
+                            nameProjet: nameProjet,
+                            nameFile: filename
+                        }
+                        //var mat = await InventaireModel(newMat).save()
+                        var file = await ProjetFileModel(fileData).save()
+                        //console.log("file", file);
+                    })
+                res.send('File Uploaded')
+            }
+        })
+    }
+});
+
+
+routeExp.route("/extract-text").post(async function (req, res) {
+
+    console.log("req.body", req.body);
+    var name = req.body.name
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var file = await ProjetFileModel.findOne({ nameProjet: name })
+            if (file.nameFile) {
+                res.send(file.nameFile)
+
+            } else {
+                res.send("vide")
+            }
+        })
 })
 module.exports = routeExp

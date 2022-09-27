@@ -12,6 +12,8 @@ const PlanningModel = require("../Model/PlanningModel")
 const HistoriqueModel = require("../Model/HistoriqueModel")
 const ProjectModel = require("../Model/ProjectModel")
 const ProjetFileModel = require("../Model/ProjetFileModel")
+const ReportingModel = require("../Model/ReportingModel");
+
 const pdfParse = require("pdf-parse")
 const fs = require("fs")
 
@@ -1623,6 +1625,17 @@ class Plannings {
     }
 
 }
+
+class Reporting {
+    constructor(mcode, name, production, faute, start, end) {
+        this.mcode = mcode;
+        this.name = name;
+        this.production = production;
+        this.faute = faute;
+        this.start = start;
+        this.end = end;
+    }
+}
 routeExp.route("/allPlanning").get(async function (req, res) {
 
     mongoose
@@ -1662,6 +1675,8 @@ routeExp.route("/allPlanning").get(async function (req, res) {
         })
 })
 
+
+//get all planning
 routeExp.route("/allPlannigView").get(async function (req, res) {
 
     mongoose
@@ -1813,11 +1828,24 @@ routeExp.route('/projet').get(async function (req, res) {
 routeExp.route('/reporting').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
-        res.render("./reporting.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var listAgent = await AgentModel.find()
+            res.render("./production/reporting.html", { type_util: session.typeUtil, listAgent: listAgent })
+
+        })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //New Projet
@@ -1919,7 +1947,7 @@ routeExp.route('/deleteProjet').post(async function (req, res) {
             //     res.send('error')
             // } else {
             var Proj = await ProjectModel.findOneAndDelete({ name: name })
-            console.log("proje", Proj);
+            //console.log("proje", Proj);
             res.send("success")
             //}
             //})
@@ -1965,12 +1993,18 @@ routeExp.route('/upload').post(async function (req, res) {
                         }
                     )
                     .then(async () => {
-                        var fileData = {
-                            nameProjet: nameProjet,
-                            nameFile: filename
+                        if (await ProjetFileModel.find({ nameProjet: nameProjet })) {
+                            var fileUpd = await ProjetFileModel.findOneAndUpdate({ nameProjet: nameProjet }, { nameFile: filename })
+                            console.log("fileUpd", fileUpd);
+                        } else {
+                            var fileData = {
+                                nameProjet: nameProjet,
+                                nameFile: filename
+                            }
+                            //var mat = await InventaireModel(newMat).save()
+                            var file = await ProjetFileModel(fileData).save()
+                            //console.log("fileUpd", file);
                         }
-                        //var mat = await InventaireModel(newMat).save()
-                        var file = await ProjetFileModel(fileData).save()
                         //console.log("file", file);
                     })
                 res.send('File Uploaded')
@@ -1994,12 +2028,260 @@ routeExp.route("/extract-text").post(async function (req, res) {
         )
         .then(async () => {
             var file = await ProjetFileModel.findOne({ nameProjet: name })
-            if (file.nameFile) {
+            console.log("file.nameFile", file);
+            if (file) {
                 res.send(file.nameFile)
-
             } else {
                 res.send("vide")
             }
         })
 })
+
+// Create Reporting
+routeExp.route("/addReporting").post(async function (req, res) {
+    var name = req.body.name;
+    var mcode = req.body.mcode;
+    var production = req.body.production;
+    var faute = req.body.faute;
+    var start = req.body.start;
+    var end = req.body.end;
+
+    console.log("end", end);
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            if ((await ReportingModel.findOne({ name: name, mcode: mcode, production: production, faute: faute, start: start, end: end })) || mcode == "" || start == "" || end == "") {
+                res.send('error')
+            } else {
+                var dataReport = {
+                    name: name,
+                    mcode: mcode,
+                    production: production,
+                    faute: faute,
+                    start: start,
+                    end: end
+                }
+
+                var saveR = await ReportingModel(dataReport).save()
+                //console.log("saeve", saveR);
+                res.send("success")
+            }
+        })
+
+})
+
+//all
+routeExp.route("/allReporting").get(async function (req, res) {
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var allRep = await ReportingModel.find();
+
+            var reporting = [];
+            allRep.forEach(report => {
+                var name = report.name;
+                var mcode = report.mcode;
+                var production = report.production;
+                var faute = report.faute;
+                if (report.start) {
+                    var dateS = new Date(report.start);
+                    var dateF = new Date(report.end);
+                    dateS = dateS.toLocaleDateString("fr");
+                    dateF = dateF.toLocaleDateString("fr");
+                } else {
+                    var dateS = null;
+                    var dateF = null;
+                }
+                var newReport = new Reporting(name, mcode, production, faute, dateS, dateF)
+                reporting.push(newReport)
+            })
+            //console.log("reporting", reporting);
+            res.send(reporting)
+        })
+})
+
+
+//selection par semaine
+routeExp.route("/allReportingMois").get(async function (req, res) {
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var allRep = await ReportingModel.find();
+
+            var reporting = [];
+            var newReporting = []
+            allRep.forEach(report => {
+                var name = report.name;
+                var mcode = report.mcode;
+                var production = report.production;
+                var faute = report.faute;
+                var dateM = ""
+                var dateY = ""
+                if (report.start) {
+                    var dateS = new Date(report.start);
+                    console.log("name", name);
+                    console.log("production", production);
+                    console.log("faute", faute);
+                    console.log("datesS", dateS.getMonth() + 1);
+                    console.log("datesS", dateS.getFullYear());
+                    dateM = dateS.getMonth()
+                    dateY = dateS.getFullYear()
+
+                    var dateF = new Date(report.end);
+                    dateS = dateS.toLocaleDateString("fr");
+                    dateF = dateF.toLocaleDateString("fr");
+                } else {
+                    var dateS = null;
+                    var dateF = null;
+                }
+                var c = 1;
+                var productionNew
+                reporting.forEach(data => {
+                    var debut = data.start.split("/");
+                    console.log("debut", debut[1]);
+                    debut = debut[1]
+                    console.log("debut", debut[1]);
+                    if ((data.mcode == mcode)) {//} && (debut === dateM) && (debut === dateY)) {
+                        productionNew = production
+                        console.log("######## egale ########", productionNew);
+                        c = 0
+                    }
+                })
+
+
+                if (c == 0) {
+                    newReporting = reporting.map(obj => {
+                        console.log("même", obj);
+                        var debut = obj.start.split("/");
+                        debut = debut[1]
+                        console.log("debut", parseInt(debut[1]));
+                        if ((obj.mcode == mcode)) {//} && (debut == dateM) && (debut == dateY)) {
+                            return { ...obj, production: parseInt(obj.production) + parseInt(production), faute: parseInt(obj.faute) + parseInt(faute) };
+                        }
+
+                        return obj;
+                    });
+                    // reporting.forEach(data => {
+                    //     if (data.mcode == name) {
+                    //         console.log("seconde for", name);
+                    //         reporting.faute = 8;
+                    //         console.log("reporting.faute", reporting.faute);
+                    //     }
+                    // })
+                } else {
+                    //console.log("différent");
+                    var newReport = new Reporting(mcode, name, production, faute, dateS, dateF)
+                    reporting.push(newReport)
+                }
+                //console.log("newReporting", reporting);
+
+
+
+                console.log("*********----------*********");
+            })
+
+            console.log("newReporting", newReporting);
+            // const arr1 = [
+            //     { id: 1, name: 'Alice' },
+            //     { id: 1, name: 'Bob' },
+            //     { id: 3, name: 'Charlie' },
+            // ];
+
+            // const newArr = arr1.map(obj => {
+            //     if (obj.id === 1) {
+            //         return { ...obj, name: 'Alfred' };
+            //     }
+
+            //     return obj;
+            // });
+
+            // console.log("newArr", newArr);
+            //console.log("reporting", reporting);
+            res.send(newReporting)
+        })
+})
+
+//Update Reporting
+routeExp.route('/updateReporting').post(async function (req, res) {
+    console.log("req.", req.body);
+    var mcodeA = req.body.mcodeA;
+    var productionA = req.body.productionA;
+    var fauteA = req.body.fauteA;
+    var debutA = req.body.debutA;
+    var finA = req.body.finA;
+
+    var mcode = req.body.mcode;
+    var production = req.body.production;
+    var faute = req.body.faute;
+    var debut = req.body.debut;
+    var fin = req.body.fin;
+    var name = req.body.name;
+
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            if (mcode == "" || debut == "" || fin == "") {
+                console.log("error");
+                res.send("error")
+            } else {
+                var updateReport = await ReportingModel.findOneAndUpdate({ mcode: mcodeA, production: productionA, faute: fauteA, start: debutA, end: finA }, { mcode: mcode, name: name, production: production, faute: faute, start: debut, end: fin })
+                //console.log("updateReport", updateReport);
+                res.send("succes")
+            }
+        })
+})
+
+//delete reporting
+routeExp.route('/deleteReporting').post(async function (req, res) {
+    var mcode = req.body.mcode;
+    var name = req.body.name;
+    var production = req.body.production;
+    var faute = req.body.faute;
+    var start = req.body.start;
+    var end = req.body.end;
+
+    //console.log("req = ", req.body);
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var deleteRep = await ReportingModel.findOneAndDelete({ mcode: mcode, name: name, production: production, faute: faute, start: start, end: end })
+
+            //console.log("deleteRep", deleteRep);
+        })
+
+})
+
 module.exports = routeExp

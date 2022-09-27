@@ -3,19 +3,21 @@
 
 var agentEvalDataTable = $('#agentEvalDataTable').DataTable(
     {
-        "ajax": {"url": "/allEvaluationAgent", "dataSrc": ""},
+        "ajax": { "url": "/allEvaluationAgent", "dataSrc": "" },
         "columns": [
-            {'data': "mcode"},
-            {'data': 'usualName', 'render' : function (usualName) {
-                if (usualName) {
-                    return usualName
-                } else {
-                    return  ""
+            { 'data': "mcode" },
+            {
+                'data': 'usualName', 'render': function (usualName) {
+                    if (usualName) {
+                        return usualName
+                    } else {
+                        return ""
+                    }
                 }
-            }},
-            {'data': 'production'},
-            {'data': 'quality'},
-            {'data': "comportement"},
+            },
+            { 'data': 'production' },
+            { 'data': 'quality' },
+            { 'data': "comportement" },
             {
                 'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -84,7 +86,7 @@ function clearForm() {
 
 $(document).on("click", "#cancelEvalAgent", function () {
     clearForm()
-    
+
 })
 
 // get user to update
@@ -92,9 +94,9 @@ var mcode = ""
 var nameA = ""
 var productionA = ""
 var qualityA = ""
-var comportementA  = ""
+var comportementA = ""
 $(document).on('click', '.btnUpdateAgent', function () {
-    console.log("btnUpdateAgent");
+    //console.log("btnUpdateAgent");
     var getCol = $(this).closest('tr')
     mcode = getCol.find('td:eq(0)').text()
     nameA = getCol.find('td:eq(1)').text()
@@ -112,7 +114,7 @@ $(document).on('click', '.btnUpdateAgent', function () {
 })
 
 //save update user
-$(document).on('click', '#saveUpdatUser', function(){
+$(document).on('click', '#saveUpdatUser', function () {
     var productionUdp = $('#productionUdp').val();
     var qualityUpdat = $('#qualityUpdat').val();
     var comportementUpdat = $('#comportementUpdat').val();
@@ -151,7 +153,7 @@ $(document).on('click', '#saveUpdatUser', function(){
                 })
                 // clearForm()
                 // window.location = "/evaluationAgent"
-                
+
             } else {
                 Swal.fire(
                     'Update',
@@ -166,14 +168,14 @@ $(document).on('click', '#saveUpdatUser', function(){
                 // $('#numberUpdatTL').val("");
                 // $('#cancelUpdatAgent').click()
                 window.location = '/evaluationAgent'
-                
+
             }
 
         }
     })
 })
 
-$(document).on('click', '.btnDeleteAgent', function() {
+$(document).on('click', '.btnDeleteAgent', function () {
     Swal.fire({
         title: 'Delete User',
         text: 'Etes-vous sûr de vouloir supprimer cet utilisateur?',
@@ -182,7 +184,7 @@ $(document).on('click', '.btnDeleteAgent', function() {
         confirmButtonColor: 'red',
         cancelButtonColor: 'green',
         confirmButtonText: 'Oui'
-    }).then((result) =>{
+    }).then((result) => {
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
             var codeDelete = getCol.find('td:eq(0)').text();
@@ -213,20 +215,20 @@ $(document).on('click', '.btnDeleteAgent', function() {
                     })
                 }
             })
-        } 
+        }
     })
 })
 
 $('#mcode').on('change', function () {
     var mcode = $('#mcode').val();
-    var user ={
+    var user = {
         mcode1: mcode.trim()
     }
     $.ajax({
         url: "/getOneAgent",
-        data :  user,
+        data: user,
         method: "post",
-        success : function (res) {
+        success: function (res) {
             //console.log("res ", res);
             $("#name").val(res.usualName)
         }
@@ -236,21 +238,21 @@ $('#mcode').on('change', function () {
 
 $('#mcodeUdpat').on('change', function () {
     var mcode = $('#mcodeUdpat').val();
-    var user ={
+    var user = {
         mcode1: mcode.trim()
     }
     $.ajax({
         url: "/getOneAgent",
-        data :  user,
+        data: user,
         method: "post",
-        success : function (res) {
+        success: function (res) {
             //console.log("res ", res);
             $("#nameUpdat").val(res.usualName)
         }
     })
 })
 
-var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+var type = $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
 
 if (type.trim() == "IT") {
     $("#utilisateur").css("display", "none")

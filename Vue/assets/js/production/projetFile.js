@@ -13,13 +13,23 @@
 //     }
 // })
 
+//console.log("$().val()", $("#nomProj").val());
+var donneF = {
+    name: $("#nomProj").val()
+}
 document.getElementById('uploadForm').onsubmit = function (event) {
     event.preventDefault() // prevent form from posting without JS
     var xhttp = new XMLHttpRequest(); // create new AJAX request
 
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) { // sucess from server
-            document.getElementById("status").innerHTML = ' sent ' + this.responseText + xhttp.status;
+            //document.getElementById("status").innerHTML = ' sent ' + this.responseText + xhttp.status;
+            Swal.fire({
+                icon: 'success',
+                title: 'Nouveau consigne sauvegardé',
+                text: 'Consigne bien sauvegardé'
+            })
+            //window.location = "/projet/" + donneF.n
         } else { // errors occured
             document.getElementById("status").innerHTML = xhttp.status;
         }
@@ -31,13 +41,9 @@ document.getElementById('uploadForm').onsubmit = function (event) {
     formData.append('avatar', document.getElementById('avatar').files[0]) // since inputs allow multi files submission, therefore files are in array
     xhttp.send(formData)
 
-    console.log("form");
+    //console.log("form");
 }
 
-console.log("$().val()", $("#nomProj").val());
-var donneF = {
-    name: $("#nomProj").val()
-}
 $.ajax({
     url: '/extract-text',
     method: 'post',
@@ -47,7 +53,7 @@ $.ajax({
 
         $("#dataFile").append(` <embed src="./../../../../uploads/${resp}" width="100%" height="700" type="application/pdf">`);
 
-        console.log("resp", resp);
+        ////console.log("resp", resp);
     }
 })
 //})

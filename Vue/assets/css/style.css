@@ -3530,6 +3530,7 @@ footer.site-footer .footer-inner a {
 
 .filtre {
   font-weight: bold;
+  color: #878787;
 }
 
 .cardClick:hover {
@@ -3575,4 +3576,17 @@ footer.site-footer .footer-inner a {
   left: 0;
   width:100%;
   height:100%;
+}
+
+.deleteIcon{
+  color: red;
+}
+
+.editIcon{
+  color:#28cf73 ;
+}
+
+
+#reportingDataTableMonth{
+  display: none;
 }

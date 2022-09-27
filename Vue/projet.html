@@ -145,19 +145,20 @@
                                 <% allProj.forEach( function(proj){ %>
                                     <div class="card card-projet">
                                         <div class="card-header">
-                                            <div class="">
-                                                <span data-toggle="modal" id="" data-target="#updateProj">
+                                            <div class="row">
+                                                <div class="" data-toggle="modal" id="" data-target="#updateProj">
                                                     <span class="nameProjCard">
                                                         <%= proj.name %>
                                                     </span>
-                                                    <i class="fa-sharp fa-solid fa-pen updatProj"></i>
-                                                </span>
-                                                <span data-toggle="modal" id="" class="">
-                                                    <span class="nameProjCard">
+                                                    <i class="editIcon fa-sharp fa-solid fa-pen  updatProj"></i>
+                                                </div>
+                                                <div data-toggle="modal" id="" class="">
+                                                    <span class="nameProjCard ">
                                                         <%= proj.name %>
                                                     </span>
-                                                    <i class="fa-sharp fa-solid fa-delete-left deleteProj"></i>
-                                                </span>
+                                                    <i
+                                                        class="deleteIcon fa-sharp fa-solid fa-delete-left deleteProj"></i>
+                                                </div>
                                             </div>
                                         </div>
                                         <a href="/projet/<%= proj.name%>">

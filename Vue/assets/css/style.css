@@ -3492,11 +3492,11 @@ footer.site-footer .footer-inner a {
 
 
 .add {
-  background-color: #789BDA;
-  color: #f0f3f5;
+  background-color: #789BDA !important;
+  color: #f0f3f5 !important;
   border: #A0B9E5;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 18px !important;
 }
 
 .modalTitre {
@@ -3587,6 +3587,6 @@ footer.site-footer .footer-inner a {
 }
 
 
-#reportingDataTableMonth{
+/* #reportingDataTableMonth{
   display: none;
-}
+} */

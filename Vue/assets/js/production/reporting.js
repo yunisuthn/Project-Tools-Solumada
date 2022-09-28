@@ -253,21 +253,17 @@ $('#semaine').on('click', function () {
 
 })
 
-$("#mois").on('click', function () {
-    console.log("mois");
-    document.getElementById("reportingDataTable").style.display = "none";
-    document.getElementById("reportingDataTableMonth").style.display = "block";
-    $("#reportingDataTableMonth").DataTable({
-        "ajax": {
-            "url": "/allReportingMois", "dataSrc": ""
-        },
-        "columns": [
-            { "data": "name" },
-            { "data": "mcode" },
-            { "data": "production" },
-            { "data": "faute" },
-            { "data": "start" },
-            { "data": "end" }
-        ]
-    })
+// document.getElementById("reportingDataTable").style.display = "none";
+// document.getElementById("reportingDataTableMonth").style.display = "block";
+var reportingDataTableMonth = $("#reportingDataTableMonth").DataTable({
+    "ajax": {
+        "url": "/allReportingMois", "dataSrc": ""
+    },
+    "columns": [
+        { "data": "name" },
+        { "data": "mcode" },
+        { "data": "production" },
+        { "data": "faute" },
+        { "data": "end" }
+    ]
 })

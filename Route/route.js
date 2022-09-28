@@ -218,10 +218,10 @@ routeExp.route('/getInstruction').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                console.log("name", name);
+                //console.log("name", name);
                 var instru = await InstructionModel.findOne({ name: name })
 
-                console.log("instru", instru);
+                //console.log("instru", instru);
                 res.send(instru)
             })
     } else {
@@ -481,7 +481,7 @@ routeExp.route('/allHistory').get(async function (req, res) {
             )
             .then(async () => {
                 var all = await HistoriqueModel.find()
-                console.log("all", all);
+                //console.log("all", all);
                 res.send(all)
             })
     } else {
@@ -671,8 +671,8 @@ routeExp.route('/planning/:project/:shift').get(async function (req, res) {
     var session = req.session
     var shift = req.params.shift
     var project = req.params.project;
-    console.log("shift", shift);
-    console.log("project", project);
+    // console.log("shift", shift);
+    // console.log("project", project);
     //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
 
     mongoose
@@ -687,7 +687,7 @@ routeExp.route('/planning/:project/:shift').get(async function (req, res) {
 
             var allPlaning = await PlanningModel.find()
             var agent = await AgentModel.find()
-            console.log("agent", shift, " ", project);
+            //console.log("agent", shift, " ", project);
             res.render("./production/planning.html", { type_util: session.typeUtil, plan: allPlaning, agent: agent })
         })
     // } else {
@@ -1775,7 +1775,7 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
                         }
                     }
                     var historie = await HistoriqueModel(historique).save()
-                    console.log("historique", historie);
+                    //console.log("historique", historie);
                 }
                 res.send("success")
             }
@@ -1913,7 +1913,7 @@ routeExp.route('/updateProjet').post(async function (req, res) {
                         res.send('error')
                     } else {
                         var Proj = await ProjectModel.findOneAndUpdate({ name: nameOld }, { name: nameNew })
-                        console.log("proje", Proj);
+                        //console.log("proje", Proj);
                         res.send("success")
                     }
                 })
@@ -1995,7 +1995,7 @@ routeExp.route('/upload').post(async function (req, res) {
                     .then(async () => {
                         if (await ProjetFileModel.find({ nameProjet: nameProjet })) {
                             var fileUpd = await ProjetFileModel.findOneAndUpdate({ nameProjet: nameProjet }, { nameFile: filename })
-                            console.log("fileUpd", fileUpd);
+                            //console.log("fileUpd", fileUpd);
                         } else {
                             var fileData = {
                                 nameProjet: nameProjet,
@@ -2016,7 +2016,7 @@ routeExp.route('/upload').post(async function (req, res) {
 
 routeExp.route("/extract-text").post(async function (req, res) {
 
-    console.log("req.body", req.body);
+    //console.log("req.body", req.body);
     var name = req.body.name
     mongoose
         .connect(
@@ -2028,7 +2028,7 @@ routeExp.route("/extract-text").post(async function (req, res) {
         )
         .then(async () => {
             var file = await ProjetFileModel.findOne({ nameProjet: name })
-            console.log("file.nameFile", file);
+            //console.log("file.nameFile", file);
             if (file) {
                 res.send(file.nameFile)
             } else {
@@ -2046,7 +2046,7 @@ routeExp.route("/addReporting").post(async function (req, res) {
     var start = req.body.start;
     var end = req.body.end;
 
-    console.log("end", end);
+    //console.log("end", end);
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2114,7 +2114,7 @@ routeExp.route("/allReporting").get(async function (req, res) {
 })
 
 
-//selection par semaine
+//selection par mois
 routeExp.route("/allReportingMois").get(async function (req, res) {
 
     mongoose
@@ -2132,7 +2132,7 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
             var newReporting = []
 
 
-            console.log("allRep", allRep);
+            // console.log("allRep", allRep);
             var suit = 0
             allRep.forEach(report => {
                 var name = report.name;
@@ -2144,29 +2144,29 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
                 var monthL = ""
                 if (report.start) {
                     var dateS = new Date(report.start);
-                    console.log("name", name);
-                    console.log("production", production);
-                    console.log("faute", faute);
-                    console.log("datesS", dateS.getMonth() + 1);
-                    console.log("datesS", dateS.getFullYear());
+                    // console.log("name", name);
+                    // console.log("production", production);
+                    // console.log("faute", faute);
+                    // console.log("datesS", dateS.getMonth() + 1);
+                    // console.log("datesS", dateS.getFullYear());
                     dateM = dateS.getMonth() + 1
                     dateY = dateS.getFullYear()
 
                     const dateMountL = new Date();
                     dateMountL.setMonth(dateM - 1);
-                    console.log("month", dateMountL.toLocaleString('en-US', {
-                        month: 'long',
-                    }));
+                    // console.log("month", dateMountL.toLocaleString('en-US', {
+                    //     month: 'long',
+                    // }));
 
                     monthL = dateMountL.toLocaleString('en-US', {
                         month: 'long',
                     })
-                    var dateF = new Date(report.end);
+                    //var dateF = new Date(report.end);
                     dateS = dateS.toLocaleDateString("fr");
                     //dateF = dateF.toLocaleDateString("fr");
                 } else {
                     var dateS = null;
-                    var dateF = null;
+                    //var dateF = null;
                 }
                 var c = 1;
                 var productionNew
@@ -2176,12 +2176,12 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
                     var debutY = parseInt(debut[2])
                     if ((data.mcode == mcode) && (debutM === dateM) && (debutY === dateY)) {
                         productionNew = production
-                        console.log("######## egale ########", productionNew);
+                        //console.log("######## egale ########", productionNew);
                         c = 0
                     }
                 })
 
-                console.log("ccccc === ", c);
+                //console.log("ccccc === ", c);
                 if (c == 0) {
 
                     newReporting = reporting.map(obj => {
@@ -2196,11 +2196,11 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
                     });
                     suit = 1
                 } else {
-                    console.log("différent", mcode, ' ', name);
+                    // console.log("différent", mcode, ' ', name);
                     var newReport = new Reporting(mcode, name, production, faute, dateS, monthL)
-                    console.log("newReport", newReport);
+                    // console.log("newReport", newReport);
                     reporting.push(newReport)
-                    console.log("reporting", reporting);
+                    // console.log("reporting", reporting);
                     if (suit == 1) {
                         newReporting.push(newReport)
                     }
@@ -2209,33 +2209,131 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
 
 
 
-                console.log("*********----------*********");
+                // console.log("*********----------*********");
             })
 
-            console.log("newReporting", newReporting);
-            // const arr1 = [
-            //     { id: 1, name: 'Alice' },
-            //     { id: 1, name: 'Bob' },
-            //     { id: 3, name: 'Charlie' },
-            // ];
-
-            // const newArr = arr1.map(obj => {
-            //     if (obj.id === 1) {
-            //         return { ...obj, name: 'Alfred' };
-            //     }
-
-            //     return obj;
-            // });
-
+            // console.log("newReporting", newReporting)
             // console.log("newArr", newArr);
             //console.log("reporting", reporting);
             res.send(newReporting)
         })
 })
 
+//selection par semaine
+routeExp.route("/allReportingWeek").get(async function (req, res) {
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+
+            var allReporting = await ReportingModel.find()
+
+
+            console.log("allReporting", allReporting);
+
+            var newReporting = []
+            for (let i = 0; i < allReporting.length; i++) {
+                const element = allReporting[i];
+                var mcode = element.mcode;
+                var nom = element.name;
+                var production = element.production;
+                console.log("mcode", mcode);
+                console.log("nom", nom);
+                console.log("production", production);
+                console.log("element", element.start);
+                if (mcode == allReporting[i - 1]) {
+                    console.log("idem");
+                } else {
+                    console.log("different");
+                }
+
+                console.log("*************");
+            }
+            var today = new Date("2022-09-05T08:09:38.021Z")//.setHours(0, 0, 0, 0);
+            console.log("today", today);
+            console.log("today", today.getDay());
+            var first = today.getDate() - today.getDay();
+            console.log("first", first);
+            var firstDayWeek = new Date(today.setDate(first));
+            console.log("firstDayWeek", firstDayWeek);
+            var lastDayWeek = new Date(today.setDate(first + 6));
+            // var firstDayMonth = new Date(today.setDate(1));
+            // var lastDayMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+            // lastDayWeek.setHours(23, 59, 59, 0);
+            // lastDayMonth.setHours(23, 59, 59, 0);
+            // today = new Date().setHours(0, 0, 0, 0);
+
+            // var test = await ReportingModel.aggregate([{
+            //     //     $match: {
+            //     //         mcode: "mcode"
+            //     //     }
+            //     // }, {
+            //     $group: {
+            //         "_id": "",
+            //         "today": {
+            //             $push: {
+            //                 $cond: {
+            //                     if: {
+            //                         $gte: ["$start", new Date(today)]
+            //                     },
+            //                     then: "$$ROOT",
+            //                     else: ''
+            //                 }
+            //             }
+            //         },
+            //         "week": {
+            //             $push: {
+            //                 $cond: [{
+            //                     $and: [{
+            //                         $gte: ["$start", new Date(firstDayWeek)]
+            //                     },
+            //                     {
+            //                         $lte: ["$start", new Date(lastDayWeek)]
+            //                     }
+            //                     ]
+            //                 },
+            //                     "$$ROOT",
+            //                     ''
+            //                 ]
+            //             }
+            //         },
+            //         "month": {
+            //             $push: {
+            //                 $cond: [{
+            //                     $and: [{
+            //                         $gte: ["$start", new Date(firstDayMonth)]
+            //                     },
+            //                     {
+            //                         $lte: ["$start", new Date(lastDayMonth)]
+            //                     }
+            //                     ]
+            //                 },
+            //                     "$$ROOT",
+            //                     ''
+            //                 ]
+            //             }
+            //         }
+            //     }
+            // }])
+            //If you want to filter in mongo query
+            // .forEach(function (data) {
+            //     data.today = data.today.filter(e => e != "")
+            //     data.week = data.week.filter(e => e != "")
+            //     print(data);
+            // })
+
+            // console.log("test", test);
+        })
+})
 //Update Reporting
 routeExp.route('/updateReporting').post(async function (req, res) {
-    console.log("req.", req.body);
+    //console.log("req.", req.body);
     var mcodeA = req.body.mcodeA;
     var productionA = req.body.productionA;
     var fauteA = req.body.fauteA;

@@ -2130,6 +2130,10 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
 
             var reporting = [];
             var newReporting = []
+
+
+            console.log("allRep", allRep);
+            var suit = 0
             allRep.forEach(report => {
                 var name = report.name;
                 var mcode = report.mcode;
@@ -2137,6 +2141,7 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
                 var faute = report.faute;
                 var dateM = ""
                 var dateY = ""
+                var monthL = ""
                 if (report.start) {
                     var dateS = new Date(report.start);
                     console.log("name", name);
@@ -2144,12 +2149,21 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
                     console.log("faute", faute);
                     console.log("datesS", dateS.getMonth() + 1);
                     console.log("datesS", dateS.getFullYear());
-                    dateM = dateS.getMonth()
+                    dateM = dateS.getMonth() + 1
                     dateY = dateS.getFullYear()
 
+                    const dateMountL = new Date();
+                    dateMountL.setMonth(dateM - 1);
+                    console.log("month", dateMountL.toLocaleString('en-US', {
+                        month: 'long',
+                    }));
+
+                    monthL = dateMountL.toLocaleString('en-US', {
+                        month: 'long',
+                    })
                     var dateF = new Date(report.end);
                     dateS = dateS.toLocaleDateString("fr");
-                    dateF = dateF.toLocaleDateString("fr");
+                    //dateF = dateF.toLocaleDateString("fr");
                 } else {
                     var dateS = null;
                     var dateF = null;
@@ -2158,40 +2172,38 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
                 var productionNew
                 reporting.forEach(data => {
                     var debut = data.start.split("/");
-                    console.log("debut", debut[1]);
-                    debut = debut[1]
-                    console.log("debut", debut[1]);
-                    if ((data.mcode == mcode)) {//} && (debut === dateM) && (debut === dateY)) {
+                    var debutM = parseInt(debut[1])
+                    var debutY = parseInt(debut[2])
+                    if ((data.mcode == mcode) && (debutM === dateM) && (debutY === dateY)) {
                         productionNew = production
                         console.log("######## egale ########", productionNew);
                         c = 0
                     }
                 })
 
-
+                console.log("ccccc === ", c);
                 if (c == 0) {
+
                     newReporting = reporting.map(obj => {
-                        console.log("même", obj);
                         var debut = obj.start.split("/");
-                        debut = debut[1]
-                        console.log("debut", parseInt(debut[1]));
-                        if ((obj.mcode == mcode)) {//} && (debut == dateM) && (debut == dateY)) {
+                        var debutM = parseInt(debut[1])
+                        var debutY = parseInt(debut[2])
+                        if ((obj.mcode == mcode) && (debutM === dateM) && (debutY === dateY)) {//} && (debut == dateM) && (debut == dateY)) {
                             return { ...obj, production: parseInt(obj.production) + parseInt(production), faute: parseInt(obj.faute) + parseInt(faute) };
                         }
 
                         return obj;
                     });
-                    // reporting.forEach(data => {
-                    //     if (data.mcode == name) {
-                    //         console.log("seconde for", name);
-                    //         reporting.faute = 8;
-                    //         console.log("reporting.faute", reporting.faute);
-                    //     }
-                    // })
+                    suit = 1
                 } else {
-                    //console.log("différent");
-                    var newReport = new Reporting(mcode, name, production, faute, dateS, dateF)
+                    console.log("différent", mcode, ' ', name);
+                    var newReport = new Reporting(mcode, name, production, faute, dateS, monthL)
+                    console.log("newReport", newReport);
                     reporting.push(newReport)
+                    console.log("reporting", reporting);
+                    if (suit == 1) {
+                        newReporting.push(newReport)
+                    }
                 }
                 //console.log("newReporting", reporting);
 

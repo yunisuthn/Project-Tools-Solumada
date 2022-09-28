@@ -267,15 +267,7 @@ $("#mois").on('click', function () {
             { "data": "production" },
             { "data": "faute" },
             { "data": "start" },
-            { "data": "end" },
-            {
-                'defaultContent': `\ 
-                <div class='btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
-                    <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateReporting' data-toggle='modal' data-target='#modalUpdateReporting'><i class='fa fa-edit'></i></button>\
-                    <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteReporting'><i class='fa fa-trash'></i></button>\
-                </div>\
-            `
-            }
+            { "data": "end" }
         ]
     })
 })

@@ -5,10 +5,10 @@ var reportingDataTable = $("#reportingDataTable").DataTable({
     "columns": [
         { "data": "name" },
         { "data": "mcode" },
-        { "data": "production" },
-        { "data": "faute" },
         { "data": "start" },
         { "data": "end" },
+        { "data": "production" },
+        { "data": "faute" },
         {
             'defaultContent': `\ 
                 <div class='btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -262,8 +262,22 @@ var reportingDataTableMonth = $("#reportingDataTableMonth").DataTable({
     "columns": [
         { "data": "name" },
         { "data": "mcode" },
+        { "data": "end" },
+        { "data": "production" },
+        { "data": "faute" }
+    ]
+})
+
+var reportingDataTableWeek = $("#reportingDataTableWeek").DataTable({
+    "ajax": {
+        "url": "/allReportingWeek", "dataSrc": ""
+    },
+    "columns": [
+        { "data": "name" },
+        { "data": "mcode" },
+        { "data": "end" },
+        { "data": "start" },
         { "data": "production" },
         { "data": "faute" },
-        { "data": "end" }
     ]
 })

@@ -2124,116 +2124,7 @@ routeExp.route("/allReporting").get(async function (req, res) {
         })
 })
 
-// //selection par semaine
-// routeExp.route("/allReportingMois").get(async function (req, res) {
-
-//     mongoose
-//         .connect(
-//             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-//             {
-//                 useUnifiedTopology: true,
-//                 UseNewUrlParser: true,
-//             }
-//         )
-//         .then(async () => {
-//             var allRep = await ReportingModel.find();
-
-//             var reporting = [];
-//             var newReporting = []
-//             allRep.forEach(report => {
-//                 var name = report.name;
-//                 var mcode = report.mcode;
-//                 var production = report.production;
-//                 var faute = report.faute;
-//                 var dateM = ""
-//                 var dateY = ""
-//                 if (report.start) {
-//                     var dateS = new Date(report.start);
-//                     console.log("name", name);
-//                     console.log("production", production);
-//                     console.log("faute", faute);
-//                     console.log("datesS", dateS.getMonth() + 1);
-//                     console.log("datesS", dateS.getFullYear());
-//                     dateM = dateS.getMonth()
-//                     dateY = dateS.getFullYear()
-
-//                     var dateF = new Date(report.end);
-//                     dateS = dateS.toLocaleDateString("fr");
-//                     dateF = dateF.toLocaleDateString("fr");
-//                 } else {
-//                     var dateS = null;
-//                     var dateF = null;
-//                 }
-//                 var c = 1;
-//                 var productionNew
-//                 reporting.forEach(data => {
-//                     var debut = data.start.split("/");
-//                     console.log("debut", debut[1]);
-//                     debut = debut[1]
-//                     console.log("debut", debut[1]);
-//                     if ((data.mcode == mcode)) {//} && (debut === dateM) && (debut === dateY)) {
-//                         productionNew = production
-//                         console.log("######## egale ########", productionNew);
-//                         c = 0
-//                     }
-//                 })
-
-
-//                 if (c == 0) {
-//                     newReporting = reporting.map(obj => {
-//                         console.log("même", obj);
-//                         var debut = obj.start.split("/");
-//                         debut = debut[1]
-//                         console.log("debut", parseInt(debut[1]));
-//                         if ((obj.mcode == mcode)) {//} && (debut == dateM) && (debut == dateY)) {
-//                             return { ...obj, production: parseInt(obj.production) + parseInt(production), faute: parseInt(obj.faute) + parseInt(faute) };
-//                         }
-
-//                         return obj;
-//                     });
-//                     // reporting.forEach(data => {
-//                     //     if (data.mcode == name) {
-//                     //         console.log("seconde for", name);
-//                     //         reporting.faute = 8;
-//                     //         console.log("reporting.faute", reporting.faute);
-//                     //     }
-//                     // })
-//                 } else {
-//                     //console.log("différent");
-//                     var newReport = new Reporting(mcode, name, production, faute, dateS, dateF)
-//                     reporting.push(newReport)
-//                 }
-//                 //console.log("newReporting", reporting);
-
-
-
-//                 console.log("*********----------*********");
-//             })
-
-//             console.log("newReporting", newReporting);
-//             // const arr1 = [
-//             //     { id: 1, name: 'Alice' },
-//             //     { id: 1, name: 'Bob' },
-//             //     { id: 3, name: 'Charlie' },
-//             // ];
-
-//             // const newArr = arr1.map(obj => {
-//             //     if (obj.id === 1) {
-//             //         return { ...obj, name: 'Alfred' };
-//             //     }
-
-//             //     return obj;
-//             // });
-
-//             // console.log("newArr", newArr);
-//             //console.log("reporting", reporting);
-//             res.send(newReporting)
-//         })
-// })
-
-//selection par mois
-
-
+//reporting par mois
 routeExp.route("/allReportingMois").get(async function (req, res) {
 
     mongoose
@@ -2250,8 +2141,6 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
             var reporting = [];
             var newReporting = []
 
-
-            // console.log("allRep", allRep);
             var suit = 0
             allRep.forEach(report => {
                 var name = report.name;
@@ -2263,29 +2152,16 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
                 var monthL = ""
                 if (report.start) {
                     var dateS = new Date(report.start);
-                    // console.log("name", name);
-                    // console.log("production", production);
-                    // console.log("faute", faute);
-                    // console.log("datesS", dateS.getMonth() + 1);
-                    // console.log("datesS", dateS.getFullYear());
                     dateM = dateS.getMonth() + 1
                     dateY = dateS.getFullYear()
-
                     const dateMountL = new Date();
                     dateMountL.setMonth(dateM - 1);
-                    // console.log("month", dateMountL.toLocaleString('en-US', {
-                    //     month: 'long',
-                    // }));
-
                     monthL = dateMountL.toLocaleString('en-US', {
                         month: 'long',
                     })
-                    //var dateF = new Date(report.end);
                     dateS = dateS.toLocaleDateString("fr");
-                    //dateF = dateF.toLocaleDateString("fr");
                 } else {
                     var dateS = null;
-                    //var dateF = null;
                 }
                 var c = 1;
                 var productionNew
@@ -2295,54 +2171,34 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
                     var debutY = parseInt(debut[2])
                     if ((data.mcode == mcode) && (debutM === dateM) && (debutY === dateY)) {
                         productionNew = production
-                        //console.log("######## egale ########", productionNew);
                         c = 0
                     }
                 })
 
-                //console.log("ccccc === ", c);
                 if (c == 0) {
 
                     newReporting = reporting.map(obj => {
                         var debut = obj.start.split("/");
                         var debutM = parseInt(debut[1])
                         var debutY = parseInt(debut[2])
-
-                        // console.log("mcode", mcode);
-                        // console.log("obj.production", obj.production);
-                        // console.log("production", production);
-                        // console.log("******");
-                        // console.log("obj.production", obj.production);
-                        // console.log("production", production);
-
                         if ((obj.mcode == mcode) && (debutM === dateM) && (debutY === dateY)) {
-                            // console.log("egale");
-
-                            //obj.name = obj.name + "name"
                             obj.production = parseInt(obj.production) + parseInt(production);
                             obj.faute = parseInt(obj.faute) + parseInt(faute)
                             return obj
-                            //return { ...obj, production: parseInt(obj.production) + parseInt(production), faute: parseInt(obj.faute) + parseInt(faute) };
                         }
 
                         return obj;
                     });
                     suit = 1
                 } else {
-                    // console.log("différent", mcode, ' ', name);
                     var newReport = new Reporting(mcode, name, production, faute, dateS, monthL)
-                    // console.log("newReport", newReport);
                     reporting.push(newReport)
-                    // console.log("reporting", reporting);
                     if (suit == 1) {
                         newReporting.push(newReport)
                     }
                 }
             })
-
-            //console.log("newReporting", newReporting)
-            // console.log("newArr", newArr);
-            console.log("newReportingMonth", newReporting);
+            //console.log("newReportingMonth", newReporting);
             res.send(newReporting)
         })
 })
@@ -2359,14 +2215,10 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
             }
         )
         .then(async () => {
-
             var allRep = await ReportingModel.find();
-
             var reporting = [];
             var newReporting = []
 
-
-            // console.log("allRep", allRep);
             var suit = 0
             allRep.forEach(report => {
                 var name = report.name;
@@ -2377,86 +2229,40 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
                 var dateY = ""
                 var monthL = ""
                 if (report.start) {
-                    //console.log("name", name);
                     var dateS = new Date(report.start);
-                    // console.log("today", dateS.getDay());
-                    // console.log("getDate", dateS.getDate());
                     var first = dateS.getDate() - dateS.getDay();
-                    //console.log("first", first);
                     var firstDayWeekAll = new Date(dateS.setDate(first));
-                    //console.log("firstDayWeek", firstDayWeekAll);
                     var lastDayWeek = new Date(dateS.setDate(first + 6));
-
-
-                    //console.log("lastDayWeek", lastDayWeek);
-                    // console.log("production", production);
-                    // console.log("faute", faute);
-                    // console.log("datesS", dateS.getMonth() + 1);
-                    // console.log("datesS", dateS.getFullYear());
                     dateM = dateS.getMonth() + 1
                     dateY = dateS.getFullYear()
 
                     const dateMountL = new Date();
                     dateMountL.setMonth(dateM - 1);
-                    // console.log("month", dateMountL.toLocaleString('en-US', {
-                    //     month: 'long',
-                    // }));
-
                     monthL = dateMountL.toLocaleString('en-US', {
                         month: 'long',
                     })
-                    //var dateF = new Date(report.end);
-                    //dateS = dateS.toLocaleDateString("fr");
-                    //dateF = dateF.toLocaleDateString("fr");
                 } else {
                     var dateS = null;
-                    //var dateF = null;
                 }
                 var c = 1;
                 var productionNew
                 reporting.forEach(data => {
-                    //console.log("nameRep == ", data.name);
                     var dateSRep = new Date(data.start);
-                    // console.log("dateSRep", dateSRep.getDay());
-                    // console.log("getDate", dateSRep.getDate());
                     var firstRep = dateSRep.getDate() - dateSRep.getDay();
-                    //console.log("firstRep", firstRep);
                     var firstDayWeekRep = new Date(dateSRep.setDate(firstRep));
-                    //console.log("firstDayWeekRep", firstDayWeekRep);
                     var lastDayWeek = new Date(dateSRep.setDate(firstRep + 6));
-
-
-                    // console.log("data", data.start.getDate());
-                    // var debut = data.start.split("/");
-                    // var debutM = parseInt(debut[1])
-                    // var debutY = parseInt(debut[2])
-                    // console.log("data.mcode", data.mcode);
-                    // console.log("mcode", mcode);
-                    // console.log("firstDayWeekAll", firstDayWeekAll);
-                    // console.log("firstDayWeekRep", firstDayWeekRep);
-                    if ((firstDayWeekAll.toString() === firstDayWeekRep.toString())) {// && (data.mcode == mcode firstDayWeekAll == firstDayWeekRep)) {//&& (debutM === dateM) && (debutY === dateY)) {
+                    if ((firstDayWeekAll.toString() === firstDayWeekRep.toString())) {
                         productionNew = production
-                        // console.log("######## egale ########", productionNew);
-                        // console.log("######## egale ########", productionNew);
-                        // console.log("######## egale ########", productionNew);
                         c = 0
                     }
                 })
 
-                //console.log("ccccc === ", c);
                 if (c == 0) {
 
                     newReporting = reporting.map(obj => {
                         var dateSNewR = new Date(obj.start);
-                        // console.log("today", dateSNewR.getDay());
-                        // console.log("getDate", dateSNewR.getDate());
                         var firstNewR = dateSNewR.getDate() - dateSNewR.getDay();
-                        //console.log("first", firstNewR);
                         var firstDayWeekNW = new Date(dateSNewR.setDate(firstNewR));
-                        //console.log("firstDayWeek", firstDayWeekNW);
-                        // var debut = obj.start.split("/");
-                        // var debutM = parseInt(debut[1])
-                        // var debutY = parseInt(debut[2])
                         if ((firstDayWeekAll.toString() === dateSNewR.toString())) {
                             return { ...obj, production: parseInt(obj.production) + parseInt(production), faute: parseInt(obj.faute) + parseInt(faute) };
                         }
@@ -2465,28 +2271,16 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
                     });
                     suit = 1
                 } else {
-                    //console.log("________différent__________", mcode, ' ', name);
                     var newReport = new Reporting(mcode, name, production, faute, firstDayWeekAll, monthL)
-                    //console.log("newReport", newReport);
                     reporting.push(newReport)
-                    //console.log("newReport", reporting);
-                    // console.log("reporting", reporting);
                     if (suit == 1) {
                         newReporting.push(newReport)
                     }
                 }
-                //console.log("newReporting", reporting);
-
-
-
-                //console.log("*********----------*********");
             })
 
-            // console.log("newReporting", newReporting)
-            // console.log("newArr", newArr);
             var newReportingWeek = []
             newReporting.forEach(rep => {
-                //console.log("rep", rep);
                 var name = rep.name;
                 var production = rep.production;
                 var mcode = rep.mcode;
@@ -2499,7 +2293,6 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
                     var dateF = new Date(rep.end)
                     dateS = dateS.toLocaleDateString("fr")
                     dateF = dateF.toLocaleDateString("fr")
-
                     rep.start = dateS
                 } else {
                     var dateS = null;
@@ -2510,7 +2303,6 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
                 //
 
             });
-            //console.log("newReportingWeek", newReportingWeek);
             res.send(newReportingWeek)
         })
 })
@@ -2518,18 +2310,16 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
 
 //Update Reporting
 routeExp.route('/updateReporting').post(async function (req, res) {
-    //console.log("req.", req.body);
     var mcodeA = req.body.mcodeA;
     var productionA = req.body.productionA;
     var fauteA = req.body.fauteA;
     var debutA = req.body.debutA;
     var finA = req.body.finA;
-
     var mcode = req.body.mcode;
     var production = req.body.production;
     var faute = req.body.faute;
-    var debut = req.body.debut;
-    var fin = req.body.fin;
+    var debut = req.body.start;
+    var fin = req.body.end;
     var name = req.body.name;
 
 
@@ -2562,7 +2352,7 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
     var start = req.body.start;
     var end = req.body.end;
 
-    //console.log("req = ", req.body);
+    console.log("req = ", req.body.start);
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2573,7 +2363,7 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
         )
         .then(async () => {
             var deleteRep = await ReportingModel.findOneAndDelete({ mcode: mcode, name: name, production: production, faute: faute, start: start, end: end })
-
+            res.send("succes")
             //console.log("deleteRep", deleteRep);
         })
 

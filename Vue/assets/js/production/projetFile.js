@@ -29,7 +29,8 @@ document.getElementById('uploadForm').onsubmit = function (event) {
                 title: 'Nouveau consigne sauvegardé',
                 text: 'Consigne bien sauvegardé'
             })
-            //window.location = "/projet/" + donneF.n
+            console.log("donneF.name", donneF.name);
+            window.location = "/projet/" + donneF.name
         } else { // errors occured
             document.getElementById("status").innerHTML = xhttp.status;
         }
@@ -40,7 +41,6 @@ document.getElementById('uploadForm').onsubmit = function (event) {
     formData.append('name', document.getElementById('nomProj').value)     // the text data
     formData.append('avatar', document.getElementById('avatar').files[0]) // since inputs allow multi files submission, therefore files are in array
     xhttp.send(formData)
-
     //console.log("form");
 }
 

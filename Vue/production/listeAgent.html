@@ -44,7 +44,7 @@
     <!-- Left Panel -->
 
     <!-- Right Panel -->
-
+    <div id="preloader" class="center"></div>
     <div id="right-panel" class="right-panel">
 
         <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
@@ -402,7 +402,16 @@
             $('#bootstrap-data-table-export').DataTable();
         });
     </script>
+    <script>
 
+        var loader = document.getElementById("preloader")
+        window.addEventListener("load", function () {
+            loader.style.display = "none"
+            document.body.style.background = "linear-gradient(#A0B9E5, #D1DCF0)";
+        })
+
+
+    </script>
 
 </body>
 

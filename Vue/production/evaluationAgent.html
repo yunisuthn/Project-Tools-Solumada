@@ -40,7 +40,7 @@
 
 <body>
     <!-- Left Panel -->
-
+    <div id="preloader" class="center"></div>
 
     <!-- Left Panel -->
 
@@ -86,19 +86,19 @@
         <div class="breadcrumbs">
             <div class="breadcrumbs-inner">
                 <div class="row m-0">
-                    <div class="col-sm-4 col-md-4 col-2">
+                    <div class="col-sm-4 col-md-4 col">
                         <a href="/">
                             <i class="fa fa-home fa-3x iconCol" aria-hidden="true"></i>
                         </a>
                     </div>
-                    <div class="col-sm-4 col-5">
+                    <div class="col-sm-4 col">
                         <div class="page-header float-left">
                             <div class="page-title">
                                 <h1>Evaluation Agent</h1>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 col-5">
+                    <div class="col-sm-4 col">
                         <div class="page-header float-right">
                             <div class="page-title">
                                 <ol class="breadcrumb text-right">
@@ -345,7 +345,16 @@
             $('#bootstrap-data-table-export').DataTable();
         });
     </script>
+    <script>
 
+        var loader = document.getElementById("preloader")
+        window.addEventListener("load", function () {
+            loader.style.display = "none"
+            document.body.style.background = "linear-gradient(#A0B9E5, #D1DCF0)";
+        })
+
+
+    </script>
 
 </body>
 

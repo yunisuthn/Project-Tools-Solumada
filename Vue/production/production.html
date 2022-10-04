@@ -85,6 +85,8 @@
 </head>
 
 <body>
+    <div id="preloader" class="center"></div>
+
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
         <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
@@ -292,7 +294,15 @@
 
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
     <script src="../assets/js/acceuil.js"></script>
+    <script>
 
+        var loader = document.getElementById("preloader")
+        window.addEventListener("load", function () {
+            loader.style.display = "none"
+            document.body.style.background = "linear-gradient(#A0B9E5, #D1DCF0)";
+        })
+
+    </script>
 </body>
 
 </html>

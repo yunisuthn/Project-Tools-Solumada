@@ -447,23 +447,23 @@ routeExp.route('/allTL').get(async function (req, res) {
 routeExp.route('/allUser').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
-        mongoose
-            .connect(
-                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-                {
-                    useUnifiedTopology: true,
-                    UseNewUrlParser: true
-                }
-            )
-            .then(async () => {
-                var all = await UserModel.find()
-                // console.log("all", all);
-                res.send(all)
-            })
-    } else {
-        res.redirect("/")
-    }
+    //if (session.typeUtil == "Operation") {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var all = await UserModel.find()
+            console.log("all", all);
+            res.send(all)
+        })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //all history
@@ -1138,7 +1138,7 @@ routeExp.route('/historique').get(async function (req, res) {
                 //console.log(newAllHistory);
 
 
-                res.render("./operation/tables_dynamic.html", { type_util: session.typeUtil, history: newAllHistory })
+                res.render("./operation/historique.html", { type_util: session.typeUtil, history: newAllHistory })
             })
     } else {
         res.redirect("/")
@@ -1828,7 +1828,7 @@ routeExp.route('/projet').get(async function (req, res) {
         .then(async () => {
             var allP = await ProjectModel.find()
             //console.log('allP', allP);
-            res.render("./projet.html", { type_util: session.typeUtil, allProj: allP })
+            res.render("./production/projet.html", { type_util: session.typeUtil, allProj: allP })
         })
     // } else {
     //     res.redirect("/")
@@ -2004,7 +2004,9 @@ routeExp.route('/upload').post(async function (req, res) {
                         }
                     )
                     .then(async () => {
-                        if (await ProjetFileModel.find({ nameProjet: nameProjet })) {
+                        var allProjetFile = await ProjetFileModel.find()
+                        //console.log("allProjetFile", allProjetFile);
+                        if (await ProjetFileModel.findOne({ nameProjet: nameProjet })) {
                             var fileUpd = await ProjetFileModel.findOneAndUpdate({ nameProjet: nameProjet }, { nameFile: filename })
                             //console.log("fileUpd", fileUpd);
                         } else {
@@ -2012,9 +2014,10 @@ routeExp.route('/upload').post(async function (req, res) {
                                 nameProjet: nameProjet,
                                 nameFile: filename
                             }
+                            //console.log("fileData data", fileData);
                             //var mat = await InventaireModel(newMat).save()
                             var file = await ProjetFileModel(fileData).save()
-                            //console.log("fileUpd", file);
+                            //console.log("fileUpdAdd", file);
                         }
                         //console.log("file", file);
                     })
@@ -2218,7 +2221,7 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
             var allRep = await ReportingModel.find();
             var reporting = [];
             var newReporting = []
-
+            // console.log("allRep", allRep);
             var suit = 0
             allRep.forEach(report => {
                 var name = report.name;
@@ -2280,7 +2283,7 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
             })
 
             var newReportingWeek = []
-            newReporting.forEach(rep => {
+            reporting.forEach(rep => {
                 var name = rep.name;
                 var production = rep.production;
                 var mcode = rep.mcode;
@@ -2303,6 +2306,8 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
                 //
 
             });
+
+            //console.log("newReportingWeek", newReportingWeek);
             res.send(newReportingWeek)
         })
 })
@@ -2367,6 +2372,39 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
             //console.log("deleteRep", deleteRep);
         })
 
+})
+
+
+// routeExp.route('/listeUser').get(async function (req, res) {
+//     var session = req.session
+//     var projet = req.params.projet
+//     //console.log("projet", projet);
+//     res.render('./it/ListeUser', { type_util: session.typeUtil, projet: projet })
+// })
+
+
+
+//get user
+routeExp.route('/listecours').get(async function (req, res) {
+
+    var session = req.session
+    //if (session.typeUtil == "Operation") {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var allTL = await TLModel.find()
+            //console.log("allTL ", allTL);
+            res.render("./it/listeCours.html", { type_util: session.typeUtil, allTL: allTL })
+        })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 module.exports = routeExp

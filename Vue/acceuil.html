@@ -85,6 +85,12 @@
 </head>
 
 <body>
+    <div id="preloader">
+        <!--div id="charg">CHARGEMENT</div-->
+    </div>
+    <!-- <div id="preloader">
+        <div id="loader" class="center"></div>
+    </div> -->
 
     <div id="right-panel" class="right-panel">
         <!-- Header-->
@@ -227,7 +233,27 @@
     <script src="assets/js/init/weather-init.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+    <script>
+        // document.onreadystatechange = function () {
+        //     if (document.readyState !== "complete") {
+        //         document.querySelector(
+        //             "body").style.visibility = "hidden";
+        //         document.querySelector(
+        //             "#loader").style.visibility = "visible";
+        //     } else {
+        //         document.querySelector(
+        //             "#loader").style.display = "none";
+        //         document.querySelector(
+        //             "body").style.visibility = "visible";
+        //     }
+        // };
 
+        var loader = document.getElementById("preloader")
+        window.addEventListener("load", function () {
+            loader.style.display = "none"
+            document.body.style.background = "linear-gradient(#A0B9E5, #D1DCF0)";
+        })
+    </script>
 </body>
 
 </html>

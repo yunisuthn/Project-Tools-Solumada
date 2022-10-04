@@ -1,17 +1,21 @@
 
-//$('#saveFileProjet').on('click', function () {
-// var myFile = $('#file').prop('files');
-// console.log("saveProjet", myFile);
+// $('#saveFileProjet').on('click', function () {
+//     var myFile = $('#file').prop('files');
+//     console.log("saveProjet", myFile);
 
 
-// $.ajax({
-//     url: '/upload',
-//     method: 'post',
-//     data: { file: myFile },
-//     success: function (resp) {
-//         console.log("resp", resp);
-//     }
+//     $.ajax({
+//         url: '/upload',
+//         method: 'post',
+//         data: { file: myFile },
+//         success: function (resp) {
+//             console.log("resp", resp);
+//         }
+//     })
+
 // })
+
+
 
 //console.log("$().val()", $("#nomProj").val());
 var donneF = {
@@ -29,7 +33,7 @@ document.getElementById('uploadForm').onsubmit = function (event) {
                 title: 'Nouveau consigne sauvegardé',
                 text: 'Consigne bien sauvegardé'
             })
-            console.log("donneF.name", donneF.name);
+            //console.log("donneF.name", donneF.name);
             window.location = "/projet/" + donneF.name
         } else { // errors occured
             document.getElementById("status").innerHTML = xhttp.status;

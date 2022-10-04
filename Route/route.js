@@ -458,7 +458,7 @@ routeExp.route('/allUser').get(async function (req, res) {
         )
         .then(async () => {
             var all = await UserModel.find()
-            console.log("all", all);
+            // console.log("all", all);
             res.send(all)
         })
     // } else {

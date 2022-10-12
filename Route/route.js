@@ -260,7 +260,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Inventaire",
-                        heure: Date.now(),
+                        date: new Date(),
                         old: {
                             "code": code,
                             "name": nameInventA,
@@ -374,6 +374,7 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Instruction",
+                        date: new Date(),
                         new: {
                             "name": name,
                             "title": title,
@@ -570,6 +571,7 @@ routeExp.route("/updateTl").post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Evaluation TL",
+                        date: new Date(),
                         old: {
                             "name": nameA,
                             "mcode": mcode,
@@ -912,6 +914,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
                         var historique = {
                             user: session.name,
                             model: "Agent",
+                            date: new Date(),
                             old: {
                                 "mcode": oldMCode,
                                 "name": nameA,
@@ -991,6 +994,7 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
                         var historique = {
                             user: session.name,
                             model: "Evaluation Agent",
+                            date: new Date(),
                             old: {
                                 "mcode": oldMCode,
                                 "name": nameA,
@@ -1278,6 +1282,7 @@ routeExp.route('/updateUser').post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Utilisateur",
+                        date: new Date(),
                         old: {
                             "mcode": mcodeA,
                             "name": nameA,
@@ -1767,7 +1772,7 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Planning",
-                        heure: new Date(),
+                        date: new Date(),
                         old: {
                             "mcode": mcodeAncien,
                             "prenom": prenomA,

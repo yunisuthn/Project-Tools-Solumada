@@ -1123,11 +1123,15 @@ routeExp.route('/historique').get(async function (req, res) {
                 // var a = new time.Date(1337324400000);
 
                 // a.setTimezone('Europe/Amsterdam');
-                //console.log(a.toString());
+                //console.log("allHistory", allHistory);
                 allHistory.forEach(element => {
-                    //console.log("element", element.heure);
+                    //console.log("element", element.date);
 
-                    var dt = dateTime.create(element.heure);
+                    var today = element.date;
+                    today = today.setHours(today.getHours() + 3);
+
+
+                    var dt = dateTime.create(today);
                     var formatted = dt.format('d-m-Y H:M:S');
                     //formatted.setTimezone('Europe/Amsterdam');
                     var user = {
@@ -1139,7 +1143,7 @@ routeExp.route('/historique').get(async function (req, res) {
                     }
                     newAllHistory.push(user)
                 });
-                //console.log(newAllHistory);
+                //console.log("newAllHistory", newAllHistory);
 
 
                 res.render("./operation/historique.html", { type_util: session.typeUtil, history: newAllHistory })

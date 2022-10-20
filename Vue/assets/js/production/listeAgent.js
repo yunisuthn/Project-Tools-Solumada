@@ -1,16 +1,16 @@
 var agentDataTable = $('#agentDataTable').DataTable(
     {
-        "ajax": {"url": "/allAgent", "dataSrc": ""},
+        "ajax": { "url": "/allAgent", "dataSrc": "" },
         "columns": [
-            {'data': 'name'},
-            {'data': "usualName"},
-            {'data': 'mcode'},
-            {'data': 'number'},
-            {'data': "shift"},
-            {'data': 'project'},
-            {'data': 'site'},
-            {'data': "quartier"},
-            {'data': 'tel'},
+            { 'data': 'name' },
+            { 'data': "usualName" },
+            { 'data': 'mcode' },
+            { 'data': 'number' },
+            { 'data': "shift" },
+            { 'data': 'project' },
+            { 'data': 'site' },
+            { 'data': "quartier" },
+            { 'data': 'tel' },
             {
                 'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -47,7 +47,7 @@ $("#saveAgent").on('click', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Cet utilisateur existe déjà'
+                    text: 'Cet utilisateur existe déjà ou nom est absent'
                 })
                 //clearForm()
                 //window.location = "/agent"
@@ -90,7 +90,7 @@ $(document).on('click', '#cancelAgent', function () {
     $("#site").val('')
     $('#quartier').val('')
     $('#phon').val('')
-    
+
 })
 // get user to update
 var mcode = ""
@@ -98,7 +98,7 @@ var nameA = ""
 var usualName = ""
 var number = ""
 var shift = ""
-var project  = ""
+var project = ""
 var site = ""
 var quartier = ""
 var phon = ""
@@ -132,7 +132,7 @@ $(document).on('click', '.btnUpdateAgent', function () {
 })
 
 //save update user
-$(document).on('click', '#saveUpdatUser', function(){
+$(document).on('click', '#saveUpdatUser', function () {
     var nameUpd = $('#nameUpdat').val();
     var usualNameUpdat = $('#usualNameUpdat').val();
     var numberUpd = $('#numberUpdat').val();
@@ -181,7 +181,7 @@ $(document).on('click', '#saveUpdatUser', function(){
                 })
                 clearForm()
                 window.location = "/agent"
-                
+
             } else {
                 Swal.fire(
                     'Mis à jour',
@@ -201,14 +201,14 @@ $(document).on('click', '#saveUpdatUser', function(){
                 $('#telUpdat').val("");
                 $('#cancelUpdatAgent').click()
                 window.location = '/agent'
-                
+
             }
 
         }
     })
 })
 
-$(document).on('click', '.btnDeleteAgent', function() {
+$(document).on('click', '.btnDeleteAgent', function () {
     Swal.fire({
         title: 'Supprimer User',
         text: 'Etes-vous sûr de vouloir supprimer cet utilisateur?',
@@ -217,7 +217,7 @@ $(document).on('click', '.btnDeleteAgent', function() {
         confirmButtonColor: 'red',
         cancelButtonColor: 'green',
         confirmButtonText: 'Oui'
-    }).then((result) =>{
+    }).then((result) => {
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
             var codeDelete = getCol.find('td:eq(2)').text();
@@ -248,12 +248,12 @@ $(document).on('click', '.btnDeleteAgent', function() {
                     })
                 }
             })
-        } 
+        }
     })
 })
 
 
-var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+var type = $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
 
 if (type.trim() == "IT") {
     $("#utilisateur").css("display", "none")

@@ -14,6 +14,7 @@ const ProjectModel = require("../Model/ProjectModel")
 const ProjetFileModel = require("../Model/ProjetFileModel")
 const ReportingModel = require("../Model/ReportingModel");
 
+const XLSX = require('xlsx');
 const pdfParse = require("pdf-parse")
 const fs = require("fs")
 
@@ -135,7 +136,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                if ((await InventaireModel.findOne({ code: code })) || name == "" || code == "" || nombre == "") {
+                if ((await InventaireModel.findOne({ code: code })) || name == "" || code == "") {
                     res.send('error')
                 } else {
                     var newMat = {
@@ -326,7 +327,7 @@ routeExp.route('/addInstruction').post(async function (req, res) {
                 // console.log("name ",name);
                 // console.log("titre ",titre);
                 // console.log("instruct ",instruct);
-                if ((await InstructionModel.findOne({ name: name })) || name == "" || titre == "" || instruct == "") {
+                if ((await InstructionModel.findOne({ name: name })) || name == "" || titre == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -402,6 +403,8 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
     var name = req.body.name;
 
     var session = req.session
+
+    //console.log("name", name);
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -413,7 +416,7 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
             )
             .then(async () => {
                 var delet = await InstructionModel.findOneAndDelete({ name: name })
-                // console.log("delet", delet);
+                //console.log("delet", delet);
                 res.send("success")
             })
     } else {
@@ -511,7 +514,7 @@ routeExp.route('/addTL').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                if ((await TLModel.findOne({ mcode: mcode })) || name == "" || mcode == "" || strengths == "") {
+                if ((await TLModel.findOne({ mcode: mcode })) || name == "" || mcode == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -756,7 +759,7 @@ routeExp.route('/addAgent').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                if ((await AgentModel.findOne({ mcode: mcode })) || name == "" || mcode == "" || number == "") {
+                if ((await AgentModel.findOne({ mcode: mcode })) || name == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -2416,4 +2419,56 @@ routeExp.route('/listecours').get(async function (req, res) {
     // }
 })
 
+
+routeExp.route("/addAgentFile").get(async function (req, res) {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+
+            const parseExcel = (filename) => {
+                const excelData = XLSX.readFile(filename);
+
+                return Object.keys(excelData.Sheets).map(name => ({
+                    name,
+                    data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
+                }));
+            }
+            var liste = []
+            parseExcel("./Vue/assets/listeUser.xlsx").forEach(element => {
+                liste.push(element.data)
+            });
+
+            for (let i = 0; i < liste[0].length; i++) {
+                const element = liste[0][i];
+                //console.log("element", element);
+                var dataUser = {
+                    name: element.Nom,
+                    usualName: element.NomUsuel,
+                    mcode: element.MCode,
+                    number: element.Numbering,
+                    shift: element.Shift,
+                    project: element.Projet,
+                    site: element.Site,
+                    quartier: element.Quartier,
+                    tel: element.Phon
+                }
+                //console.log("dataUser", dataUser);
+                var agent = await AgentModel(dataUser).save()
+                // var listA = await AgentModel.find()
+                // for (let i = 0; i < listA.length; i++) {
+                //     const element = listA[i]._id;
+                //     await AgentModel.findOneAndDelete({ _id: element })
+                // }
+                console.log("dataUser", agent);
+            }
+            //console.log("liste", liste);
+            res.send("coucou")
+        })
+})
 module.exports = routeExp

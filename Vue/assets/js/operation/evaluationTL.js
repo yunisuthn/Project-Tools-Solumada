@@ -1,13 +1,13 @@
 var evaluationDataTable = $('#evaluationDataTable').DataTable(
     {
-        "ajax": {"url": "/allTL", "dataSrc": ""},
+        "ajax": { "url": "/allTL", "dataSrc": "" },
         "columns": [
-            {'data': 'name'},
-            {'data': "mcode"},
-            {'data': 'strengths'},
-            {'data': "weaknesses"},
-            {'data': 'opportunities'},
-            {'data': "threats"},
+            { 'data': 'name' },
+            { 'data': "mcode" },
+            { 'data': 'strengths' },
+            { 'data': "weaknesses" },
+            { 'data': 'opportunities' },
+            { 'data': "threats" },
             {
                 'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -29,7 +29,7 @@ $("#saveTL").on('click', function () {
         opportunities: $('#opportunities').val(),
         threats: $('#threats').val()
     }
-    console.log("addTL", addTL);
+    //console.log("addTL", addTL);
     $.ajax({
         url: '/addTL',
         method: 'post',
@@ -39,10 +39,10 @@ $("#saveTL").on('click', function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Ce TL est déjà existe'
+                    text: 'Ce TL est déjà existe ou nom, mcode incomplet'
                 })
-                clearForm()
-                window.location = "/evaluationTL"
+                //clearForm()
+                //window.location = "/evaluationTL"
             } else {
                 Swal.fire({
                     icon: 'réussi',
@@ -50,7 +50,6 @@ $("#saveTL").on('click', function () {
                     text: `Team Leader ${addTL.name} sauvegardé avec succès`,
                     timer: 2000
                 })
-                clearForm()
                 $('#evaluationTL').DataTable().ajax.reload(null, false)
                 window.location = "/evaluationTL"
 
@@ -84,7 +83,7 @@ $(document).on('click', '.btnUpdateEvaluationTL', function () {
     weaknessesUpdatA = getCol.find('td:eq(3)').text()
     opportunitiesUpdatTLA = getCol.find('td:eq(4)').text()
     threatsUpdatA = getCol.find('td:eq(5)').text()
-    
+
     $("#nameUpdat").val(nameA)
     $("#mcodeUpdate").val(mcode)
     $("#strengthsUpdatTL").val(strengthsUpdatTLA)
@@ -98,7 +97,7 @@ $(document).on('click', '.btnUpdateEvaluationTL', function () {
 })
 
 //save update user
-$(document).on('click', '#saveUpdatTL', function(){
+$(document).on('click', '#saveUpdatTL', function () {
     var nameUpd = $('#nameUpdat').val();
     var mcodeUpd = $('#mcodeUpdate').val();
     var strengthsUpdatTL = $('#strengthsUpdatTL').val();
@@ -110,15 +109,15 @@ $(document).on('click', '#saveUpdatTL', function(){
         mcodeOld: mcode,
         mcodeN: mcodeUpd,
         name: nameUpd,
-        nameA : nameA,
+        nameA: nameA,
         strengths: strengthsUpdatTL,
         weaknesses: weaknessesUpdat,
-        opportunities :opportunitiesUpdatTL,
+        opportunities: opportunitiesUpdatTL,
         threats: threatsUpdat,
 
         strengthsA: strengthsUpdatTLA,
         weaknessesA: weaknessesUpdatA,
-        opportunitiesA :opportunitiesUpdatTLA,
+        opportunitiesA: opportunitiesUpdatTLA,
         threatsA: threatsUpdatA
     }
 
@@ -150,7 +149,7 @@ $(document).on('click', '#saveUpdatTL', function(){
 })
 
 
-$(document).on('click', '.btnDeleteEvaluationTL', function() {
+$(document).on('click', '.btnDeleteEvaluationTL', function () {
     Swal.fire({
         title: "Supprimer l'utilisateur",
         text: 'Etes-vous sûr de vouloir supprimer cet utilisateur?',
@@ -159,7 +158,7 @@ $(document).on('click', '.btnDeleteEvaluationTL', function() {
         confirmButtonColor: 'red',
         cancelButtonColor: 'green',
         confirmButtonText: 'Oui'
-    }).then((result) =>{
+    }).then((result) => {
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
             var codeDelete = getCol.find('td:eq(1)').text();
@@ -190,11 +189,11 @@ $(document).on('click', '.btnDeleteEvaluationTL', function() {
                     })
                 }
             })
-        } 
+        }
     })
 })
 
-var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+var type = $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
 
 if (type.trim() == "IT") {
     $("#utilisateur").css("display", "none")

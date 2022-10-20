@@ -1,56 +1,56 @@
 
 $(document).on("click", "#myBtn", function () {
-    var instructionName = $(this).parent().find(".instruction-hidden").text().trim()
-    $.ajax({
-      url: '/getOneInstruction',
-      data: {instructionName: instructionName},
-      method: "post",
-      success: function (resp) {
-        $(document).ready(function(){
-          $("#nomInstru" ).html(`${resp.name}`);
-          $("#titreInstr").html(`${resp.title}`)
-          $("#instruct").html(`${resp.instruction}`)
-        })
-        // document.getElementById()
-      }
-    })
+  var instructionName = $(this).parent().find(".instruction-hidden").text().trim()
+  $.ajax({
+    url: '/getOneInstruction',
+    data: { instructionName: instructionName },
+    method: "post",
+    success: function (resp) {
+      $(document).ready(function () {
+        $("#nomInstru").html(`${resp.name}`);
+        $("#titreInstr").html(`${resp.title}`)
+        $("#instruct").html(`${resp.instruction}`)
+      })
+      // document.getElementById()
+    }
+  })
 
 })
 
-  $("#saveInstruction").on("click", function() {
-    Instruction = {
-      name: $("#nameInst").val(),
-      titre: $("#TitleInst").val(),
-      instruct : $("#instruction").val()
-    }
+$("#saveInstruction").on("click", function () {
+  Instruction = {
+    name: $("#nameInst").val(),
+    titre: $("#TitleInst").val(),
+    instruct: $("#instruction").val()
+  }
 
-    //console.log("Instruction ", Instruction);
+  //console.log("Instruction ", Instruction);
 
-    $.ajax({
-      url: '/addInstruction',
-      method: 'post',
-      data: Instruction,
-      success: function (response) {
-        if (response == "error") {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'This instruction is already exist'
-          })
-          clearForm()
-          window.location = "/instruction"
-        } else {
-          Swal.fire({
-            icon: 'success',
-            title: "New Instruction saved",
-            text: `Instruction ${Instruction.name} saved successfully`,
-          })
-          clearForm()
-          window.location = "/instruction"
-        }
+  $.ajax({
+    url: '/addInstruction',
+    method: 'post',
+    data: Instruction,
+    success: function (response) {
+      if (response == "error") {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: "L'instruction est exist ou le champ nom ou titre est incomplet"
+        })
+        clearForm()
+        window.location = "/instruction"
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: "Nouveau Instruction sauvegardé",
+          text: `Instruction ${Instruction.name} bien enregistré`,
+        })
+        clearForm()
+        window.location = "/instruction"
       }
-    })
+    }
   })
+})
 
 
 //Empty form Instruction
@@ -103,10 +103,10 @@ $(document).on('click', '#saveUpdatInstruction', function () {
   var instUpdat = $('#updateInstruction').val()
 
   var donneUpdat = {
-    nameOld : updateInst,
+    nameOld: updateInst,
     name: nameInstUpdat,
     title: titleInstUpdat,
-    titleOld : titreInstA,
+    titleOld: titreInstA,
     instruct: instUpdat,
     instructOld: instructInstA
   }
@@ -119,7 +119,7 @@ $(document).on('click', '#saveUpdatInstruction', function () {
       console.log("res", res);
       Swal.fire(
         "Update",
-        "Update Instruction successfuly !",
+        "Mis à jour Instruction sauvegardée !",
         'success',
         {
           confirmButtonText: 'OK'
@@ -139,24 +139,26 @@ $(document).on('click', '#saveUpdatInstruction', function () {
 $(document).on('click', '.deleteInstruct', function () {
   Swal.fire({
     title: 'Delete Instruction',
-    text: 'Are you sure to delete this instruction?',
+    text: 'Etes vous sur de supprimer cette instruction?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: 'red',
     cancelButtonColor: 'green',
     confirmButtonText: "Yes, delete it!"
-  }).then((result) =>{
+  }).then((result) => {
     if (result.isConfirmed) {
-      var name = $(this).parent().find('.instructName').val();
+      var name = $(this).parent().find('.instruction-hidden').text().trim()//.val();
       deleteInstruct = {
         name: name
       }
+
+      //console.log("deleteInstruct", name);
       $.ajax({
         url: '/deleteInstruction',
         method: 'post',
         data: deleteInstruct,
-        success: function(res) {
-          responseTxt = "Instruction deleted successfully !";
+        success: function (res) {
+          responseTxt = "Instruction supprimée !";
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -179,14 +181,14 @@ $(document).on('click', '.deleteInstruct', function () {
   })
 })
 
-var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+var type = $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
 
 if (type.trim() == "IT") {
-    $("#utilisateur").css("display", "none")
-    $("#historique").css("display", "none")
-    // console.log("page IT");
+  $("#utilisateur").css("display", "none")
+  $("#historique").css("display", "none")
+  // console.log("page IT");
 } else if (type.trim() == "TL") {
-    $("#utilisateur").css("display", "none")
-    $("#historique").css("display", "none")
-    // console.log("page TL");
+  $("#utilisateur").css("display", "none")
+  $("#historique").css("display", "none")
+  // console.log("page TL");
 } 

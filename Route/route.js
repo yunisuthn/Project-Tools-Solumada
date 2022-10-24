@@ -405,23 +405,23 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
     var session = req.session
 
     //console.log("name", name);
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        mongoose
-            .connect(
-                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-                {
-                    useUnifiedTopology: true,
-                    UseNewUrlParser: true
-                }
-            )
-            .then(async () => {
-                var delet = await InstructionModel.findOneAndDelete({ name: name })
-                //console.log("delet", delet);
-                res.send("success")
-            })
-    } else {
-        res.redirect("/")
-    }
+    //if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            await InstructionModel.findOneAndDelete({ name: name })
+            //console.log("delet", delet);
+            res.send("success")
+        })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //all Team Leader

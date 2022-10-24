@@ -40,7 +40,7 @@
 
 <body>
     <!-- Left Panel -->
-
+    <div id="preloader" class="center"></div>
 
     <!-- Left Panel -->
 
@@ -48,7 +48,7 @@
 
     <div id="right-panel" class="right-panel">
 
-        <input type="hidden" name="" id="typeUtil" value= "<%= type_util %> ">
+        <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
         <!-- Header-->
         <header id="header" class="header">
             <div class="top-left">
@@ -68,8 +68,10 @@
 
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
-                            <a class="nav-link" href="/user" id="utilisateur"><i class="fa fa-solid fa-users"></i> Utilisateur</a>
-                            <a class="nav-link" href="/historique" id="historique"><i class="fa fa-thin fa-calendar-check"></i> Historiques</a>
+                            <a class="nav-link" href="/user" id="utilisateur"><i class="fa fa-solid fa-users"></i>
+                                Utilisateur</a>
+                            <a class="nav-link" href="/historique" id="historique"><i
+                                    class="fa fa-thin fa-calendar-check"></i> Historiques</a>
                             <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
@@ -84,19 +86,19 @@
         <div class="breadcrumbs">
             <div class="breadcrumbs-inner">
                 <div class="row m-0">
-                    <div class="col-sm-4 col-md-4 col-2">
-                        <a href="/" >
+                    <div class="col-sm-4 col-md-4 col">
+                        <a href="/">
                             <i class="fa fa-home fa-3x iconCol" aria-hidden="true"></i>
                         </a>
                     </div>
-                    <div class="col-sm-4 col-5">
+                    <div class="col-sm-4 col">
                         <div class="page-header float-left">
                             <div class="page-title">
                                 <h1>Evaluation Agent</h1>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 col-5">
+                    <div class="col-sm-4 col">
                         <div class="page-header float-right">
                             <div class="page-title">
                                 <ol class="breadcrumb text-right">
@@ -129,19 +131,21 @@
                             </span>
                         </div>
                         <div class="card-body">
-                            <table id="agentEvalDataTable" class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>M-Code</th>
-                                        <th>Nom</th>
-                                        <th>Production</th>
-                                        <th>Qualité</th>
-                                        <th>Comportement</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                            <div class="table-responsive-lg">
+                                <table id="agentEvalDataTable" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>M-Code</th>
+                                            <th>Nom</th>
+                                            <th>Production</th>
+                                            <th>Qualité</th>
+                                            <th>Comportement</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -341,7 +345,16 @@
             $('#bootstrap-data-table-export').DataTable();
         });
     </script>
+    <script>
 
+        var loader = document.getElementById("preloader")
+        window.addEventListener("load", function () {
+            loader.style.display = "none"
+            document.body.style.background = "linear-gradient(#A0B9E5, #D1DCF0)";
+        })
+
+
+    </script>
 
 </body>
 

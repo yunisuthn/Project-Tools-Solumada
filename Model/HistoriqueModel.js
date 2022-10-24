@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const historique = mongoose.Schema({
-    user: String, 
+    user: String,
     model: String,
-    heure: Date,
+    date: Date,
     old: Object,
     new: Object
 })

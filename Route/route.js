@@ -14,6 +14,7 @@ const ProjectModel = require("../Model/ProjectModel")
 const ProjetFileModel = require("../Model/ProjetFileModel")
 const ReportingModel = require("../Model/ReportingModel");
 
+const XLSX = require('xlsx');
 const pdfParse = require("pdf-parse")
 const fs = require("fs")
 
@@ -135,7 +136,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                if ((await InventaireModel.findOne({ code: code })) || name == "" || code == "" || nombre == "") {
+                if ((await InventaireModel.findOne({ code: code })) || name == "" || code == "") {
                     res.send('error')
                 } else {
                     var newMat = {
@@ -218,10 +219,10 @@ routeExp.route('/getInstruction').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                console.log("name", name);
+                //console.log("name", name);
                 var instru = await InstructionModel.findOne({ name: name })
 
-                console.log("instru", instru);
+                //console.log("instru", instru);
                 res.send(instru)
             })
     } else {
@@ -260,7 +261,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Inventaire",
-                        heure: Date.now(),
+                        date: new Date(),
                         old: {
                             "code": code,
                             "name": nameInventA,
@@ -326,7 +327,7 @@ routeExp.route('/addInstruction').post(async function (req, res) {
                 // console.log("name ",name);
                 // console.log("titre ",titre);
                 // console.log("instruct ",instruct);
-                if ((await InstructionModel.findOne({ name: name })) || name == "" || titre == "" || instruct == "") {
+                if ((await InstructionModel.findOne({ name: name })) || name == "" || titre == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -374,6 +375,7 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Instruction",
+                        date: new Date(),
                         new: {
                             "name": name,
                             "title": title,
@@ -401,23 +403,25 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
     var name = req.body.name;
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        mongoose
-            .connect(
-                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-                {
-                    useUnifiedTopology: true,
-                    UseNewUrlParser: true
-                }
-            )
-            .then(async () => {
-                var delet = await InstructionModel.findOneAndDelete({ name: name })
-                // console.log("delet", delet);
-                res.send("success")
-            })
-    } else {
-        res.redirect("/")
-    }
+
+    //console.log("name", name);
+    //if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            await InstructionModel.findOneAndDelete({ name: name })
+            //console.log("delet", delet);
+            res.send("success")
+        })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //all Team Leader
@@ -447,23 +451,23 @@ routeExp.route('/allTL').get(async function (req, res) {
 routeExp.route('/allUser').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
-        mongoose
-            .connect(
-                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-                {
-                    useUnifiedTopology: true,
-                    UseNewUrlParser: true
-                }
-            )
-            .then(async () => {
-                var all = await UserModel.find()
-                // console.log("all", all);
-                res.send(all)
-            })
-    } else {
-        res.redirect("/")
-    }
+    //if (session.typeUtil == "Operation") {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var all = await UserModel.find()
+            // console.log("all", all);
+            res.send(all)
+        })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //all history
@@ -481,7 +485,7 @@ routeExp.route('/allHistory').get(async function (req, res) {
             )
             .then(async () => {
                 var all = await HistoriqueModel.find()
-                console.log("all", all);
+                //console.log("all", all);
                 res.send(all)
             })
     } else {
@@ -510,7 +514,7 @@ routeExp.route('/addTL').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                if ((await TLModel.findOne({ mcode: mcode })) || name == "" || mcode == "" || strengths == "") {
+                if ((await TLModel.findOne({ mcode: mcode })) || name == "" || mcode == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -570,6 +574,7 @@ routeExp.route("/updateTl").post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Evaluation TL",
+                        date: new Date(),
                         old: {
                             "name": nameA,
                             "mcode": mcode,
@@ -671,8 +676,8 @@ routeExp.route('/planning/:project/:shift').get(async function (req, res) {
     var session = req.session
     var shift = req.params.shift
     var project = req.params.project;
-    console.log("shift", shift);
-    console.log("project", project);
+    // console.log("shift", shift);
+    // console.log("project", project);
     //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
 
     mongoose
@@ -687,7 +692,7 @@ routeExp.route('/planning/:project/:shift').get(async function (req, res) {
 
             var allPlaning = await PlanningModel.find()
             var agent = await AgentModel.find()
-            console.log("agent", shift, " ", project);
+            //console.log("agent", shift, " ", project);
             res.render("./production/planning.html", { type_util: session.typeUtil, plan: allPlaning, agent: agent })
         })
     // } else {
@@ -754,7 +759,7 @@ routeExp.route('/addAgent').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                if ((await AgentModel.findOne({ mcode: mcode })) || name == "" || mcode == "" || number == "") {
+                if ((await AgentModel.findOne({ mcode: mcode })) || name == "") {
                     console.log("error");
                     res.send('error')
                 } else {
@@ -912,6 +917,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
                         var historique = {
                             user: session.name,
                             model: "Agent",
+                            date: new Date(),
                             old: {
                                 "mcode": oldMCode,
                                 "name": nameA,
@@ -991,6 +997,7 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
                         var historique = {
                             user: session.name,
                             model: "Evaluation Agent",
+                            date: new Date(),
                             old: {
                                 "mcode": oldMCode,
                                 "name": nameA,
@@ -1119,11 +1126,15 @@ routeExp.route('/historique').get(async function (req, res) {
                 // var a = new time.Date(1337324400000);
 
                 // a.setTimezone('Europe/Amsterdam');
-                //console.log(a.toString());
+                //console.log("allHistory", allHistory);
                 allHistory.forEach(element => {
-                    //console.log("element", element.heure);
+                    //console.log("element", element.date);
 
-                    var dt = dateTime.create(element.heure);
+                    var today = element.date;
+                    today = today.setHours(today.getHours() + 3);
+
+
+                    var dt = dateTime.create(today);
                     var formatted = dt.format('d-m-Y H:M:S');
                     //formatted.setTimezone('Europe/Amsterdam');
                     var user = {
@@ -1135,10 +1146,10 @@ routeExp.route('/historique').get(async function (req, res) {
                     }
                     newAllHistory.push(user)
                 });
-                //console.log(newAllHistory);
+                //console.log("newAllHistory", newAllHistory);
 
 
-                res.render("./operation/tables_dynamic.html", { type_util: session.typeUtil, history: newAllHistory })
+                res.render("./operation/historique.html", { type_util: session.typeUtil, history: newAllHistory })
             })
     } else {
         res.redirect("/")
@@ -1278,6 +1289,7 @@ routeExp.route('/updateUser').post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Utilisateur",
+                        date: new Date(),
                         old: {
                             "mcode": mcodeA,
                             "name": nameA,
@@ -1636,6 +1648,17 @@ class Reporting {
         this.end = end;
     }
 }
+
+class ReportingWeek {
+    constructor(mcode, name, production, faute, start, end) {
+        this.mcode = mcode;
+        this.name = name;
+        this.production = production;
+        this.faute = faute;
+        this.start = start;
+        this.end = end;
+    }
+}
 routeExp.route("/allPlanning").get(async function (req, res) {
 
     mongoose
@@ -1756,7 +1779,7 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Planning",
-                        heure: new Date(),
+                        date: new Date(),
                         old: {
                             "mcode": mcodeAncien,
                             "prenom": prenomA,
@@ -1775,7 +1798,7 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
                         }
                     }
                     var historie = await HistoriqueModel(historique).save()
-                    console.log("historique", historie);
+                    //console.log("historique", historie);
                 }
                 res.send("success")
             }
@@ -1817,7 +1840,7 @@ routeExp.route('/projet').get(async function (req, res) {
         .then(async () => {
             var allP = await ProjectModel.find()
             //console.log('allP', allP);
-            res.render("./projet.html", { type_util: session.typeUtil, allProj: allP })
+            res.render("./production/projet.html", { type_util: session.typeUtil, allProj: allP })
         })
     // } else {
     //     res.redirect("/")
@@ -1913,7 +1936,7 @@ routeExp.route('/updateProjet').post(async function (req, res) {
                         res.send('error')
                     } else {
                         var Proj = await ProjectModel.findOneAndUpdate({ name: nameOld }, { name: nameNew })
-                        console.log("proje", Proj);
+                        //console.log("proje", Proj);
                         res.send("success")
                     }
                 })
@@ -1993,17 +2016,20 @@ routeExp.route('/upload').post(async function (req, res) {
                         }
                     )
                     .then(async () => {
-                        if (await ProjetFileModel.find({ nameProjet: nameProjet })) {
+                        var allProjetFile = await ProjetFileModel.find()
+                        //console.log("allProjetFile", allProjetFile);
+                        if (await ProjetFileModel.findOne({ nameProjet: nameProjet })) {
                             var fileUpd = await ProjetFileModel.findOneAndUpdate({ nameProjet: nameProjet }, { nameFile: filename })
-                            console.log("fileUpd", fileUpd);
+                            //console.log("fileUpd", fileUpd);
                         } else {
                             var fileData = {
                                 nameProjet: nameProjet,
                                 nameFile: filename
                             }
+                            //console.log("fileData data", fileData);
                             //var mat = await InventaireModel(newMat).save()
                             var file = await ProjetFileModel(fileData).save()
-                            //console.log("fileUpd", file);
+                            //console.log("fileUpdAdd", file);
                         }
                         //console.log("file", file);
                     })
@@ -2016,7 +2042,7 @@ routeExp.route('/upload').post(async function (req, res) {
 
 routeExp.route("/extract-text").post(async function (req, res) {
 
-    console.log("req.body", req.body);
+    //console.log("req.body", req.body);
     var name = req.body.name
     mongoose
         .connect(
@@ -2028,7 +2054,7 @@ routeExp.route("/extract-text").post(async function (req, res) {
         )
         .then(async () => {
             var file = await ProjetFileModel.findOne({ nameProjet: name })
-            console.log("file.nameFile", file);
+            //console.log("file.nameFile", file);
             if (file) {
                 res.send(file.nameFile)
             } else {
@@ -2046,7 +2072,7 @@ routeExp.route("/addReporting").post(async function (req, res) {
     var start = req.body.start;
     var end = req.body.end;
 
-    console.log("end", end);
+    //console.log("end", end);
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2113,8 +2139,7 @@ routeExp.route("/allReporting").get(async function (req, res) {
         })
 })
 
-
-//selection par semaine
+//reporting par mois
 routeExp.route("/allReportingMois").get(async function (req, res) {
 
     mongoose
@@ -2130,6 +2155,8 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
 
             var reporting = [];
             var newReporting = []
+
+            var suit = 0
             allRep.forEach(report => {
                 var name = report.name;
                 var mcode = report.mcode;
@@ -2137,104 +2164,179 @@ routeExp.route("/allReportingMois").get(async function (req, res) {
                 var faute = report.faute;
                 var dateM = ""
                 var dateY = ""
+                var monthL = ""
                 if (report.start) {
                     var dateS = new Date(report.start);
-                    console.log("name", name);
-                    console.log("production", production);
-                    console.log("faute", faute);
-                    console.log("datesS", dateS.getMonth() + 1);
-                    console.log("datesS", dateS.getFullYear());
-                    dateM = dateS.getMonth()
+                    dateM = dateS.getMonth() + 1
                     dateY = dateS.getFullYear()
-
-                    var dateF = new Date(report.end);
+                    const dateMountL = new Date();
+                    dateMountL.setMonth(dateM - 1);
+                    monthL = dateMountL.toLocaleString('en-US', {
+                        month: 'long',
+                    })
                     dateS = dateS.toLocaleDateString("fr");
-                    dateF = dateF.toLocaleDateString("fr");
                 } else {
                     var dateS = null;
-                    var dateF = null;
                 }
                 var c = 1;
                 var productionNew
                 reporting.forEach(data => {
                     var debut = data.start.split("/");
-                    console.log("debut", debut[1]);
-                    debut = debut[1]
-                    console.log("debut", debut[1]);
-                    if ((data.mcode == mcode)) {//} && (debut === dateM) && (debut === dateY)) {
+                    var debutM = parseInt(debut[1])
+                    var debutY = parseInt(debut[2])
+                    if ((data.mcode == mcode) && (debutM === dateM) && (debutY === dateY)) {
                         productionNew = production
-                        console.log("######## egale ########", productionNew);
                         c = 0
                     }
                 })
 
+                if (c == 0) {
+
+                    newReporting = reporting.map(obj => {
+                        var debut = obj.start.split("/");
+                        var debutM = parseInt(debut[1])
+                        var debutY = parseInt(debut[2])
+                        if ((obj.mcode == mcode) && (debutM === dateM) && (debutY === dateY)) {
+                            obj.production = parseInt(obj.production) + parseInt(production);
+                            obj.faute = parseInt(obj.faute) + parseInt(faute)
+                            return obj
+                        }
+
+                        return obj;
+                    });
+                    suit = 1
+                } else {
+                    var newReport = new Reporting(mcode, name, production, faute, dateS, monthL)
+                    reporting.push(newReport)
+                    if (suit == 1) {
+                        newReporting.push(newReport)
+                    }
+                }
+            })
+            //console.log("newReportingMonth", newReporting);
+            res.send(newReporting)
+        })
+})
+
+//selection par semaine
+routeExp.route("/allReportingWeek").get(async function (req, res) {
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var allRep = await ReportingModel.find();
+            var reporting = [];
+            var newReporting = []
+            // console.log("allRep", allRep);
+            var suit = 0
+            allRep.forEach(report => {
+                var name = report.name;
+                var mcode = report.mcode;
+                var production = report.production;
+                var faute = report.faute;
+                var dateM = ""
+                var dateY = ""
+                var monthL = ""
+                if (report.start) {
+                    var dateS = new Date(report.start);
+                    var first = dateS.getDate() - dateS.getDay();
+                    var firstDayWeekAll = new Date(dateS.setDate(first));
+                    var lastDayWeek = new Date(dateS.setDate(first + 6));
+                    dateM = dateS.getMonth() + 1
+                    dateY = dateS.getFullYear()
+
+                    const dateMountL = new Date();
+                    dateMountL.setMonth(dateM - 1);
+                    monthL = dateMountL.toLocaleString('en-US', {
+                        month: 'long',
+                    })
+                } else {
+                    var dateS = null;
+                }
+                var c = 1;
+                var productionNew
+                reporting.forEach(data => {
+                    var dateSRep = new Date(data.start);
+                    var firstRep = dateSRep.getDate() - dateSRep.getDay();
+                    var firstDayWeekRep = new Date(dateSRep.setDate(firstRep));
+                    var lastDayWeek = new Date(dateSRep.setDate(firstRep + 6));
+                    if ((firstDayWeekAll.toString() === firstDayWeekRep.toString())) {
+                        productionNew = production
+                        c = 0
+                    }
+                })
 
                 if (c == 0) {
+
                     newReporting = reporting.map(obj => {
-                        console.log("même", obj);
-                        var debut = obj.start.split("/");
-                        debut = debut[1]
-                        console.log("debut", parseInt(debut[1]));
-                        if ((obj.mcode == mcode)) {//} && (debut == dateM) && (debut == dateY)) {
+                        var dateSNewR = new Date(obj.start);
+                        var firstNewR = dateSNewR.getDate() - dateSNewR.getDay();
+                        var firstDayWeekNW = new Date(dateSNewR.setDate(firstNewR));
+                        if ((firstDayWeekAll.toString() === dateSNewR.toString())) {
                             return { ...obj, production: parseInt(obj.production) + parseInt(production), faute: parseInt(obj.faute) + parseInt(faute) };
                         }
 
                         return obj;
                     });
-                    // reporting.forEach(data => {
-                    //     if (data.mcode == name) {
-                    //         console.log("seconde for", name);
-                    //         reporting.faute = 8;
-                    //         console.log("reporting.faute", reporting.faute);
-                    //     }
-                    // })
+                    suit = 1
                 } else {
-                    //console.log("différent");
-                    var newReport = new Reporting(mcode, name, production, faute, dateS, dateF)
+                    var newReport = new Reporting(mcode, name, production, faute, firstDayWeekAll, monthL)
                     reporting.push(newReport)
+                    if (suit == 1) {
+                        newReporting.push(newReport)
+                    }
                 }
-                //console.log("newReporting", reporting);
-
-
-
-                console.log("*********----------*********");
             })
 
-            console.log("newReporting", newReporting);
-            // const arr1 = [
-            //     { id: 1, name: 'Alice' },
-            //     { id: 1, name: 'Bob' },
-            //     { id: 3, name: 'Charlie' },
-            // ];
+            var newReportingWeek = []
+            reporting.forEach(rep => {
+                var name = rep.name;
+                var production = rep.production;
+                var mcode = rep.mcode;
+                var faute = rep.faute;
+                var start = rep.start;
+                var end = rep.end;
+                var dateS = ""
+                if (rep.start) {
+                    var dateS = new Date(rep.start)
+                    var dateF = new Date(rep.end)
+                    dateS = dateS.toLocaleDateString("fr")
+                    dateF = dateF.toLocaleDateString("fr")
+                    rep.start = dateS
+                } else {
+                    var dateS = null;
+                    var dateF = null
+                }
+                var newP = new ReportingWeek(mcode, name, production, faute, dateS, end)
+                newReportingWeek.push(newP)
+                //
 
-            // const newArr = arr1.map(obj => {
-            //     if (obj.id === 1) {
-            //         return { ...obj, name: 'Alfred' };
-            //     }
+            });
 
-            //     return obj;
-            // });
-
-            // console.log("newArr", newArr);
-            //console.log("reporting", reporting);
-            res.send(newReporting)
+            //console.log("newReportingWeek", newReportingWeek);
+            res.send(newReportingWeek)
         })
 })
 
+
 //Update Reporting
 routeExp.route('/updateReporting').post(async function (req, res) {
-    console.log("req.", req.body);
     var mcodeA = req.body.mcodeA;
     var productionA = req.body.productionA;
     var fauteA = req.body.fauteA;
     var debutA = req.body.debutA;
     var finA = req.body.finA;
-
     var mcode = req.body.mcode;
     var production = req.body.production;
     var faute = req.body.faute;
-    var debut = req.body.debut;
-    var fin = req.body.fin;
+    var debut = req.body.start;
+    var fin = req.body.end;
     var name = req.body.name;
 
 
@@ -2267,7 +2369,7 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
     var start = req.body.start;
     var end = req.body.end;
 
-    //console.log("req = ", req.body);
+    console.log("req = ", req.body.start);
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2278,10 +2380,95 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
         )
         .then(async () => {
             var deleteRep = await ReportingModel.findOneAndDelete({ mcode: mcode, name: name, production: production, faute: faute, start: start, end: end })
-
+            res.send("succes")
             //console.log("deleteRep", deleteRep);
         })
 
 })
 
+
+// routeExp.route('/listeUser').get(async function (req, res) {
+//     var session = req.session
+//     var projet = req.params.projet
+//     //console.log("projet", projet);
+//     res.render('./it/ListeUser', { type_util: session.typeUtil, projet: projet })
+// })
+
+
+
+//get user
+routeExp.route('/listecours').get(async function (req, res) {
+
+    var session = req.session
+    //if (session.typeUtil == "Operation") {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var allTL = await TLModel.find()
+            //console.log("allTL ", allTL);
+            res.render("./it/listeCours.html", { type_util: session.typeUtil, allTL: allTL })
+        })
+    // } else {
+    //     res.redirect("/")
+    // }
+})
+
+
+routeExp.route("/addAgentFile").get(async function (req, res) {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+
+            const parseExcel = (filename) => {
+                const excelData = XLSX.readFile(filename);
+
+                return Object.keys(excelData.Sheets).map(name => ({
+                    name,
+                    data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
+                }));
+            }
+            var liste = []
+            parseExcel("./Vue/assets/listeUser.xlsx").forEach(element => {
+                liste.push(element.data)
+            });
+
+            for (let i = 0; i < liste[0].length; i++) {
+                const element = liste[0][i];
+                //console.log("element", element);
+                var dataUser = {
+                    name: element.Nom,
+                    usualName: element.NomUsuel,
+                    mcode: element.MCode,
+                    number: element.Numbering,
+                    shift: element.Shift,
+                    project: element.Projet,
+                    site: element.Site,
+                    quartier: element.Quartier,
+                    tel: element.Phon
+                }
+                //console.log("dataUser", dataUser);
+                var agent = await AgentModel(dataUser).save()
+                // var listA = await AgentModel.find()
+                // for (let i = 0; i < listA.length; i++) {
+                //     const element = listA[i]._id;
+                //     await AgentModel.findOneAndDelete({ _id: element })
+                // }
+                console.log("dataUser", agent);
+            }
+            //console.log("liste", liste);
+            res.send("coucou")
+        })
+})
 module.exports = routeExp

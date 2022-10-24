@@ -1,17 +1,21 @@
 
-//$('#saveFileProjet').on('click', function () {
-// var myFile = $('#file').prop('files');
-// console.log("saveProjet", myFile);
+// $('#saveFileProjet').on('click', function () {
+//     var myFile = $('#file').prop('files');
+//     console.log("saveProjet", myFile);
 
 
-// $.ajax({
-//     url: '/upload',
-//     method: 'post',
-//     data: { file: myFile },
-//     success: function (resp) {
-//         console.log("resp", resp);
-//     }
+//     $.ajax({
+//         url: '/upload',
+//         method: 'post',
+//         data: { file: myFile },
+//         success: function (resp) {
+//             console.log("resp", resp);
+//         }
+//     })
+
 // })
+
+
 
 //console.log("$().val()", $("#nomProj").val());
 var donneF = {
@@ -29,7 +33,8 @@ document.getElementById('uploadForm').onsubmit = function (event) {
                 title: 'Nouveau consigne sauvegardé',
                 text: 'Consigne bien sauvegardé'
             })
-            //window.location = "/projet/" + donneF.n
+            //console.log("donneF.name", donneF.name);
+            window.location = "/projet/" + donneF.name
         } else { // errors occured
             document.getElementById("status").innerHTML = xhttp.status;
         }
@@ -40,7 +45,6 @@ document.getElementById('uploadForm').onsubmit = function (event) {
     formData.append('name', document.getElementById('nomProj').value)     // the text data
     formData.append('avatar', document.getElementById('avatar').files[0]) // since inputs allow multi files submission, therefore files are in array
     xhttp.send(formData)
-
     //console.log("form");
 }
 

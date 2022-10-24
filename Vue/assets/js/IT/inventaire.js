@@ -1,10 +1,10 @@
 var inventaireDataT = $('#inventaireDataT').DataTable(
     {
-        "ajax": {"url": "/allInventaire", "dataSrc": ""},
+        "ajax": { "url": "/allInventaire", "dataSrc": "" },
         "columns": [
-            {'data': 'name'},
-            {'data': "code"},
-            {'data': 'nombre'},
+            { 'data': 'name' },
+            { 'data': "code" },
+            { 'data': 'nombre' },
             {
                 'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -20,8 +20,8 @@ var inventaireDataT = $('#inventaireDataT').DataTable(
 // Add material in inventary
 $('#saveMateriel').on("click", function () {
     //swal("HEY", "Message", "warning")
-    Inventaire = { 
-        name: $('#nameMat').val(), 
+    Inventaire = {
+        name: $('#nameMat').val(),
         code: $('#codeMat').val(),
         nombr: $('#nombreMat').val()
     }
@@ -29,14 +29,15 @@ $('#saveMateriel').on("click", function () {
         url: '/addInventaire',
         method: 'post',
         data: Inventaire,
-        success: function(response) {
+        success: function (response) {
             if (response == "error") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Ce matériel est déjà existant'
+                    text: 'Ce matériel est déjà existant ou le nom ou la référence est incomplet'
                 })
-                clearForm()
+                // clearForm()
+                // window.location = "/inventaire"
             } else {
                 Swal.fire({
                     icon: 'success',
@@ -133,7 +134,7 @@ $(document).on('click', '#saveUpdateMat', function () {
 })
 
 //Delete material in inventary
-$(document).on('click', '.btnDeleteInventaire', function() {
+$(document).on('click', '.btnDeleteInventaire', function () {
     Swal.fire({
         title: 'Supprimer',
         text: 'Etes-vous sûr de vouloir supprimer ce matériel?',
@@ -142,7 +143,7 @@ $(document).on('click', '.btnDeleteInventaire', function() {
         confirmButtonColor: 'red',
         cancelButtonColor: 'green',
         confirmButtonText: 'Oui!'
-    }).then((result) =>{
+    }).then((result) => {
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
             var codeDelete = getCol.find('td:eq(1)').text();
@@ -173,12 +174,12 @@ $(document).on('click', '.btnDeleteInventaire', function() {
                     })
                 }
             })
-        } 
+        }
     })
 })
 
 
-var type =  $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
+var type = $('#typeUtil').val()// document.getElementById("typeUtil")//$('#typeUtil').val();
 
 if (type.trim() == "IT") {
     $("#utilisateur").css("display", "none")

@@ -5,10 +5,10 @@ var reportingDataTable = $("#reportingDataTable").DataTable({
     "columns": [
         { "data": "name" },
         { "data": "mcode" },
-        { "data": "production" },
-        { "data": "faute" },
         { "data": "start" },
         { "data": "end" },
+        { "data": "production" },
+        { "data": "faute" },
         {
             'defaultContent': `\ 
                 <div class='btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -99,10 +99,10 @@ $(document).on('click', '.btnUpdateReporting', function () {
     var getCol = $(this).closest('tr');
     mcodeA = getCol.find('td:eq(0)').text();
     nameA = getCol.find('td:eq(1)').text();
-    productionA = getCol.find('td:eq(2)').text();
-    fauteA = getCol.find('td:eq(3)').text();
-    debutA = getCol.find('td:eq(4)').text();
-    finA = getCol.find('td:eq(5)').text();
+    productionA = getCol.find('td:eq(4)').text();
+    fauteA = getCol.find('td:eq(5)').text();
+    debutA = getCol.find('td:eq(2)').text();
+    finA = getCol.find('td:eq(3)').text();
 
     debutA = debutA.split("/").reverse().join("-");
     finA = finA.split("/").reverse().join("-")
@@ -143,6 +143,8 @@ $("#saveUpdateMat").on("click", function () {
     var startUpdat = $('#debutUpdat').val();
     var endUpdat = $('#finUpdat').val();
 
+    // console.log("startUpdat", startUpdat);
+    // console.log("endUpdat", endUpdat);
     var dataReportUpdat = {
         name: nameUpdat,
         mcode: mcodeUpdat,
@@ -160,10 +162,10 @@ $("#saveUpdateMat").on("click", function () {
 
     $.ajax({
         url: "/updateReporting",
-        method: "post",
         data: dataReportUpdat,
+        method: "post",
         success: function (resp) {
-            console.log("resp", resp);
+            //console.log("resp", resp);
 
             if (resp == "error") {
                 Swal.fire(
@@ -181,6 +183,10 @@ $("#saveUpdateMat").on("click", function () {
                     'success',
                     { confirmButtonText: 'Ok' }
                 )
+                $("#cancelUpdate").click()
+                //reportingDataTable.ajax.reload(null, false)
+                // reportingDataTable.ajax.reload(null, false)
+                // reportingDataTable.ajax.reload(null, false)
                 window.location = "/reporting"
             }
         }
@@ -202,10 +208,10 @@ $(document).on("click", '.btnDeleteReporting', function () {
             var getCol = $(this).closest('tr');
             var mcode = getCol.find('td:eq(0)').text();
             var name = getCol.find('td:eq(1)').text();
-            var production = getCol.find('td:eq(2)').text();
-            var faute = getCol.find('td:eq(3)').text();
-            var debut = getCol.find('td:eq(4)').text();
-            var fin = getCol.find('td:eq(5)').text();
+            var production = getCol.find('td:eq(4)').text();
+            var faute = getCol.find('td:eq(5)').text();
+            var debut = getCol.find('td:eq(2)').text();
+            var fin = getCol.find('td:eq(3)').text();
 
 
             debut = debut.split("/").reverse().join("-");
@@ -231,6 +237,8 @@ $(document).on("click", '.btnDeleteReporting', function () {
                         showConfirmButton: true
                     })
                     $("#reportingDataTable").DataTable().ajax.reload(null, false)
+                    $("#reportingDataTableMonth").DataTable().ajax.reload(null, false)
+                    $("#reportingDataTableWeek").DataTable().ajax.reload(null, false)
 
                     //$("#").DataTable().ajax.reload(null, false)
                     //window.location = '/reporting'
@@ -249,33 +257,31 @@ $(document).on("click", '.btnDeleteReporting', function () {
     })
 })
 
-$('#semaine').on('click', function () {
-
+// document.getElementById("reportingDataTable").style.display = "none";
+// document.getElementById("reportingDataTableMonth").style.display = "block";
+var reportingDataTableMonth = $("#reportingDataTableMonth").DataTable({
+    "ajax": {
+        "url": "/allReportingMois", "dataSrc": ""
+    },
+    "columns": [
+        { "data": "name" },
+        { "data": "mcode" },
+        { "data": "end" },
+        { "data": "production" },
+        { "data": "faute" }
+    ]
 })
 
-$("#mois").on('click', function () {
-    console.log("mois");
-    document.getElementById("reportingDataTable").style.display = "none";
-    document.getElementById("reportingDataTableMonth").style.display = "block";
-    $("#reportingDataTableMonth").DataTable({
-        "ajax": {
-            "url": "/allReportingMois", "dataSrc": ""
-        },
-        "columns": [
-            { "data": "name" },
-            { "data": "mcode" },
-            { "data": "production" },
-            { "data": "faute" },
-            { "data": "start" },
-            { "data": "end" },
-            {
-                'defaultContent': `\ 
-                <div class='btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
-                    <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateReporting' data-toggle='modal' data-target='#modalUpdateReporting'><i class='fa fa-edit'></i></button>\
-                    <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteReporting'><i class='fa fa-trash'></i></button>\
-                </div>\
-            `
-            }
-        ]
-    })
+var reportingDataTableWeek = $("#reportingDataTableWeek").DataTable({
+    "ajax": {
+        "url": "/allReportingWeek", "dataSrc": ""
+    },
+    "columns": [
+        { "data": "name" },
+        { "data": "mcode" },
+        { "data": "end" },
+        { "data": "start" },
+        { "data": "production" },
+        { "data": "faute" },
+    ]
 })

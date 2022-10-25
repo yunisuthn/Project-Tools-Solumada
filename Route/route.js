@@ -14,6 +14,9 @@ const ProjectModel = require("../Model/ProjectModel")
 const ProjetFileModel = require("../Model/ProjetFileModel")
 const ReportingModel = require("../Model/ReportingModel");
 
+//planning congé Ricardo Base de donné
+const leaveModel = require("../Model/leave")
+
 const XLSX = require('xlsx');
 const pdfParse = require("pdf-parse")
 const fs = require("fs")
@@ -1670,6 +1673,7 @@ routeExp.route("/allPlanning").get(async function (req, res) {
             }
         )
         .then(async () => {
+
             var allPlanning = await PlanningModel.find()
             var planning = []
             allPlanning.forEach(plan => {
@@ -1698,6 +1702,46 @@ routeExp.route("/allPlanning").get(async function (req, res) {
         })
 })
 
+
+// routeExp.route("/allPlanning").get(async function (req, res) {
+
+//     mongoose
+//         .connect(
+//             "mongodb+srv://rica:ryane_jarello5@cluster0.z3s3n.mongodb.net/Pointage?retryWrites=true&w=majority",
+//             {
+//                 useUnifiedTopology: true,
+//                 UseNewUrlParser: true,
+//             }
+//         )
+//         .then(async () => {
+
+//             var allPlanning = await PlanningModel.find()
+//             var planning = []
+//             allPlanning.forEach(plan => {
+//                 var usualName = plan.usualName;
+//                 var shift = plan.shift;
+//                 var mcode = plan.mcode;
+//                 var project = plan.project;
+//                 if (plan.start) {
+//                     var dateS = new Date(plan.start)
+//                     var dateF = new Date(plan.end)
+//                     dateS = dateS.toLocaleDateString("fr")
+//                     dateF = dateF.toLocaleDateString("fr")
+
+//                     plan.start = dateS
+//                 } else {
+//                     var dateS = null;
+//                     var dateF = null
+//                 }
+//                 var newP = new Plannings(shift, usualName, mcode, project, dateS, dateF)
+//                 planning.push(newP)
+
+
+//             });
+//             console.log("allPlanning", planning);
+//             res.send(planning)
+//         })
+// })
 
 //get all planning
 routeExp.route("/allPlannigView").get(async function (req, res) {
@@ -2472,3 +2516,7 @@ routeExp.route("/addAgentFile").get(async function (req, res) {
         })
 })
 module.exports = routeExp
+
+
+
+//"mongodb+srv://rica:ryane_jarello5@cluster0.z3s3n.mongodb.net/Pointage?retryWrites=true&w=majority"

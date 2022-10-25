@@ -38,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use("/", route)
 
-const server = app.listen(process.env.PORT || PORT, () => {
+const server = app.listen(PORT, () => {
     const port = server.address().port;
     console.log(`Express is working on port ${port}`);
 })

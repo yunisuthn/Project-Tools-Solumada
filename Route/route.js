@@ -708,7 +708,20 @@ routeExp.route('/agent').get(async function (req, res) {
 
     var session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
-        res.render("./production/listeAgent.html", { type_util: session.typeUtil })
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+                var Projet = await ProjectModel.find();
+                // console.log("listAgent", Projet);
+                res.render("./production/listeAgent.html", { type_util: session.typeUtil, projet: Projet })
+
+            })
     } else {
         res.redirect("/")
     }
@@ -1662,11 +1675,30 @@ class ReportingWeek {
         this.end = end;
     }
 }
+// routeExp.route("/allPlanning").get(async function (req, res) {
+
+//     console.log("allPlanning");
+//     mongoose
+//         .connect(
+//             "mongodb+srv://Rica:ryane_jarello5@cluster0.z3s3n.mongodb.net/Pointage?retryWrites=true&w=majority",
+//             {
+//                 useUnifiedTopology: true,
+//                 UseNewUrlParser: true,
+//             }
+//         )
+//         .then(async () => {
+//             console.log("allPlanning **** ");
+//             var planning = await leaveModel.find({ $or: [{ status: "en attente" }, { status: "en cours" }] })
+//             res.send(planning)
+//         })
+// })
+
+
 routeExp.route("/allPlanning").get(async function (req, res) {
 
     mongoose
         .connect(
-            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            "mongodb+srv://solumada:solumada@cluster0.z3s3n.mongodb.net/Pointage?retryWrites=true&w=majority",
             {
                 useUnifiedTopology: true,
                 UseNewUrlParser: true,
@@ -1694,54 +1726,13 @@ routeExp.route("/allPlanning").get(async function (req, res) {
                 }
                 var newP = new Plannings(shift, usualName, mcode, project, dateS, dateF)
                 planning.push(newP)
-                //
+
 
             });
             //console.log("allPlanning", planning);
             res.send(planning)
         })
 })
-
-
-// routeExp.route("/allPlanning").get(async function (req, res) {
-
-//     mongoose
-//         .connect(
-//             "mongodb+srv://rica:ryane_jarello5@cluster0.z3s3n.mongodb.net/Pointage?retryWrites=true&w=majority",
-//             {
-//                 useUnifiedTopology: true,
-//                 UseNewUrlParser: true,
-//             }
-//         )
-//         .then(async () => {
-
-//             var allPlanning = await PlanningModel.find()
-//             var planning = []
-//             allPlanning.forEach(plan => {
-//                 var usualName = plan.usualName;
-//                 var shift = plan.shift;
-//                 var mcode = plan.mcode;
-//                 var project = plan.project;
-//                 if (plan.start) {
-//                     var dateS = new Date(plan.start)
-//                     var dateF = new Date(plan.end)
-//                     dateS = dateS.toLocaleDateString("fr")
-//                     dateF = dateF.toLocaleDateString("fr")
-
-//                     plan.start = dateS
-//                 } else {
-//                     var dateS = null;
-//                     var dateF = null
-//                 }
-//                 var newP = new Plannings(shift, usualName, mcode, project, dateS, dateF)
-//                 planning.push(newP)
-
-
-//             });
-//             console.log("allPlanning", planning);
-//             res.send(planning)
-//         })
-// })
 
 //get all planning
 routeExp.route("/allPlannigView").get(async function (req, res) {
@@ -2413,7 +2404,7 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
     var start = req.body.start;
     var end = req.body.end;
 
-    console.log("req = ", req.body.start);
+    //console.log("req = ", req.body.start);
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2509,10 +2500,33 @@ routeExp.route("/addAgentFile").get(async function (req, res) {
                 //     const element = listA[i]._id;
                 //     await AgentModel.findOneAndDelete({ _id: element })
                 // }
-                console.log("dataUser", agent);
+                //console.log("dataUser", agent);
             }
             //console.log("liste", liste);
             res.send("coucou")
+        })
+})
+
+
+//liste agent filter
+routeExp.route('/agentFilter/:shift').get(async function (req, res) {
+
+    var session = req.session
+    var shift = req.params.shift;
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var all = await AgentModel.find({ shift: shift })
+            // var Projet = await ProjectModel.find();
+            //console.log("listAgent", all);
+            res.send(all)
         })
 })
 module.exports = routeExp

@@ -263,4 +263,111 @@ if (type.trim() == "IT") {
     $("#utilisateur").css("display", "none")
     $("#historique").css("display", "none")
     // console.log("page TL");
-} 
+}
+
+
+$(document).on("change", "#filterShift", function () {
+    var shift = $("#filterShift").val();
+    var projet = $("#filterProj").val();
+    // console.log("shift", shift);
+    // console.log("shift", projet);
+    // var dataShift = {
+    //     shift: shift
+    // }
+    if (shift == "all" && projet == "all") {
+        $("#table-container").empty();
+        var tableData = `<table id="agentDataTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom complet</th>
+                                                <th>Nom usuel</th>
+                                                <th>M-Code</th>
+                                                <th>Numbering</th>
+                                                <th>Shift</th>
+                                                <th>Projet</th>
+                                                <th>Site</th>
+                                                <th>Quartier</th>
+                                                <th>Mobil phon</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>`;
+        $("#table-container").append(tableData);
+
+        console.log("shiftshift", shift);
+        $("#agentDataTable").DataTable({
+            "ajax": { "url": `/allAgent`, "dataSrc": "" },
+            "columns": [
+                { 'data': 'name' },
+                { 'data': "usualName" },
+                { 'data': 'mcode' },
+                { 'data': 'number' },
+                { 'data': "shift" },
+                { 'data': 'project' },
+                { 'data': 'site' },
+                { 'data': "quartier" },
+                { 'data': 'tel' },
+                {
+                    'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateAgent' data-toggle='modal' data-target='#modalUpdateAgent' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteAgent'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+                }
+            ]
+        })
+    } else if (shift != "all" && projet == "all") {
+        $("#table-container").empty();
+        var tableData = `<table id="agentDataTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom complet</th>
+                                                <th>Nom usuel</th>
+                                                <th>M-Code</th>
+                                                <th>Numbering</th>
+                                                <th>Shift</th>
+                                                <th>Projet</th>
+                                                <th>Site</th>
+                                                <th>Quartier</th>
+                                                <th>Mobil phon</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>`;
+        $("#table-container").append(tableData);
+
+        // console.log("shiftshift", shift);
+        $("#agentDataTable").DataTable({
+            "ajax": { "url": `/agentFilter/${shift}`, "dataSrc": "" },
+            "columns": [
+                { 'data': 'name' },
+                { 'data': "usualName" },
+                { 'data': 'mcode' },
+                { 'data': 'number' },
+                { 'data': "shift" },
+                { 'data': 'project' },
+                { 'data': 'site' },
+                { 'data': "quartier" },
+                { 'data': 'tel' },
+                {
+                    'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateAgent' data-toggle='modal' data-target='#modalUpdateAgent' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteAgent'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+                }
+            ]
+        })
+        // $.ajax({
+        //     url: `/agentFilter:${shift}`,
+        //     method: "get",
+        //     success: function (resp) {
+        //         console.log("resp", resp);
+        //     }
+        // })
+    }
+})

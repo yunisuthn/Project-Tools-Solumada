@@ -6,14 +6,13 @@ const route = require('./Route/route')
 const PORT = process.env.PORT || 8000
 const methodOverride = require("method-override")
 const expression = require('express-session')
-
 const fileUpload = require('express-fileupload');
 app.use(fileUpload()); // Don't forget this line!
 
 // app.post('/upload', function (req, res) {
 //     console.log(req.files);
 //     res.send('UPLOADED!!!');
-// });
+// });  
 app.use(methodOverride("X-HTTP-Method"))
 app.use(methodOverride("X-HTTP-Method-Override"))
 app.use(methodOverride("X-Method-Override"))

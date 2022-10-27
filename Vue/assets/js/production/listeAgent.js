@@ -19,10 +19,17 @@ var agentDataTable = $('#agentDataTable').DataTable(
                     <div>\
                 `
             }
+        ],
+
+        "dom": 'Bfrtip',
+        "buttons": [
+            { extend: 'excel', className: 'btn btn-secondary' }
         ]
+        // "buttons": [
+        //     'excel'
+        // ]
     }
 )
-
 
 
 $("#saveAgent").on('click', function () {
@@ -120,7 +127,7 @@ $(document).on('click', '.btnUpdateAgent', function () {
     $("#usualNameUpdat").val(usualName)
     $("#numberUpdat").val(number)
     $("#shiftUpdat").val(shift)
-    $("#projectUpdat").val(project)
+    //$("#projectUpdat").val(project)
     $("#siteUpdat").val(site)
     $("#quartierUpdat").val(quartier)
     $("#telUpdat").val(phon)
@@ -129,6 +136,9 @@ $(document).on('click', '.btnUpdateAgent', function () {
     // UserUpdat = {
     //     name: $()
     // }
+    $('#projectUpdat').val(null).trigger('change');
+
+
 })
 
 //save update user
@@ -269,11 +279,6 @@ if (type.trim() == "IT") {
 $(document).on("change", "#filterShift", function () {
     var shift = $("#filterShift").val();
     var projet = $("#filterProj").val();
-    // console.log("shift", shift);
-    // console.log("shift", projet);
-    // var dataShift = {
-    //     shift: shift
-    // }
     if (shift == "all" && projet == "all") {
         $("#table-container").empty();
         var tableData = `<table id="agentDataTable" class="table table-striped table-bordered">
@@ -316,6 +321,11 @@ $(document).on("change", "#filterShift", function () {
                     <div>\
                 `
                 }
+            ],
+
+            "dom": 'Bfrtip',
+            "buttons": [
+                { extend: 'excel', className: 'btn btn-secondary' }
             ]
         })
     } else if (shift != "all" && projet == "all") {
@@ -360,6 +370,11 @@ $(document).on("change", "#filterShift", function () {
                     <div>\
                 `
                 }
+            ],
+
+            "dom": 'Bfrtip',
+            "buttons": [
+                { extend: 'excel', className: 'btn btn-secondary' }
             ]
         })
         // $.ajax({
@@ -369,5 +384,322 @@ $(document).on("change", "#filterShift", function () {
         //         console.log("resp", resp);
         //     }
         // })
+    } else if (shift != "all" && projet != "all") {
+        $("#table-container").empty();
+        var tableData = `<table id="agentDataTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom complet</th>
+                                                <th>Nom usuel</th>
+                                                <th>M-Code</th>
+                                                <th>Numbering</th>
+                                                <th>Shift</th>
+                                                <th>Projet</th>
+                                                <th>Site</th>
+                                                <th>Quartier</th>
+                                                <th>Mobil phon</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>`;
+        $("#table-container").append(tableData);
+
+        // console.log("shiftshift", shift);
+        $("#agentDataTable").DataTable({
+            "ajax": { "url": `/agentFilterProjShift/${shift}/${projet}`, "dataSrc": "" },
+            "columns": [
+                { 'data': 'name' },
+                { 'data': "usualName" },
+                { 'data': 'mcode' },
+                { 'data': 'number' },
+                { 'data': "shift" },
+                { 'data': 'project' },
+                { 'data': 'site' },
+                { 'data': "quartier" },
+                { 'data': 'tel' },
+                {
+                    'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateAgent' data-toggle='modal' data-target='#modalUpdateAgent' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteAgent'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+                }
+            ],
+
+            "dom": 'Bfrtip',
+            "buttons": [
+                { extend: 'excel', className: 'btn btn-secondary' }
+            ]
+        })
+    } else if (shift == "all" && projet != "all") {
+        $("#table-container").empty();
+        var tableData = `<table id="agentDataTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom complet</th>
+                                                <th>Nom usuel</th>
+                                                <th>M-Code</th>
+                                                <th>Numbering</th>
+                                                <th>Shift</th>
+                                                <th>Projet</th>
+                                                <th>Site</th>
+                                                <th>Quartier</th>
+                                                <th>Mobil phon</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>`;
+        $("#table-container").append(tableData);
+
+        $("#agentDataTable").DataTable({
+            "ajax": { "url": `/agentFilterProjet/${projet}`, "dataSrc": "" },
+            "columns": [
+                { 'data': 'name' },
+                { 'data': "usualName" },
+                { 'data': 'mcode' },
+                { 'data': 'number' },
+                { 'data': "shift" },
+                { 'data': 'project' },
+                { 'data': 'site' },
+                { 'data': "quartier" },
+                { 'data': 'tel' },
+                {
+                    'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateAgent' data-toggle='modal' data-target='#modalUpdateAgent' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteAgent'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+                }
+            ],
+
+            "dom": 'Bfrtip',
+            "buttons": [
+                { extend: 'excel', className: 'btn btn-secondary' }
+            ]
+        })
     }
+})
+
+
+
+$(document).on("change", "#filterProj", function () {
+    var shift = $("#filterShift").val();
+    var projet = $("#filterProj").val();
+    if (shift == "all" && projet == "all") {
+        $("#table-container").empty();
+        var tableData = `<table id="agentDataTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom complet</th>
+                                                <th>Nom usuel</th>
+                                                <th>M-Code</th>
+                                                <th>Numbering</th>
+                                                <th>Shift</th>
+                                                <th>Projet</th>
+                                                <th>Site</th>
+                                                <th>Quartier</th>
+                                                <th>Mobil phon</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>`;
+        $("#table-container").append(tableData);
+
+        //console.log("shiftshift", shift);
+        $("#agentDataTable").DataTable({
+            "ajax": { "url": `/allAgent`, "dataSrc": "" },
+            "columns": [
+                { 'data': 'name' },
+                { 'data': "usualName" },
+                { 'data': 'mcode' },
+                { 'data': 'number' },
+                { 'data': "shift" },
+                { 'data': 'project' },
+                { 'data': 'site' },
+                { 'data': "quartier" },
+                { 'data': 'tel' },
+                {
+                    'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateAgent' data-toggle='modal' data-target='#modalUpdateAgent' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteAgent'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+                }
+            ],
+
+            "dom": 'Bfrtip',
+            "buttons": [
+                { extend: 'excel', className: 'btn btn-secondary' }
+            ]
+        })
+    } else if (shift == "all" && projet != "all") {
+        $("#table-container").empty();
+        var tableData = `<table id="agentDataTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom complet</th>
+                                                <th>Nom usuel</th>
+                                                <th>M-Code</th>
+                                                <th>Numbering</th>
+                                                <th>Shift</th>
+                                                <th>Projet</th>
+                                                <th>Site</th>
+                                                <th>Quartier</th>
+                                                <th>Mobil phon</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>`;
+        $("#table-container").append(tableData);
+
+        // console.log("shiftshift", shift);
+        $("#agentDataTable").DataTable({
+            "ajax": { "url": `/agentFilterProjet/${projet}`, "dataSrc": "" },
+            "columns": [
+                { 'data': 'name' },
+                { 'data': "usualName" },
+                { 'data': 'mcode' },
+                { 'data': 'number' },
+                { 'data': "shift" },
+                { 'data': 'project' },
+                { 'data': 'site' },
+                { 'data': "quartier" },
+                { 'data': 'tel' },
+                {
+                    'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateAgent' data-toggle='modal' data-target='#modalUpdateAgent' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteAgent'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+                }
+            ],
+
+            "dom": 'Bfrtip',
+            "buttons": [
+                { extend: 'excel', className: 'btn btn-secondary' }
+            ]
+        })
+    } else if (shift != "all" && projet != "all") {
+        $("#table-container").empty();
+        var tableData = `<table id="agentDataTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom complet</th>
+                                                <th>Nom usuel</th>
+                                                <th>M-Code</th>
+                                                <th>Numbering</th>
+                                                <th>Shift</th>
+                                                <th>Projet</th>
+                                                <th>Site</th>
+                                                <th>Quartier</th>
+                                                <th>Mobil phon</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>`;
+        $("#table-container").append(tableData);
+
+        // console.log("shiftshift", shift);
+        $("#agentDataTable").DataTable({
+            "ajax": { "url": `/agentFilterProjShift/${shift}/${projet}`, "dataSrc": "" },
+            "columns": [
+                { 'data': 'name' },
+                { 'data': "usualName" },
+                { 'data': 'mcode' },
+                { 'data': 'number' },
+                { 'data': "shift" },
+                { 'data': 'project' },
+                { 'data': 'site' },
+                { 'data': "quartier" },
+                { 'data': 'tel' },
+                {
+                    'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateAgent' data-toggle='modal' data-target='#modalUpdateAgent' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteAgent'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+                }
+            ],
+
+            "dom": 'Bfrtip',
+            "buttons": [
+                { extend: 'excel', className: 'btn btn-secondary' }
+            ]
+        })
+    } else if (shift != "all" && projet == "all") {
+        $("#table-container").empty();
+        var tableData = `<table id="agentDataTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nom complet</th>
+                                                <th>Nom usuel</th>
+                                                <th>M-Code</th>
+                                                <th>Numbering</th>
+                                                <th>Shift</th>
+                                                <th>Projet</th>
+                                                <th>Site</th>
+                                                <th>Quartier</th>
+                                                <th>Mobil phon</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>`;
+        $("#table-container").append(tableData);
+
+        $("#agentDataTable").DataTable({
+            "ajax": { "url": `/agentFilter/${shift}`, "dataSrc": "" },
+            "columns": [
+                { 'data': 'name' },
+                { 'data': "usualName" },
+                { 'data': 'mcode' },
+                { 'data': 'number' },
+                { 'data': "shift" },
+                { 'data': 'project' },
+                { 'data': 'site' },
+                { 'data': "quartier" },
+                { 'data': 'tel' },
+                {
+                    'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateAgent' data-toggle='modal' data-target='#modalUpdateAgent' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteAgent'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+                }
+            ],
+
+            "dom": 'Bfrtip',
+            "buttons": [
+                { extend: 'excel', className: 'btn btn-secondary' }
+            ]
+        })
+    }
+})
+
+
+var $updateproj = $("#projectUpdat").select2()
+var $exampleMulti = $("#project").select2();
+
+$(".add").on('click', function () {
+    //$("#project").val("")
+    //$exampleMulti.val(null).trigger("change");
+    $('#project').val(null).trigger('change');
+});
+
+
+
+document.getElementById("exportExcel").addEventListener('click', function () {
+    var table2excel = new Table2Excel();
+    table2excel.export(document.querySelectorAll("#agentDataTable"));
 })

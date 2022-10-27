@@ -765,6 +765,8 @@ routeExp.route('/addAgent').post(async function (req, res) {
 
 
     var session = req.session
+
+    //console.log("project", project);
     if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -856,7 +858,7 @@ routeExp.route('/allAgent').get(async function (req, res) {
             )
             .then(async () => {
                 var all = await AgentModel.find()
-                // console.log("all", all);
+                //console.log("all", all);
                 res.send(all)
             })
     } else {
@@ -1729,7 +1731,7 @@ routeExp.route("/allPlanning").get(async function (req, res) {
 
 
             });
-            //console.log("allPlanning", planning);
+            console.log("allPlanning", planning);
             res.send(planning)
         })
 })
@@ -2446,6 +2448,7 @@ routeExp.route('/listecours').get(async function (req, res) {
         )
         .then(async () => {
             var allTL = await TLModel.find()
+
             //console.log("allTL ", allTL);
             res.render("./it/listeCours.html", { type_util: session.typeUtil, allTL: allTL })
         })
@@ -2454,7 +2457,7 @@ routeExp.route('/listecours').get(async function (req, res) {
     // }
 })
 
-
+// Ajout agent dans le fichier excel
 routeExp.route("/addAgentFile").get(async function (req, res) {
     mongoose
         .connect(
@@ -2507,8 +2510,29 @@ routeExp.route("/addAgentFile").get(async function (req, res) {
         })
 })
 
+// Partage des projets en array dans le base de donnée
+// routeExp.route("/AddProjet").get(async function (req, res) {
+//     mongoose
+//         .connect(
+//             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+//             {
+//                 useUnifiedTopology: true,
+//                 UseNewUrlParser: true,
+//             }
+//         )
+//         .then(async () => {
 
-//liste agent filter
+//             var allProjet = await AgentModel.find()
+//             for (let i = 0; i < allProjet.length; i++) {
+//                 const element = allProjet[i];
+//                 console.log("element", element.project);
+//             }
+//             //console.log("liste", allProjet);
+//             res.send(allProjet)
+//         })
+// })
+
+//liste agent filter par shift
 routeExp.route('/agentFilter/:shift').get(async function (req, res) {
 
     var session = req.session
@@ -2526,6 +2550,53 @@ routeExp.route('/agentFilter/:shift').get(async function (req, res) {
             var all = await AgentModel.find({ shift: shift })
             // var Projet = await ProjectModel.find();
             //console.log("listAgent", all);
+            res.send(all)
+        })
+})
+
+
+//liste agent filter par agent
+routeExp.route('/agentFilterProjet/:projet').get(async function (req, res) {
+
+    var session = req.session
+    var projet = req.params.projet;
+
+    console.log("projet", projet);
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var all = await AgentModel.find({ project: { $all: [projet] } })
+            // var Projet = await ProjectModel.find();
+            //console.log("listProjet", all);
+            console.log("agentFilterProjet");
+            res.send(all)
+        })
+})
+//liste agent filter
+routeExp.route('/agentFilterProjShift/:shift/:projet').get(async function (req, res) {
+
+    var session = req.session
+    var shift = req.params.shift;
+    var projet = req.params.projet;
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var all = await AgentModel.find({ shift: shift, project: { $all: [projet] } })
+            // var Projet = await ProjectModel.find();
+            // console.log("listAgent", all);
             res.send(all)
         })
 })

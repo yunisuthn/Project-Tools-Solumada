@@ -665,10 +665,8 @@ routeExp.route('/planning').get(async function (req, res) {
                     }
                 ])
                 var agent = await AgentModel.find()
-
-                var plan = await ProjectModel.find()
-                //console.log("agent", plan);
-                res.render("./production/planning.html", { type_util: session.typeUtil, plan: plan, agent: agent })
+                //console.log("agent", agent);
+                res.render("./production/planning.html", { type_util: session.typeUtil, plan: planning, agent: agent })
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
     } else {
@@ -1679,21 +1677,24 @@ class ReportingWeek {
         this.end = end;
     }
 }
-
 routeExp.route("/allPlanning").get(async function (req, res) {
-    //console.log("allPlanning");
-    leaveModel.find({ $or: [{ status: "en attente" }, { status: "en cours" }] })
-        .then(notes => {
-            //console.log("notes", notes);
 
-            //Shift - Nom - Start - End - Projet
-            res.send(notes);
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || 'some error'
-            });
-        });
-});
+    console.log("allPlanning");
+    mongoose
+        .connect(
+            "mongodb+srv://Rica:ryane_jarello5@cluster0.z3s3n.mongodb.net/Pointage?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            console.log("allPlanning **** ");
+            var planning = await leaveModel.find({ $or: [{ status: "en attente" }, { status: "en cours" }] })
+            res.send(planning)
+        })
+})
+
 
 // routeExp.route("/allPlanning").get(async function (req, res) {
 
@@ -1736,20 +1737,22 @@ routeExp.route("/allPlanning").get(async function (req, res) {
 // })
 
 //get all planning
-
 routeExp.route("/allPlannigView").get(async function (req, res) {
 
-    leaveModel.find({ $or: [{ status: "en attente" }, { status: "en cours" }] })
-        .then(notes => {
-            console.log("notes", notes);
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var allPlanning = await PlanningModel.find()
 
-            //Shift - Nom - Start - End - Projet
-            res.send(notes);
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || 'some error'
-            });
-        });
+            //console.log("allPlanning", allPlanning);
+            res.send(allPlanning)
+        })
 })
 
 routeExp.route("/planning/project/shift").get(async function (req, res) {

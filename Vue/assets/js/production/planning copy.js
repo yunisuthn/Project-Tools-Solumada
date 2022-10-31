@@ -305,25 +305,19 @@ function planningView() {
                 // });
                 data.addColumn({
                     type: 'string',
-                    id: 'Nom'
+                    id: 'nom'
                 })
 
                 data.addColumn({
                     type: 'date',
-                    id: 'Start'
+                    id: 'date_start'
                 });
                 data.addColumn({
                     type: 'date',
-                    id: 'End'
+                    id: 'date_end'
                 });
                 resp.forEach(el => {
-                    console.log("resp", el);
-                    console.log("resp", el.m_code);
-                    console.log("resp", el.date_start);
-                    console.log("resp", el.date_end);
-                    //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-                    data.addRows([el.nom, el.m_code, new Date(el.date_start), new Date(el.date_end)])
-                    // data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                    data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                 });
                 dashboard.bind(control, chart);
 

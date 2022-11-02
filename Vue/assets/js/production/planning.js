@@ -1,10 +1,11 @@
 var planningDataTable = $("#planningDataTable").DataTable({
-    "ajax": { "url": "/allPlanning", "dataSrc": "" },
+    "ajax": { "url": "/allPlannigView", "dataSrc": "" },
     "columns": [
         //{ "data": "shift" },
         { "data": "nom" },
         { "data": "m_code" },
-        //{ "data": "project" },
+        { "data": "users[0].shift" },
+        { "data": "users[0].project" },
         {
             "data": "date_start"
         },
@@ -216,6 +217,7 @@ function planningView() {
             });
             google.setOnLoadCallback(drawVisualization);
 
+            //console.log("resp", resp);
             function drawVisualization() {
                 var dashboard = new google.visualization.Dashboard(
                     document.getElementById('dashboard'));
@@ -317,8 +319,8 @@ function planningView() {
                     id: 'date_end'
                 });
                 resp.forEach(el => {
-                    //console.log("el", el);
                     //data.addRows([[el.m_code, el.nom, new Date(el.date_start), new Date(el.date_end)]])
+                    //data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                     data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                 });
                 dashboard.bind(control, chart);
@@ -521,7 +523,7 @@ $(document).on('change', '#filterProj', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.shift == shift) {
+                        if (elel.users[0].shift == shift) {
                             //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                             data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
@@ -714,7 +716,7 @@ $(document).on('change', '#filterProj', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.shift == shift && el.project == project) {
+                        if (el.users[0].shift == shift && el.project == project) {
                             //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                             data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
@@ -916,7 +918,7 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.shift == shift) {
+                        if (el.users[0].shift == shift) {
                             // data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                             data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
@@ -1103,7 +1105,7 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.shift == shift && el.project == project) {
+                        if (el.users[0].shift == shift && el.project == project) {
                             // data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                             data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }

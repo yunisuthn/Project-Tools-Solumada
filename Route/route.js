@@ -1424,6 +1424,13 @@ async function login(email, password, session, res) {
                 })
             }
         })
+
+        .catch(err => {
+            console.log("erreur de connexion mdatabase");
+            // res.status(500).send({
+            //     message: err.message || 'some error'
+            // });;
+        });
 }
 
 routeExp.route("/logout").get(async function (req, res) {
@@ -1766,15 +1773,24 @@ routeExp.route("/allPlannigView").get(async function (req, res) {
             $match: {
                 $or: [
                     {
-                        status: "en attente"
-                    }, {
-                        status: "en cours"
+                        "users.shift": "SHIFT 1"
+                    },
+                    {
+                        "users.shift": "SHIFT 2"
+                    },
+                    {
+                        "users.shift": "SHIFT 3"
+                    },
+                    {
+                        "users.shift": "SHIFT WEEKEND"
                     }
+                    // , {
+                    //     status: "en cours"
+                    // }
                 ]
             }
         }
     ])
-
         .then(user => {
             //console.log("user", user.users);
             var newUs = []
@@ -1783,8 +1799,8 @@ routeExp.route("/allPlannigView").get(async function (req, res) {
                 if (element.users.length > 0) {
                     newUs.push(element)
                 }
+
             }
-            //console.log("element", newUs);
             res.send(newUs)
         })
 });
@@ -2701,6 +2717,23 @@ routeExp.route('/agentFilterProjShift/:shift/:projet').get(async function (req, 
             // console.log("listAgent", all);
             res.send(all)
         })
+})
+
+//get shift
+routeExp.route('/getAllUserClock').get(async function (req, res) {
+
+    userModelClock.find()
+        .then(notes => {
+            console.log("notes", notes);
+
+            //Shift - Nom - Start - End - Projet
+            res.send(notes);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || 'some error'
+            });
+        });
+
 })
 module.exports = routeExp
 

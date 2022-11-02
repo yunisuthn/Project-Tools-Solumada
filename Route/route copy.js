@@ -16,7 +16,6 @@ const ReportingModel = require("../Model/ReportingModel");
 
 //planning congé Ricardo Base de donné
 const leaveModel = require("../Model/leave")
-const userModelClock = require("../Model/User")
 
 const XLSX = require('xlsx');
 const pdfParse = require("pdf-parse")
@@ -666,10 +665,8 @@ routeExp.route('/planning').get(async function (req, res) {
                     }
                 ])
                 var agent = await AgentModel.find()
-
-                var plan = await ProjectModel.find()
-                //console.log("agent", plan);
-                res.render("./production/planning.html", { type_util: session.typeUtil, plan: plan, agent: agent })
+                //console.log("agent", agent);
+                res.render("./production/planning.html", { type_util: session.typeUtil, plan: planning, agent: agent })
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
     } else {
@@ -1424,13 +1421,6 @@ async function login(email, password, session, res) {
                 })
             }
         })
-
-        .catch(err => {
-            console.log("erreur de connexion mdatabase");
-            // res.status(500).send({
-            //     message: err.message || 'some error'
-            // });;
-        });
 }
 
 routeExp.route("/logout").get(async function (req, res) {
@@ -1687,35 +1677,24 @@ class ReportingWeek {
         this.end = end;
     }
 }
-
 routeExp.route("/allPlanning").get(async function (req, res) {
-    //console.log("allPlanning");
-    // leaveModel.find({ $or: [{ status: "en attente" }, { status: "en cours" }] })
-    //     .then(notes => {
-    //         //console.log("notes", notes);
 
-    //         //Shift - Nom - Start - End - Projet
-    //         res.send(notes);
-    //     }).catch(err => {
-    //         res.status(500).send({
-    //             message: err.message || 'some error'
-    //         });
-    //     });
+    console.log("allPlanning");
+    mongoose
+        .connect(
+            "mongodb+srv://Rica:ryane_jarello5@cluster0.z3s3n.mongodb.net/Pointage?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            console.log("allPlanning **** ");
+            var planning = await leaveModel.find({ $or: [{ status: "en attente" }, { status: "en cours" }] })
+            res.send(planning)
+        })
+})
 
-
-
-    leaveModel.find({ $or: [{ status: "en attente" }, { status: "en cours" }] })
-        .then(notes => {
-            //console.log("notes", notes);
-
-            //Shift - Nom - Start - End - Projet
-            res.send(notes);
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || 'some error'
-            });
-        });
-});
 
 // routeExp.route("/allPlanning").get(async function (req, res) {
 
@@ -1759,119 +1738,22 @@ routeExp.route("/allPlanning").get(async function (req, res) {
 
 //get all planning
 routeExp.route("/allPlannigView").get(async function (req, res) {
-    //console.log("allPlanning");
-    leaveModel.aggregate([
-        {
-            $lookup: {
-                from: 'cusers',
-                localField: 'm_code',
-                foreignField: 'm_code',
-                as: 'users'
-            }
-        },
-        {
-            $match: {
-                $or: [
-                    {
-                        "users.shift": "SHIFT 1"
-                    },
-                    {
-                        "users.shift": "SHIFT 2"
-                    },
-                    {
-                        "users.shift": "SHIFT 3"
-                    },
-                    {
-                        "users.shift": "SHIFT WEEKEND"
-                    }
-                    // , {
-                    //     status: "en cours"
-                    // }
-                ]
-            }
-        }
-    ])
-        .then(user => {
-            //console.log("user", user.users);
-            var newUs = []
-            for (let i = 0; i < user.length; i++) {
-                const element = user[i];
-                if (element.users.length > 0) {
-                    newUs.push(element)
-                }
 
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
             }
-            res.send(newUs)
+        )
+        .then(async () => {
+            var allPlanning = await PlanningModel.find()
+
+            //console.log("allPlanning", allPlanning);
+            res.send(allPlanning)
         })
-});
-
-// routeExp.route("/allPlannigView").get(async function (req, res) {
-//     mongoose
-//         .connect(
-//             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-//             {
-//                 useUnifiedTopology: true,
-//                 UseNewUrlParser: true,
-//             }
-//         )
-//         .then(async () => {
-//             // var planning = await AgentModel.aggregate([
-//             //     {
-//             //         $lookup: {
-//             //             from: "cleaves",
-//             //             localField: "m_code",
-//             //             foreignField: "mcode",
-//             //             as: "code"
-//             //         }
-//             //     }
-//             // ])
-//             // var newPlan = []
-//             // for (let i = 0; i < planning.length; i++) {
-//             //     const element = planning[i];
-//             //     if (element.code.length > 0) {
-//             //         console.log("element", element);
-//             //     }
-//             // }
-//             // leaveModel.find({ $or: [{ status: "en attente" }, { status: "en cours" }] })
-//             //     .then(notes => {
-//             //         //console.log("notes", notes);
-
-//             //         //Shift - Nom - Start - End - Projet
-//             //         res.send(notes);
-//             //     }).catch(err => {
-//             //         res.status(500).send({
-//             //             message: err.message || 'some error'
-//             //         });;
-//             //     });
-
-//             leaveModel.aggregate([
-//                 {
-//                     $lookup: {
-//                         from: "plannings",
-//                         localField: "m_code",
-//                         foreignField: "mcode",
-//                         as: "code"
-//                     }
-//                 }
-//             ])
-//                 .then(plan => {
-//                     //console.log("plan", plan);
-
-//                     for (let i = 0; i < plan.length; i++) {
-//                         const element = plan[i];
-//                         console.log("element", element.code);
-//                         if (element.code.length > 0) {
-//                             console.log("element", element);
-//                         }
-//                     }
-//                 })
-//                 .catch(err => {
-//                     res.status(500).send({
-//                         message: err.message || 'some error'
-//                     });;
-//                 });
-//         })
-// })
+})
 
 routeExp.route("/planning/project/shift").get(async function (req, res) {
     var shift = req.params.shift;
@@ -2717,23 +2599,6 @@ routeExp.route('/agentFilterProjShift/:shift/:projet').get(async function (req, 
             // console.log("listAgent", all);
             res.send(all)
         })
-})
-
-//get shift
-routeExp.route('/getAllUserClock').get(async function (req, res) {
-
-    userModelClock.find()
-        .then(notes => {
-            console.log("notes", notes);
-
-            //Shift - Nom - Start - End - Projet
-            res.send(notes);
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message || 'some error'
-            });
-        });
-
 })
 module.exports = routeExp
 

@@ -128,6 +128,8 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     var name = req.body.name
     var code = req.body.code
     var nombre = req.body.nombr
+    var licence = req.body.licence
+    var comment = req.body.commentaire
 
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
@@ -146,7 +148,9 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                     var newMat = {
                         name: name,
                         code: code,
-                        nombre: nombre
+                        nombre: nombre,
+                        licence: licence,
+                        commentaire: comment
                     }
                     var mat = await InventaireModel(newMat).save()
                     // console.log("addInventaire", mat);
@@ -241,8 +245,12 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var codeN = req.body.codeNew;
     var name = req.body.name;
     var nombre = req.body.nombre;
+    var licence = req.body.licence;
+    var commentaire = req.body.commentaire;
     var nameInventA = req.body.nameInventA;
     var nombreInventA = req.body.nombreInventA;
+    var licencInventA = req.body.licencInventA;
+    var commentInventA = req.body.commentInventA;
 
     //console.log("nombreInventA ", nombreInventA, " nameInventA ", nameInventA);
     //console.log("session", session);
@@ -257,9 +265,11 @@ routeExp.route('/updateInvent').post(async function (req, res) {
             )
             .then(async () => {
 
-                var updat = await InventaireModel.findOneAndUpdate({ code: code }, { code: codeN, name: name, nombre: nombre })
+                var updat = await InventaireModel.findOneAndUpdate({ code: code },
+                    { code: codeN, name: name, nombre: nombre, licence: licence, commentaire: commentaire })
                 // console.log("updat ", updat);
-                if (code == codeN && name == nameInventA && nombre == nombreInventA) {
+                if (code == codeN && name == nameInventA && nombre == nombreInventA
+                    && licence == licencInventA && commentaire == commentInventA) {
 
                 } else {
                     var historique = {
@@ -269,12 +279,16 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         old: {
                             "code": code,
                             "name": nameInventA,
-                            "nombre": nombreInventA
+                            "nombre": nombreInventA,
+                            "licence": licencInventA,
+                            "commentaire": commentInventA
                         },
                         new: {
                             "code": codeN,
                             "name": name,
-                            "nombre": nombre
+                            "nombre": nombre,
+                            "licence": licence,
+                            "commentaire": commentaire
                         }
                     }
                     var historie = await HistoriqueModel(historique).save()

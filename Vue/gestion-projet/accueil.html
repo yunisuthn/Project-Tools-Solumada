@@ -1,0 +1,285 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tools Solumada</title>
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"> -->
+
+    <link rel="stylesheet" href="/assets/fontawesome/fontawesome-free/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/assets/fontawesome/fontawesome-free/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+
+    <link rel="stylesheet" href="/assets/Icon-font-7-stroke/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="/assets/Icon-font-7-stroke/pe-icon-7-stroke/css/helper.css">
+
+    <link rel="stylesheet" href="/assets/css/lib/themify-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets/css/lib/flag-icon-css/css/flag-icon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/gestion-projet/css/style.css">
+    <link rel="stylesheet" href="/gestion-projet/css/custom.css">
+
+    <style>
+        #weatherWidget .currentDesc {
+            color: #ffffff !important;
+        }
+
+        .traffic-chart {
+            min-height: 335px;
+        }
+
+        #flotPie1 {
+            height: 150px;
+        }
+
+        #flotPie1 td {
+            padding: 3px;
+        }
+
+        #flotPie1 table {
+            top: 20px !important;
+            right: -10px !important;
+        }
+
+        .chart-container {
+            display: table;
+            min-width: 270px;
+            text-align: left;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        #flotLine5 {
+            height: 105px;
+        }
+
+        #flotBarChart {
+            height: 150px;
+        }
+
+        #cellPaiChart {
+            height: 160px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preloader">
+        <!--div id="charg">CHARGEMENT</div-->
+    </div>
+    <!-- <div id="preloader">
+        <div id="loader" class="center"></div>
+    </div> -->
+
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        <header id="header" class="header">
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href=""><img src="/images/logo 2.jpg" alt="Logo"></a>
+                    <!--a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a-->
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="header-menu">
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <img class="user-avatar rounded-circle" src="/images/admin.png" alt="User Avatar">
+                        </a>
+
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> Mon Profile</a>
+                            <a class="nav-link" href="/user" id="utilisateur"><i class="fa fa-solid fa-users"></i>
+                                Utilisateur</a>
+                            <a class="nav-link" href="/historique" id="historique"><i
+                                    class="fa fa-thin fa-calendar-check"></i> Historiques</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Déconnecter</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+    </div>
+    <!-- /#header -->
+    <!-- Content -->
+    <div class="container-fluide">
+        <!-- Animated -->
+        <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
+        <div class="animated fadeIn p-0">
+            <!-- Widgets  -->
+            <div class="tcontainer">
+                <div class="tleft-navbar">
+                  <h1 class="tboard-openform"><i class="fa fa-business-time"></i> <span>GESTION DE PROJET</span></h1>
+                  <div class="tboard-list-title">
+                    <span>Vos tableaux</span>
+                    <div class="actions">
+                      <button onclick="tBoardOpenAddItem('tadd-board-field')"><i class="fa fa-plus"></i></button>
+                      <button onclick="tBoardOpenSearchItem('search-board-field')"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+                  <div class="tboard-form" id="tadd-board-field" hidden>
+                    <div class="tboard-form-header">
+                      <label for="tboard-item-tile-input">Créer un tableau</label>
+                      <button onclick="tBoardCloseAddItem('tadd-board-field')">
+                        <i class="fa fa-times mx-2"></i>
+                      </button>
+                    </div>
+                    <div class="tboard-form-input">
+                      <input type="text" id="tboard-item-tile-input" value="" placeholder="Titre du tableau">
+                      <button onclick="tBoardSaveItem()">
+                        <i class="fa fa-save mx-2"></i> Créer
+                      </button>
+                    </div>
+                  </div>
+                  <div class="tboard-form" id="search-board-field" hidden>
+                    <div class="tboard-form-header">
+                      <label for="tboard-search-item-input">Chercher par titre</label>
+                      <button onclick="tBoardCloseSearchItem('search-board-field')">
+                        <i class="fa fa-times mx-2"></i>
+                      </button>
+                    </div>
+                    <div class="tboard-form-input">
+                      <input type="search" id="tboard-search-item-input" value="" placeholder="Titre..." onkeyup="tBoardSearchItem(this, 'tboard-list')">
+                      <p></p>
+                    </div>
+                  </div>
+                  <div id="tboard-list" class="tboard-list">
+                    <% boards.forEach(board => { %> 
+                    <div class="tboard-item <%= boardId == board._id ? 'active': '' %> ">
+                      <a href="/gestion-projet/board-item/<%= board._id %>" class="tboard-item-link">
+                        <i class="fa fa-eye"></i>
+                      </a>
+                      <input type="text" value="<%= board.title %>" disabled id="<%= board._id %>">
+                      <div class="actions action-1-<%= board._id %>">
+                        <button onclick="tBoardEditItemTitle('<%= board._id %>')">
+                          <i class="fa fa-edit"></i>
+                        </button>
+                        <button onclick="tBoardDeleteItemTitle('<%= board._id %>')">
+                          <i class="fa fa-trash-alt"></i>
+                        </button>
+                      </div>
+                      <div class="actions action-2-<%= board._id %>" hidden>
+                        <button onclick="tBoardSaveItemTitle('<%= board._id %>')">
+                          <i class="fa fa-save"></i>
+                        </button>
+                        <button onclick="tBoardCancelItemTitle('<%= board._id %>')">
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <% }) %> 
+                  </div>
+                </div>
+                <div class="tright-navbar">
+                    <div class="trash-field">
+                      <div class="trash-field-container" id="ttrash" hidden>
+                        <div class="trash-field-icon">
+                          <i class="fa fa-trash"></i>
+                          <p>Supprimer</p>
+                        </div>
+                        <div class="trash-field-icon">
+                          <i class="fa fa-sync"></i>
+                          <p>Suppression</p>
+                        </div>
+                        <div class="trash-field-icon">
+                          <i class="fa fa-check-circle"></i>
+                          <p>Supprimé</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tright-home">
+                        <div class="tright-home-box">
+                            <h2><span class="fa fa-business-time"></span></h2>
+                            <small>Bienvenu dans </small>
+                            <h1>GESTION DE PROJET</h1>
+                            <p>
+                                Créer et personnaliser votre gestionaire de tâches.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- /#right-panel -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+
+    <script src="/gestion-projet/js/script.js"></script>
+    <script src="/gestion-projet/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/fontawesome/js/all.js"></script>
+    <!--  Chart js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+
+    <! --Chartist Chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-legend@0.6.2/chartist-plugin-legend.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-pie@1.0.0/src/jquery.flot.pie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
+    <script src="assets/js/init/weather-init.js"></script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+    <script>
+        // document.onreadystatechange = function () {
+        //     if (document.readyState !== "complete") {
+        //         document.querySelector(
+        //             "body").style.visibility = "hidden";
+        //         document.querySelector(
+        //             "#loader").style.visibility = "visible";
+        //     } else {
+        //         document.querySelector(
+        //             "#loader").style.display = "none";
+        //         document.querySelector(
+        //             "body").style.visibility = "visible";
+        //     }
+        // };
+
+        var loader = document.getElementById("preloader")
+        window.addEventListener("load", function () {
+            loader.style.display = "none"
+            document.body.style.background = "linear-gradient(#A0B9E5, #D1DCF0)";
+        });
+        document.querySelectorAll('button').forEach(button => {
+          if (!button.hasAttribute('type')) {
+            button.setAttribute('type', 'button');
+          }
+        });
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body>
+
+</html>

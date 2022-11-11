@@ -3,8 +3,42 @@ var inventaireDataT = $('#inventaireDataT').DataTable(
         "ajax": { "url": "/allInventaire", "dataSrc": "" },
         "columns": [
             { 'data': 'name' },
-            { 'data': "code" },
-            { 'data': 'nombre' },
+            {
+                'data': "code", 'render': function (code) {
+                    if (!code) {
+                        return ""
+                    } else {
+                        return code
+                    }
+                }
+            },
+            {
+                'data': 'nombre', 'render': function (nombre) {
+                    if (!nombre) {
+                        return ""
+                    } else {
+                        return nombre
+                    }
+                }
+            },
+            {
+                'data': "licence", 'render': function (licence) {
+                    if (!licence) {
+                        return ""
+                    } else {
+                        return licence
+                    }
+                }
+            },
+            {
+                'data': 'commentaire', 'render': function (commentaire) {
+                    if (!commentaire) {
+                        return ""
+                    } else {
+                        return commentaire
+                    }
+                }
+            },
             {
                 'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -23,7 +57,9 @@ $('#saveMateriel').on("click", function () {
     Inventaire = {
         name: $('#nameMat').val(),
         code: $('#codeMat').val(),
-        nombr: $('#nombreMat').val()
+        nombr: $('#nombreMat').val(),
+        licence: $('#licenceMat').val(),
+        commentaire: $('#commentaireMat').val()
     }
     $.ajax({
         url: '/addInventaire',
@@ -58,6 +94,8 @@ function clearForm() {
     $('#nameMat').val('');
     $('#codeMat').val('');
     $('#nombreMat').val('');
+    $('#licenceMat').val('');
+    $('#commentaireMat').val('');
     $('#cancelMat').click();
 }
 
@@ -71,6 +109,8 @@ function searchOnDatatable(dataTab, value) {
 var codeMat = ''
 var nameInventA = ""
 var nombreInventA = ""
+var licencInventA = ""
+var commentInventA = ""
 $(document).on('click', '.btnUpdateInventaire', function () {
     var getCol = $(this).closest('tr');
     codeMat = getCol.find('td:eq(1)').text()
@@ -91,6 +131,8 @@ $(document).on('click', '.btnUpdateInventaire', function () {
             $("#nameUpdatMat").val(respData.name);
             $("#nombreUpdatMat").val(respData.nombre)
             $("#refUpdatMat").val(respData.code)
+            $("#licencUpdatMat").val(respData.licence)
+            $("#commentUpdatMat").val(respData.commentaire)
         }
     })
 })
@@ -101,13 +143,19 @@ $(document).on('click', '#saveUpdateMat', function () {
     var nameMatUpd = $('#nameUpdatMat').val();
     var nbreMatUpd = $('#nombreUpdatMat').val();
     var refMatUpd = $('#refUpdatMat').val();
+    var licenceUpd = $('#licencUpdatMat').val();
+    var commentUpd = $('#commentUpdatMat').val();
     var matUpd = {
         code: codeMat,
         codeNew: refMatUpd,
         name: nameMatUpd,
         nombre: nbreMatUpd,
+        licence: licenceUpd,
+        commentaire: commentUpd,
         nameInventA: nameInventA,
-        nombreInventA: nombreInventA
+        nombreInventA: nombreInventA,
+        licencInventA: licencInventA,
+        commentInventA: commentInventA
     }
 
     $.ajax({

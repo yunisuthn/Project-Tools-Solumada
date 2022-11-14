@@ -50,43 +50,192 @@ var inventaireDataT = $('#inventaireDataT').DataTable(
         ]
     }
 )
+$("#addInvent").on('click', function () {
 
+    $(".type").css('display', "none")
+    $(".localisation").css('display', "none")
+    $(".departement").css('display', "none")
+    $(".equipement").css('display', "none")
+    $(".numSerie").css('display', "none")
+    $(".marque").css('display', "none")
+    $(".processeur").css('display', "none")
+    $(".ram").css('display', "none")
+    $(".diskDur").css('display', "none")
+    $(".capacite").css('display', "none")
+    $(".cleWin").css('display', "none")
+    $(".resolution").css('display', "none")
+    $(".imei").css('display', "none")
+    $(".chargeur-cable-housse").css('display', "none")
+    $(".portsClavier").css('display', "none")
+    $(".portsEcran").css('display', "none")
+
+})
+
+$("#nameMat").on("change", function () {
+    console.log("nameMat", $("#nameMat").val());
+    $(".type").css('display', "block")
+    $(".marque").css('display', "block")
+    $(".numSerie").css('display', "block")
+
+    if ($("#nameMat").val() == "uc") {
+        $(".localisation").css('display', "block")
+        $(".departement").css('display', "block")
+        $(".equipement").css('display', "block")
+        $(".processeur").css('display', "block")
+        $(".ram").css('display', "block")
+        $(".diskDur").css('display', "block")
+        $(".capacite").css('display', "block")
+        $(".cleWin").css('display', "block")
+        $(".portsClavier").css('display', "none")
+        $(".portsEcran").css('display', "none")
+        $(".imei").css('display', "none")
+        $(".chargeur-cable-housse").css('display', "none")
+    } else if ($("#nameMat").val() == "ecran") {
+        $(".localisation").css('display', "block")
+        $(".departement").css('display', "block")
+        $(".equipement").css('display', "block")
+        $(".resolution").css('display', 'block')
+        $(".portsEcran").css('display', 'block')
+
+        $(".processeur").css('display', "none")
+        $(".ram").css('display', "none")
+        $(".diskDur").css('display', "none")
+        $(".capacite").css('display', "none")
+        $(".cleWin").css('display', "none")
+        $(".portsClavier").css('display', "none")
+        $(".imei").css('display', "none")
+        $(".chargeur-cable-housse").css('display', "none")
+    } else if ($("#nameMat").val() == "clavier" || $("#nameMat").val() == 'souris') {
+
+        $(".processeur").css('display', "none")
+        $(".ram").css('display', "none")
+        $(".diskDur").css('display', "none")
+        $(".capacite").css('display', "none")
+        $(".cleWin").css('display', "none")
+        $(".localisation").css('display', "block")
+        $(".departement").css('display', "block")
+        $(".equipement").css('display', "block")
+        $(".portsClavier").css('display', "block")
+        $(".portsEcran").css('display', "none")
+        $(".imei").css('display', "none")
+        $(".chargeur-cable-housse").css('display', "none")
+    } else if ($("#nameMat").val() == 'phone') {
+        $(".imei").css('display', "block")
+        $(".chargeur-cable-housse").css('display', "block")
+        $(".processeur").css('display', "none")
+        $(".ram").css('display', "none")
+        $(".diskDur").css('display', "none")
+        $(".capacite").css('display', "none")
+        $(".cleWin").css('display', "none")
+        $(".localisation").css('display', "none")
+        $(".departement").css('display', "none")
+        $(".equipement").css('display', "none")
+        $(".portsClavier").css('display', "none")
+        $(".portsEcran").css('display', "none")
+    }
+    // $(".resolution").css('display', "block")
+    // $(".ports").css('display', "block")
+    // $(".imei").css('display', "block")
+    // $(".chargeur-cable-housse").css('display', "block")
+})
 // Add material in inventary
 $('#saveMateriel').on("click", function () {
     //swal("HEY", "Message", "warning")
-    Inventaire = {
-        name: $('#nameMat').val(),
-        code: $('#codeMat').val(),
-        nombr: $('#nombreMat').val(),
-        licence: $('#licenceMat').val(),
-        commentaire: $('#commentaireMat').val()
-    }
-    $.ajax({
-        url: '/addInventaire',
-        method: 'post',
-        data: Inventaire,
-        success: function (response) {
-            if (response == "error") {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Ce matériel est déjà existant ou le nom ou la référence est incomplet'
-                })
-                // clearForm()
-                // window.location = "/inventaire"
-            } else {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Nouveau matériel sauvegardé',
-                    text: `Matériel ${Inventaire.name} sauvegardé avec succès`,
-                })
-                clearForm()
-                $("#inventaireDataT").DataTable().ajax.reload(null, false)
-                searchOnDatatable(inventaireDataT, Inventaire.code)
-                window.location = "/inventaire"
-            }
+    var Inventaire
+
+    if ($("#nameMat").val() == "uc") {
+
+        Inventaire = {
+            name: $('#nameMat').val(),
+            type: $('#type').val(),
+            localisation: $('#localisation').val(),
+            departement: $('#departement').val(),
+            equipement: $('#equipement').val(),
+            numSerie: $('#numSerie').val(),
+            marque: $('#marque').val(),
+            processeur: $('#processeur').val(),
+            ram: $('#ram').val(),
+            diskDur: $('#diskDur').val(),
+            capacite: $('#capacite').val(),
+            cleWin: $('#cleWin').val(),
         }
-    })
+    } else if ($("#nameMat").val() == "ecran") {
+        if ($("#portHdmi").is(':checked')) {
+            $("#portHdmi").attr('value', 'true');
+        } else {
+            $("#portHdmi").attr('value', 'false');
+        }
+        if ($("#portVga").is(':checked')) {
+            $("#portVga").attr('value', 'true');
+        } else {
+            $("#portVga").attr('value', 'false');
+        }
+        Inventaire = {
+            name: $('#nameMat').val(),
+            type: $('#type').val(),
+            localisation: $('#localisation').val(),
+            departement: $('#departement').val(),
+            equipement: $('#equipement').val(),
+            numSerie: $('#numSerie').val(),
+            marque: $('#marque').val(),
+            resolution: $('#resolution').val(),
+            portHdmi: $('#portHdmi').val(),
+            portVga: $('#portVga').val(),
+
+        }
+    } else if ($("#nameMat").val() == "clavier" || $("#nameMat").val() == 'souris') {
+
+        Inventaire = {
+            name: $('#nameMat').val(),
+            type: $('#type').val(),
+            localisation: $('#localisation').val(),
+            departement: $('#departement').val(),
+            equipement: $('#equipement').val(),
+            numSerie: $('#numSerie').val(),
+            marque: $('#marque').val(),
+            portUsb: $('#portUsb').val(),
+            portPci: $('#portPci').val(),
+        }
+    } else if ($("#nameMat").val() == 'phone') {
+        Inventaire = {
+            name: $('#nameMat').val(),
+            type: $('#type').val(),
+            numSerie: $('#numSerie').val(),
+            marque: $('#marque').val(),
+            imei1: $('#imei1').val(),
+            imei2: $('#imei2').val(),
+            chargeur: $('#chargeur').val(),
+            cable: $('#cable').val(),
+            housse: $('#housse').val()
+        }
+    }
+    console.log("Inventaire", Inventaire);
+    // $.ajax({
+    //     url: '/addInventaire',
+    //     method: 'post',
+    //     data: Inventaire,
+    //     success: function (response) {
+    //         if (response == "error") {
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Error',
+    //                 text: 'Ce matériel est déjà existant ou le nom ou la référence est incomplet'
+    //             })
+    //             // clearForm()
+    //             // window.location = "/inventaire"
+    //         } else {
+    //             Swal.fire({
+    //                 icon: 'success',
+    //                 title: 'Nouveau matériel sauvegardé',
+    //                 text: `Matériel ${Inventaire.name} sauvegardé avec succès`,
+    //             })
+    //             clearForm()
+    //             $("#inventaireDataT").DataTable().ajax.reload(null, false)
+    //             searchOnDatatable(inventaireDataT, Inventaire.code)
+    //             window.location = "/inventaire"
+    //         }
+    //     }
+    // })
 })
 
 //Empty form Inventaire

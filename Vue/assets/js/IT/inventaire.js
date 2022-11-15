@@ -1,44 +1,109 @@
-var inventaireDataT = $('#inventaireDataT').DataTable(
+var inventaireUCDataT = $('#inventaireUCActifDataT').DataTable(
     {
-        "ajax": { "url": "/allInventaire", "dataSrc": "" },
+        "ajax": { "url": "/allUCActifInventaire", "dataSrc": "" },
         "columns": [
             { 'data': 'name' },
             {
-                'data': "code", 'render': function (code) {
-                    if (!code) {
+                'data': "type", 'render': function (type) {
+                    if (!type) {
                         return ""
                     } else {
-                        return code
+                        return type
                     }
                 }
             },
             {
-                'data': 'nombre', 'render': function (nombre) {
-                    if (!nombre) {
+                'data': 'localisation', 'render': function (localisation) {
+                    if (!localisation) {
                         return ""
                     } else {
-                        return nombre
+                        return localisation
                     }
                 }
             },
             {
-                'data': "licence", 'render': function (licence) {
-                    if (!licence) {
+                'data': "departement", 'render': function (departement) {
+                    if (!departement) {
                         return ""
                     } else {
-                        return licence
+                        return departement
                     }
                 }
             },
             {
-                'data': 'commentaire', 'render': function (commentaire) {
-                    if (!commentaire) {
+                'data': 'equipement', 'render': function (equipement) {
+                    if (!equipement) {
                         return ""
                     } else {
-                        return commentaire
+                        return equipement
                     }
                 }
             },
+            {
+                'data': 'numSerie', 'render': function (numSerie) {
+                    if (!numSerie) {
+                        return ""
+                    } else {
+                        return numSerie
+                    }
+                }
+            },
+            {
+                'data': 'marque', 'render': function (marque) {
+                    if (!marque) {
+                        return ""
+                    } else {
+                        return marque
+                    }
+                }
+            },
+
+            {
+                'data': 'processeur', 'render': function (processeur) {
+                    if (!processeur) {
+                        return ""
+                    } else {
+                        return processeur
+                    }
+                }
+            },
+            {
+                'data': 'ram', 'render': function (ram) {
+                    if (!ram) {
+                        return ""
+                    } else {
+                        return ram
+                    }
+                }
+            },
+            {
+                'data': 'diskDur', 'render': function (diskDur) {
+                    if (!diskDur) {
+                        return ""
+                    } else {
+                        return diskDur
+                    }
+                }
+            },
+            {
+                'data': 'capacite', 'render': function (capacite) {
+                    if (!capacite) {
+                        return ""
+                    } else {
+                        return capacite
+                    }
+                }
+            },
+            {
+                'data': 'cleWin', 'render': function (cleWin) {
+                    if (!cleWin) {
+                        return ""
+                    } else {
+                        return cleWin
+                    }
+                }
+            },
+
             {
                 'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -50,6 +115,870 @@ var inventaireDataT = $('#inventaireDataT').DataTable(
         ]
     }
 )
+
+var inventaireEcranDataT = $('#inventaireEcranActifDataT').DataTable(
+    {
+        "ajax": { "url": "/allEcranActifInventaire", "dataSrc": "" },
+        "columns": [
+            { 'data': 'name' },
+            {
+                'data': "type", 'render': function (type) {
+                    if (!type) {
+                        return ""
+                    } else {
+                        return type
+                    }
+                }
+            },
+            {
+                'data': 'localisation', 'render': function (localisation) {
+                    if (!localisation) {
+                        return ""
+                    } else {
+                        return localisation
+                    }
+                }
+            },
+            {
+                'data': "departement", 'render': function (departement) {
+                    if (!departement) {
+                        return ""
+                    } else {
+                        return departement
+                    }
+                }
+            },
+            {
+                'data': 'equipement', 'render': function (equipement) {
+                    if (!equipement) {
+                        return ""
+                    } else {
+                        return equipement
+                    }
+                }
+            },
+            {
+                'data': 'numSerie', 'render': function (numSerie) {
+                    if (!numSerie) {
+                        return ""
+                    } else {
+                        return numSerie
+                    }
+                }
+            },
+            {
+                'data': 'marque', 'render': function (marque) {
+                    if (!marque) {
+                        return ""
+                    } else {
+                        return marque
+                    }
+                }
+            },
+
+            {
+                'data': 'resolution', 'render': function (resolution) {
+                    if (!resolution) {
+                        return ""
+                    } else {
+                        return resolution
+                    }
+                }
+            },
+            {
+                'data': 'portHdmi', 'render': function (portHdmi) {
+                    if (!portHdmi) {
+                        return ""
+                    } else {
+                        return portHdmi
+                    }
+                }
+            },
+            {
+                'data': 'portVga', 'render': function (portVga) {
+                    if (!portVga) {
+                        return ""
+                    } else {
+                        return portVga
+                    }
+                }
+            },
+
+            {
+                'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateInventaire' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+            }
+        ]
+    }
+)
+
+var inventaireClavierActifDataT = $('#inventaireClavierActifDataT').DataTable(
+    {
+        "ajax": { "url": "/allClavierActifInventaire", "dataSrc": "" },
+        "columns": [
+            { 'data': 'name' },
+            {
+                'data': "type", 'render': function (type) {
+                    if (!type) {
+                        return ""
+                    } else {
+                        return type
+                    }
+                }
+            },
+            {
+                'data': 'localisation', 'render': function (localisation) {
+                    if (!localisation) {
+                        return ""
+                    } else {
+                        return localisation
+                    }
+                }
+            },
+            {
+                'data': "departement", 'render': function (departement) {
+                    if (!departement) {
+                        return ""
+                    } else {
+                        return departement
+                    }
+                }
+            },
+            {
+                'data': 'equipement', 'render': function (equipement) {
+                    if (!equipement) {
+                        return ""
+                    } else {
+                        return equipement
+                    }
+                }
+            },
+            {
+                'data': 'numSerie', 'render': function (numSerie) {
+                    if (!numSerie) {
+                        return ""
+                    } else {
+                        return numSerie
+                    }
+                }
+            },
+            {
+                'data': 'marque', 'render': function (marque) {
+                    if (!marque) {
+                        return ""
+                    } else {
+                        return marque
+                    }
+                }
+            },
+
+            {
+                'data': 'portUsb', 'render': function (portUsb) {
+                    if (!portUsb) {
+                        return ""
+                    } else {
+                        return portUsb
+                    }
+                }
+            },
+            {
+                'data': 'portPci', 'render': function (portPci) {
+                    if (!portPci) {
+                        return ""
+                    } else {
+                        return portPci
+                    }
+                }
+            },
+
+            {
+                'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateInventaire' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+            }
+        ]
+    }
+)
+
+var inventaireSourisActifDataT = $('#inventaireSourisActifDataT').DataTable(
+    {
+        "ajax": { "url": "/allSourisActifInventaire", "dataSrc": "" },
+        "columns": [
+            { 'data': 'name' },
+            {
+                'data': "type", 'render': function (type) {
+                    if (!type) {
+                        return ""
+                    } else {
+                        return type
+                    }
+                }
+            },
+            {
+                'data': 'localisation', 'render': function (localisation) {
+                    if (!localisation) {
+                        return ""
+                    } else {
+                        return localisation
+                    }
+                }
+            },
+            {
+                'data': "departement", 'render': function (departement) {
+                    if (!departement) {
+                        return ""
+                    } else {
+                        return departement
+                    }
+                }
+            },
+            {
+                'data': 'equipement', 'render': function (equipement) {
+                    if (!equipement) {
+                        return ""
+                    } else {
+                        return equipement
+                    }
+                }
+            },
+            {
+                'data': 'numSerie', 'render': function (numSerie) {
+                    if (!numSerie) {
+                        return ""
+                    } else {
+                        return numSerie
+                    }
+                }
+            },
+            {
+                'data': 'marque', 'render': function (marque) {
+                    if (!marque) {
+                        return ""
+                    } else {
+                        return marque
+                    }
+                }
+            },
+
+            {
+                'data': 'portUsb', 'render': function (portUsb) {
+                    if (!portUsb) {
+                        return ""
+                    } else {
+                        return portUsb
+                    }
+                }
+            },
+            {
+                'data': 'portPci', 'render': function (portPci) {
+                    if (!portPci) {
+                        return ""
+                    } else {
+                        return portPci
+                    }
+                }
+            },
+
+            {
+                'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateInventaire' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+            }
+        ]
+    }
+)
+
+var inventairePhoneActifDataT = $('#inventairePhoneActifDataT').DataTable(
+    {
+        "ajax": { "url": "/allPhoneActifInventaire", "dataSrc": "" },
+        "columns": [
+            { 'data': 'name' },
+            {
+                'data': "type", 'render': function (type) {
+                    if (!type) {
+                        return ""
+                    } else {
+                        return type
+                    }
+                }
+            },
+            {
+                'data': 'numSerie', 'render': function (numSerie) {
+                    if (!numSerie) {
+                        return ""
+                    } else {
+                        return numSerie
+                    }
+                }
+            },
+            {
+                'data': 'marque', 'render': function (marque) {
+                    if (!marque) {
+                        return ""
+                    } else {
+                        return marque
+                    }
+                }
+            },
+
+            {
+                'data': 'imei1', 'render': function (imei1) {
+                    if (!imei1) {
+                        return ""
+                    } else {
+                        return imei1
+                    }
+                }
+            },
+            {
+                'data': 'imei2', 'render': function (imei2) {
+                    if (!imei2) {
+                        return ""
+                    } else {
+                        return imei2
+                    }
+                }
+            },
+            {
+                'data': 'chargeur', 'render': function (chargeur) {
+                    if (!chargeur) {
+                        return ""
+                    } else {
+                        return chargeur
+                    }
+                }
+            },
+            {
+                'data': 'cable', 'render': function (cable) {
+                    if (!cable) {
+                        return ""
+                    } else {
+                        return cable
+                    }
+                }
+            },
+            {
+                'data': 'housse', 'render': function (housse) {
+                    if (!housse) {
+                        return ""
+                    } else {
+                        return housse
+                    }
+                }
+            },
+
+            {
+                'defaultContent': `\
+                    <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+                        <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateInventaire' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+                    <div>\
+                `
+            }
+        ]
+    }
+)
+
+// var inventaireUCDataT = $('#inventaireUCActifDataT').DataTable(
+//     {
+//         "ajax": { "url": "/allUCActifInventaire", "dataSrc": "" },
+//         "columns": [
+//             { 'data': 'name' },
+//             {
+//                 'data': "type", 'render': function (type) {
+//                     if (!type) {
+//                         return ""
+//                     } else {
+//                         return type
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'localisation', 'render': function (localisation) {
+//                     if (!localisation) {
+//                         return ""
+//                     } else {
+//                         return localisation
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': "departement", 'render': function (departement) {
+//                     if (!departement) {
+//                         return ""
+//                     } else {
+//                         return departement
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'equipement', 'render': function (equipement) {
+//                     if (!equipement) {
+//                         return ""
+//                     } else {
+//                         return equipement
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'numSerie', 'render': function (numSerie) {
+//                     if (!numSerie) {
+//                         return ""
+//                     } else {
+//                         return numSerie
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'marque', 'render': function (marque) {
+//                     if (!marque) {
+//                         return ""
+//                     } else {
+//                         return marque
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'data': 'processeur', 'render': function (processeur) {
+//                     if (!processeur) {
+//                         return ""
+//                     } else {
+//                         return processeur
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'ram', 'render': function (ram) {
+//                     if (!ram) {
+//                         return ""
+//                     } else {
+//                         return ram
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'diskDur', 'render': function (diskDur) {
+//                     if (!diskDur) {
+//                         return ""
+//                     } else {
+//                         return diskDur
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'capacite', 'render': function (capacite) {
+//                     if (!capacite) {
+//                         return ""
+//                     } else {
+//                         return capacite
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'cleWin', 'render': function (cleWin) {
+//                     if (!cleWin) {
+//                         return ""
+//                     } else {
+//                         return cleWin
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'defaultContent': `\
+//                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+//                         <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateInventaire' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+//                         <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+//                     <div>\
+//                 `
+//             }
+//         ]
+//     }
+// )
+
+// var inventaireEcranDataT = $('#inventaireEcranActifDataT').DataTable(
+//     {
+//         "ajax": { "url": "/allEcranActifInventaire", "dataSrc": "" },
+//         "columns": [
+//             { 'data': 'name' },
+//             {
+//                 'data': "type", 'render': function (type) {
+//                     if (!type) {
+//                         return ""
+//                     } else {
+//                         return type
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'localisation', 'render': function (localisation) {
+//                     if (!localisation) {
+//                         return ""
+//                     } else {
+//                         return localisation
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': "departement", 'render': function (departement) {
+//                     if (!departement) {
+//                         return ""
+//                     } else {
+//                         return departement
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'equipement', 'render': function (equipement) {
+//                     if (!equipement) {
+//                         return ""
+//                     } else {
+//                         return equipement
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'numSerie', 'render': function (numSerie) {
+//                     if (!numSerie) {
+//                         return ""
+//                     } else {
+//                         return numSerie
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'marque', 'render': function (marque) {
+//                     if (!marque) {
+//                         return ""
+//                     } else {
+//                         return marque
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'data': 'resolution', 'render': function (resolution) {
+//                     if (!resolution) {
+//                         return ""
+//                     } else {
+//                         return resolution
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'portHdmi', 'render': function (portHdmi) {
+//                     if (!portHdmi) {
+//                         return ""
+//                     } else {
+//                         return portHdmi
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'portVga', 'render': function (portVga) {
+//                     if (!portVga) {
+//                         return ""
+//                     } else {
+//                         return portVga
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'defaultContent': `\
+//                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+//                         <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateInventaire' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+//                         <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+//                     <div>\
+//                 `
+//             }
+//         ]
+//     }
+// )
+
+// var inventaireClavierActifDataT = $('#inventaireClavierActifDataT').DataTable(
+//     {
+//         "ajax": { "url": "/allClavierActifInventaire", "dataSrc": "" },
+//         "columns": [
+//             { 'data': 'name' },
+//             {
+//                 'data': "type", 'render': function (type) {
+//                     if (!type) {
+//                         return ""
+//                     } else {
+//                         return type
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'localisation', 'render': function (localisation) {
+//                     if (!localisation) {
+//                         return ""
+//                     } else {
+//                         return localisation
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': "departement", 'render': function (departement) {
+//                     if (!departement) {
+//                         return ""
+//                     } else {
+//                         return departement
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'equipement', 'render': function (equipement) {
+//                     if (!equipement) {
+//                         return ""
+//                     } else {
+//                         return equipement
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'numSerie', 'render': function (numSerie) {
+//                     if (!numSerie) {
+//                         return ""
+//                     } else {
+//                         return numSerie
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'marque', 'render': function (marque) {
+//                     if (!marque) {
+//                         return ""
+//                     } else {
+//                         return marque
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'data': 'portUsb', 'render': function (portUsb) {
+//                     if (!portUsb) {
+//                         return ""
+//                     } else {
+//                         return portUsb
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'portPci', 'render': function (portPci) {
+//                     if (!portPci) {
+//                         return ""
+//                     } else {
+//                         return portPci
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'defaultContent': `\
+//                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+//                         <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateInventaire' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+//                         <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+//                     <div>\
+//                 `
+//             }
+//         ]
+//     }
+// )
+
+// var inventaireSourisActifDataT = $('#inventaireSourisActifDataT').DataTable(
+//     {
+//         "ajax": { "url": "/allSourisActifInventaire", "dataSrc": "" },
+//         "columns": [
+//             { 'data': 'name' },
+//             {
+//                 'data': "type", 'render': function (type) {
+//                     if (!type) {
+//                         return ""
+//                     } else {
+//                         return type
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'localisation', 'render': function (localisation) {
+//                     if (!localisation) {
+//                         return ""
+//                     } else {
+//                         return localisation
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': "departement", 'render': function (departement) {
+//                     if (!departement) {
+//                         return ""
+//                     } else {
+//                         return departement
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'equipement', 'render': function (equipement) {
+//                     if (!equipement) {
+//                         return ""
+//                     } else {
+//                         return equipement
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'numSerie', 'render': function (numSerie) {
+//                     if (!numSerie) {
+//                         return ""
+//                     } else {
+//                         return numSerie
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'marque', 'render': function (marque) {
+//                     if (!marque) {
+//                         return ""
+//                     } else {
+//                         return marque
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'data': 'portUsb', 'render': function (portUsb) {
+//                     if (!portUsb) {
+//                         return ""
+//                     } else {
+//                         return portUsb
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'portPci', 'render': function (portPci) {
+//                     if (!portPci) {
+//                         return ""
+//                     } else {
+//                         return portPci
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'defaultContent': `\
+//                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+//                         <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateInventaire' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+//                         <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+//                     <div>\
+//                 `
+//             }
+//         ]
+//     }
+// )
+
+// var inventairePhoneActifDataT = $('#inventairePhoneActifDataT').DataTable(
+//     {
+//         "ajax": { "url": "/allPhoneActifInventaire", "dataSrc": "" },
+//         "columns": [
+//             { 'data': 'name' },
+//             {
+//                 'data': "type", 'render': function (type) {
+//                     if (!type) {
+//                         return ""
+//                     } else {
+//                         return type
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'numSerie', 'render': function (numSerie) {
+//                     if (!numSerie) {
+//                         return ""
+//                     } else {
+//                         return numSerie
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'marque', 'render': function (marque) {
+//                     if (!marque) {
+//                         return ""
+//                     } else {
+//                         return marque
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'data': 'imei1', 'render': function (imei1) {
+//                     if (!imei1) {
+//                         return ""
+//                     } else {
+//                         return imei1
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'imei2', 'render': function (imei2) {
+//                     if (!imei2) {
+//                         return ""
+//                     } else {
+//                         return imei2
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'chargeur', 'render': function (chargeur) {
+//                     if (!chargeur) {
+//                         return ""
+//                     } else {
+//                         return chargeur
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'cable', 'render': function (cable) {
+//                     if (!cable) {
+//                         return ""
+//                     } else {
+//                         return cable
+//                     }
+//                 }
+//             },
+//             {
+//                 'data': 'housse', 'render': function (housse) {
+//                     if (!housse) {
+//                         return ""
+//                     } else {
+//                         return housse
+//                     }
+//                 }
+//             },
+
+//             {
+//                 'defaultContent': `\
+//                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
+//                         <button type='button' class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning btnUpdateInventaire' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+//                         <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+//                     <div>\
+//                 `
+//             }
+//         ]
+//     }
+// )
 $("#addInvent").on('click', function () {
 
     $(".type").css('display', "none")
@@ -133,19 +1062,22 @@ $("#nameMat").on("change", function () {
         $(".portsClavier").css('display', "none")
         $(".portsEcran").css('display', "none")
     }
-    // $(".resolution").css('display', "block")
-    // $(".ports").css('display', "block")
-    // $(".imei").css('display', "block")
-    // $(".chargeur-cable-housse").css('display', "block")
 })
+
 // Add material in inventary
 $('#saveMateriel').on("click", function () {
     //swal("HEY", "Message", "warning")
     var Inventaire
 
+    if ($("#actif").is(':checked')) {
+        $("#actif").attr('value', 'true');
+    } else {
+        $("#actif").attr('value', 'false');
+    }
     if ($("#nameMat").val() == "uc") {
 
         Inventaire = {
+            actif: $("#actif").val(),
             name: $('#nameMat').val(),
             type: $('#type').val(),
             localisation: $('#localisation').val(),
@@ -171,6 +1103,7 @@ $('#saveMateriel').on("click", function () {
             $("#portVga").attr('value', 'false');
         }
         Inventaire = {
+            actif: $("#actif").val(),
             name: $('#nameMat').val(),
             type: $('#type').val(),
             localisation: $('#localisation').val(),
@@ -185,7 +1118,18 @@ $('#saveMateriel').on("click", function () {
         }
     } else if ($("#nameMat").val() == "clavier" || $("#nameMat").val() == 'souris') {
 
+        if ($("#portUsb").is(':checked')) {
+            $("#portUsb").attr('value', 'true');
+        } else {
+            $("#portUsb").attr('value', 'false');
+        }
+        if ($("#portPci").is(':checked')) {
+            $("#portPci").attr('value', 'true');
+        } else {
+            $("#portPci").attr('value', 'false');
+        }
         Inventaire = {
+            actif: $("#actif").val(),
             name: $('#nameMat').val(),
             type: $('#type').val(),
             localisation: $('#localisation').val(),
@@ -197,7 +1141,23 @@ $('#saveMateriel').on("click", function () {
             portPci: $('#portPci').val(),
         }
     } else if ($("#nameMat").val() == 'phone') {
+        if ($("#chargeur").is(':checked')) {
+            $("#chargeur").attr('value', 'true');
+        } else {
+            $("#chargeur").attr('value', 'false');
+        }
+        if ($("#cable").is(':checked')) {
+            $("#cable").attr('value', 'true');
+        } else {
+            $("#cable").attr('value', 'false');
+        }
+        if ($("#housse").is(':checked')) {
+            $("#housse").attr('value', 'true');
+        } else {
+            $("#housse").attr('value', 'false');
+        }
         Inventaire = {
+            actif: $("#actif").val(),
             name: $('#nameMat').val(),
             type: $('#type').val(),
             numSerie: $('#numSerie').val(),
@@ -210,41 +1170,69 @@ $('#saveMateriel').on("click", function () {
         }
     }
     console.log("Inventaire", Inventaire);
-    // $.ajax({
-    //     url: '/addInventaire',
-    //     method: 'post',
-    //     data: Inventaire,
-    //     success: function (response) {
-    //         if (response == "error") {
-    //             Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Error',
-    //                 text: 'Ce matériel est déjà existant ou le nom ou la référence est incomplet'
-    //             })
-    //             // clearForm()
-    //             // window.location = "/inventaire"
-    //         } else {
-    //             Swal.fire({
-    //                 icon: 'success',
-    //                 title: 'Nouveau matériel sauvegardé',
-    //                 text: `Matériel ${Inventaire.name} sauvegardé avec succès`,
-    //             })
-    //             clearForm()
-    //             $("#inventaireDataT").DataTable().ajax.reload(null, false)
-    //             searchOnDatatable(inventaireDataT, Inventaire.code)
-    //             window.location = "/inventaire"
-    //         }
-    //     }
-    // })
+    $.ajax({
+        url: '/addInventaire',
+        method: 'post',
+        data: Inventaire,
+        success: function (response) {
+            if (response == "error") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Vous devez completer les champs'
+                })
+                // clearForm()
+                // window.location = "/inventaire"
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Nouveau matériel sauvegardé',
+                    text: `Matériel ${Inventaire.name} sauvegardé avec succès`,
+                })
+                clearForm()
+                $("#inventaireDataT").DataTable().ajax.reload(null, false)
+                //searchOnDatatable(inventaireDataT, Inventaire.code)
+                if (Inventaire.name == "ecran") {
+                    window.location = "/inventaireEcran"
+                } else if (Inventaire.name == "uc") {
+                    window.location = "/inventaire"
+                } else if (Inventaire.name == "souris") {
+                    window.location = "/inventaireSouris"
+                } else if (Inventaire.name == "phone") {
+                    window.location = "/inventairePhone"
+                } else if (Inventaire.name == "clavier") {
+                    window.location = "/inventaireClavier"
+                }
+            }
+        }
+    })
 })
 
 //Empty form Inventaire
 function clearForm() {
     $('#nameMat').val('');
-    $('#codeMat').val('');
-    $('#nombreMat').val('');
-    $('#licenceMat').val('');
-    $('#commentaireMat').val('');
+    $('#type').val('');
+    $('#localisation').val('');
+    $('#departement').val('');
+    $('#equipement').val('');
+    $('#numSerie').val('');
+    $('#marque').val('');
+    $('#processeur').val('');
+    $('#ram').val('');
+    $('#diskDur').val('');
+    $('#capacite').val('');
+    $('#cleWin').val('');
+    $('#resolution').val('');
+    $("#portHdmi").attr('value', 'false');
+    $("#portVga").attr('value', 'false');
+    $("#portUsb").attr('value', 'false');
+    $("#portPci").attr('value', 'false');
+    $('#imei1').val('');
+    $('#imei2').val('');
+    $("#chargeur").attr('value', 'false');
+    $("#cable").attr('value', 'false');
+    $("#housse").attr('value', 'false');
+
     $('#cancelMat').click();
 }
 

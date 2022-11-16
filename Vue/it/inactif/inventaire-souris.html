@@ -88,32 +88,31 @@
         <div class="breadcrumbs">
             <div class="breadcrumbs-inner">
                 <div class="row m-0">
-                    <div class="col-sm-4 col-md-4 col-2">
+                    <div class="col-sm-4 col-md-4 col-12">
                         <ul class="nav nav-tabs">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                                    aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                    aria-haspopup="true" aria-expanded="false"
+                                    style=" font-size: 26px; font-weight: bold;">Inactif - souris</a>
                                 <div class="dropdown-menu">
                                     Actif
-                                    <a class="dropdown-item" href="/actif">UC</a>
-                                    <a class="dropdown-item" href="/actif">Ecran</a>
-                                    <a class="dropdown-item" href="/actif">CLAVIER</a>
-                                    <a class="dropdown-item" href="/actif">SOURIS</a>
-                                    <a class="dropdown-item" href="#">PHONE</a>
-                                    <a class="dropdown-item" href="#">AUTRE</a>
+                                    <a class="dropdown-item" href="/inventaire">UC</a>
+                                    <a class="dropdown-item" href="/inventaireEcran">Ecran</a>
+                                    <a class="dropdown-item" href="/inventaireClavier">CLAVIER</a>
+                                    <a class="dropdown-item" href="/inventaireSouris">SOURIS</a>
+                                    <a class="dropdown-item" href="/inventairePhone">PHONE</a>
                                     <div class="dropdown-divider"></div>
                                     Inactif
-                                    <a class="dropdown-item" href="/inactif">UC</a>
-                                    <a class="dropdown-item" href="/inactif">Ecran</a>
-                                    <a class="dropdown-item" href="/inactif">CLAVIER</a>
-                                    <a class="dropdown-item" href="#">SOURIS</a>
-                                    <a class="dropdown-item" href="#">PHONE</a>
-                                    <a class="dropdown-item" href="#">AUTRE</a>
+                                    <a class="dropdown-item" href="/inventaire-inact-uc">UC</a>
+                                    <a class="dropdown-item" href="/inventaire-inact-ecran">Ecran</a>
+                                    <a class="dropdown-item" href="/inventaire-inact-clavier">CLAVIER</a>
+                                    <a class="dropdown-item" href="/inventaire-inact-souris">SOURIS</a>
+                                    <a class="dropdown-item" href="/inventaire-inact-phone">PHONE</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-sm-4 col-5">
+                    <div class="col-sm-4 col-12">
                         <div class="page-header float-left">
                             <div class="page-title">
                                 <h1>
@@ -122,10 +121,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 col-5">
+                    <div class="col-sm-4 col-12">
                         <div class="page-header float-right">
                             <div class="page-title">
-                                <li class="nav-item" style="">
+                                <li class="nav-item" style="list-style-type: none;">
                                     <a href="/">
                                         <i class="fa fa-home fa-3x iconCol" aria-hidden="true"></i>
                                     </a>
@@ -163,7 +162,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive-lg">
-                                <table id="inventaireEcranActifDataT" class="table table-striped table-bordered">
+                                <table id="inventaireSourisInActifDataT" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Nom</th>
@@ -173,21 +172,8 @@
                                             <th>Equipement</th>
                                             <th>Num de Serie</th>
                                             <th>Marque</th>
-                                            <!-- <th>Processeur</th>
-                                            <th>RAM</th>
-                                            <th>Disque Dure</th>
-                                            <th>Capacité</th>
-                                            <th>Clé Windows</th> -->
-                                            <th>Résolution</th>
-                                            <th>Port HDMI</th>
-                                            <th>Port VGA</th>
-                                            <!-- <th>Port USB</th>
+                                            <th>Port USB</th>
                                             <th>Port PCI</th>
-                                            <th>IMEI 1</th>
-                                            <th>IMEI 2</th>
-                                            <th>Chargeur</th>
-                                            <th>Câble</th>
-                                            <th>Housse</th>  -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -214,7 +200,16 @@
                     <div class="modal-body">
                         <form id="updateUserLevel" method="post">
                             <div class="row form-group">
-                                <div class="col col-md-3">
+                                <div class="col col-md-12">
+                                    <label for="name" class="form-control-label">Actif</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="checkbox" id="actif" placeholder="" value="true" class="form-control">
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-12">
                                     <label for="name" class="form-control-label">Nom</label>
                                 </div>
                                 <div class="col-12 col-md-9">
@@ -509,24 +504,9 @@
     <script src="../assets/js/lib/data-table/datatables.min.js"></script>
     <script src="../assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
     <script src="../assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-    <!-- <script src="../assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-    <script src="../assets/js/lib/data-table/jszip.min.js"></script>
-    <script src="../assets/js/lib/data-table/vfs_fonts.js"></script>
-    <script src="../assets/js/lib/data-table/buttons.html5.min.js"></script>
-    <script src="../assets/js/lib/data-table/buttons.print.min.js"></script>
-    <script src="../assets/js/lib/data-table/buttons.colVis.min.js"></script>
-    <script src="../assets/js/init/datatables-init.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"></script>
 
     <script src="../assets/js/IT/inventaire.js"></script>
-
-
-
-
-
-
-
     <script type="text/javascript">
         $(document).ready(function () {
             $('#bootstrap-data-table-export').DataTable();

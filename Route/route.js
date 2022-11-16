@@ -84,10 +84,104 @@ routeExp.route('/production').get(async function (req, res) {
     }
 })
 
+//ACTIF Inventaire
+//Inventaire uc
 routeExp.route('/inventaire').get(async function (req, res) {
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inventaire.html", { type_util: session.typeUtil })
+        res.render("./it/actif/inventaireUC.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+// Get Inventaire ecran
+routeExp.route('/inventaireEcran').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        res.render("./it/actif/inventaire-ecran.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+//Inventaire clavier
+routeExp.route('/inventaireClavier').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        res.render("./it/actif/inventaire-clavier.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+//Inventaire souris
+routeExp.route('/inventaireSouris').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        res.render("./it/actif/inventaire-souris.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+//Inventaire phone
+routeExp.route('/inventairePhone').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        res.render("./it/actif/inventaire-phone.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+
+//INACTIF Inventaire
+//Inventaire uc
+routeExp.route('/inventaire-inact-uc').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        res.render("./it/inactif/inventaireUC.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+// Get Inventaire ecran
+routeExp.route('/inventaire-inact-ecran').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        res.render("./it/inactif/inventaire-ecran.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+//Inventaire clavier
+routeExp.route('/inventaire-inact-clavier').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        res.render("./it/inactif/inventaire-clavier.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+//Inventaire souris
+routeExp.route('/inventaire-inact-souris').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        res.render("./it/inactif/inventaire-souris.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+//Inventaire phone
+routeExp.route('/inventaire-inact-phone').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        res.render("./it/inactif/inventaire-phone.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
     }
@@ -125,11 +219,29 @@ routeExp.route('/instruction').get(async function (req, res) {
 
 
 routeExp.route('/addInventaire').post(async function (req, res) {
+    var actif = req.body.actif
     var name = req.body.name
-    var code = req.body.code
-    var nombre = req.body.nombr
-    var licence = req.body.licence
-    var comment = req.body.commentaire
+    var type = req.body.type
+    var localisation = req.body.localisation
+    var departement = req.body.departement
+    var equipement = req.body.equipement
+    var numSerie = req.body.numSerie
+    var marque = req.body.marque
+    var processeur = req.body.processeur
+    var ram = req.body.ram
+    var diskDur = req.body.diskDur
+    var capacite = req.body.capacite
+    var cleWin = req.body.cleWin
+    var resolution = req.body.resolution
+    var portHdmi = req.body.portHdmi
+    var portVga = req.body.portVga
+    var portUsb = req.body.portUsb
+    var portPci = req.body.portPci
+    var imei1 = req.body.imei1
+    var imei2 = req.body.imei2
+    var chargeur = req.body.chargeur
+    var cable = req.body.cable
+    var housse = req.body.housse
 
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
@@ -142,18 +254,29 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                if ((await InventaireModel.findOne({ code: code })) || name == "" || code == "") {
+                if (type == "" &&
+                    localisation == "" && departement == "" && equipement == "" && numSerie == "" &&
+                    marque == "" && processeur == "" && ram == "" && diskDur == "" && capacite == "" && cleWin == "" && resolution == "" &&
+                    portHdmi == "false" && portVga == "false" && portUsb == "false" && portPci == "false" && imei1 == "" && imei2 == "" &&
+                    chargeur == "false" && cable == "false" && housse == "false") {
                     res.send('error')
                 } else {
                     var newMat = {
-                        name: name,
-                        code: code,
-                        nombre: nombre,
-                        licence: licence,
-                        commentaire: comment
+                        actif: actif,
+                        name: name, type: type,
+                        localisation: localisation, departement: departement,
+                        equipement: equipement, numSerie: numSerie,
+                        marque: marque, processeur: processeur,
+                        ram: ram, diskDur: diskDur,
+                        capacite: capacite, cleWin: cleWin,
+                        resolution: resolution,
+                        portHdmi: portHdmi, portVga: portVga,
+                        portUsb: portUsb, portPci: portPci,
+                        imei1: imei1, imei2: imei2,
+                        chargeur: chargeur, cable: cable, housse: housse
                     }
                     var mat = await InventaireModel(newMat).save()
-                    // console.log("addInventaire", mat);
+                    console.log("addInventaire", mat);
                     res.send("success")
                 }
             })
@@ -162,10 +285,9 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     }
 })
 
-
-// Get all Material in inventary
-routeExp.route('/allInventaire').get(async function (req, res) {
-
+//GET DATA inventaire ACTIF
+//invetiaire UC
+routeExp.route('/allUCActifInventaire').get(async function (req, res) {
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
@@ -177,14 +299,204 @@ routeExp.route('/allInventaire').get(async function (req, res) {
                 }
             )
             .then(async () => {
-                var allInv = await InventaireModel.find()
-                // console.log("al", allInv);
+                var allInv = await InventaireModel.find({ name: "uc", actif: true })
                 res.send(allInv)
             })
     } else {
         res.redirect("/")
     }
 })
+// Get all Material in inventary Ecran
+routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true,
+                }
+            )
+            .then(async () => {
+                var allInv = await InventaireModel.find({ name: "ecran", actif: true })
+                res.send(allInv)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
+
+// Get all Material in inventary Clavier
+routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true,
+                }
+            )
+            .then(async () => {
+                var allInv = await InventaireModel.find({ name: "clavier", actif: true })
+                res.send(allInv)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
+// Get all Material in inventary souris
+routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true,
+                }
+            )
+            .then(async () => {
+                var allInv = await InventaireModel.find({ name: "souris", actif: true })
+                res.send(allInv)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
+// Get all Material in inventary phone
+routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true,
+                }
+            )
+            .then(async () => {
+                var allInv = await InventaireModel.find({ name: "phone", actif: true })
+                res.send(allInv)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
+//GET DATA inventaire INACTIF
+//invetiaire UC inactif
+routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true,
+                }
+            )
+            .then(async () => {
+                var allInv = await InventaireModel.find({ name: "uc", actif: false })
+                res.send(allInv)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+// Get all Material in inventary Ecran
+routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true,
+                }
+            )
+            .then(async () => {
+                var allInv = await InventaireModel.find({ name: "ecran", actif: false })
+                res.send(allInv)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
+
+// Get all Material in inventary Clavier
+routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true,
+                }
+            )
+            .then(async () => {
+                var allInv = await InventaireModel.find({ name: "clavier", actif: false })
+                res.send(allInv)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
+// Get all Material in inventary souris
+routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true,
+                }
+            )
+            .then(async () => {
+                var allInv = await InventaireModel.find({ name: "souris", actif: false })
+                res.send(allInv)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
+// Get all Material in inventary phone
+routeExp.route('/allPhoneInactifInventaire').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true,
+                }
+            )
+            .then(async () => {
+                var allInv = await InventaireModel.find({ name: "phone", actif: false })
+                res.send(allInv)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
 
 
 //get One Material

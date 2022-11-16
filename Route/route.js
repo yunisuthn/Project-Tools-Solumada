@@ -243,7 +243,6 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     var cable = req.body.cable
     var housse = req.body.housse
 
-    console.log("req.body", req.body);
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
@@ -255,11 +254,11 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                if (type == "",
-                    localisation == "", departement == "", equipement == "", numSerie == "",
-                    marque == "", processeur == "", ram == "", diskDur == "", capacite == "", cleWin == "", resolution == "",
-                    portHdmi == "false", portVga == "false", portUsb == "false", portPci == "false", imei1 == "", imei2 == "",
-                    chargeur == "false", cable == "false", housse == "false") {
+                if (type == "" &&
+                    localisation == "" && departement == "" && equipement == "" && numSerie == "" &&
+                    marque == "" && processeur == "" && ram == "" && diskDur == "" && capacite == "" && cleWin == "" && resolution == "" &&
+                    portHdmi == "false" && portVga == "false" && portUsb == "false" && portPci == "false" && imei1 == "" && imei2 == "" &&
+                    chargeur == "false" && cable == "false" && housse == "false") {
                     res.send('error')
                 } else {
                     var newMat = {
@@ -290,7 +289,6 @@ routeExp.route('/addInventaire').post(async function (req, res) {
 //invetiaire UC
 routeExp.route('/allUCActifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allEcranInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -302,7 +300,6 @@ routeExp.route('/allUCActifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "uc", actif: true })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {
@@ -312,7 +309,6 @@ routeExp.route('/allUCActifInventaire').get(async function (req, res) {
 // Get all Material in inventary Ecran
 routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allEcranInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -324,7 +320,6 @@ routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "ecran", actif: true })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {
@@ -336,7 +331,6 @@ routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
 // Get all Material in inventary Clavier
 routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allClavierActifInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -348,7 +342,6 @@ routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "clavier", actif: true })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {
@@ -359,7 +352,6 @@ routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
 // Get all Material in inventary souris
 routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allClavierActifInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -371,7 +363,6 @@ routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "souris", actif: true })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {
@@ -382,7 +373,6 @@ routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
 // Get all Material in inventary phone
 routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allPhoneActifInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -394,7 +384,6 @@ routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "phone", actif: true })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {
@@ -406,7 +395,6 @@ routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
 //invetiaire UC inactif
 routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allEcranInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -418,7 +406,6 @@ routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "uc", actif: false })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {
@@ -428,7 +415,6 @@ routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary Ecran
 routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allEcranInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -440,7 +426,6 @@ routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "ecran", actif: false })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {
@@ -452,7 +437,6 @@ routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary Clavier
 routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allClavierActifInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -464,7 +448,6 @@ routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "clavier", actif: false })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {
@@ -475,7 +458,6 @@ routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary souris
 routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allClavierActifInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -487,7 +469,6 @@ routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "souris", actif: false })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {
@@ -498,7 +479,6 @@ routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary phone
 routeExp.route('/allPhoneInactifInventaire').get(async function (req, res) {
     var session = req.session
-    console.log("allPhoneActifInventaire");
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -510,7 +490,6 @@ routeExp.route('/allPhoneInactifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "phone", actif: false })
-                console.log("al", allInv);
                 res.send(allInv)
             })
     } else {

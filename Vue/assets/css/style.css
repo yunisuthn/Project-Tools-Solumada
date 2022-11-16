@@ -4355,3 +4355,16 @@ main {
 		--shade4: #686e7e;
 	}
 } */
+
+.border-delete{
+  border-bottom: 0px solid red !important;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+border-color: #425364 #4c749c #4381be;
+}
+
+.actif{
+    font-size: x-large;
+    font-weight: 600;
+}

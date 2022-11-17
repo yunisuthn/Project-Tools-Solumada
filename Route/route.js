@@ -242,6 +242,9 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     var chargeur = req.body.chargeur
     var cable = req.body.cable
     var housse = req.body.housse
+    var antivirus = req.body.antivirus
+    var vpn = req.body.vpn
+    var usb = req.body.usb
 
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
@@ -258,7 +261,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                     localisation == "" && departement == "" && equipement == "" && numSerie == "" &&
                     marque == "" && processeur == "" && ram == "" && diskDur == "" && capacite == "" && cleWin == "" && resolution == "" &&
                     portHdmi == "false" && portVga == "false" && portUsb == "false" && portPci == "false" && imei1 == "" && imei2 == "" &&
-                    chargeur == "false" && cable == "false" && housse == "false") {
+                    chargeur == "false" && cable == "false" && housse == "false" && antivirus == "" && vpn == "" && usb == "") {
                     res.send('error')
                 } else {
                     var newMat = {
@@ -273,10 +276,12 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                         portHdmi: portHdmi, portVga: portVga,
                         portUsb: portUsb, portPci: portPci,
                         imei1: imei1, imei2: imei2,
-                        chargeur: chargeur, cable: cable, housse: housse
+                        chargeur: chargeur, cable: cable, housse: housse,
+                        antivirus: antivirus,
+                        vpn: vpn, nbUsb: usb,
                     }
                     var mat = await InventaireModel(newMat).save()
-                    console.log("addInventaire", mat);
+                    //console.log("addInventaire", mat);
                     res.send("success")
                 }
             })

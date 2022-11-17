@@ -24,6 +24,9 @@ const Inventaire = mongoose.Schema({
     chargeur: Boolean,
     cable: Boolean,
     housse: Boolean,
+    antivirus: String,
+    vpn: String,
+    nbUsb: String
 })
 
 module.exports = mongoose.model('Inventaire', Inventaire)

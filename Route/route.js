@@ -569,6 +569,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var licencInventA = req.body.licencInventA;
     var commentInventA = req.body.commentInventA;
 
+    console.log("req.body", req.body);
     //console.log("nombreInventA ", nombreInventA, " nameInventA ", nameInventA);
     //console.log("session", session);
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {

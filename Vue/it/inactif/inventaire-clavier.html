@@ -92,7 +92,7 @@
                         <ul class="nav nav-tabs border-delete">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                                    aria-haspopup="true"
+                                    aria-haspopup="true" id="getActif"
                                     style=" font-size: 26px; font-weight: bold; background: aliceblue; border-radius: 10px;"
                                     aria-expanded="false">Inactif - clavier</a>
                                 <div class="dropdown-menu">
@@ -460,52 +460,245 @@
         <div class="modal fade" id="modalUpdateInventaire" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
             tabindex="-1">
 
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title modalTitre" id="staticBackdropLabel">Mis à jours matériel</h5>
                     </div>
                     <div class="modal-body">
-                        <form id="updateMaterial" method="post">
-                            <!-- <div class="row mt-2 mb-3">
-                                <div class="col">
-                                    <div class="">
-                                        <div class="text-center">CHANGE MATERIEL </div>
-                                    </div>
-                                </div>
-                            </div> -->
+                        <form id="updateUserLevel" method="post">
                             <div class="row form-group">
-                                <div class="col col-md-3"><label for="name" class="form-control-label">Nom</label>
+                                <div class="col col-md-12">
+                                    <label for="name" class="form-control-label">Actif</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" id="nameUpdatMat" placeholder="" class="form-control">
+                                    <input type="checkbox" id="actifUpdat" placeholder="" value="true"
+                                        class="form-control">
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col col-md-3"><label for="name" class="form-control-label">Référence</label>
+                                <div class="col col-md-12">
+                                    <label for="name" class="form-control-label">Nom</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" id="refUpdatMat" placeholder="" class="form-control">
+                                    <select data-placeholder="Choisir un nom" class="form-control" id="nameMatUpdat"
+                                        tabindex="1">
+                                        <option value="" disabled selected>Choisir le nom</option>
+                                        <option value="uc">UC</option>
+                                        <option value="ecran">Ecran</option>
+                                        <option value="clavier">Clavier</option>
+                                        <option value="souris">Souris</option>
+                                        <option value="phone">Téléphone</option>
+                                        <option value="autre">Autre</option>
+                                    </select>
+                                    <!-- <input type="text" id="nameMat" placeholder="" class="form-control"> -->
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
                                 </div>
                             </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3"> <label for="">Nombre</label></div>
+                            <div class="row form-group typeUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Types</label>
+                                </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" class="form-control" name="nombreUpdatMat" id="nombreUpdatMat">
+                                    <input type="text" name="Mat" id="typeUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group localisationUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Localisation</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="number" id="localisationUpdat" class="form-control">
                                 </div>
                             </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="name" class="form-control-label">Licence</label>
+                            <div class="row form-group departementUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Département</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" id="licencUpdatMat" placeholder="" class="form-control">
+                                    <input type="text" name="Mat" id="departementUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group equipementUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Equipement</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="equipementUpdat" class="form-control">
+
                                 </div>
                             </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3"> <label for="">Commentaire</label></div>
+
+                            <div class="row form-group numSerieUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Numéros de Série</label>
+                                </div>
                                 <div class="col-12 col-md-9">
-                                    <textarea name="" id="commentUpdatMat" class="form-control" rows="5"
-                                        cols="33"></textarea>
+                                    <input type="text" name="Mat" id="numSerieUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group marqueUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Marque</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="marqueUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group processeurUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Processeur</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="processeurUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group ramUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">RAM (Gb)</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="ramUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group diskDurUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Disque Dure</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="diskDurUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group capaciteUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Capacité (Gb)</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="capaciteUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group cleWinUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Clé windows</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="cleWinUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group resolutionUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Résolution</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="resolutionUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group antivirusUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Antivirus</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="antivirusUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group vpnUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">VPN</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="vpnUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group usbUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Nombre port USB</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="usbUpdat" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group portHdmiUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Ports :</label>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    HDMI
+                                    <input type="checkbox" name="Mat" id="portHdmiUpdat" class="form-control"
+                                        value="false">
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    VGA
+                                    <input type="checkbox" name="Mat" id="portVgaUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group portUsbUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Ports :</label>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    USB
+                                    <input type="checkbox" name="Mat" id="portUsbUpdat" class="form-control">
+
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    PCI
+                                    <input type="checkbox" name="Mat" id="portPciUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group imeiUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">IMEI :</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    IMEI 1
+                                    <input type="text" name="Mat" id="imei1Updat" class="form-control">
+
+                                </div>
+                                <div class="col-12 col-md-9 ">
+                                    IMEI 2
+                                    <input type="text" name="Mat" id="imei2Updat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group chargeur-cable-housseUpdat">
+                                <div class="col col-md-2">
+                                    <label for="name" class="form-control-label">Chargeur</label>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <input type="checkbox" name="Mat" id="chargeurUpdat" class="form-control">
+
+                                </div>
+                                <!-- </div>
+                                                                                        <div class="row form-group"> -->
+                                <div class="col col-md-2">
+                                    <label for="name" class="form-control-label">Câble</label>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <input type="checkbox" name="Mat" id="cableUpdat" class="form-control">
+
+                                </div>
+                                <!-- </div>
+                                                                                        <div class="row form-group"> -->
+                                <div class="col col-md-2">
+                                    <label for="name" class="form-control-label">Housse</label>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <input type="checkbox" name="Mat" id="housseUpdat" class="form-control">
 
                                 </div>
                             </div>

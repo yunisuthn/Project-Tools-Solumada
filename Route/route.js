@@ -325,6 +325,7 @@ routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "ecran", actif: true })
+                console.log("allInv", allInv);
                 res.send(allInv)
             })
     } else {
@@ -558,16 +559,60 @@ routeExp.route('/getInstruction').post(async function (req, res) {
 //Update Material
 routeExp.route('/updateInvent').post(async function (req, res) {
     var session = req.session
-    var code = req.body.code;
-    var codeN = req.body.codeNew;
-    var name = req.body.name;
-    var nombre = req.body.nombre;
-    var licence = req.body.licence;
-    var commentaire = req.body.commentaire;
-    var nameInventA = req.body.nameInventA;
-    var nombreInventA = req.body.nombreInventA;
-    var licencInventA = req.body.licencInventA;
-    var commentInventA = req.body.commentInventA;
+    console.log("req.body.actif;", req.body.actifUpdat);
+    var actifUpdat = req.body.actifUpdat;
+    var nameMatUpd = req.body.nameMatUpd;
+    var typeUpdat = req.body.typeUpdat;
+    var localisationUpdat = req.body.localisationUpdat;
+    var departementUpdat = req.body.departementUpdat;
+    var equipementUpdat = req.body.equipementUpdat;
+    var numSerieUpdat = req.body.numSerieUpdat;
+    var marqueUpdat = req.body.marqueUpdat;
+    var processeurUpdat = req.body.processeurUpdat;
+    var ramUpdat = req.body.ramUpdat;
+    var diskDurUpdat = req.body.diskDurUpdat;
+    var capaciteUpdat = req.body.capaciteUpdat;
+    var cleWinUpdat = req.body.cleWinUpdat;
+    var resolutionUpdat = req.body.resolutionUpdat;
+    var antivirusUpdat = req.body.antivirusUpdat;
+    var vpnUpdat = req.body.vpnUpdat;
+    var usbUpdat = req.body.usbUpdat;
+    var portHdmiUpdat = req.body.portHdmiUpdat;
+    var portVgaUpdat = req.body.portVgaUpdat;
+    var portUsbUpdat = req.body.portUsbUpdat;
+    var portPciUpdat = req.body.portPciUpdat;
+    var imei1Updat = req.body.imei1Updat;
+    var imei2Updat = req.body.imei2Updat;
+    var chargeurUpdat = req.body.chargeurUpdat;
+    var cableUpdat = req.body.cableUpdat;
+    var housseUpdat = req.body.housseUpdat;
+
+    var portHdmiA = req.body.portHdmiA;
+    var portVgaA = req.body.portVgaA;
+    var portUsbA = req.body.portUsbA;
+    var portPciA = req.body.portPciA;
+    var imei1A = req.body.imei1A;
+    var imei2A = req.body.imei2A;
+    var chargeurA = req.body.chargeurA;
+    var cableA = req.body.cableA;
+    var housseA = req.body.housseA;
+    var nameMatA = req.body.nameMatA;
+    var typeA = req.body.typeA;
+    var localisationA = req.body.localisationA;
+    var departementA = req.body.departementA;
+    var equipementA = req.body.equipementA;
+    var numSerieA = req.body.numSerieA;
+    var marqueA = req.body.marqueA;
+    var processeurA = req.body.processeurA;
+    var ramA = req.body.ramA;
+    var diskDurA = req.body.diskDurA;
+    var capaciteA = req.body.capaciteA;
+    var cleWinA = req.body.cleWinA;
+    var resolutionA = req.body.resolutionA;
+    var antivirusA = req.body.antivirusA;
+    var vpnA = req.body.vpnA;
+    var nbreUsbA = req.body.nbreUsbA
+    var actifA = req.body.actifA;
 
     console.log("req.body", req.body);
     //console.log("nombreInventA ", nombreInventA, " nameInventA ", nameInventA);
@@ -583,36 +628,316 @@ routeExp.route('/updateInvent').post(async function (req, res) {
             )
             .then(async () => {
 
-                var updat = await InventaireModel.findOneAndUpdate({ code: code },
-                    { code: codeN, name: name, nombre: nombre, licence: licence, commentaire: commentaire })
-                // console.log("updat ", updat);
-                if (code == codeN && name == nameInventA && nombre == nombreInventA
-                    && licence == licencInventA && commentaire == commentInventA) {
+                console.log("actifA = ", actifA);
+                console.log("nameMatA = ", nameMatA);
+                console.log("typeA = ", typeA);
+                console.log("localisationA = ", localisationA);
+                console.log("departementA = ", departementA);
+                console.log("equipementA = ", equipementA);
+                console.log("numSerieA = ", numSerieA);
+                console.log("marqueA = ", marqueA);
+                console.log("resolutionA = ", resolutionA);
+                console.log("portHdmiA = ", portHdmiA);
+                console.log("portVgaA = ", portVgaA);
 
-                } else {
-                    var historique = {
-                        user: session.name,
-                        model: "Inventaire",
-                        date: new Date(),
-                        old: {
-                            "code": code,
-                            "name": nameInventA,
-                            "nombre": nombreInventA,
-                            "licence": licencInventA,
-                            "commentaire": commentInventA
-                        },
-                        new: {
-                            "code": codeN,
-                            "name": name,
-                            "nombre": nombre,
-                            "licence": licence,
-                            "commentaire": commentaire
+                var updat
+                if (nameMatA == "uc") {
+                    updat = await InventaireModel.findOneAndUpdate({
+                        actif: actifA,
+                        name: nameMatA,
+                        type: typeA,
+                        localisation: localisationA,
+                        departement: departementA,
+                        equipement: equipementA,
+                        numSerie: numSerieA,
+                        marque: marqueA,
+                        processeur: processeurA,
+                        ram: ramA,
+                        diskDur: diskDurA,
+                        capacite: capaciteA,
+                        cleWin: cleWinA,
+                        antivirus: antivirusA,
+                        vpn: vpnA,
+                        nbUsb: nbreUsbA
+                    },
+                        {
+                            actif: actifUpdat,
+                            name: nameMatUpd,
+                            type: typeUpdat,
+                            localisation: localisationUpdat,
+                            departement: departementUpdat,
+                            equipement: equipementUpdat,
+                            numSerie: numSerieUpdat,
+                            marque: marqueUpdat,
+                            processeur: processeurUpdat,
+                            ram: ramUpdat,
+                            diskDur: diskDurUpdat,
+                            capacite: capaciteUpdat,
+                            cleWin: cleWinUpdat,
+                            antivirus: antivirusUpdat,
+                            vpn: vpnUpdat,
+                            nbUsb: usbUpdat
+                        })
+
+                    if (actifA == actifUpdat && nameMatUpd == nameMatA && typeUpdat == typeA
+                        && localisationA == localisationUpdat && departementA == departementUpdat
+                        && equipementA == equipementUpdat && numSerieUpdat == numSerieA &&
+                        marqueUpdat == marqueA
+                        && processeurA == processeurUpdat && ramA == ramUpdat
+                        && diskDurA == diskDurUpdat && capaciteA == capaciteUpdat &&
+                        cleWinA == cleWinUpdat
+                        && antivirusA == antivirusUpdat && vpnA == vpnUpdat
+                        && nbreUsbA == usbUpdat) {
+
+                    } else {
+                        var historique = {
+                            user: session.name,
+                            model: "Inventaire",
+                            crud: "Modification",
+                            date: new Date(),
+                            old: {
+                                actif: actifA,
+                                nameMat: nameMatA,
+                                type: typeA,
+                                localisation: localisationA,
+                                departement: departementA,
+                                equipement: equipementA,
+                                numSerie: numSerieA,
+                                marque: marqueA,
+                                processeur: processeurA, ram: ramA,
+                                diskDur: diskDurA, capacite: capaciteA,
+                                cleWin: cleWinA, antivirus: antivirusA,
+                                vpn: vpnA, nbreUsb: nbreUsbA
+                            },
+                            new: {
+                                actif: actifUpdat,
+                                nameMat: nameMatUpd,
+                                type: typeUpdat,
+                                localisation: localisationUpdat,
+                                departement: departementUpdat,
+                                equipement: equipementUpdat,
+                                numSerie: numSerieUpdat,
+                                marque: marqueUpdat,
+                                processeur: processeurUpdat, ram: ramUpdat,
+                                diskDur: diskDurUpdat, capacite: capaciteUpdat,
+                                cleWin: cleWinUpdat, antivirus: antivirusUpdat,
+                                vpn: vpnUpdat, nbreUsb: usbUpdat
+                            }
                         }
+                        var historie = await HistoriqueModel(historique).save()
+                        //console.log("historique", historie);
                     }
-                    var historie = await HistoriqueModel(historique).save()
-                    //console.log("historique", historie);
+                } else if (nameMatA == "ecran") {
+                    updat = await InventaireModel.findOneAndUpdate({
+                        actif: actifA,
+                        name: nameMatA,
+                        type: typeA,
+                        localisation: localisationA,
+                        departement: departementA,
+                        equipement: equipementA,
+                        numSerie: numSerieA,
+                        marque: marqueA,
+                        resolution: resolutionA,
+                        portHdmi: portHdmiA,
+                        portVga: portVgaA
+                    },
+                        {
+                            actif: actifUpdat,
+                            name: nameMatUpd,
+                            type: typeUpdat,
+                            localisation: localisationUpdat,
+                            departement: departementUpdat,
+                            equipement: equipementUpdat,
+                            numSerie: numSerieUpdat,
+                            marque: marqueUpdat,
+                            resolution: resolutionUpdat,
+                            portHdmi: portHdmiUpdat,
+                            portVga: portVgaUpdat,
+
+                        })
+
+                    if (actifA == actifUpdat && nameMatUpd == nameMatA && typeUpdat == typeA
+                        && localisationA == localisationUpdat && departementA == departementUpdat
+                        && equipementA == equipementUpdat && numSerieUpdat == numSerieA &&
+                        marqueUpdat == marqueA
+                        && resolutionA == resolutionUpdat && portHdmiA == portHdmiUpdat
+                        && portVgaA == portVgaUpdat) {
+
+                    } else {
+                        var historique = {
+                            user: session.name,
+                            model: "Inventaire",
+                            crud: "Modification",
+                            date: new Date(),
+                            old: {
+                                actif: actifA,
+                                nameMat: nameMatA,
+                                type: typeA,
+                                localisation: localisationA,
+                                departement: departementA,
+                                equipement: equipementA,
+                                numSerie: numSerieA,
+                                marque: marqueA,
+                                resolution: resolutionA,
+                                portHdmi: portHdmiA,
+                                portVga: portVgaA
+                            },
+                            new: {
+                                actif: actifUpdat,
+                                nameMat: nameMatUpd,
+                                type: typeUpdat,
+                                localisation: localisationUpdat,
+                                departement: departementUpdat,
+                                equipement: equipementUpdat,
+                                numSerie: numSerieUpdat,
+                                marque: marqueUpdat,
+                                resolution: resolutionUpdat,
+                                portHdmi: portHdmiUpdat,
+                                portVga: portVgaUpdat
+
+                            }
+                        }
+                        var historie = await HistoriqueModel(historique).save()
+                        //console.log("historique", historie);
+                    }
+                } else if (nameMatA == "souris" || nameMatA == "clavier") {
+                    updat = await InventaireModel.findOneAndUpdate({
+                        actif: actifA,
+                        name: nameMatA,
+                        type: typeA,
+                        localisation: localisationA,
+                        departement: departementA,
+                        equipement: equipementA,
+                        numSerie: numSerieA,
+                        marque: marqueA,
+                        portUsb: portUsbA,
+                        portPci: portPciA,
+                    },
+                        {
+                            actif: actifUpdat,
+                            name: nameMatUpd,
+                            type: typeUpdat,
+                            localisation: localisationUpdat,
+                            departement: departementUpdat,
+                            equipement: equipementUpdat,
+                            numSerie: numSerieUpdat,
+                            marque: marqueUpdat,
+                            portUsb: portUsbUpdat,
+                            portPci: portPciUpdat,
+
+                        })
+                    if (actifA == actifUpdat && nameMatUpd == nameMatA && typeUpdat == typeA
+                        && localisationA == localisationUpdat && departementA == departementUpdat
+                        && equipementA == equipementUpdat && numSerieUpdat == numSerieA &&
+                        marqueUpdat == marqueA
+                        &&
+                        portUsbUpdat == portUsbA &&
+                        portPciUpdat == portPciA) {
+
+                    } else {
+                        var historique = {
+                            user: session.name,
+                            model: "Inventaire",
+                            crud: "Modification",
+                            date: new Date(),
+                            old: {
+                                "actif": actifA,
+                                "nom": nameMatA,
+                                "type": typeA,
+                                "localisation": localisationA,
+                                "département": departementA,
+                                "équipement": equipementA,
+                                "num Serie": numSerieA,
+                                "marque": marqueA,
+                                "port Usb": portUsbA, "port Pci": portPciA,
+                            },
+                            new: {
+                                "actif": actifUpdat,
+                                "nameMat": nameMatUpd,
+                                "type": typeUpdat,
+                                "localisation": localisationUpdat,
+                                "département": departementUpdat,
+                                "équipement": equipementUpdat,
+                                "num Serie": numSerieUpdat,
+                                "marque": marqueUpdat,
+                                "port Usb": portUsbUpdat, "port Pci": portPciUpdat,
+                            }
+                        }
+                        var historie = await HistoriqueModel(historique).save()
+                        //console.log("historique", historie);
+                    }
+                } else if (nameMatA == "phone") {
+
+                    updat = await InventaireModel.findOneAndUpdate({
+                        actif: actifA,
+                        name: nameMatA,
+                        type: typeA,
+                        numSerie: numSerieA,
+                        marque: marqueA,
+                        imei1: imei1A,
+                        imei2: imei2A,
+                        chargeur: chargeurA,
+                        cable: cableA,
+                        housse: housseA,
+                    },
+                        {
+                            actif: actifUpdat,
+                            name: nameMatUpd,
+                            type: typeUpdat,
+                            numSerie: numSerieUpdat,
+                            marque: marqueUpdat,
+                            imei1: imei1Updat,
+                            imei2: imei2Updat,
+                            chargeur: chargeurUpdat,
+                            cable: cableUpdat,
+                            housse: housseUpdat,
+
+                        })
+                    if (actifA == actifUpdat && nameMatUpd == nameMatA && typeUpdat == typeA
+                        && numSerieUpdat == numSerieA &&
+                        marqueUpdat == marqueA
+                        &&
+                        imei1A == imei1Updat && imei2A == imei2Updat &&
+                        chargeurA == chargeurUpdat && cableA == cableUpdat &&
+                        housseA == housseUpdat) {
+
+                    } else {
+                        var historique = {
+                            user: session.name,
+                            model: "Inventaire",
+                            date: new Date(),
+                            crud: "Modification",
+                            old: {
+                                "actif": actifA,
+                                "nom": nameMatA,
+                                "type": typeA,
+                                "num Serie": numSerieA,
+                                "marque": marqueA,
+                                "IMEI 1": imei1A, "IMEI 2": imei2A,
+                                "chargeur": chargeurA,
+                                "cable": cableA,
+                                "housse": housseA,
+                            },
+                            new: {
+                                "actif": actifUpdat,
+                                "nameMat": nameMatUpd,
+                                "type": typeUpdat,
+                                "num Serie": numSerieUpdat,
+                                "marque": marqueUpdat,
+                                "IMEI 1": imei1Updat, "IMEI 2": imei2Updat,
+                                "chargeur": chargeurUpdat,
+                                "cable": cableUpdat,
+                                "housse": housseUpdat,
+                            }
+                        }
+                        var historie = await HistoriqueModel(historique).save()
+                        //console.log("historique", historie);
+                    }
                 }
-                res.send("success")
+                // console.log("updat ", updat);
+
+
+                res.send(updat)
             })
     } else {
         res.redirect("/")
@@ -621,9 +946,26 @@ routeExp.route('/updateInvent').post(async function (req, res) {
 
 //delete material in inventary
 routeExp.route('/deleteMaterial').post(async function (req, res) {
-    var code = req.body.code;
-
+    var actifD = req.body.actifD;
     var session = req.session
+
+
+    var nameD = req.body.nameD
+    var typeD = req.body.typeD; var localisationD = req.body.localisationD;
+    var departementD = req.body.departementD
+    var equipementD = req.body.equipementD; var numSerieD = req.body.numSerieD;
+    var marqueD = req.body.marqueD; var processeurD = req.body.processeurD;
+    var ramD = req.body.ramD; var diskDurD = req.body.diskDurD;
+    var capaciteD = req.body.capaciteD; var cleWinD = req.body.cleWinD
+    var resolutionD = req.body.resolutionD; var portHdmiD = req.body.portHdmiD;
+    var portVgaD = req.body.portVgaD; var portUsbD = req.body.portUsbD;
+    var portPciD = req.body.portPciD;
+    var imei1D = req.body.imei1D
+    var imei2D = req.body.imei2D; var chargeurD = req.body.chargeurD;
+    var cableD = req.body.cableD; var housseD = req.body.housseD;
+    var antivirusD = req.body.antivirusD; var vpnD = req.body.vpnD
+    var nbUsbD = req.body.nbUsbD
+
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
         mongoose
             .connect(
@@ -634,7 +976,157 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
                 }
             )
             .then(async () => {
-                var delet = await InventaireModel.findOneAndDelete({ code: code })
+
+                if (nameD == "uc") {
+                    updat = await InventaireModel.findOneAndDelete({
+                        actif: actifD,
+                        name: nameMatD,
+                        type: typeD,
+                        localisation: localisationD,
+                        departement: departementD,
+                        equipement: equipementD,
+                        numSerie: numSerieD,
+                        marque: marqueD,
+                        processeur: processeurD,
+                        ram: ramD,
+                        diskDur: diskDurD,
+                        capacite: capaciteD,
+                        cleWin: cleWinD,
+                        antivirus: antivirusD,
+                        vpn: vpnD,
+                        nbUsb: nbUsbD
+                    })
+
+                    var historique = {
+                        user: session.name,
+                        model: "Inventaire",
+                        crud: "Delete",
+                        date: new Date(),
+                        old: {
+                            actif: actifD,
+                            nameMat: nameMatD,
+                            type: typeD,
+                            localisation: localisationD,
+                            departement: departementD,
+                            equipement: equipementD,
+                            numSerie: numSerieD,
+                            marque: marqueD,
+                            processeur: processeurD, ram: ramD,
+                            diskDur: diskDurD, capacite: capaciteD,
+                            cleWin: cleWinD, antivirus: antivirusD,
+                            vpn: vpnD, nbreUsb: nbUsbD
+                        },
+                    }
+
+                    var historie = await HistoriqueModel(historique).save()
+                    //console.log("historique", historie);
+
+                } else if (nameD == "ecran") {
+                    updat = await InventaireModel.findOneAndDelete({
+                        actif: actifD,
+                        name: nameD,
+                        type: typeD,
+                        localisation: localisationD,
+                        departement: departementD,
+                        equipement: equipementD,
+                        numSerie: numSerieD,
+                        marque: marqueD,
+                        resolution: resolutionD,
+                        portHdmi: portHdmiD,
+                        portVga: portVgaD
+                    })
+
+                    var historique = {
+                        user: session.name,
+                        model: "Inventaire",
+                        crud: "Delete",
+                        date: new Date(),
+                        old: {
+                            actif: actifD,
+                            nameMat: nameD,
+                            type: typeD,
+                            localisation: localisationD,
+                            departement: departementD,
+                            equipement: equipementD,
+                            numSerie: numSerieD,
+                            marque: marqueD,
+                            resolution: resolutionD,
+                            portHdmi: portHdmiD,
+                            portVga: portVgaD
+                        }
+                    }
+                    var historie = await HistoriqueModel(historique).save()
+                    //console.log("historique", historie);
+
+                } else if (nameD == "souris" || nameD == "clavier") {
+                    updat = await InventaireModel.findOneAndDelete({
+                        actif: actifD,
+                        name: nameD,
+                        type: typeD,
+                        localisation: localisationD,
+                        departement: departementD,
+                        equipement: equipementD,
+                        numSerie: numSerieD,
+                        marque: marqueD,
+                        portUsb: portUsbD,
+                        portPci: portPciD,
+                    })
+                    var historique = {
+                        user: session.name,
+                        model: "Inventaire",
+                        crud: "Delete",
+                        date: new Date(),
+                        old: {
+                            "actif": actifD,
+                            "nom": nameD,
+                            "type": typeD,
+                            "localisation": localisationD,
+                            "département": departementD,
+                            "équipement": equipementD,
+                            "num Serie": numSerieD,
+                            "marque": marqueD,
+                            "port Usb": portUsbD, "port Pci": portPciD,
+                        },
+                    }
+                    var historie = await HistoriqueModel(historique).save()
+                    //console.log("historique", historie);
+
+                } else if (nameD == "phone") {
+
+                    updat = await InventaireModel.findOneAndDelete({
+                        actif: actifD,
+                        name: nameD,
+                        type: typeD,
+                        numSerie: numSerieD,
+                        marque: marqueD,
+                        imei1: imei1D,
+                        imei2: imei2D,
+                        chargeur: chargeurD,
+                        cable: cableD,
+                        housse: housseD,
+                    })
+
+                    var historique = {
+                        user: session.name,
+                        model: "Inventaire",
+                        date: new Date(),
+                        crud: "Delete",
+                        old: {
+                            "actif": actifD,
+                            "nom": nameD,
+                            "type": typeD,
+                            "num Serie": numSerieD,
+                            "marque": marqueD,
+                            "IMEI 1": imei1D, "IMEI 2": imei2D,
+                            "chargeur": chargeurD,
+                            "cable": cableD,
+                            "housse": housseD,
+                        }
+                    }
+                    var historie = await HistoriqueModel(historique).save()
+                    //console.log("historique", historie);
+
+                }
                 // console.log("delet", delet);
                 res.send("success")
             })
@@ -711,6 +1203,7 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Instruction",
+                        crud: "Modification",
                         date: new Date(),
                         new: {
                             "name": name,
@@ -911,6 +1404,7 @@ routeExp.route("/updateTl").post(async function (req, res) {
                         user: session.name,
                         model: "Evaluation TL",
                         date: new Date(),
+                        crud: "Modification",
                         old: {
                             "name": nameA,
                             "mcode": mcode,
@@ -1271,6 +1765,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
                             user: session.name,
                             model: "Agent",
                             date: new Date(),
+                            crud: "Modification",
                             old: {
                                 "mcode": oldMCode,
                                 "name": nameA,
@@ -1351,6 +1846,7 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
                             user: session.name,
                             model: "Evaluation Agent",
                             date: new Date(),
+                            crud: "Modification",
                             old: {
                                 "mcode": oldMCode,
                                 "name": nameA,
@@ -1488,7 +1984,7 @@ routeExp.route('/historique').get(async function (req, res) {
 
 
                     var dt = dateTime.create(today);
-                    var formatted = dt.format('d-m-Y H:M:S');
+                    var formatted = dt.format('Y-m-d H:M:S');
                     //formatted.setTimezone('Europe/Amsterdam');
                     var user = {
                         user: element.user,
@@ -1642,6 +2138,7 @@ routeExp.route('/updateUser').post(async function (req, res) {
                     var historique = {
                         user: session.name,
                         model: "Utilisateur",
+                        crud: "Modification",
                         date: new Date(),
                         old: {
                             "mcode": mcodeA,
@@ -2267,6 +2764,7 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
                         user: session.name,
                         model: "Planning",
                         date: new Date(),
+                        crud: "Modification",
                         old: {
                             "mcode": mcodeAncien,
                             "prenom": prenomA,

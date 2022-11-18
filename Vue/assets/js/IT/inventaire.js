@@ -214,8 +214,9 @@ var inventaireEcranDataT = $('#inventaireEcranActifDataT').DataTable(
             },
             {
                 'data': 'portHdmi', 'render': function (portHdmi) {
+                    console.log("portHdmi", portHdmi);
                     if (!portHdmi) {
-                        return ""
+                        return "false"
                     } else {
                         return portHdmi
                     }
@@ -224,7 +225,7 @@ var inventaireEcranDataT = $('#inventaireEcranActifDataT').DataTable(
             {
                 'data': 'portVga', 'render': function (portVga) {
                     if (!portVga) {
-                        return ""
+                        return "false"
                     } else {
                         return portVga
                     }
@@ -306,7 +307,7 @@ var inventaireClavierActifDataT = $('#inventaireClavierActifDataT').DataTable(
             {
                 'data': 'portUsb', 'render': function (portUsb) {
                     if (!portUsb) {
-                        return ""
+                        return "false"
                     } else {
                         return portUsb
                     }
@@ -315,7 +316,7 @@ var inventaireClavierActifDataT = $('#inventaireClavierActifDataT').DataTable(
             {
                 'data': 'portPci', 'render': function (portPci) {
                     if (!portPci) {
-                        return ""
+                        return "false"
                     } else {
                         return portPci
                     }
@@ -397,7 +398,7 @@ var inventaireSourisActifDataT = $('#inventaireSourisActifDataT').DataTable(
             {
                 'data': 'portUsb', 'render': function (portUsb) {
                     if (!portUsb) {
-                        return ""
+                        return "false"
                     } else {
                         return portUsb
                     }
@@ -406,7 +407,7 @@ var inventaireSourisActifDataT = $('#inventaireSourisActifDataT').DataTable(
             {
                 'data': 'portPci', 'render': function (portPci) {
                     if (!portPci) {
-                        return ""
+                        return "false"
                     } else {
                         return portPci
                     }
@@ -479,7 +480,7 @@ var inventairePhoneActifDataT = $('#inventairePhoneActifDataT').DataTable(
             {
                 'data': 'chargeur', 'render': function (chargeur) {
                     if (!chargeur) {
-                        return ""
+                        return "false"
                     } else {
                         return chargeur
                     }
@@ -488,7 +489,7 @@ var inventairePhoneActifDataT = $('#inventairePhoneActifDataT').DataTable(
             {
                 'data': 'cable', 'render': function (cable) {
                     if (!cable) {
-                        return ""
+                        return "false"
                     } else {
                         return cable
                     }
@@ -497,7 +498,7 @@ var inventairePhoneActifDataT = $('#inventairePhoneActifDataT').DataTable(
             {
                 'data': 'housse', 'render': function (housse) {
                     if (!housse) {
-                        return ""
+                        return "false"
                     } else {
                         return housse
                     }
@@ -733,7 +734,7 @@ var inventaireEcranInActifDataT = $('#inventaireEcranInActifDataT').DataTable(
             {
                 'data': 'portHdmi', 'render': function (portHdmi) {
                     if (!portHdmi) {
-                        return ""
+                        return "false"
                     } else {
                         return portHdmi
                     }
@@ -742,7 +743,7 @@ var inventaireEcranInActifDataT = $('#inventaireEcranInActifDataT').DataTable(
             {
                 'data': 'portVga', 'render': function (portVga) {
                     if (!portVga) {
-                        return ""
+                        return "false"
                     } else {
                         return portVga
                     }
@@ -824,7 +825,7 @@ var inventaireClavierInactifDataT = $('#inventaireClavierInactifDataT').DataTabl
             {
                 'data': 'portUsb', 'render': function (portUsb) {
                     if (!portUsb) {
-                        return ""
+                        return "false"
                     } else {
                         return portUsb
                     }
@@ -833,7 +834,7 @@ var inventaireClavierInactifDataT = $('#inventaireClavierInactifDataT').DataTabl
             {
                 'data': 'portPci', 'render': function (portPci) {
                     if (!portPci) {
-                        return ""
+                        return "false"
                     } else {
                         return portPci
                     }
@@ -915,7 +916,7 @@ var inventaireSourisInActifDataT = $('#inventaireSourisInActifDataT').DataTable(
             {
                 'data': 'portUsb', 'render': function (portUsb) {
                     if (!portUsb) {
-                        return ""
+                        return "false"
                     } else {
                         return portUsb
                     }
@@ -924,7 +925,7 @@ var inventaireSourisInActifDataT = $('#inventaireSourisInActifDataT').DataTable(
             {
                 'data': 'portPci', 'render': function (portPci) {
                     if (!portPci) {
-                        return ""
+                        return "false"
                     } else {
                         return portPci
                     }
@@ -997,7 +998,7 @@ var inventairePhoneInActifDataT = $('#inventairePhoneInActifDataT').DataTable(
             {
                 'data': 'chargeur', 'render': function (chargeur) {
                     if (!chargeur) {
-                        return ""
+                        return "false"
                     } else {
                         return chargeur
                     }
@@ -1006,7 +1007,7 @@ var inventairePhoneInActifDataT = $('#inventairePhoneInActifDataT').DataTable(
             {
                 'data': 'cable', 'render': function (cable) {
                     if (!cable) {
-                        return ""
+                        return "false"
                     } else {
                         return cable
                     }
@@ -1015,7 +1016,7 @@ var inventairePhoneInActifDataT = $('#inventairePhoneInActifDataT').DataTable(
             {
                 'data': 'housse', 'render': function (housse) {
                     if (!housse) {
-                        return ""
+                        return "false"
                     } else {
                         return housse
                     }
@@ -1035,7 +1036,7 @@ var inventairePhoneInActifDataT = $('#inventairePhoneInActifDataT').DataTable(
 )
 
 $("#addInvent").on('click', function () {
-
+    clearForm()
     $(".type").css('display', "none")
     $(".localisation").css('display', "none")
     $(".departement").css('display', "none")
@@ -1082,6 +1083,7 @@ $("#nameMat").on("change", function () {
         $(".portsClavier").css('display', "none")
         $(".portsEcran").css('display', "none")
         $(".imei").css('display', "none")
+        $(".resolution").css('display', 'none')
 
 
         $(".chargeur-cable-housse").css('display', "none")
@@ -1120,6 +1122,7 @@ $("#nameMat").on("change", function () {
         $(".vpn").css('display', "none")
         $(".usb").css('display', "none")
         $(".chargeur-cable-housse").css('display', "none")
+        $(".resolution").css('display', 'none')
     } else if ($("#nameMat").val() == 'phone') {
         $(".imei").css('display', "block")
         $(".chargeur-cable-housse").css('display', "block")
@@ -1136,6 +1139,7 @@ $("#nameMat").on("change", function () {
         $(".vpn").css('display', "none")
         $(".usb").css('display', "none")
         $(".portsEcran").css('display', "none")
+        $(".resolution").css('display', 'none')
     }
 })
 
@@ -1268,7 +1272,6 @@ $('#saveMateriel').on("click", function () {
                     text: `Matériel ${Inventaire.name} sauvegardé avec succès`,
                 })
                 clearForm()
-                $("#inventaireDataT").DataTable().ajax.reload(null, false)
                 //searchOnDatatable(inventaireDataT, Inventaire.code)
                 if (Inventaire.name == "ecran" && Inventaire.actif == "true") {
                     window.location = "/inventaireEcran"
@@ -1298,6 +1301,7 @@ $('#saveMateriel').on("click", function () {
 
 //Empty form Inventaire
 function clearForm() {
+    $("#actif").prop("checked", false)
     $('#nameMat').val('');
     $('#type').val('');
     $('#localisation').val('');
@@ -1359,8 +1363,9 @@ var housseA = ""
 var antivirusA = ""
 var vpnA = ""
 var nbreUsbA = ""
+var actifA = ""
 $(document).on('click', '.btnUpdateInventaire', function () {
-
+    clearForm()
 
     $(".typeUpdat").css('display', "none")
     $(".localisationUpdat").css('display', "none")
@@ -1385,13 +1390,24 @@ $(document).on('click', '.btnUpdateInventaire', function () {
     $(".portsEcranUpdat").css('display', "none")
 
     var getCol = $(this).closest('tr');
-    var name = getCol.find('td:eq(0)').text();
-    console.log("name", name);
     nameMatA = getCol.find('td:eq(0)').text();
-    console.log("nameMatA", nameMatA);
     $(".typeUpdat").css('display', "block")
     $(".localisationUpdat").css('display', "block")
     $(".departementUpdat").css('display', "block")
+
+    var getActif = $("#getActif").text()
+    var numAct = getActif.search("Actif")
+    if (numAct == 0) {
+        $("#actifUpdat").prop("checked", true)
+        actifA = true
+    } else {
+        actifA = false
+    }
+
+    // console.log("portHdmiA", portHdmiA);
+    // console.log("portVgaA", portVgaA);
+
+
     if (nameMatA == "uc") {
         typeA = getCol.find('td:eq(1)').text()
         localisationA = getCol.find('td:eq(2)').text()
@@ -1411,6 +1427,9 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         $(".localisationUpdat").css('display', "block")
         $(".departementUpdat").css('display', "block")
         $(".equipementUpdat").css('display', "block")
+        $(".numSerieUpdat").css('display', "block")
+        $(".marqueUpdat").css('display', "block")
+
         $(".processeurUpdat").css('display', "block")
         $(".ramUpdat").css('display', "block")
         $(".diskDurUpdat").css('display', "block")
@@ -1423,7 +1442,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         $(".portUsbUpdat").css('display', "none")
         $(".imeiUpdat").css('display', "none")
 
-
+        console.log("processeurA", processeurA);
         $(".chargeur-cable-housse").css('display', "none")
     } else if (nameMatA == "ecran") {
         typeA = getCol.find('td:eq(1)').text()
@@ -1435,6 +1454,15 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         resolutionA = getCol.find('td:eq(7)').text()
         portHdmiA = getCol.find('td:eq(8)').text()
         portVgaA = getCol.find('td:eq(9)').text()
+        if (portHdmiA == "true") {
+            $("#portHdmiUpdat").prop("checked", true)
+        }
+        if (portVgaA == "true") {
+            $("#portVgaUpdat").prop("checked", true)
+        }
+        console.log("portHdmiA", portHdmiA);
+        $(".numSerieUpdat").css('display', "block")
+        $(".marqueUpdat").css('display', "block")
 
         $(".localisationUpdat").css('display', "block")
         $(".departementUpdat").css('display', "block")
@@ -1478,6 +1506,9 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         $(".antivirusUpdat").css('display', "none")
         $(".vpnUpdat").css('display', "none")
         $(".usbUpdat").css('display', "none")
+        $(".numSerieUpdat").css('display', "block")
+        $(".marqueUpdat").css('display', "block")
+
         $(".chargeur-cable-housseUpdat").css('display', "none")
     } else if (nameMatA == "phone") {
         typeA = getCol.find('td:eq(1)').text()
@@ -1505,41 +1536,13 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         $(".usbUpdat").css('display', "none")
         $(".portsEcranUpdat").css('display', "none")
         $(".portUsbUpdat").css('display', "none")
+        $(".numSerieUpdat").css('display', "block")
+        $(".marqueUpdat").css('display', "block")
+
         $(".portHdmiUpdat").css('display', "none")
     }
     console.log("dfsdf");
 
-    var getActif = $("#getActif").text()
-    var numAct = getActif.search("Actif")
-    //console.log("numAct", numAct);
-    if (numAct == 0) {
-        $("#actifUpdat").prop("checked", true)
-    }
-
-    console.log("portHdmiA", portHdmiA);
-    console.log("portVgaA", portVgaA);
-    if (portHdmiA == "true") {
-        $("#portHdmiUpdat").prop("checked", true)
-    }
-    if (portVgaA == "true") {
-        $("#portVgaUpdat").prop("checked", true)
-    }
-    if (portUsbA == "true") {
-        $("#portUsbUpdat").prop("checked", true)
-    }
-    if (portPciA == "true") {
-        $("#portPciUpdat").prop("checked", true)
-    }
-    if (chargeurA == "true") {
-        $("#chargeurUpdat").prop("checked", true)
-    }
-
-    if (cableA == "true") {
-        $("#cableUpdat").prop("checked", true)
-    }
-    if (housseA == "true") {
-        $("#housseUpdat").prop("checked", true)
-    }
     // console.log("nameMatA", name);
     $("#nameMatUpdat").val(nameMatA);
     $("#typeUpdat").val(typeA)
@@ -1567,6 +1570,22 @@ $(document).on('click', '.btnUpdateInventaire', function () {
     $("#cableUpdat").val(cableA)
     $("#housseUpdat").val(housseA)
 
+    if (portUsbA == "true") {
+        $("#portUsbUpdat").prop("checked", true)
+    }
+    if (portPciA == "true") {
+        $("#portPciUpdat").prop("checked", true)
+    }
+    if (chargeurA == "true") {
+        $("#chargeurUpdat").prop("checked", true)
+    }
+
+    if (cableA == "true") {
+        $("#cableUpdat").prop("checked", true)
+    }
+    if (housseA == "true") {
+        $("#housseUpdat").prop("checked", true)
+    }
 })
 
 
@@ -1608,7 +1627,13 @@ $(document).on('click', '#saveUpdateMat', function () {
     } else {
         $("#housseUpdat").attr('value', 'false');
     }
+    if ($("#actifUpdat").is(':checked')) {
+        $("#actifUpdat").attr('value', 'true');
+    } else {
+        $("#actifUpdat").attr('value', 'false');
+    }
     console.log("saveUpdateMat");
+    var actifUpdat = $("#actifUpdat").val();
     var nameMatUpd = $("#nameMatUpdat").val();
     var typeUpdat = $("#typeUpdat").val()
     var localisationUpdat = $("#localisationUpdat").val()
@@ -1625,16 +1650,18 @@ $(document).on('click', '#saveUpdateMat', function () {
     var antivirusUpdat = $("#antivirusUpdat").val()
     var vpnUpdat = $("#vpnUpdat").val()
     var usbUpdat = $("#usbUpdat").val();
-    // var portHdmiUpdat = $("#portHdmiUpdat").val()
-    // var portVgaUpdat = $("#portVgaUpdat").val()
-    // var portUsbUpdat = $("#portUsbUpdat").val()
-    // var portPciUpdat = $("#portPciUpdat").val()
+    var portHdmiUpdat = $("#portHdmiUpdat").val()
+    var portVgaUpdat = $("#portVgaUpdat").val()
+    var portUsbUpdat = $("#portUsbUpdat").val()
+    var portPciUpdat = $("#portPciUpdat").val()
     var imei1Updat = $("#imei1Updat").val();
     var imei2Updat = $("#imei2Updat").val()
-    // var chargeurUpdat = $("#chargeurUpdat").val()
-    // var cableUpdat = $("#cableUpdat").val()
-    // var housseUpdat = $("#housseUpdat").val()
+    var chargeurUpdat = $("#chargeurUpdat").val()
+    var cableUpdat = $("#cableUpdat").val()
+    var housseUpdat = $("#housseUpdat").val()
 
+    console.log("portHdmiUpdat", portHdmiUpdat);
+    console.log("portVgaUpdat", portVgaUpdat);
     var matUpd = {
         nameMatUpd: nameMatUpd,
         typeUpdat: typeUpdat,
@@ -1652,6 +1679,16 @@ $(document).on('click', '#saveUpdateMat', function () {
         antivirusUpdat: antivirusUpdat,
         vpnUpdat: vpnUpdat,
         usbUpdat: usbUpdat,
+        actifUpdat: actifUpdat,
+        portHdmiUpdat: portHdmiUpdat,
+        portVgaUpdat: portVgaUpdat,
+        portUsbUpdat: portUsbUpdat,
+        portPciUpdat: portPciUpdat,
+        imei1Updat: imei1Updat,
+        imei2Updat: imei2Updat,
+        chargeurUpdat: chargeurUpdat,
+        cableUpdat: cableUpdat,
+        housseUpdat: housseUpdat,
 
 
         nameMatA: nameMatA,
@@ -1667,9 +1704,19 @@ $(document).on('click', '#saveUpdateMat', function () {
         capaciteA: capaciteA,
         cleWinA: cleWinA,
         resolutionA: resolutionA,
+        portHdmiA: portHdmiA,
+        portVgaA: portVgaA,
+        portUsbA: portUsbA,
+        portPciA: portPciA,
+        imei1A: imei1A,
+        imei2A: imei2A,
+        chargeurA: chargeurA,
+        cableA: cableA,
+        housseA: housseA,
         antivirusA: antivirusA,
         vpnA: vpnA,
-        nbreUsbA: nbreUsbA
+        nbreUsbA: nbreUsbA,
+        actifA: actifA
     }
 
     $.ajax({
@@ -1677,7 +1724,7 @@ $(document).on('click', '#saveUpdateMat', function () {
         method: 'post',
         data: matUpd,
         success: function (res) {
-            //console.log("res", res);
+            console.log("res", res);
             Swal.fire(
                 'Update',
                 'Mise à jour réussie du matériel ! ',
@@ -1686,17 +1733,48 @@ $(document).on('click', '#saveUpdateMat', function () {
                     confirmButtonText: 'OK',
                 }
             )
-            // $("#nameUpdatMat").val("");
-            // $("#nombreUpdatMat").val("");
-            // $("#cancelUpdate").click();
-            // $('#inventaireDataT').DataTable().ajax.reload(null, false)
-            // window.location = '/inventaire'
+            $("#nameUpdatMat").val("");
+            $("#nombreUpdatMat").val("");
+            $("#cancelUpdate").click();
+
+            if (matUpd.nameMatUpd == "ecran" && matUpd.actifA == "true") {
+                window.location = "/inventaireEcran"
+            } else if (matUpd.nameMatUpd == "uc" && matUpd.actifA == "true") {
+                window.location = "/inventaire"
+            } else if (matUpd.nameMatUpd == "souris" && matUpd.actifA == "true") {
+                window.location = "/inventaireSouris"
+            } else if (matUpd.nameMatUpd == "phone" && matUpd.actifA == "true") {
+                window.location = "/inventairePhone"
+            } else if (matUpd.nameMatUpd == "clavier" && matUpd.actifA == "true") {
+                window.location = "/inventaireClavier"
+            } else if (matUpd.nameMatUpd == "ecran" && matUpd.actifA == "false") {
+                window.location = "/inventaire-inact-ecran"
+            } else if (matUpd.nameMatUpd == "uc" && matUpd.actifA == "false") {
+                window.location = "/inventaire-inact-uc"
+            } else if (matUpd.nameMatUpd == "souris" && matUpd.actifA == "false") {
+                window.location = "/inventaire-inact-souris"
+            } else if (matUpd.nameMatUpd == "phone" && matUpd.actifA == "false") {
+                window.location = "/inventaire-inact-phone"
+            } else if (matUpd.nameMatUpd == "clavier" && matUpd.actifA == "false") {
+                window.location = "/inventaire-inact-clavier"
+            }
         }
     })
 })
 
 //Delete material in inventary
 $(document).on('click', '.btnDeleteInventaire', function () {
+
+    var getActif = $("#getActif").text()
+    var numAct = getActif.search("Actif")
+    var actifD
+
+    if (numAct == 0) {
+        actifD = true
+    } else {
+        actifD = false
+    }
+
     Swal.fire({
         title: 'Supprimer',
         text: 'Etes-vous sûr de vouloir supprimer ce matériel?',
@@ -1706,12 +1784,120 @@ $(document).on('click', '.btnDeleteInventaire', function () {
         cancelButtonColor: 'green',
         confirmButtonText: 'Oui!'
     }).then((result) => {
+        var deleteMaterial
         if (result.isConfirmed) {
             var getCol = $(this).closest('tr');
-            var codeDelete = getCol.find('td:eq(1)').text();
-            deleteMaterial = {
-                code: codeDelete
+            var nameD = getCol.find('td:eq(0)').text();
+            var typeD; var localisationD; var departementD
+            var equipementD; var numSerieD; var marqueD; var processeurD; var ramD; var diskDurD; var capaciteD; var cleWinD
+            var resolutionD; var portHdmiD; var portVgaD; var portUsbD; var portPciD; var imei1D
+            var imei2D; var chargeurD; var cableD; var housseD; var antivirusD; var vpnD
+            var nbUsbD
+            console.log("nameD", nameD);
+            if (nameD == "uc") {
+                typeD = getCol.find('td:eq(1)').text()
+                localisationD = getCol.find('td:eq(2)').text()
+                departementD = getCol.find('td:eq(3)').text()
+                equipementD = getCol.find('td:eq(4)').text()
+                numSerieD = getCol.find('td:eq(5)').text()
+                marqueD = getCol.find('td:eq(6)').text()
+                processeurD = getCol.find('td:eq(7)').text()
+                ramD = getCol.find('td:eq(8)').text()
+                diskDurD = getCol.find('td:eq(9)').text()
+                capaciteD = getCol.find('td:eq(10)').text()
+                cleWinD = getCol.find('td:eq(11)').text()
+                antivirusD = getCol.find('td:eq(12)').text()
+                vpnD = getCol.find('td:eq(13)').text()
+                nbUsbD = getCol.find('td:eq(14)').text()
+
+                deleteMaterial = {
+                    nameD: nameD,
+                    typeD: typeD,
+                    localisationD: localisationD,
+                    departementD: departementD,
+                    equipementD: equipementD,
+                    marqueD: marqueD,
+                    processeurD: processeurD,
+                    ramD: ramD,
+                    diskDurD: diskDurD,
+                    capaciteD: capaciteD,
+                    cleWinD: cleWinD,
+                    antivirusD: antivirusD,
+                    vpnD: vpnD,
+                    nbUsbD: nbUsbD,
+                    actifD: actifD
+                }
+            } else if (nameD == "ecran") {
+                typeD = getCol.find('td:eq(1)').text()
+                localisationD = getCol.find('td:eq(2)').text()
+                departementD = getCol.find('td:eq(3)').text()
+                equipementD = getCol.find('td:eq(4)').text()
+                numSerieD = getCol.find('td:eq(5)').text()
+                marqueD = getCol.find('td:eq(6)').text()
+                resolutionD = getCol.find('td:eq(7)').text()
+                portHdmiD = getCol.find('td:eq(8)').text()
+                portVgaD = getCol.find('td:eq(9)').text()
+
+                deleteMaterial = {
+                    nameD: nameD,
+                    typeD: typeD,
+                    localisationD: localisationD,
+                    departementD: departementD,
+                    equipementD: equipementD,
+                    numSerieD: numSerieD,
+                    marqueD: marqueD,
+                    resolutionD: resolutionD,
+                    portHdmiD: portHdmiD,
+                    portVgaD: portVgaD,
+                    actifD: actifD
+                }
+            } else if (nameD == "clavier" || nameD == "souris") {
+                typeD = getCol.find('td:eq(1)').text()
+                localisationD = getCol.find('td:eq(2)').text()
+                departementD = getCol.find('td:eq(3)').text()
+                equipementD = getCol.find('td:eq(4)').text()
+                numSerieD = getCol.find('td:eq(5)').text()
+                marqueD = getCol.find('td:eq(6)').text()
+                portUsbD = getCol.find('td:eq(7)').text()
+                portPciD = getCol.find('td:eq(8)').text()
+
+                deleteMaterial = {
+                    nameD: nameD,
+                    typeD: typeD,
+                    localisationD: localisationD,
+                    departementD: departementD,
+                    equipementD: equipementD,
+                    numSerieD: numSerieD,
+                    marqueD: marqueD,
+                    portUsbD: portUsbD,
+                    portHdmiD: portHdmiD,
+                    portPciD: portPciD,
+                    actifD: actifD
+                }
+            } else if (nameD == "phone") {
+                typeD = getCol.find('td:eq(1)').text()
+                numSerieD = getCol.find('td:eq(2)').text()
+                marqueD = getCol.find('td:eq(3)').text()
+                imei1D = getCol.find('td:eq(4)').text()
+                imei2D = getCol.find('td:eq(5)').text()
+                chargeurD = getCol.find('td:eq(6)').text()
+                cableD = getCol.find('td:eq(7)').text()
+                housseD = getCol.find('td:eq(8)').text()
+
+                deleteMaterial = {
+                    nameD: nameD,
+                    typeD: typeD,
+                    numSerieD: numSerieD,
+                    marqueD: marqueD,
+                    imei1D: imei1D,
+                    imei2D: imei2D,
+                    chargeurD: chargeurD,
+                    cableD: cableD,
+                    housseD: housseD,
+                    actifD: actifD
+                }
             }
+            console.log("deleteMaterial", deleteMaterial);
             $.ajax({
                 url: '/deleteMaterial',
                 method: 'post',
@@ -1724,7 +1910,42 @@ $(document).on('click', '.btnDeleteInventaire', function () {
                         title: responseTxt,
                         showConfirmButton: true
                     })
-                    $("#inventaireDataT").DataTable().ajax.reload(null, false)
+                    $("#inventaireEcranActifDataT").DataTable().ajax.reload(null, false)
+                    $("#inventaireUCActifDataT").DataTable().ajax.reload(null, false)
+                    $("#inventaireClavierActifDataT").DataTable().ajax.reload(null, false)
+                    $("#inventaireSourisActifDataT").DataTable().ajax.reload(null, false)
+                    $("#inventairePhoneActifDataT").DataTable().ajax.reload(null, false)
+
+                    $("#inventaireUCInActifDataT").DataTable().ajax.reload(null, false)
+                    $("#inventaireEcranInActifDataT").DataTable().ajax.reload(null, false)
+                    $("#inventaireClavierInactifDataT").DataTable().ajax.reload(null, false)
+                    $("#inventaireSourisInActifDataT").DataTable().ajax.reload(null, false)
+                    $("#inventairePhoneInActifDataT").DataTable().ajax.reload(null, false)
+
+                    if (deleteMaterial.nameD == "ecran" && deleteMaterial.actifD == "true") {
+
+                        window.location = "/inventaireEcran"
+                    } else if (deleteMaterial.nameD == "uc" && deleteMaterial.actifD == "true") {
+
+                        window.location = "/inventaire"
+                    } else if (deleteMaterial.nameD == "souris" && deleteMaterial.actifD == "true") {
+
+                        window.location = "/inventaireSouris"
+                    } else if (deleteMaterial.nameD == "phone" && deleteMaterial.actifD == "true") {
+                        window.location = "/inventairePhone"
+                    } else if (deleteMaterial.nameD == "clavier" && deleteMaterial.actifD == "true") {
+                        window.location = "/inventaireClavier"
+                    } else if (deleteMaterial.nameD == "ecran" && deleteMaterial.actifD == "false") {
+                        window.location = "/inventaire-inact-ecran"
+                    } else if (deleteMaterial.nameD == "uc" && deleteMaterial.actifD == "false") {
+                        window.location = "/inventaire-inact-uc"
+                    } else if (deleteMaterial.nameD == "souris" && deleteMaterial.actifD == "false") {
+                        window.location = "/inventaire-inact-souris"
+                    } else if (deleteMaterial.nameD == "phone" && deleteMaterial.actifD == "false") {
+                        window.location = "/inventaire-inact-phone"
+                    } else if (deleteMaterial.nameD == "clavier" && deleteMaterial.actifD == "false") {
+                        window.location = "/inventaire-inact-clavier"
+                    }
                 },
                 error: function (resp) {
                     Swal.fire({

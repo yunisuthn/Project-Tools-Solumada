@@ -214,7 +214,7 @@ var inventaireEcranDataT = $('#inventaireEcranActifDataT').DataTable(
             },
             {
                 'data': 'portHdmi', 'render': function (portHdmi) {
-                    console.log("portHdmi", portHdmi);
+                    //console.log("portHdmi", portHdmi);
                     if (!portHdmi) {
                         return "false"
                     } else {
@@ -1062,7 +1062,7 @@ $("#addInvent").on('click', function () {
 })
 
 $("#nameMat").on("change", function () {
-    console.log("nameMat", $("#nameMat").val());
+    //console.log("nameMat", $("#nameMat").val());
     $(".type").css('display', "block")
     $(".marque").css('display', "block")
     $(".numSerie").css('display', "block")
@@ -1442,7 +1442,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         $(".portUsbUpdat").css('display', "none")
         $(".imeiUpdat").css('display', "none")
 
-        console.log("processeurA", processeurA);
+        //console.log("processeurA", processeurA);
         $(".chargeur-cable-housse").css('display', "none")
     } else if (nameMatA == "ecran") {
         typeA = getCol.find('td:eq(1)').text()
@@ -1460,7 +1460,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         if (portVgaA == "true") {
             $("#portVgaUpdat").prop("checked", true)
         }
-        console.log("portHdmiA", portHdmiA);
+        //console.log("portHdmiA", portHdmiA);
         $(".numSerieUpdat").css('display', "block")
         $(".marqueUpdat").css('display', "block")
 
@@ -1541,7 +1541,6 @@ $(document).on('click', '.btnUpdateInventaire', function () {
 
         $(".portHdmiUpdat").css('display', "none")
     }
-    console.log("dfsdf");
 
     // console.log("nameMatA", name);
     $("#nameMatUpdat").val(nameMatA);
@@ -1632,7 +1631,6 @@ $(document).on('click', '#saveUpdateMat', function () {
     } else {
         $("#actifUpdat").attr('value', 'false');
     }
-    console.log("saveUpdateMat");
     var actifUpdat = $("#actifUpdat").val();
     var nameMatUpd = $("#nameMatUpdat").val();
     var typeUpdat = $("#typeUpdat").val()
@@ -1660,8 +1658,6 @@ $(document).on('click', '#saveUpdateMat', function () {
     var cableUpdat = $("#cableUpdat").val()
     var housseUpdat = $("#housseUpdat").val()
 
-    console.log("portHdmiUpdat", portHdmiUpdat);
-    console.log("portVgaUpdat", portVgaUpdat);
     var matUpd = {
         nameMatUpd: nameMatUpd,
         typeUpdat: typeUpdat,
@@ -1724,44 +1720,82 @@ $(document).on('click', '#saveUpdateMat', function () {
         method: 'post',
         data: matUpd,
         success: function (res) {
-            console.log("res", res);
-            Swal.fire(
-                'Update',
-                'Mise à jour réussie du matériel ! ',
-                'success',
-                {
-                    confirmButtonText: 'OK',
-                }
-            )
-            $("#nameUpdatMat").val("");
-            $("#nombreUpdatMat").val("");
-            $("#cancelUpdate").click();
-
-            if (matUpd.nameMatUpd == "ecran" && matUpd.actifA == "true") {
-                window.location = "/inventaireEcran"
-            } else if (matUpd.nameMatUpd == "uc" && matUpd.actifA == "true") {
+            if (res === "success") {
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: 'Mise à jour réussie du matériel !',
+                    showConfirmButton: false,
+                    timer: 1700
+                });
+                //$("#cancelUpdate").click();
+                // $("#inventaireUCActifDataT").DataTable().ajax.reload(null, false);
+                // //resetTimeTableForm('update');
+                // $("#cancelUpdate").click(function () {
+                //     $("#myModal").modal('hide');
+                // });
+                // $('#updateUserLevel').each(function () { this.reset(); });
+                // $('#cancelUpdate').click();
+                //$("#cancelUpdate").click();
                 window.location = "/inventaire"
-            } else if (matUpd.nameMatUpd == "souris" && matUpd.actifA == "true") {
-                window.location = "/inventaireSouris"
-            } else if (matUpd.nameMatUpd == "phone" && matUpd.actifA == "true") {
-                window.location = "/inventairePhone"
-            } else if (matUpd.nameMatUpd == "clavier" && matUpd.actifA == "true") {
-                window.location = "/inventaireClavier"
-            } else if (matUpd.nameMatUpd == "ecran" && matUpd.actifA == "false") {
-                window.location = "/inventaire-inact-ecran"
-            } else if (matUpd.nameMatUpd == "uc" && matUpd.actifA == "false") {
-                window.location = "/inventaire-inact-uc"
-            } else if (matUpd.nameMatUpd == "souris" && matUpd.actifA == "false") {
-                window.location = "/inventaire-inact-souris"
-            } else if (matUpd.nameMatUpd == "phone" && matUpd.actifA == "false") {
-                window.location = "/inventaire-inact-phone"
-            } else if (matUpd.nameMatUpd == "clavier" && matUpd.actifA == "false") {
-                window.location = "/inventaire-inact-clavier"
+            } else {
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    title: 'Error occured!',
+                    showConfirmButton: false,
+                    timer: 1700
+                });
             }
+            // console.log("res", res);
+
+            // Swal.fire({
+            //     position: 'top-center',
+            //     icon: 'success',
+            //     title: 'Time table updated successfuly!',
+            //     showConfirmButton: false,
+            //     timer: 1700
+            // });
+            // // 'Update',
+            // // 'Mise à jour réussie du matériel ! ',
+            // // 'success',
+            // // {
+            // //     confirmButtonText: 'OK',
+            // // }
+            // //)
+            // // $("#nameUpdatMat").val("");
+            // // $("#nombreUpdatMat").val("");
+            // // $("#cancelUpdate").click();
+
+            // $("#inventaireUCActifDataT").DataTable().ajax.reload(null, false);
+            // //resetTimeTableForm('update');
+            // $('#cancelUpdate').click();
+            // console.log("matUpd.nameMatUpd", matUpd.nameMatUpd);
+            // if (matUpd.nameMatUpd == "ecran" && matUpd.actifA == "true") {
+            //     window.location = "/inventaireEcran"
+            // } else if (matUpd.nameMatUpd == "uc" && matUpd.actifA == "true") {
+            //     window.location = "/inventaire"
+            // } else if (matUpd.nameMatUpd == "souris" && matUpd.actifA == "true") {
+            //     window.location = "/inventaireSouris"
+            // } else if (matUpd.nameMatUpd == "phone" && matUpd.actifA == "true") {
+            //     window.location = "/inventairePhone"
+            // } else if (matUpd.nameMatUpd == "clavier" && matUpd.actifA == "true") {
+            //     window.location = "/inventaireClavier"
+            // } else if (matUpd.nameMatUpd == "ecran" && matUpd.actifA == "false") {
+            //     window.location = "/inventaire-inact-ecran"
+            // } else if (matUpd.nameMatUpd == "uc" && matUpd.actifA == "false") {
+            //     window.location = "/inventaire-inact-uc"
+            // } else if (matUpd.nameMatUpd == "souris" && matUpd.actifA == "false") {
+            //     window.location = "/inventaire-inact-souris"
+            // } else if (matUpd.nameMatUpd == "phone" && matUpd.actifA == "false") {
+            //     window.location = "/inventaire-inact-phone"
+            // } else if (matUpd.nameMatUpd == "clavier" && matUpd.actifA == "false") {
+            //     window.location = "/inventaire-inact-clavier"
+            // }
         }
     })
 })
-
+//resetTimeTableForm
 //Delete material in inventary
 $(document).on('click', '.btnDeleteInventaire', function () {
 
@@ -1793,7 +1827,6 @@ $(document).on('click', '.btnDeleteInventaire', function () {
             var resolutionD; var portHdmiD; var portVgaD; var portUsbD; var portPciD; var imei1D
             var imei2D; var chargeurD; var cableD; var housseD; var antivirusD; var vpnD
             var nbUsbD
-            console.log("nameD", nameD);
             if (nameD == "uc") {
                 typeD = getCol.find('td:eq(1)').text()
                 localisationD = getCol.find('td:eq(2)').text()
@@ -1825,7 +1858,8 @@ $(document).on('click', '.btnDeleteInventaire', function () {
                     antivirusD: antivirusD,
                     vpnD: vpnD,
                     nbUsbD: nbUsbD,
-                    actifD: actifD
+                    actifD: actifD,
+                    numSerieD: numSerieD
                 }
             } else if (nameD == "ecran") {
                 typeD = getCol.find('td:eq(1)').text()
@@ -1897,7 +1931,7 @@ $(document).on('click', '.btnDeleteInventaire', function () {
                     actifD: actifD
                 }
             }
-            console.log("deleteMaterial", deleteMaterial);
+            //console.log("deleteMaterial", deleteMaterial);
             $.ajax({
                 url: '/deleteMaterial',
                 method: 'post',

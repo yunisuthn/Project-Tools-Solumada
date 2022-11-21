@@ -325,7 +325,7 @@ routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
             )
             .then(async () => {
                 var allInv = await InventaireModel.find({ name: "ecran", actif: true })
-                console.log("allInv", allInv);
+                //console.log("allInv", allInv);
                 res.send(allInv)
             })
     } else {
@@ -559,7 +559,7 @@ routeExp.route('/getInstruction').post(async function (req, res) {
 //Update Material
 routeExp.route('/updateInvent').post(async function (req, res) {
     var session = req.session
-    console.log("req.body.actif;", req.body.actifUpdat);
+    //console.log("req.body.actif;", req.body.actifUpdat);
     var actifUpdat = req.body.actifUpdat;
     var nameMatUpd = req.body.nameMatUpd;
     var typeUpdat = req.body.typeUpdat;
@@ -614,7 +614,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var nbreUsbA = req.body.nbreUsbA
     var actifA = req.body.actifA;
 
-    console.log("req.body", req.body);
+    //console.log("req.body", req.body);
     //console.log("nombreInventA ", nombreInventA, " nameInventA ", nameInventA);
     //console.log("session", session);
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
@@ -628,17 +628,17 @@ routeExp.route('/updateInvent').post(async function (req, res) {
             )
             .then(async () => {
 
-                console.log("actifA = ", actifA);
-                console.log("nameMatA = ", nameMatA);
-                console.log("typeA = ", typeA);
-                console.log("localisationA = ", localisationA);
-                console.log("departementA = ", departementA);
-                console.log("equipementA = ", equipementA);
-                console.log("numSerieA = ", numSerieA);
-                console.log("marqueA = ", marqueA);
-                console.log("resolutionA = ", resolutionA);
-                console.log("portHdmiA = ", portHdmiA);
-                console.log("portVgaA = ", portVgaA);
+                // console.log("actifA = ", actifA);
+                // console.log("nameMatA = ", nameMatA);
+                // console.log("typeA = ", typeA);
+                // console.log("localisationA = ", localisationA);
+                // console.log("departementA = ", departementA);
+                // console.log("equipementA = ", equipementA);
+                // console.log("numSerieA = ", numSerieA);
+                // console.log("marqueA = ", marqueA);
+                // console.log("resolutionA = ", resolutionA);
+                // console.log("portHdmiA = ", portHdmiA);
+                // console.log("portVgaA = ", portVgaA);
 
                 var updat
                 if (nameMatA == "uc") {
@@ -937,7 +937,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                 // console.log("updat ", updat);
 
 
-                res.send(updat)
+                // res.send(updat)
+                res.send("success")
             })
     } else {
         res.redirect("/")
@@ -977,10 +978,45 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
             )
             .then(async () => {
 
+                // console.log("nameD", nameD);
+                // console.log("actifD", actifD);
+                // console.log("typeD", typeD);
+                // console.log("departementD", departementD);
+                // console.log("localisationD", localisationD);
+                // console.log("equipementD", equipementD);
+                // console.log("numSerieD", numSerieD);
+                // console.log("marqueD", marqueD);
+                // console.log("processeurD", processeurD);
+                // console.log("ramD", ramD);
+                // console.log("diskDurD", diskDurD);
+                // console.log("capaciteD", capaciteD);
+                // console.log("cleWinD", cleWinD);
+                // console.log("antivirusD", antivirusD);
+                // console.log("vpnD", vpnD);
+                // console.log("nbUsbD", nbUsbD);
                 if (nameD == "uc") {
-                    updat = await InventaireModel.findOneAndDelete({
+                    getMat = await InventaireModel.findOne({
                         actif: actifD,
-                        name: nameMatD,
+                        name: nameD,
+                        type: typeD,
+                        localisation: localisationD,
+                        departement: departementD,
+                        equipement: equipementD,
+                        numSerie: numSerieD,
+                        marque: marqueD,
+                        processeur: processeurD,
+                        ram: ramD,
+                        diskDur: diskDurD,
+                        capacite: capaciteD,
+                        cleWin: cleWinD,
+                        antivirus: antivirusD,
+                        vpn: vpnD,
+                        nbUsb: nbUsbD
+                    })
+                    //console.log("getMat", getMat);
+                    deleteM = await InventaireModel.findOneAndDelete({
+                        actif: actifD,
+                        name: nameD,
                         type: typeD,
                         localisation: localisationD,
                         departement: departementD,
@@ -997,6 +1033,8 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
                         nbUsb: nbUsbD
                     })
 
+                    //console.log("delet", deleteM);
+
                     var historique = {
                         user: session.name,
                         model: "Inventaire",
@@ -1004,7 +1042,7 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
                         date: new Date(),
                         old: {
                             actif: actifD,
-                            nameMat: nameMatD,
+                            nameMat: nameD,
                             type: typeD,
                             localisation: localisationD,
                             departement: departementD,
@@ -3509,7 +3547,7 @@ routeExp.route('/agentFilterProjet/:projet').get(async function (req, res) {
     var session = req.session
     var projet = req.params.projet;
 
-    console.log("projet", projet);
+    //console.log("projet", projet);
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -3522,7 +3560,7 @@ routeExp.route('/agentFilterProjet/:projet').get(async function (req, res) {
             var all = await AgentModel.find({ project: { $all: [projet] } })
             // var Projet = await ProjectModel.find();
             //console.log("listProjet", all);
-            console.log("agentFilterProjet");
+            //console.log("agentFilterProjet");
             res.send(all)
         })
 })

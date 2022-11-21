@@ -1728,8 +1728,17 @@ $(document).on('click', '#saveUpdateMat', function () {
                     showConfirmButton: false,
                     timer: 1700
                 });
-                //$("#cancelUpdate").click();
-                // $("#inventaireUCActifDataT").DataTable().ajax.reload(null, false);
+                document.getElementById("cancelUpdate").click();
+                $("#inventaireUCActifDataT").DataTable().ajax.reload(null, false);
+                $("#inventaireEcranActifDataT").DataTable().ajax.reload(null, false);
+                $("#inventaireClavierActifDataT").DataTable().ajax.reload(null, false);
+                $("#inventaireSourisActifDataT").DataTable().ajax.reload(null, false);
+                $("#inventairePhoneActifDataT").DataTable().ajax.reload(null, false);
+                $("#inventaireUCInActifDataT").DataTable().ajax.reload(null, false);
+                $("#inventaireEcranInActifDataT").DataTable().ajax.reload(null, false);
+                $("#inventaireClavierInactifDataT").DataTable().ajax.reload(null, false);
+                $("#inventaireSourisInActifDataT").DataTable().ajax.reload(null, false);
+                $("#inventairePhoneInActifDataT").DataTable().ajax.reload(null, false);
                 // //resetTimeTableForm('update');
                 // $("#cancelUpdate").click(function () {
                 //     $("#myModal").modal('hide');
@@ -1737,7 +1746,7 @@ $(document).on('click', '#saveUpdateMat', function () {
                 // $('#updateUserLevel').each(function () { this.reset(); });
                 // $('#cancelUpdate').click();
                 //$("#cancelUpdate").click();
-                window.location = "/inventaire"
+                //window.location = "/inventaire"
             } else {
                 Swal.fire({
                     position: 'top-center',

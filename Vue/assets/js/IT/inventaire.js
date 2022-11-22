@@ -231,6 +231,15 @@ var inventaireEcranDataT = $('#inventaireEcranActifDataT').DataTable(
                     }
                 }
             },
+            {
+                'data': 'portDvi', 'render': function (portDvi) {
+                    if (!portDvi) {
+                        return "false"
+                    } else {
+                        return portDvi
+                    }
+                }
+            },
 
             {
                 'defaultContent': `\
@@ -749,6 +758,15 @@ var inventaireEcranInActifDataT = $('#inventaireEcranInActifDataT').DataTable(
                     }
                 }
             },
+            {
+                'data': 'portDvi', 'render': function (portDvi) {
+                    if (!portDvi) {
+                        return "false"
+                    } else {
+                        return portDvi
+                    }
+                }
+            },
 
             {
                 'defaultContent': `\
@@ -1038,6 +1056,7 @@ var inventairePhoneInActifDataT = $('#inventairePhoneInActifDataT').DataTable(
 $("#addInvent").on('click', function () {
     clearForm()
     $(".type").css('display', "none")
+    $(".typeUC").css('display', "none")
     $(".localisation").css('display', "none")
     $(".departement").css('display', "none")
     $(".equipement").css('display', "none")
@@ -1063,12 +1082,12 @@ $("#addInvent").on('click', function () {
 
 $("#nameMat").on("change", function () {
     //console.log("nameMat", $("#nameMat").val());
-    $(".type").css('display', "block")
     $(".marque").css('display', "block")
     $(".numSerie").css('display', "block")
 
 
     if ($("#nameMat").val() == "uc") {
+        $(".typeUC").css('display', "block")
         $(".localisation").css('display', "block")
         $(".departement").css('display', "block")
         $(".equipement").css('display', "block")
@@ -1084,16 +1103,23 @@ $("#nameMat").on("change", function () {
         $(".portsEcran").css('display', "none")
         $(".imei").css('display', "none")
         $(".resolution").css('display', 'none')
+        $(".modelClass").css('display', 'none')
+        $(".equipementClass").css('display', 'block')
 
+        $(".type").css('display', "none")
 
         $(".chargeur-cable-housse").css('display', "none")
     } else if ($("#nameMat").val() == "ecran") {
+        $(".type").css('display', "block")
         $(".localisation").css('display', "block")
         $(".departement").css('display', "block")
         $(".equipement").css('display', "block")
         $(".resolution").css('display', 'block')
         $(".portsEcran").css('display', 'block')
 
+        $(".equipementClass").css('display', 'none')
+        $(".modelClass").css('display', 'block')
+        $(".typeUC").css('display', "none")
         $(".processeur").css('display', "none")
         $(".ram").css('display', "none")
         $(".diskDur").css('display', "none")
@@ -1107,6 +1133,7 @@ $("#nameMat").on("change", function () {
         $(".chargeur-cable-housse").css('display', "none")
     } else if ($("#nameMat").val() == "clavier" || $("#nameMat").val() == 'souris') {
 
+        $(".type").css('display', "block")
         $(".processeur").css('display', "none")
         $(".ram").css('display', "none")
         $(".diskDur").css('display', "none")
@@ -1116,18 +1143,24 @@ $("#nameMat").on("change", function () {
         $(".departement").css('display', "block")
         $(".equipement").css('display', "block")
         $(".portsClavier").css('display', "block")
+        $(".equipementClass").css('display', 'none')
+        $(".modelClass").css('display', 'block')
         $(".portsEcran").css('display', "none")
         $(".imei").css('display', "none")
+        $(".typeUC").css('display', "none")
         $(".antivirus").css('display', "none")
         $(".vpn").css('display', "none")
         $(".usb").css('display', "none")
         $(".chargeur-cable-housse").css('display', "none")
         $(".resolution").css('display', 'none')
     } else if ($("#nameMat").val() == 'phone') {
+
+        $(".type").css('display', "block")
         $(".imei").css('display', "block")
         $(".chargeur-cable-housse").css('display', "block")
         $(".processeur").css('display', "none")
         $(".ram").css('display', "none")
+        $(".typeUC").css('display', "none")
         $(".diskDur").css('display', "none")
         $(".capacite").css('display', "none")
         $(".cleWin").css('display', "none")
@@ -1158,7 +1191,7 @@ $('#saveMateriel').on("click", function () {
         Inventaire = {
             actif: $("#actif").val(),
             name: $('#nameMat').val(),
-            type: $('#type').val(),
+            type: $('#typeUC').val(),
             localisation: $('#localisation').val(),
             departement: $('#departement').val(),
             equipement: $('#equipement').val(),
@@ -1184,6 +1217,11 @@ $('#saveMateriel').on("click", function () {
         } else {
             $("#portVga").attr('value', 'false');
         }
+        if ($("#portDvi").is(':checked')) {
+            $("#portDvi").attr('value', 'true');
+        } else {
+            $("#portDvi").attr('value', 'false');
+        }
         Inventaire = {
             actif: $("#actif").val(),
             name: $('#nameMat').val(),
@@ -1196,6 +1234,7 @@ $('#saveMateriel').on("click", function () {
             resolution: $('#resolution').val(),
             portHdmi: $('#portHdmi').val(),
             portVga: $('#portVga').val(),
+            portDvi: $('#portDvi').val(),
 
         }
     } else if ($("#nameMat").val() == "clavier" || $("#nameMat").val() == 'souris') {
@@ -1304,6 +1343,7 @@ function clearForm() {
     $("#actif").prop("checked", false)
     $('#nameMat').val('');
     $('#type').val('');
+    $('#typeUC').val('');
     $('#localisation').val('');
     $('#departement').val('');
     $('#equipement').val('');
@@ -1317,6 +1357,7 @@ function clearForm() {
     $('#resolution').val('');
     $("#portHdmi").attr('value', 'false');
     $("#portVga").attr('value', 'false');
+    $("#portDvi").attr('value', 'false');
     $("#portUsb").attr('value', 'false');
     $("#portPci").attr('value', 'false');
     $('#imei1').val('');
@@ -1353,6 +1394,7 @@ var cleWinA = ""
 var resolutionA = ""
 var portHdmiA = ""
 var portVgaA = ""
+var portDviA = ""
 var portUsbA = ''
 var portPciA = ""
 var imei1A = ""
@@ -1368,6 +1410,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
     clearForm()
 
     $(".typeUpdat").css('display', "none")
+    $(".typeUCUpdat").css('display', "none")
     $(".localisationUpdat").css('display', "none")
     $(".departementUpdat").css('display', "none")
     $(".equipementUpdat").css('display', "none")
@@ -1391,7 +1434,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
 
     var getCol = $(this).closest('tr');
     nameMatA = getCol.find('td:eq(0)').text();
-    $(".typeUpdat").css('display', "block")
+    // $(".typeUpdat").css('display', "block")
     $(".localisationUpdat").css('display', "block")
     $(".departementUpdat").css('display', "block")
 
@@ -1423,7 +1466,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         antivirusA = getCol.find('td:eq(12)').text()
         vpnA = getCol.find('td:eq(13)').text()
         nbreUsbA = getCol.find('td:eq(14)').text()
-
+        $(".typeUCUpdat").css('display', "block")
         $(".localisationUpdat").css('display', "block")
         $(".departementUpdat").css('display', "block")
         $(".equipementUpdat").css('display', "block")
@@ -1441,7 +1484,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         $(".portHdmiUpdat").css('display', "none")
         $(".portUsbUpdat").css('display', "none")
         $(".imeiUpdat").css('display', "none")
-
+        $(".typeUpdat").css('display', "none")
         //console.log("processeurA", processeurA);
         $(".chargeur-cable-housse").css('display', "none")
     } else if (nameMatA == "ecran") {
@@ -1454,21 +1497,27 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         resolutionA = getCol.find('td:eq(7)').text()
         portHdmiA = getCol.find('td:eq(8)').text()
         portVgaA = getCol.find('td:eq(9)').text()
+        portDviA = getCol.find('td:eq(10)').text()
         if (portHdmiA == "true") {
             $("#portHdmiUpdat").prop("checked", true)
         }
         if (portVgaA == "true") {
             $("#portVgaUpdat").prop("checked", true)
         }
+        if (portDviA == "true") {
+            $("#portDviUpdat").prop("checked", true)
+        }
         //console.log("portHdmiA", portHdmiA);
         $(".numSerieUpdat").css('display', "block")
         $(".marqueUpdat").css('display', "block")
-
         $(".localisationUpdat").css('display', "block")
         $(".departementUpdat").css('display', "block")
         $(".equipementUpdat").css('display', "block")
         $(".resolutionUpdat").css('display', 'block')
         $(".portsEcranUpdat").css('display', 'block')
+        $(".typeUpdat").css('display', "block")
+
+        $(".typeUCUpdat").css('display', "none")
         $(".processeurUpdat").css('display', "none")
         $(".ramUpdat").css('display', "none")
         $(".diskDurUpdat").css('display', "none")
@@ -1508,6 +1557,8 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         $(".usbUpdat").css('display', "none")
         $(".numSerieUpdat").css('display', "block")
         $(".marqueUpdat").css('display', "block")
+        $(".typeUpdat").css('display', "block")
+        $(".typeUCUpdat").css('display', "none")
 
         $(".chargeur-cable-housseUpdat").css('display', "none")
     } else if (nameMatA == "phone") {
@@ -1538,6 +1589,9 @@ $(document).on('click', '.btnUpdateInventaire', function () {
         $(".portUsbUpdat").css('display', "none")
         $(".numSerieUpdat").css('display', "block")
         $(".marqueUpdat").css('display', "block")
+        $(".typeUpdat").css('display', "block")
+
+        $(".typeUCUpdat").css('display', "none")
 
         $(".portHdmiUpdat").css('display', "none")
     }
@@ -1545,6 +1599,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
     // console.log("nameMatA", name);
     $("#nameMatUpdat").val(nameMatA);
     $("#typeUpdat").val(typeA)
+    $("#typeUCUpdat").val(typeA)
     $("#localisationUpdat").val(localisationA)
     $("#departementUpdat").val(departementA)
     $("#equipementUpdat").val(equipementA)
@@ -1561,6 +1616,7 @@ $(document).on('click', '.btnUpdateInventaire', function () {
     $("#usbUpdat").val(nbreUsbA);
     $("#portHdmiUpdat").val(portHdmiA)
     $("#portVgaUpdat").val(portVgaA)
+    $("#portDviUpdat").val(portDviA)
     $("#portUsbUpdat").val(portUsbA)
     $("#portPciUpdat").val(portPciA)
     $("#imei1Updat").val(imei1A);
@@ -1601,6 +1657,11 @@ $(document).on('click', '#saveUpdateMat', function () {
     } else {
         $("#portVgaUpdat").attr('value', 'false');
     }
+    if ($("#portDviUpdat").is(':checked')) {
+        $("#portDviUpdat").attr('value', 'true');
+    } else {
+        $("#portDviUpdat").attr('value', 'false');
+    }
     if ($("#portUsbUpdat").is(':checked')) {
         $("#portUsbUpdat").attr('value', 'true');
     } else {
@@ -1633,7 +1694,12 @@ $(document).on('click', '#saveUpdateMat', function () {
     }
     var actifUpdat = $("#actifUpdat").val();
     var nameMatUpd = $("#nameMatUpdat").val();
-    var typeUpdat = $("#typeUpdat").val()
+    var typeUpdat
+    if (nameMatUpd == "uc") {
+        typeUpdat = $("#typeUCUpdat").val()
+    } else {
+        typeUpdat = $("#typeUpdat").val()
+    }
     var localisationUpdat = $("#localisationUpdat").val()
     var departementUpdat = $("#departementUpdat").val()
     var equipementUpdat = $("#equipementUpdat").val()
@@ -1650,6 +1716,7 @@ $(document).on('click', '#saveUpdateMat', function () {
     var usbUpdat = $("#usbUpdat").val();
     var portHdmiUpdat = $("#portHdmiUpdat").val()
     var portVgaUpdat = $("#portVgaUpdat").val()
+    var portDviUpdat = $("#portDviUpdat").val()
     var portUsbUpdat = $("#portUsbUpdat").val()
     var portPciUpdat = $("#portPciUpdat").val()
     var imei1Updat = $("#imei1Updat").val();
@@ -1678,6 +1745,7 @@ $(document).on('click', '#saveUpdateMat', function () {
         actifUpdat: actifUpdat,
         portHdmiUpdat: portHdmiUpdat,
         portVgaUpdat: portVgaUpdat,
+        portDviUpdat: portDviUpdat,
         portUsbUpdat: portUsbUpdat,
         portPciUpdat: portPciUpdat,
         imei1Updat: imei1Updat,
@@ -1702,6 +1770,7 @@ $(document).on('click', '#saveUpdateMat', function () {
         resolutionA: resolutionA,
         portHdmiA: portHdmiA,
         portVgaA: portVgaA,
+        portDviA: portDviA,
         portUsbA: portUsbA,
         portPciA: portPciA,
         imei1A: imei1A,
@@ -1833,7 +1902,7 @@ $(document).on('click', '.btnDeleteInventaire', function () {
             var nameD = getCol.find('td:eq(0)').text();
             var typeD; var localisationD; var departementD
             var equipementD; var numSerieD; var marqueD; var processeurD; var ramD; var diskDurD; var capaciteD; var cleWinD
-            var resolutionD; var portHdmiD; var portVgaD; var portUsbD; var portPciD; var imei1D
+            var resolutionD; var portHdmiD; var portVgaD; var portDviD; var portUsbD; var portPciD; var imei1D
             var imei2D; var chargeurD; var cableD; var housseD; var antivirusD; var vpnD
             var nbUsbD
             if (nameD == "uc") {
@@ -1880,6 +1949,7 @@ $(document).on('click', '.btnDeleteInventaire', function () {
                 resolutionD = getCol.find('td:eq(7)').text()
                 portHdmiD = getCol.find('td:eq(8)').text()
                 portVgaD = getCol.find('td:eq(9)').text()
+                portDviD = getCol.find('td:eq(10)').text()
 
                 deleteMaterial = {
                     nameD: nameD,
@@ -1892,6 +1962,7 @@ $(document).on('click', '.btnDeleteInventaire', function () {
                     resolutionD: resolutionD,
                     portHdmiD: portHdmiD,
                     portVgaD: portVgaD,
+                    portDviD: portDviD,
                     actifD: actifD
                 }
             } else if (nameD == "clavier" || nameD == "souris") {
@@ -1940,7 +2011,7 @@ $(document).on('click', '.btnDeleteInventaire', function () {
                     actifD: actifD
                 }
             }
-            //console.log("deleteMaterial", deleteMaterial);
+            console.log("deleteMaterial", deleteMaterial);
             $.ajax({
                 url: '/deleteMaterial',
                 method: 'post',

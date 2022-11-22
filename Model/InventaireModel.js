@@ -18,6 +18,7 @@ const Inventaire = mongoose.Schema({
     portHdmi: Boolean,
     portVga: Boolean,
     portUsb: Boolean,
+    portDvi: Boolean,
     portPci: Boolean,
     imei1: String,
     imei2: String,
@@ -26,7 +27,8 @@ const Inventaire = mongoose.Schema({
     housse: Boolean,
     antivirus: String,
     vpn: String,
-    nbUsb: String
+    nbUsb: String,
+    modelNum: String
 })
 
 module.exports = mongoose.model('Inventaire', Inventaire)

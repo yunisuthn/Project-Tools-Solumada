@@ -235,6 +235,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     var resolution = req.body.resolution
     var portHdmi = req.body.portHdmi
     var portVga = req.body.portVga
+    var portDvi = req.body.portDvi
     var portUsb = req.body.portUsb
     var portPci = req.body.portPci
     var imei1 = req.body.imei1
@@ -260,7 +261,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                 if (type == "" &&
                     localisation == "" && departement == "" && equipement == "" && numSerie == "" &&
                     marque == "" && processeur == "" && ram == "" && diskDur == "" && capacite == "" && cleWin == "" && resolution == "" &&
-                    portHdmi == "false" && portVga == "false" && portUsb == "false" && portPci == "false" && imei1 == "" && imei2 == "" &&
+                    portHdmi == "false" && portVga == "false" && portDvi == "false" && portUsb == "false" && portPci == "false" && imei1 == "" && imei2 == "" &&
                     chargeur == "false" && cable == "false" && housse == "false" && antivirus == "" && vpn == "" && usb == "") {
                     res.send('error')
                 } else {
@@ -273,7 +274,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                         ram: ram, diskDur: diskDur,
                         capacite: capacite, cleWin: cleWin,
                         resolution: resolution,
-                        portHdmi: portHdmi, portVga: portVga,
+                        portHdmi: portHdmi, portVga: portVga, portDvi: portDvi,
                         portUsb: portUsb, portPci: portPci,
                         imei1: imei1, imei2: imei2,
                         chargeur: chargeur, cable: cable, housse: housse,
@@ -579,6 +580,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var usbUpdat = req.body.usbUpdat;
     var portHdmiUpdat = req.body.portHdmiUpdat;
     var portVgaUpdat = req.body.portVgaUpdat;
+    var portDviUpdat = req.body.portDviUpdat;
     var portUsbUpdat = req.body.portUsbUpdat;
     var portPciUpdat = req.body.portPciUpdat;
     var imei1Updat = req.body.imei1Updat;
@@ -589,6 +591,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
 
     var portHdmiA = req.body.portHdmiA;
     var portVgaA = req.body.portVgaA;
+    var portDviA = req.body.portDviA;
     var portUsbA = req.body.portUsbA;
     var portPciA = req.body.portPciA;
     var imei1A = req.body.imei1A;
@@ -614,7 +617,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var nbreUsbA = req.body.nbreUsbA
     var actifA = req.body.actifA;
 
-    //console.log("req.body", req.body);
+    console.log("portDviA", portDviA);
+    console.log("portDviUpdat", portDviUpdat);
     //console.log("nombreInventA ", nombreInventA, " nameInventA ", nameInventA);
     //console.log("session", session);
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
@@ -739,7 +743,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         marque: marqueA,
                         resolution: resolutionA,
                         portHdmi: portHdmiA,
-                        portVga: portVgaA
+                        portVga: portVgaA,
+                        portDviA: portDviA,
                     },
                         {
                             actif: actifUpdat,
@@ -753,6 +758,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                             resolution: resolutionUpdat,
                             portHdmi: portHdmiUpdat,
                             portVga: portVgaUpdat,
+                            portDvi: portDviUpdat
 
                         })
 
@@ -761,7 +767,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         && equipementA == equipementUpdat && numSerieUpdat == numSerieA &&
                         marqueUpdat == marqueA
                         && resolutionA == resolutionUpdat && portHdmiA == portHdmiUpdat
-                        && portVgaA == portVgaUpdat) {
+                        && portVgaA == portVgaUpdat && portDviA == portDviUpdat) {
 
                     } else {
                         var historique = {
@@ -780,7 +786,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 marque: marqueA,
                                 resolution: resolutionA,
                                 portHdmi: portHdmiA,
-                                portVga: portVgaA
+                                portVga: portVgaA,
+                                portDvi: portDviA
                             },
                             new: {
                                 actif: actifUpdat,
@@ -793,7 +800,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 marque: marqueUpdat,
                                 resolution: resolutionUpdat,
                                 portHdmi: portHdmiUpdat,
-                                portVga: portVgaUpdat
+                                portDvi: portDviUpdat
 
                             }
                         }
@@ -978,16 +985,16 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
             )
             .then(async () => {
 
-                // console.log("nameD", nameD);
                 // console.log("actifD", actifD);
+                // console.log("nameD", nameD);
                 // console.log("typeD", typeD);
                 // console.log("departementD", departementD);
                 // console.log("localisationD", localisationD);
                 // console.log("equipementD", equipementD);
                 // console.log("numSerieD", numSerieD);
                 // console.log("marqueD", marqueD);
-                // console.log("processeurD", processeurD);
-                // console.log("ramD", ramD);
+                // console.log("resolutionD", resolutionD);
+                // console.log("portVgaD", portVgaD);
                 // console.log("diskDurD", diskDurD);
                 // console.log("capaciteD", capaciteD);
                 // console.log("cleWinD", cleWinD);
@@ -1073,6 +1080,7 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
                         portHdmi: portHdmiD,
                         portVga: portVgaD
                     })
+                    console.log("updat", updat);
 
                     var historique = {
                         user: session.name,

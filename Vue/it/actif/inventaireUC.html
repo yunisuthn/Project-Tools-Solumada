@@ -256,11 +256,29 @@
                                     <small id="" style="color: red; font-size: smaller; display: none;"></small>
                                 </div>
                             </div>
+                            <div class="row form-group typeUC">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Types</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select id="typeUC" class="form-control">
+                                        <option value="" disabled selected>Choisir le type</option>
+                                        <option value="Desktop">Desktop</option>
+                                        <option value="Laptop">Laptop</option>
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="type" class="form-control"> -->
+                                </div>
+                            </div>
                             <div class="row form-group type">
                                 <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Types</label>
                                 </div>
                                 <div class="col-12 col-md-9">
+                                    <!-- <select id="type" class="form-control">
+                                        <option value="" disabled selected>Choisir le type</option>
+                                        <option value="Desktop">Desktop</option>
+                                        <option value="Laptop">Laptop</option>
+                                    </select> -->
                                     <input type="text" name="Mat" id="type" class="form-control">
                                 </div>
 
@@ -270,7 +288,12 @@
                                     <label for="name" class="form-control-label">Localisation</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" name="number" id="localisation" class="form-control">
+                                    <select name="" id="localisation" class="form-control">
+                                        <option value="" disabled selected>Choisir la localisation</option>
+                                        <option value="IKANO">IKANO</option>
+                                        <option value="TWF">TWF</option>
+                                    </select>
+                                    <!-- <input type="text" name="number" id="localisation" class="form-control"> -->
                                 </div>
                             </div>
                             <div class="row form-group departement">
@@ -278,13 +301,37 @@
                                     <label for="name" class="form-control-label">Département</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" name="Mat" id="departement" class="form-control">
+                                    <select name="" id="departement" class="form-control">
+                                        <option value="" disabled selected>Choisir le departement</option>
+                                        <option value="Gérant">Gérant</option>
+                                        <option value="RH">RH</option>
+                                        <option value="Assistante RH">Assistante RH</option>
+                                        <option value="Assistante Administrative & finance">Assistante Administrative &
+                                            finance</option>
+                                        <option value="Opérationnel">Opérationnel</option>
+                                        <option value="TeamLeader">TeamLeader</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Agent">Agent</option>
+                                        <option value="Developpeur">Developpeur</option>
+                                        <option value="Reporting">Reporting</option>
+
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="departement" class="form-control"> -->
                                 </div>
 
                             </div>
+                            <!-- <div class="row form-group modelNum">
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="modelNum" class="form-control">
+
+                                </div>
+                            </div> -->
                             <div class="row form-group equipement">
-                                <div class="col col-md-3">
+                                <div class="col col-md-3 equipementClass">
                                     <label for="name" class="form-control-label">Equipement</label>
+                                </div>
+                                <div class="col col-md-3 modelClass">
+                                    <label for="name" class="form-control-label">Modèle N°</label>
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <input type="text" name="Mat" id="equipement" class="form-control">
@@ -333,7 +380,12 @@
                                     <label for="name" class="form-control-label">Disque Dure</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" name="Mat" id="diskDur" class="form-control">
+                                    <select name="" id="diskDur" class="form-control">
+                                        <option value="" disabled selected>Choisir le disque dure</option>
+                                        <option value="HDD">HDD</option>
+                                        <option value="SSD">SSD</option>
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="diskDur" class="form-control"> -->
                                 </div>
 
                             </div>
@@ -401,7 +453,10 @@
                                 <div class="col-12 col-md-4">
                                     VGA
                                     <input type="checkbox" name="Mat" id="portVga" class="form-control">
-
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    DVI
+                                    <input type="checkbox" name="Mat" id="portDvi" class="form-control">
                                 </div>
                             </div>
                             <div class="row form-group portsClavier">
@@ -510,11 +565,29 @@
                                     <small id="" style="color: red; font-size: smaller; display: none;"></small>
                                 </div>
                             </div>
+                            <div class="row form-group typeUCUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Types</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select id="typeUCUpdat" class="form-control">
+                                        <option value="" disabled selected>Choisir le type</option>
+                                        <option value="Desktop">Desktop</option>
+                                        <option value="Laptop">Laptop</option>
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="type" class="form-control"> -->
+                                </div>
+                            </div>
                             <div class="row form-group typeUpdat">
                                 <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Types</label>
                                 </div>
                                 <div class="col-12 col-md-9">
+                                    <!-- <select id="typeUpdat" class="form-control">
+                                        <option value="" disabled selected>Choisir le type</option>
+                                        <option value="Desktop">Desktop</option>
+                                        <option value="Laptop">Laptop</option>
+                                    </select> -->
                                     <input type="text" name="Mat" id="typeUpdat" class="form-control">
                                 </div>
 
@@ -524,7 +597,12 @@
                                     <label for="name" class="form-control-label">Localisation</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" name="number" id="localisationUpdat" class="form-control">
+                                    <select name="" id="localisationUpdat" class="form-control">
+                                        <option value="" disabled selected>Choisir la localisation</option>
+                                        <option value="IKANO">IKANO</option>
+                                        <option value="TWF">TWF</option>
+                                    </select>
+                                    <!-- <input type="text" name="number" id="localisationUpdat" class="form-control"> -->
                                 </div>
                             </div>
                             <div class="row form-group departementUpdat">
@@ -532,7 +610,23 @@
                                     <label for="name" class="form-control-label">Département</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" name="Mat" id="departementUpdat" class="form-control">
+                                    <select name="" id="departementUpdat" class="form-control">
+                                        <option value="" disabled selected>Choisir le departement</option>
+                                        <option value="Gérant">Gérant</option>
+                                        <option value="RH">RH</option>
+                                        <option value="Assistante RH">Assistante RH</option>
+                                        <option value="Assistante Administrative & finance">Assistante Administrative &
+                                            finance</option>
+                                        <option value="Opérationnel">Opérationnel</option>
+                                        <option value="TeamLeader">TeamLeader</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Agent">Agent</option>
+                                        <option value="Developpeur">Developpeur</option>
+                                        <option value="Reporting">Reporting</option>
+
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="departementUpdat" class="form-control"> -->
+                                    <!-- <input type="text" name="Mat" id="departementUpdat" class="form-control"> -->
                                 </div>
 
                             </div>
@@ -587,7 +681,12 @@
                                     <label for="name" class="form-control-label">Disque Dure</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" name="Mat" id="diskDurUpdat" class="form-control">
+                                    <select name="" id="diskDurUpdat" class="form-control">
+                                        <option value="" disabled selected>Choisir le disque dure</option>
+                                        <option value="HDD">HDD</option>
+                                        <option value="SSD">SSD</option>
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="diskDurUpdat" class="form-control"> -->
                                 </div>
 
                             </div>
@@ -658,6 +757,11 @@
                                     <input type="checkbox" name="Mat" id="portVgaUpdat" class="form-control">
 
                                 </div>
+                                <div class="col-12 col-md-4">
+                                    DVI
+                                    <input type="checkbox" name="Mat" id="portDviUpdat" class="form-control">
+
+                                </div>
                             </div>
                             <div class="row form-group portUsbUpdat">
                                 <div class="col col-md-3">
@@ -666,12 +770,10 @@
                                 <div class="col-12 col-md-4">
                                     USB
                                     <input type="checkbox" name="Mat" id="portUsbUpdat" class="form-control">
-
                                 </div>
                                 <div class="col-12 col-md-4">
                                     PCI
                                     <input type="checkbox" name="Mat" id="portPciUpdat" class="form-control">
-
                                 </div>
                             </div>
                             <div class="row form-group imeiUpdat">

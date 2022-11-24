@@ -28,7 +28,8 @@ const Inventaire = mongoose.Schema({
     antivirus: String,
     vpn: String,
     nbUsb: String,
-    modelNum: String
+    modelNum: String,
+    commentaire: String
 })
 
 module.exports = mongoose.model('Inventaire', Inventaire)

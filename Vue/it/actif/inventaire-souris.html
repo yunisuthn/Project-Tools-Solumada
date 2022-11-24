@@ -182,12 +182,13 @@
                                             <th>Nom</th>
                                             <th>Type</th>
                                             <th>Localisation</th>
-                                            <th>Département</th>
+                                            <th>Fonction</th>
                                             <th>N° Modèle</th>
                                             <th>Num de Serie</th>
                                             <th>Marque</th>
                                             <th>Port USB</th>
                                             <th>Port PCI</th>
+                                            <th>Commentaire</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -235,7 +236,6 @@
                                         <option value="clavier">Clavier</option>
                                         <option value="souris">Souris</option>
                                         <option value="phone">Téléphone</option>
-                                        <option value="autre">Autre</option>
                                     </select>
                                     <!-- <input type="text" id="nameMat" placeholder="" class="form-control"> -->
                                     <small id="" style="color: red; font-size: smaller; display: none;"></small>
@@ -283,11 +283,11 @@
                             </div>
                             <div class="row form-group departement">
                                 <div class="col col-md-3">
-                                    <label for="name" class="form-control-label">Département</label>
+                                    <label for="name" class="form-control-label">Fonction</label>
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <select name="" id="departement" class="form-control">
-                                        <option value="" disabled selected>Choisir le departement</option>
+                                        <option value="" disabled selected>Choisir fonction</option>
                                         <option value="Gérant">Gérant</option>
                                         <option value="RH">RH</option>
                                         <option value="Assistante RH">Assistante RH</option>
@@ -495,6 +495,16 @@
 
                                 </div>
                             </div>
+                            <div class="row form-group commentaire">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Commentaire</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <textarea name="" id="commentaire" cols="10" rows="5"
+                                        class="form-control"></textarea>
+                                    <!-- <input type="text" name="Mat" id="commentaire" class="form-control"> -->
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -538,7 +548,6 @@
                                         <option value="clavier">Clavier</option>
                                         <option value="souris">Souris</option>
                                         <option value="phone">Téléphone</option>
-                                        <option value="autre">Autre</option>
                                     </select>
                                     <!-- <input type="text" id="nameMat" placeholder="" class="form-control"> -->
                                     <small id="" style="color: red; font-size: smaller; display: none;"></small>
@@ -576,11 +585,11 @@
                             </div>
                             <div class="row form-group departementUpdat">
                                 <div class="col col-md-3">
-                                    <label for="name" class="form-control-label">Département</label>
+                                    <label for="name" class="form-control-label">Fonction</label>
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <select name="" id="departementUpdat" class="form-control">
-                                        <option value="" disabled selected>Choisir le departement</option>
+                                        <option value="" disabled selected>Choisir fonction</option>
                                         <option value="Gérant">Gérant</option>
                                         <option value="RH">RH</option>
                                         <option value="Assistante RH">Assistante RH</option>
@@ -779,6 +788,15 @@
                                 <div class="col-12 col-md-2">
                                     <input type="checkbox" name="Mat" id="housseUpdat" class="form-control">
 
+                                </div>
+                            </div>
+                            <div class="row form-group commentaireUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Commentaire</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <textarea name="" id="commentaireUpdat" cols="10" rows="5"
+                                        class="form-control"></textarea>
                                 </div>
                             </div>
                         </form>

@@ -246,6 +246,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     var antivirus = req.body.antivirus
     var vpn = req.body.vpn
     var usb = req.body.usb
+    var commentaire = req.body.commentaire
 
     var session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
@@ -262,7 +263,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                     localisation == "" && departement == "" && equipement == "" && numSerie == "" &&
                     marque == "" && processeur == "" && ram == "" && diskDur == "" && capacite == "" && cleWin == "" && resolution == "" &&
                     portHdmi == "false" && portVga == "false" && portDvi == "false" && portUsb == "false" && portPci == "false" && imei1 == "" && imei2 == "" &&
-                    chargeur == "false" && cable == "false" && housse == "false" && antivirus == "" && vpn == "" && usb == "") {
+                    chargeur == "false" && cable == "false" && housse == "false" && antivirus == "" && vpn == "" && usb == "" && commentaire == "") {
                     res.send('error')
                 } else {
                     var newMat = {
@@ -279,7 +280,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                         imei1: imei1, imei2: imei2,
                         chargeur: chargeur, cable: cable, housse: housse,
                         antivirus: antivirus,
-                        vpn: vpn, nbUsb: usb,
+                        vpn: vpn, nbUsb: usb, commentaire: commentaire
                     }
                     var mat = await InventaireModel(newMat).save()
                     //console.log("addInventaire", mat);
@@ -588,6 +589,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var chargeurUpdat = req.body.chargeurUpdat;
     var cableUpdat = req.body.cableUpdat;
     var housseUpdat = req.body.housseUpdat;
+    var commentaireUpdat = req.body.commentaireUpdat;
 
     var portHdmiA = req.body.portHdmiA;
     var portVgaA = req.body.portVgaA;
@@ -616,6 +618,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var vpnA = req.body.vpnA;
     var nbreUsbA = req.body.nbreUsbA
     var actifA = req.body.actifA;
+    var commentaireA = req.body.commentaireA;
 
     console.log("portDviA", portDviA);
     console.log("portDviUpdat", portDviUpdat);
@@ -662,7 +665,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         cleWin: cleWinA,
                         antivirus: antivirusA,
                         vpn: vpnA,
-                        nbUsb: nbreUsbA
+                        nbUsb: nbreUsbA,
+                        commentaire: commentaireA
                     },
                         {
                             actif: actifUpdat,
@@ -680,7 +684,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                             cleWin: cleWinUpdat,
                             antivirus: antivirusUpdat,
                             vpn: vpnUpdat,
-                            nbUsb: usbUpdat
+                            nbUsb: usbUpdat,
+                            commentaire: commentaireUpdat
                         })
 
                     if (actifA == actifUpdat && nameMatUpd == nameMatA && typeUpdat == typeA
@@ -691,7 +696,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         && diskDurA == diskDurUpdat && capaciteA == capaciteUpdat &&
                         cleWinA == cleWinUpdat
                         && antivirusA == antivirusUpdat && vpnA == vpnUpdat
-                        && nbreUsbA == usbUpdat) {
+                        && nbreUsbA == usbUpdat && commentaireA == commentaireUpdat) {
 
                     } else {
                         var historique = {
@@ -711,7 +716,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 processeur: processeurA, ram: ramA,
                                 diskDur: diskDurA, capacite: capaciteA,
                                 cleWin: cleWinA, antivirus: antivirusA,
-                                vpn: vpnA, nbreUsb: nbreUsbA
+                                vpn: vpnA, nbreUsb: nbreUsbA,
+                                commentaire: commentaireA
                             },
                             new: {
                                 actif: actifUpdat,
@@ -725,7 +731,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 processeur: processeurUpdat, ram: ramUpdat,
                                 diskDur: diskDurUpdat, capacite: capaciteUpdat,
                                 cleWin: cleWinUpdat, antivirus: antivirusUpdat,
-                                vpn: vpnUpdat, nbreUsb: usbUpdat
+                                vpn: vpnUpdat, nbreUsb: usbUpdat, commentaire: commentaireUpdat
                             }
                         }
                         var historie = await HistoriqueModel(historique).save()
@@ -745,6 +751,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         portHdmi: portHdmiA,
                         portVga: portVgaA,
                         portDviA: portDviA,
+                        commentaire: commentaireA
                     },
                         {
                             actif: actifUpdat,
@@ -758,7 +765,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                             resolution: resolutionUpdat,
                             portHdmi: portHdmiUpdat,
                             portVga: portVgaUpdat,
-                            portDvi: portDviUpdat
+                            portDvi: portDviUpdat,
+                            commentaire: commentaireUpdat
 
                         })
 
@@ -767,7 +775,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         && equipementA == equipementUpdat && numSerieUpdat == numSerieA &&
                         marqueUpdat == marqueA
                         && resolutionA == resolutionUpdat && portHdmiA == portHdmiUpdat
-                        && portVgaA == portVgaUpdat && portDviA == portDviUpdat) {
+                        && portVgaA == portVgaUpdat && portDviA == portDviUpdat
+                        && commentaireA == commentaireUpdat) {
 
                     } else {
                         var historique = {
@@ -787,7 +796,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 resolution: resolutionA,
                                 portHdmi: portHdmiA,
                                 portVga: portVgaA,
-                                portDvi: portDviA
+                                portDvi: portDviA,
+                                commentaire: commentaireA
                             },
                             new: {
                                 actif: actifUpdat,
@@ -800,7 +810,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 marque: marqueUpdat,
                                 resolution: resolutionUpdat,
                                 portHdmi: portHdmiUpdat,
-                                portDvi: portDviUpdat
+                                portDvi: portDviUpdat,
+                                commentaire: commentaireUpdat
 
                             }
                         }
@@ -819,6 +830,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         marque: marqueA,
                         portUsb: portUsbA,
                         portPci: portPciA,
+                        commentaire: commentaireA
                     },
                         {
                             actif: actifUpdat,
@@ -831,6 +843,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                             marque: marqueUpdat,
                             portUsb: portUsbUpdat,
                             portPci: portPciUpdat,
+                            commentaire: commentaireUpdat
 
                         })
                     if (actifA == actifUpdat && nameMatUpd == nameMatA && typeUpdat == typeA
@@ -839,7 +852,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         marqueUpdat == marqueA
                         &&
                         portUsbUpdat == portUsbA &&
-                        portPciUpdat == portPciA) {
+                        portPciUpdat == portPciA
+                        && commentaireA == commentaireUpdat) {
 
                     } else {
                         var historique = {
@@ -857,6 +871,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 "num Serie": numSerieA,
                                 "marque": marqueA,
                                 "port Usb": portUsbA, "port Pci": portPciA,
+                                "commentaire": commentaireA
                             },
                             new: {
                                 "actif": actifUpdat,
@@ -868,6 +883,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 "num Serie": numSerieUpdat,
                                 "marque": marqueUpdat,
                                 "port Usb": portUsbUpdat, "port Pci": portPciUpdat,
+                                "commentaire": commentaireUpdat
                             }
                         }
                         var historie = await HistoriqueModel(historique).save()
@@ -886,6 +902,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         chargeur: chargeurA,
                         cable: cableA,
                         housse: housseA,
+                        commentaire: commentaireA
                     },
                         {
                             actif: actifUpdat,
@@ -898,6 +915,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                             chargeur: chargeurUpdat,
                             cable: cableUpdat,
                             housse: housseUpdat,
+                            commentaire: commentaireUpdat
 
                         })
                     if (actifA == actifUpdat && nameMatUpd == nameMatA && typeUpdat == typeA
@@ -906,7 +924,8 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         &&
                         imei1A == imei1Updat && imei2A == imei2Updat &&
                         chargeurA == chargeurUpdat && cableA == cableUpdat &&
-                        housseA == housseUpdat) {
+                        housseA == housseUpdat
+                        && commentaireA == commentaireUpda) {
 
                     } else {
                         var historique = {
@@ -924,6 +943,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 "chargeur": chargeurA,
                                 "cable": cableA,
                                 "housse": housseA,
+                                "commentaire": commentaireA
                             },
                             new: {
                                 "actif": actifUpdat,
@@ -935,6 +955,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                                 "chargeur": chargeurUpdat,
                                 "cable": cableUpdat,
                                 "housse": housseUpdat,
+                                "commentaire": commentaireUpdat
                             }
                         }
                         var historie = await HistoriqueModel(historique).save()
@@ -1540,7 +1561,7 @@ routeExp.route('/planning').get(async function (req, res) {
                 var agent = await AgentModel.find()
 
                 var plan = await ProjectModel.find()
-                //console.log("agent", plan);
+                //console.log("plan", plan);
                 res.render("./production/planning.html", { type_util: session.typeUtil, plan: plan, agent: agent })
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
@@ -2667,15 +2688,42 @@ routeExp.route("/allPlannigView").get(async function (req, res) {
         }
     ])
         .then(user => {
-            //console.log("user", user.users);
+            //console.log("user");
             var newUs = []
+            var allProjet = []
             for (let i = 0; i < user.length; i++) {
                 const element = user[i];
                 if (element.users.length > 0) {
                     newUs.push(element)
+                    //console.log("newUs", element.users[0].project);
+                    allProjet.push(element.users[0].project)
                 }
 
             }
+            // uniqueArray = allProjet.filter(function (item, pos) {
+            //     return allProjet.indexOf(item) == pos;
+            // })
+            // //console.log("uniqueArray", uniqueArray);
+
+            // var project = []
+            // for (let i = 0; i < uniqueArray.length; i++) {
+            //     element = uniqueArray[i].split("/")
+            //     for (let j = 0; j < element.length; j++) {
+            //         if (project.includes(element[j]) || element[j] == '') {
+
+            //         } else {
+            //             project.push(element[j])
+            //         }
+            //     }
+            // }
+            // project = project.sort()
+            // console.log("project", project);
+            // for (let k = 0; k < 25; k++) {
+            //     console.log(" project[k] ", project[k]);
+            //     var projectN = { name: project[k] }
+            //     var j = ProjectModel(projectN).save()
+            //     //console.log("j", j);
+            // }
             res.send(newUs)
         })
 });
@@ -3610,6 +3658,53 @@ routeExp.route('/getAllUserClock').get(async function (req, res) {
             });
         });
 
+})
+
+
+//Backup DataBase
+
+routeExp.route("/backup_databas").get(async function (req, res) {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            try {
+                var inventaire = await InventaireModel.find({ validation: true });
+                var instruction = await InstructionModel.find({ validation: true });
+                var tl = await TLModel.find({ validation: true });
+                var agent = await AgentModel.find({ validation: true });
+                var user = await UserModel.find({ validation: true });
+                var evaluationAgent = await EvaluationAgent.find({ validation: true });
+                var planning = await PlanningModel.find({ validation: true });
+                var historique = await HistoriqueModel.find({ validation: true });
+                var projet = await ProjectModel.find({ validation: true });
+                var reporting = await ReportingModel.find({ validation: true });
+
+
+                //var data = fs.readFileSync("data.json");
+                var myObject = []
+                myObject.push({ "inventaire": inventaire }, { "instruction": instruction },
+                    { "tl": tl }, { "agent": agent }, { "user": user },
+                    { "evaluationAgent": evaluationAgent }, { "planning": planning },
+                    { "historique": historique }, { "projet": projet }, { "reporting": reporting },
+                );
+
+                var newData2 = JSON.stringify(myObject);
+                fs.writeFile("./Route/BackUpData/data.json", newData2, (err) => {
+                    if (err) throw err;
+                    //console.log("New data added");
+                });
+                console.log("finish backup");
+            } catch (err) {
+                console.log(err);
+                res.send(data)
+            }
+        });
 })
 module.exports = routeExp
 

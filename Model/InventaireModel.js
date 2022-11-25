@@ -14,6 +14,7 @@ const Inventaire = mongoose.Schema({
     diskDur: String,
     capacite: String,
     cleWin: String,
+    cleWinOriginal: String,
     resolution: String,
     portHdmi: Boolean,
     portVga: Boolean,
@@ -29,7 +30,8 @@ const Inventaire = mongoose.Schema({
     vpn: String,
     nbUsb: String,
     modelNum: String,
-    commentaire: String
+    commentaire: String,
+    versionWin: String
 })
 
 module.exports = mongoose.model('Inventaire', Inventaire)

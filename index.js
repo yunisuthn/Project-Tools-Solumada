@@ -42,3 +42,18 @@ const server = app.listen(PORT, () => {
     const port = server.address().port;
     console.log(`Express is working on port ${port}`);
 })
+
+
+
+
+
+
+//
+//spare time
+// What do you usually do when you have a spare time?
+// Do you like to planning your day or your week?
+// When do you have a spare time?
+// Do have another day even week end to your spare time?
+// With who do you like to spend your spare time?
+// What do you dislike when you have a spare time?
+// 

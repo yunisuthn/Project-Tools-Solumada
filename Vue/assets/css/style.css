@@ -4368,3 +4368,13 @@ border-color: #425364 #4c749c #4381be;
     font-size: x-large;
     font-weight: 600;
 }
+
+.identification{
+  display: none;
+}
+
+.table-responsive-lg {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}

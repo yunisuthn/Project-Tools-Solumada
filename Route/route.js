@@ -221,6 +221,7 @@ routeExp.route('/instruction').get(async function (req, res) {
 routeExp.route('/addInventaire').post(async function (req, res) {
     var actif = req.body.actif
     var name = req.body.name
+    var nomPoste = req.body.nomPoste
     var type = req.body.type
     var localisation = req.body.localisation
     var departement = req.body.departement
@@ -266,11 +267,11 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                     marque == "" && processeur == "" && ram == "" && diskDur == "" && capacite == "" && cleWin == "" && resolution == "" &&
                     portHdmi == "false" && portVga == "false" && portDvi == "false" && portUsb == "false" && portPci == "false" && imei1 == "" && imei2 == "" &&
                     chargeur == "false" && cable == "false" && housse == "false" && antivirus == "" && vpn == "" && usb == "" && commentaire == ""
-                    && versionWin == "") {
+                    && versionWin == "" && nomPoste == "") {
                     res.send('error')
                 } else {
                     var newMat = {
-                        actif: actif,
+                        actif: actif, nomPoste: nomPoste,
                         name: name, type: type,
                         localisation: localisation, departement: departement,
                         equipement: equipement, numSerie: numSerie,
@@ -597,7 +598,9 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var housseUpdat = req.body.housseUpdat;
     var versionWinUpdat = req.body.versionWinUpdat;
     var commentaireUpdat = req.body.commentaireUpdat;
+    var nomPosteUpdat = req.body.nomPosteUpdat;
 
+    var nomPosteA = req.body.nomPosteA;
     var portHdmiA = req.body.portHdmiA;
     var portVgaA = req.body.portVgaA;
     var portDviA = req.body.portDviA;
@@ -688,7 +691,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                     },
                         {
                             actif: actifUpdat,
-                            name: nameMatUpd,
+                            name: nameMatUpd, nomPoste: nomPosteUpdat,
                             type: typeUpdat,
                             localisation: localisationUpdat,
                             departement: departementUpdat,

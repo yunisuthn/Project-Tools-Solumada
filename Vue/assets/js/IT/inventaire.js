@@ -5,6 +5,15 @@ var inventaireUCDataT = $('#inventaireUCActifDataT').DataTable(
 
             { 'data': 'name' },
             {
+                'data': 'nomPoste', 'render': function (nomPoste) {
+                    if (!nomPoste) {
+                        return ""
+                    } else {
+                        return nomPoste
+                    }
+                }
+            },
+            {
                 'data': "type", 'render': function (type) {
                     if (!type) {
                         return ""
@@ -1224,6 +1233,7 @@ var inventairePhoneInActifDataT = $('#inventairePhoneInActifDataT').DataTable(
 
 $("#addInvent").on('click', function () {
     clearForm()
+    $(".nomPoste").css('display', "none")
     $(".type").css('display', "none")
     $(".typeUC").css('display', "none")
     $(".localisation").css('display', "none")
@@ -1260,6 +1270,7 @@ $("#nameMat").on("change", function () {
 
 
     if ($("#nameMat").val() == "uc") {
+        $(".nomPoste").css('display', "block")
         $(".typeUC").css('display', "block")
         $(".localisation").css('display', "block")
         $(".departement").css('display', "block")
@@ -1293,6 +1304,7 @@ $("#nameMat").on("change", function () {
         $(".resolution").css('display', 'block')
         $(".portsEcran").css('display', 'block')
 
+        $(".nomPoste").css('display', "none")
         $(".equipementClass").css('display', 'none')
         $(".modelClass").css('display', 'block')
         $(".typeUC").css('display', "none")
@@ -1330,6 +1342,7 @@ $("#nameMat").on("change", function () {
         $(".antivirus").css('display', "none")
         $(".vpn").css('display', "none")
         $(".usb").css('display', "none")
+        $(".nomPoste").css('display', "none")
         $(".chargeur-cable-housse").css('display', "none")
         $(".resolution").css('display', 'none')
         $(".versionWin").css('display', 'none')
@@ -1338,6 +1351,7 @@ $("#nameMat").on("change", function () {
         $(".type").css('display', "block")
         $(".imei").css('display', "block")
         $(".chargeur-cable-housse").css('display', "block")
+        $(".nomPoste").css('display', "none")
         $(".processeur").css('display', "none")
         $(".ram").css('display', "none")
         $(".typeUC").css('display', "none")
@@ -1374,6 +1388,7 @@ $('#saveMateriel').on("click", function () {
         Inventaire = {
             actif: $("#actif").val(),
             name: $('#nameMat').val(),
+            nomPoste: $('#nomPoste').val(),
             type: $('#typeUC').val(),
             localisation: $('#localisation').val(),
             departement: $('#departement').val(),
@@ -1560,6 +1575,7 @@ function clearForm() {
     $('#usb').val('');
     $('#versionWin').val('');
     $('#commentaire').val('');
+    $('#nomPoste').val('');
 
     $('#cancelMat').click();
 }
@@ -1570,8 +1586,9 @@ function searchOnDatatable(dataTab, value) {
 }
 
 
-//Update Inventaire
+//Update Inventaire 
 var nameMatA = ''
+var nomPosteA = ''
 var typeA = ""
 var localisationA = ""
 var departementA = ""
@@ -1606,6 +1623,7 @@ var idA = ""
 
 function btnUpdateInventaire(id) {
     $(".typeUpdat").css('display', "none")
+    $(".nomPoste").css('display', "none")
     $(".typeUCUpdat").css('display', "none")
     $(".localisationUpdat").css('display', "none")
     $(".departementUpdat").css('display', "none")
@@ -1654,6 +1672,7 @@ function btnUpdateInventaire(id) {
             if (res.name == "uc") {
 
                 typeA = res.type
+                nomPosteA = res.nomPoste
                 localisationA = res.localisation
                 departementA = res.departement
                 equipementA = res.equipement
@@ -1671,6 +1690,7 @@ function btnUpdateInventaire(id) {
                 versionWinA = res.versionWin
                 commentaireA = res.commentaire
                 $(".typeUCUpdat").css('display', "block")
+                $(".nomPosteUpdat").css('display', "block")
                 $(".localisationUpdat").css('display', "block")
                 // $(".departementUpdat").css('display', "block")
                 $(".equipementUpdat").css('display', "block")
@@ -1737,6 +1757,7 @@ function btnUpdateInventaire(id) {
                 $(".commentaireUpdat").css('display', 'block')
                 $(".typeUpdat").css('display', "block")
 
+                $(".nomPosteUpdat").css('display', "none")
                 $(".versionWinUpdat").css('display', "none")
                 $(".typeUCUpdat").css('display', "none")
                 $(".processeurUpdat").css('display', "none")
@@ -1770,6 +1791,7 @@ function btnUpdateInventaire(id) {
                 portPciA = res.portPci
                 commentaireA = res.commentaire
 
+                $(".nomPosteUpdat").css('display', "none")
                 $(".processeurUpdat").css('display', "none")
                 $(".ramUpdat").css('display', "none")
                 $(".diskDurUpdat").css('display', "none")
@@ -1816,6 +1838,7 @@ function btnUpdateInventaire(id) {
                 $(".chargeur-cable-housseUpdat").css('display', "block")
                 $(".processeurUpdat").css('display', "none")
                 $(".ramUpdat").css('display', "none")
+                $(".nomPosteUpdat").css('display', "none")
                 $(".diskDurUpdat").css('display', "none")
                 $(".capaciteUpdat").css('display', "none")
                 $(".cleWinUpdat").css('display', "none")
@@ -1842,6 +1865,7 @@ function btnUpdateInventaire(id) {
 
             // console.log("nameMatA", name);
             $("#nameMatUpdat").val(nameMatA);
+            $("#nomPosteUpdat").val(nomPosteA);
             $("#typeUpdat").val(typeA)
             $("#typeUCUpdat").val(typeA)
             $("#localisationUpdat").val(localisationA)
@@ -2205,6 +2229,7 @@ $(document).on('click', '#saveUpdateMat', function () {
     } else {
         typeUpdat = $("#typeUpdat").val()
     }
+    var nomPosteUpdat = $("#nomPosteUpdat").val()
     var localisationUpdat = $("#localisationUpdat").val()
     var departementUpdat = $("#departementUpdat").val()
     var equipementUpdat = $("#equipementUpdat").val()
@@ -2235,6 +2260,7 @@ $(document).on('click', '#saveUpdateMat', function () {
     //console.log("idA", idA);
     var matUpd = {
         id: idA,
+        nomPosteUpdat: nomPosteUpdat,
         nameMatUpd: nameMatUpd,
         typeUpdat: typeUpdat,
         localisationUpdat: localisationUpdat,
@@ -2267,6 +2293,7 @@ $(document).on('click', '#saveUpdateMat', function () {
         versionWinUpdat: versionWinUpdat,
 
 
+        nomPosteA: nomPosteA,
         nameMatA: nameMatA,
         typeA: typeA,
         localisationA: localisationA,

@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const Inventaire = mongoose.Schema({
     actif: Boolean,
     name: String,
+    nomPoste: String,
     type: String,
     localisation: String,
     departement: String,

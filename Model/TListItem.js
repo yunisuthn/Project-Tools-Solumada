@@ -9,6 +9,10 @@ const tlistitem = mongoose.Schema({
         type: String,
         default: '#fff'
     },
+    createdAt: {
+        type: Date,
+        default: new Date()
+    },
     boardId: mongoose.Types.ObjectId,
     parent: mongoose.Types.ObjectId,
     owner: String,

@@ -192,6 +192,38 @@
                     </div>
                     <% }) %> 
                   </div>
+                  <div class="tboard-list-title">
+                    <span>Partagés avec vous (<%= sharedItems.length %>)</span>
+                    <div class="actions">
+                      <button onclick="tBoardOpenSearchItem('search-shared-item')"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+                  <div class="tboard-form" id="search-shared-item" hidden>
+                    <div class="tboard-form-header">
+                      <label for="tboard-search-item-input">Faire un recherche</label>
+                      <button onclick="tBoardCloseSearchItem('search-shared-item')">
+                        <i class="fa fa-times mx-2"></i>
+                      </button>
+                    </div>
+                    <div class="tboard-form-input">
+                      <input type="search" id="tboard-search-item-input" value="" placeholder="Titre..." onkeyup="tBoardSearchItem(this, 'shared-items')">
+                      <p></p>
+                    </div>
+                  </div>
+                  <div class="notifs" id="shared-items">
+                    <% sharedItems.forEach(item => { %> 
+                    <div class="shared-list-item">
+                      <div class="infos">
+                        <span id="shared-item-<%= item._id %>"><%= item.title %></span> <br>
+                        <small>Créer par: <b><%= mcode === item.owner ? 'Vous' : item.owner %></b></small>
+                        <input type="hidden" value="<%= item.title %> - <%= item.owner %>">
+                      </div>
+                      <div class="actions">
+                        <button onclick="checkSharedItem('<%= item._id %>')"><i class="fa fa-info-circle"></i></button>
+                      </div>
+                    </div>
+                    <% }) %> 
+                  </div>
                 </div>
                 <div class="tright-navbar">
                   <div class="tcard-list" id="tcard-list">
@@ -283,12 +315,23 @@
                                     <div class="col-8">
                                       <p class="text-muted">Membres</p>
                                       <div class="tedit-members">
-                                        <ul class="tedit-members-list" id="tmodal-litem-members">
-                                          <li>njatotian@gmail.com <button><i class="text-white fa fa-times"></i></button></li>
-                                        </ul>
-                                        <div class="tform-group">
-                                          <input type="text" class="tform-control"  id="tmember-input" placeholder="Ajouter un nouveau membre">
-                                          <button class="tbtn" type="button" id="addMember" onclick="tAddMember()"><i class="fa fa-plus"></i></button>
+                                        <div class="tedit-members-list" id="tmodal-litem-members">
+                                          <span>njatotian@gmail.com <button><i class="text-white fa fa-times"></i></button></span>
+                                        </div>
+                                        <div class="tedit-member-showadd">
+                                          <button onclick="tShowAvailableMembers(this)"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                        <div class="tform-group tmember-available-list" hidden>
+                                          <input type="text" class="form-controld" custom-list="listofmembers"  id="tmember-input" placeholder="Ajouter un nouveau membre">
+                                          <div id="listofmembers">
+                                            <% users.forEach(user => { %>
+                                              <div id="user-<%= user.email %>">
+                                                <option label="<%= user.email %>" onclick="get_member('<%= user.mcode %>')" value="<%= user.email %>"><%= user.email %> </option>
+                                                <button onclick="tMoveMember('<%= user.email %>')"><i class="fa fa-plus"></i></button>
+                                              </div>
+                                            <% }) %> 
+                                          </div>
+                                          <!-- <button class="tbtn" type="button" id="addMember" onclick="tAddMember()"><i class="fa fa-plus"></i></button> -->
                                         </div>
                                       </div>
                                     </div>
@@ -441,8 +484,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     <!-- /#right-panel -->
 
     <!-- 
@@ -470,7 +511,10 @@
     </script>
         <%- "<script>" %> 
         <% listItems.forEach(item => { %>
-            <%- `try { tNewViewCard(tViewCardTemplateItem({title: \`${item.title}\`, itemId: "${item._id}", theme: "${item.theme}" }), "${item.parent}");  } catch {}` %>
+          <% const checkPercent = (item.checklist.filter(check => check.checked).length * 100 / item.checklist.length) || 0 %>
+          <% const membersCount = item.members.length %>
+          <% const date = item.createdAt.toLocaleDateString() %>
+          <%- `try { tNewViewCard(tViewCardTemplateItem({title: \`${item.title}\`, itemId: "${item._id}", date: "${date}", members: "${membersCount}", checklist: "${checkPercent}", theme: "${item.theme}" }), "${item.parent}");  } catch {}` %>
         <% }) %>
         <%- "</script>" %>
     <script src="/assets/fontawesome/js/all.js"></script>
@@ -516,6 +560,27 @@
         });
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      // for custom list
+      document.querySelector('input[custom-list]').addEventListener('keyup', function(e) {
+        const target = e.target;
+        const listId = target.attributes['custom-list'].value;
+        const key    = target.value.toLowerCase();
+        document.querySelectorAll(`#${listId} > div`).forEach(div => {
+          // event handler
+          // option.setAttribute('onclick', 'alert("h")');
+          const option = div.firstElementChild;
+          div.setAttribute('hidden', '');
+          if (option.value.toLowerCase().match(key)) {
+            div.removeAttribute('hidden');
+          }
+        });
+      })
+      
+      function get_member(val){
+        console.log(val);
+      }
+    </script>
 </body>
 
 </html>

@@ -192,6 +192,38 @@
                     </div>
                     <% }) %> 
                   </div>
+                  <div class="tboard-list-title">
+                    <span>Partagés avec vous (<%= sharedItems.length %>)</span>
+                    <div class="actions">
+                      <button onclick="tBoardOpenSearchItem('search-shared-item')"><i class="fa fa-search"></i></button>
+                    </div>
+                  </div>
+                  <div class="tboard-form" id="search-shared-item" hidden>
+                    <div class="tboard-form-header">
+                      <label for="tboard-search-item-input">Faire un recherche</label>
+                      <button onclick="tBoardCloseSearchItem('search-shared-item')">
+                        <i class="fa fa-times mx-2"></i>
+                      </button>
+                    </div>
+                    <div class="tboard-form-input">
+                      <input type="search" id="tboard-search-item-input" value="" placeholder="Titre..." onkeyup="tBoardSearchItem(this, 'shared-items')">
+                      <p></p>
+                    </div>
+                  </div>
+                  <div class="notifs" id="shared-items">
+                    <% sharedItems.forEach(item => { %> 
+                    <div class="shared-list-item">
+                      <div class="infos">
+                        <span><%= item.title %></span> <br>
+                        <small>Créer par: <b><%= mcode === item.owner ? 'Vous' : item.owner %></b></small>
+                        <input type="hidden" value="<%= item.title %> - <%= item.owner %>">
+                      </div>
+                      <div class="actions">
+                        <button onclick="checkSharedItem('<%= item._id %>')"><i class="fa fa-info-circle"></i></button>
+                      </div>
+                    </div>
+                    <% }) %> 
+                  </div>
                 </div>
                 <div class="tright-navbar">
                     <div class="trash-field">
@@ -220,6 +252,197 @@
                             </p>
                         </div>
                     </div>
+                </div>
+                
+                <div class="row">
+                  <div class="tmodal" id="tmodal-1" hidden>
+                    <div class="tedit-card">
+                      <div class="tedit-card-header">
+                        <button class="tbtn-dismiss-modal float-end" onclick="tModalDismiss('tmodal-1')">
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                      <div class="tedit-card-body">
+                        <div class="row">
+                          <div class="col-12">
+                            <!-- card title -->
+                            <div class="tedit-card-item">
+                              <p>
+                                <i class="fa fa-credit-card"></i>
+                                <span id="tmodal-litem-title">Card title</span>
+                                <input type="hidden" id="tmodal-litem-id" value="">
+                              </p>
+                              <div>
+                                <span>Dans la liste <b id="tmodal-litem-parent-title">To Do</b> </span>
+                                <div class="row">
+                                  <div class="col-8">
+                                    <p class="text-muted">Membres</p>
+                                    <div class="tedit-members">
+                                      <div class="tedit-members-list" id="tmodal-litem-members">
+                                        <span>njatotian@gmail.com <button><i class="text-white fa fa-times"></i></button></span>
+                                      </div>
+                                      <div class="tedit-member-showadd">
+                                        <button onclick="tShowAvailableMembers(this)"><i class="fa fa-plus"></i></button>
+                                      </div>
+                                      <div class="tform-group tmember-available-list" hidden>
+                                        <input type="text" class="form-controld" custom-list="listofmembers"  id="tmember-input" placeholder="Ajouter un nouveau membre">
+                                        <div id="listofmembers">
+                                          <% users.forEach(user => { %>
+                                            <div id="user-<%= user.email %>">
+                                              <option label="<%= user.email %>" onclick="get_member('<%= user.mcode %>')" value="<%= user.email %>"><%= user.email %> </option>
+                                              <button onclick="tMoveMember('<%= user.email %>')"><i class="fa fa-plus"></i></button>
+                                            </div>
+                                          <% }) %> 
+                                        </div>
+                                        <!-- <button class="tbtn" type="button" id="addMember" onclick="tAddMember()"><i class="fa fa-plus"></i></button> -->
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- THEME -->
+                                  <div class="col-4">
+                                    <p class="text-muted">Thème</p>
+                                    <div class="tedit-card-theme">
+                                      <div class="tedit-card-active-theme my-1">
+                                        <div class="ttheme-active" id="tmodal-litem-theme-active" style="background: black"></div>
+                                        <small class="text-muted"><i class="fa fa-arrow-circle-right"></i> <span id="tmodal-litem-theme-active-name" class="text-uppercase"></span> </small>
+                                        <input type="hidden" id="tmodal-litem-theme-input" name="theme" value="">
+                                      </div>
+                                      <div class="tedit-card-customize-theme ttheme-field">
+                                        <label for="cust-theme">Personnaliser: </label>
+                                        <input type="color" onchange="tSetThemeColor(this)" id="cust-theme">
+                                      </div>
+                                      <div class="ttheme-field">
+                                        <label for="tmodal-litem-theme-div">Choisir: </label>
+                                        <div class="tedit-card-available-theme" id="tmodal-litem-theme-div">
+                                          <div class="ttheme ttheme-item" style="background: lightpink"></div>
+                                          <div class="ttheme ttheme-item" style="background: lightseagreen"></div>
+                                          <div class="ttheme ttheme-item" style="background: yellowgreen"></div>
+                                          <div class="ttheme ttheme-item" style="background: lightslategray"></div>
+                                          <div class="ttheme ttheme-item" style="background: lightsalmon"></div>
+                                          <div class="ttheme ttheme-item" style="background: cyan"></div>
+                                          <div class="ttheme ttheme-item" style="background: violet"></div>
+                                          <div class="ttheme ttheme-item" style="background: crimson"></div>
+                                          <div class="ttheme ttheme-item" style="background: orange"></div>
+                                          <div class="ttheme ttheme-item" style="background: #37387D"></div>
+                                          <div class="ttheme ttheme-item" style="background: #398C39"></div>
+                                          <div class="ttheme ttheme-item" style="background: #DA534B"></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- card description -->
+                            <div class="tedit-card-item">
+                              <p>
+                                <i class="fa fa-pen"></i>
+                                Description
+                              </p>
+                              <div class="tdescription">
+                                <textarea class="tcard-description" placeholder="Décrivez la carte..." id="tmodal-litem-description" rows="2"></textarea>
+                              </div>
+                            </div>
+                            <!-- card checklist -->
+                            <div class="tedit-card-item">
+                              <p>
+                                <i class="fa fa-check"></i>
+                                Checklist
+                              </p>
+                              <div class="row">
+                                <!-- Check list progress bar -->
+                                <div class="col-12">
+            
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="tcard-checklist-progress">
+                                    <div class="progress-bar">
+                                      <div class="progress-bar-content"></div>
+                                    </div>
+                                    <div class="percent">0%</div>
+                                  </div>
+                                  <div class="tcard-checklist" id="tmodal-litem-checklist">
+                                    <div class="tcard-checklist-item">
+                                      <!-- check -->
+                                      <div class="tform-check">
+                                        <input class="form-check-input" onchange="tCardCheckListUpdateProgressBar()" type="checkbox" checked value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          <div class="tcard-checklist-details">
+                                            <div class="tcard-checklist-item-title">
+                                              <i class="fa fa-tag"></i>
+                                              <input type="text" id="tcard-checklist-item-title-input">
+                                            </div>
+                                            <div class="tcard-checklist-hidden-details" id="details-1" hidden>
+                                              <!-- assign -->
+                                              <div class="tcard-checklist-item-assigned">
+                                                <i class="fa fa-user"></i>
+                                                <input type="text" id="tcard-checklist-item-assigned-input">
+                                              </div>
+                                              <!-- due date -->
+                                              <div class="tcard-checklist-item-duedate">
+                                                <i class="fa fa-calendar-alt"></i>
+                                                <input type="date" name="" id="tcard-checklist-item-duedate-input">
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </label>
+                                      </div>
+                                      <!-- action -->
+                                      <div class="tcard-checklist-item-action">
+                                        <button class="tbtn-custom" onclick="tcardChecklistExpandItem(this, 'details-1')"><i class="fa fa-eye"></i></button>
+                                        <button class="tbtn-custom" onclick="tcardChecklistDeleteItem(this)"><i class="fa fa-trash"></i></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- Add checklist -->
+                                  <div class="tcard-checklist-add">
+                                    <button class="tbtn-custom tbtn-wonderful text-dark" onclick="tCardCheckListShowAddForm(this)">+ Nouveau checklist</button>
+                                    <div class="tcard-checklist-add-form" hidden>
+                                      <div class="tform-group-checklist">
+                                        <label for="">Titre: </label>
+                                        <input type="text" id="tcard-checklist-title-input" placeholder="Nom du checklist...">
+                                      </div>
+                                      <div class="tform-group-checklist">
+                                        <label for="">Affecté à: </label>
+                                        <input type="text" id="tcard-checklist-assigned-input" placeholder="Nom ou M-CODE...">
+                                      </div>
+                                      <div class="tform-group-checklist">
+                                        <label for="">Date d'échéance: </label>
+                                        <input type="date" name="" id="tcard-checklist-duedate-input">
+                                      </div>
+                                      <div class="tform-group-checklist float-end">
+                                        <button class="tbtn-custom tbtn-wonderful text-primary me-1" onclick="tCardCheckListAddItem(this)"><i class="fa fa-plus"></i> Ajouter</button>
+                                        <button class="tbtn-custom tbtn-wonderful text-warning ms-1" onclick="tCardCheckListCancelForm(this)"><i class="fa fa-times"></i> Annuler</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- card activity -->
+                            <div class="tedit-card-item">
+                              <p>
+                                <i class="fa fa-tasks"></i>
+                                Activité
+                              </p>
+                              <div class="tactivity">
+                                <textarea class="tcard-activity" placeholder="Ecrivez un commentaire..." id="tmodal-litem-activity" rows="2"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <hr>
+                          <div class="tedit-card-actions">
+                            <button class="tbtn-custom tbtn-wonderful text-success" onclick="tModalUpdateItem('tmodal-1')"><i class="fa fa-save"></i> Mettre à jour</button>
+                            <button class="tbtn-custom tbtn-wonderful text-danger" onclick="tModalDismiss('tmodal-1')"><i class="fa fa-times"></i> Fermer</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </div>
         </div>

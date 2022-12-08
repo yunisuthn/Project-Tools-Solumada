@@ -1,6 +1,7 @@
 const TBoard = require('../../Model/TBoard');
 const TList = require("../../Model/TList");
 const TListItem = require("../../Model/TListItem");
+const mongoose = require('mongoose');
 
 const tBoardList = async (filter = {}) => await TBoard.find(filter);
 // Board
@@ -9,6 +10,13 @@ const saveBoardItem = async (req, res) => {
     board.owner = req.session.mcode;
     try {
         const createdBoard = new TBoard(board).save();
+        const boardId = (await createdBoard)._id;
+        // create default 3 lists TODO - DOING - DONE
+        ['A FAIRE', 'EN COURS', 'TERMINEES'].forEach(async list => {
+            const added = await new TList({ title: list, boardId: mongoose.Types.ObjectId(boardId), owner: req.session.mcode }).save();
+            console.log(added);
+        });
+
         res.send({
             board: await createdBoard,
             status: 1

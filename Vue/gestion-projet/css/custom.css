@@ -69,7 +69,6 @@
     height: auto;
 }
 .c-card:hover {
-    padding: 8px;
     background: rgba(255, 255, 255, 0.4);
 }
 .c-card-header {
@@ -140,9 +139,9 @@
 }
 .item-card.view {
     background: white;
-    border-bottom: 3px solid rgb(194, 194, 194);
+    border-bottom: 2px solid rgb(194, 194, 194);
     padding: 4px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12); */
     border-radius: 3px;
 }
 .item-card.add-form {
@@ -164,7 +163,7 @@
 
 .item-card.view:active {
     background-color: rgb(241, 241, 241) !important;
-    border-bottom: 3px solid rgb(194, 194, 194);
+    border-bottom: 2px solid rgb(194, 194, 194);
     cursor: grabbing !important;
     cursor: -moz-grabbing !important;
     cursor: -webkit-grabbing !important;
@@ -183,12 +182,15 @@
 }
 
 .item-card-theme {
-    width: 40px;
-    height: 10px;
-    /* background: red; */
-    border-radius: 50px 10px 50px 10px;
+    width: 110px;
+    border-radius: 20px 10px 20px 10px;
     margin: 4px 0;
     margin-left: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    color: white;
+    padding: 0 !important;
 }
 
 .item-card.tadd > button:hover {
@@ -247,6 +249,11 @@
     border-radius: 5px;
 }
 
+.tedit-card-body > .row:nth-child(1){
+    max-height: 700px;
+    overflow-y: scroll;
+}
+
 .tedit-card-item {
     margin: 4px 0;
 }
@@ -258,29 +265,30 @@
     padding: 6px;
     font-weight: bold;
 }
-/* 
+
 .tedit-members-list {
-    
-} */
-.tedit-members-list > li{
+    margin-bottom: 5px;
+}
+.tedit-members-list > span {
     list-style: none;
-    padding: 0px 4px;
-    background: lightsalmon;
-    margin: 1px 0;
-    color: #fff;
-    border-radius: 3px;
-    display: flex;
-    justify-content: space-between;
+    padding: 2px 4px;
+    color: rgb(206, 134, 106);
+    background-color: #eee;
+    border-radius: 10px;
+    /* display: flex;
+    justify-content: space-between; */
+    /* width: auto; */
 }
 
-.tedit-members-list li > button {
+.tedit-members-list span button {
     background: transparent;
     border: none;
     cursor: pointer;
     border-radius: 50%;
 }
-.tedit-members-list li > button:hover {
-    background: rgba(255, 255, 255, 0.3);
+.tedit-members-list span button:hover {
+    background: rgba(156, 81, 81, 0.3);
+    color: rgb(243, 150, 113);
 }
 .tedit-members-list {
     padding: 0;
@@ -325,7 +333,19 @@
 }
 
 .tform-group {
-    display: flex;
+    /* display: flex; */
+    position: relative;
+    border: 1px solid rgb(197, 197, 197);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.tform-group > input{
+    border: none;
+    border-bottom: 2px solid #8687d6;
+    padding: 6px;
+    border-radius: 3px;
+    margin: 0;
+    width: 100%;
 }
 .tform-control {
     border: 1px solid rgb(192, 192, 192);
@@ -640,14 +660,14 @@
 
 .tboard-list-title {
     font-weight: 500;
-    border-bottom: 3px solid #5aa55a;
+    border-bottom: 2px solid #5aa55a;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 .tboard-list-title > span {
     color: #5aa55a;
-    font-size: 18px;
+    font-size: 16px;
     padding: 0 10px;
 }
 .tboard-list > .tboard-item {
@@ -706,6 +726,7 @@
     margin-left: 8px;
     font-weight: 500;
     color:#37387D;
+    font-size: 14px;
 }
 .tboard-form-header > button {
     border: none;
@@ -731,7 +752,7 @@
     position: relative;
     width: 130px;
     height: 130px;
-    border: 3px solid rgb(241, 85, 116);
+    border: 3px solid rgb(245, 130, 153);
     background: #fff;
     display: flex;
     align-items: center;
@@ -922,4 +943,204 @@
 .ttheme-field > label {
     color:rgb(63, 63, 63) !important;
     font-size: 14px;
+}
+
+datalist {
+position: absolute;
+max-height: 20em;
+border: 0 none;
+overflow-x: hidden;
+overflow-y: auto;
+}
+
+datalist option {
+font-size: 0.8em;
+padding: 0.3em 1em;
+background-color: #ccc;
+cursor: pointer;
+}
+  
+  /* option active styles */
+datalist option:hover,
+datalist option:focus {
+color: #fff;
+background-color: #036;
+outline: 0 none;
+}
+
+#browserdata option {
+font-size: 1.8em;
+padding: 0.3em 1em;
+background-color: #ccc;
+cursor: pointer;
+}
+/* 
+#tmember-input: ~ #listofmembers {
+    display: block !important;
+} */
+#listofmembers {
+    /* position: absolute; */
+    /* display: none; */
+    top: 38px;
+    left: 0;
+    width: 100%;
+    padding: 6px;
+    background-color: #FFF;
+    /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
+    overflow-y: scroll;
+    max-height: 110px;
+}
+#listofmembers > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2px;
+}
+#listofmembers > div > button {
+    border: none;
+    background-color: transparent;
+    color: rgb(243, 159, 131);
+}
+#listofmembers > div:hover {
+    color: white;
+    background-color: lightsalmon;
+    cursor: pointer;
+}
+#listofmembers > div:hover > button {
+    color: #fff;
+}
+
+.tmember-available-list {
+    overflow: hidden;
+    height: 0;
+    animation: growheight .3s forwards ease-in;
+}
+@keyframes growheight {
+    from { height: 0; }
+    to { height: 150px; }
+}
+
+.tedit-member-showadd > button {
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 50%;
+    margin-bottom: 2px;
+}
+
+.notifs {
+    padding: 8px;
+}
+.shared-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow:  0 2px 2px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    margin: 4px 0;
+}
+.shared-list-item:hover {
+    background: #f5f5f5;
+}
+.infos > span {
+    font-size: 14px;
+    font-weight: 500;
+    color:#333;
+}
+
+.infos > small  {
+    font-size: 12px;
+    color:rgb(143, 143, 143);
+}
+.infos > small > b {
+    color:#666;
+    font-weight: 400;
+}
+
+
+@media screen and (max-width: 1370px) {
+    .tboard-list-title > span,
+    .actions > button,
+    .tboard-item > input {
+        font-size: 14px;
+    }
+    .c-card {
+        padding: 4px;
+        width: 300px;
+    }
+    .item-card.view {
+        padding: 2px;
+    }
+    .c-card-header > input,
+    .item-card-label,
+    .item-card.tadd > button,
+    .tform-group > input,
+    .taddnewlist > button,
+    .form-group > label,
+    .form-group > button,
+    .form-group > textarea,
+    .dropdown-item,
+    .shared-list-item > .infos  > span {
+        font-size: 13px;
+    }
+    .shared-list-item > .infos  > small {
+        font-size: 12px;
+    }
+    .tedit-members-list, #listofmembers > div {
+        font-size: 13px;
+    }
+    .tedit-card-item > p {
+        font-size: 14px;
+        margin: 2px 0;
+        padding: 3px;
+    }
+    .tcard-description, .tcard-activity {
+        font-size: 13px;
+        padding: 4px;
+    }
+    
+    .tmodal > .tedit-card {
+        width: 650px;
+    }
+    .tcard-checklist-item,
+    .ttheme-field > label,
+    .tbtn-wonderful,
+    #tmodal-litem-theme-active-name {
+        font-size: 13px;
+    }
+    .tform-check > input[type='checkbox'] {
+        font-size: 15px;
+    }
+    .ttheme-active {
+        width: 50px;
+        height: 15px;
+    }
+    .tform-group-checklist > label,
+    .tform-group-checklist > input,
+    .tboard-form-input > input,
+    .tboard-form-input > button {
+        font-size: 13px;
+    }
+    .ttheme {
+        width: 25px;
+        height: 25px;
+    }
+    .item-card-theme {
+        width: 100px;
+        margin: 2px 0;
+        margin-left: 5px;
+        font-size: 11px;
+    }
+}
+.item-card-infos {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.item-card-infos > p {
+    color: rgb(179, 179, 179);
+    font-size: 13px;
+    font-weight: 300;
+    margin: 0 4px;
 }

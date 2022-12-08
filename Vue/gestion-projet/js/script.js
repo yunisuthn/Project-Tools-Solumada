@@ -1,5 +1,7 @@
-
 const getById = (id) => document.getElementById(id);
+const docQuery = query => document.querySelector(query);
+const docQueryAll = query => document.querySelectorAll(query);
+
 /**
  * 
  * @param {string} target if top push from
@@ -66,7 +68,9 @@ function tAddFormTemplate(target, parentId, boardId) {
                     const json = JSON.parse(this.response);
                     if (json.status === 1) {
                         const item = json.newListItem;
-                        let viewCard = tViewCardTemplateItem({title: item.title, itemId: item._id, theme: item.theme});
+                        const date = new Date(item.createdAt);
+                        console.log(date)
+                        let viewCard = tViewCardTemplateItem({title: item.title, itemId: item._id, date: date.toLocaleDateString(), theme: item.theme, members: 0, checklist: 0});
                         tNewViewCard(viewCard, json.newListItem.parent, target);
                         div.remove();
                         // update each item row
@@ -124,8 +128,13 @@ function tEditFormTemplate(itemId, title, prevForm) {
                     const json = JSON.parse(this.response);
                     if (json.status === 1) {
                         const item = json.updated;
-                        let viewCard = tViewCardTemplateItem({title: textarea.value, itemId: item._id, theme: item.theme});
+                        const percent = (Math.floor((item.checklist.filter(e => e.checked).length * 100 / item.checklist.length) || 0));
+                        const date = new Date(item.createdAt)
+                        let viewCard = tViewCardTemplateItem({title: textarea.value, date: date.toLocaleDateString(), itemId: item._id, theme: item.theme, members: item.members.length, checklist: percent});
                         // tNewViewCard(viewCard, json.newListItem.parent, target);
+                        // update in the shared item
+                        const span = getById('shared-item-' + item._id);
+                        if (span) span.textContent = textarea.value;
                         div.after(viewCard);
                         div.remove();
                         // update each item row
@@ -170,12 +179,17 @@ function tViewCardTemplateItem(data = {}) {
     if (data.theme === '#fff') {
         p.setAttribute('hidden', 'hidden');
     }
+    // time
+    const i2 = document.createElement('i');
+    i2.className = "fa fa-calendar";
+    p.appendChild(i2);
+    p.appendChild(document.createTextNode(' ' + data.date));
     div1.append(p);
     const span = document.createElement('span');
     span.className = "item-card-label";
     // limit string length to 17
-    let string = data.title.split('').map((e, i) => i < 34 ? e : '').join('') + '...';
-    span.textContent = data.title.length > 34 ? string : data.title;
+    let string = data.title.split('').map((e, i) => i < 40 ? e : '').join('') + '...';
+    span.textContent = data.title.length > 40 ? string : data.title;
     span.draggable = false;
     div1.append(span);
     div.append(div1);
@@ -191,6 +205,33 @@ function tViewCardTemplateItem(data = {}) {
     }
     btn.append(i);
     div.append(btn);
+
+    // some infos
+    const div_infos = document.createElement('div');
+    div_infos.className = 'item-card-infos';
+    // members
+    const p_members = document.createElement('p');
+    const i_members = document.createElement('i');
+    const span_members = document.createElement('span');
+    i_members.className = 'fa fa-user me-1';
+    span_members.id = 'member-' + data.itemId;
+    span_members.textContent = data.members;
+    p_members.appendChild(i_members);
+    p_members.appendChild(span_members);
+    // check list
+    const p_checklist = document.createElement('p');
+    const i_checklist = document.createElement('i');
+    const span_checklist = document.createElement('span');
+    span_checklist.id = 'checklist-' + data.itemId;
+    span_checklist.textContent = Math.floor(data.checklist || 0) + '%';
+    i_checklist.className = 'fa fa-check me-1';
+    p_checklist.appendChild(i_checklist);
+    p_checklist.appendChild(span_checklist);
+
+    div_infos.append(p_members);
+    div_infos.append(p_checklist);
+
+    div1.append(div_infos);
 
     // handle drag and drop event
     const trashField = document.getElementById('ttrash');
@@ -215,25 +256,34 @@ function tViewCardTemplateItem(data = {}) {
     // open modal
     
     div.ondblclick = () => {
-        // send request to server
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
+        getListItemInfo(data);
+    }
+    return div;
+}
+
+function getListItemInfo(data) {
+    // send request to server
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
             const json = JSON.parse(this.response);
             if (json.status === 1) {
                 // open form
                 const modal = document.getElementById('tmodal-1');
                 modal.removeAttribute('hidden');
                 // initialize modal with data
-                initTModal(json.list, json.parent);
+                initTModal(json.list, json.parent, json.users);
             }
-          }
         }
-        xhr.open('GET', '/gestion-projet/listitem/'+ data.itemId, true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send(null);
     }
-    return div;
+    xhr.open('GET', '/gestion-projet/listitem/'+ data.itemId, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(null);
+}
+
+/// check shared item
+function checkSharedItem(id) {
+    getListItemInfo({itemId: id});
 }
 
 /**
@@ -424,20 +474,38 @@ tThemeHaldler();
 
 // add member
 function tMemberTemplateItem(context) {
-    const li = document.createElement('li');
     const span = document.createElement('span');
     span.textContent = context;
-    li.append(span);
     const button = document.createElement('button');
     // remove button event handler
-    button.onclick = () => li.remove();
+    button.onclick = () => {
+        span.remove();
+        // put the item back into the members list
+        const template = tMemberListItemTemplate(context);
+        getById('listofmembers').appendChild(template);
+    };
     // icon times
     const i = document.createElement('i');
     i.className = "text-white fa fa-times";
     button.append(i);
-    li.append(button);
+    span.append(button)
+    return span;
+}
 
-    return li;
+function tMemberListItemTemplate (member) {
+    const div = document.createElement('div');
+    div.id = 'user-'+member;
+    const option = document.createElement('option');
+    option.textContent = member;
+    option.value = member;
+    div.append(option);
+    const button = document.createElement('button');
+    const i = document.createElement('i');
+    i.className = "fa fa-plus";
+    button.append(i);
+    button.setAttribute('onclick', `tMoveMember('${member}')`);
+    div.append(button);
+    return div;
 }
 
 function tAddMember() {
@@ -448,6 +516,14 @@ function tAddMember() {
         document.getElementById('tmodal-litem-members').append(template);
         tMember_input.value = '';
     }
+}
+
+function tMoveMember(member) {
+    const div = getById('user-'+member);
+    let template = tMemberTemplateItem(member);
+    // append in the list
+    document.getElementById('tmodal-litem-members').append(template);
+    div.remove();
 }
 
 function tcardChecklistExpandItem(e, layoutId) {
@@ -846,14 +922,14 @@ function tCardSaveEditedTitle(cardId) {
     if (cardTitle.value.trim().length > 0) {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            const json = JSON.parse(this.response);
-            if (json.status === 1) {
-                // hide action1
-                tCardCancelTitle(cardId);
-                cardTitle.value = json.newTitle;
+            if (this.readyState == 4 && this.status == 200) {
+                const json = JSON.parse(this.response);
+                if (json.status === 1) {
+                    // hide action1
+                    tCardCancelTitle(cardId);
+                    cardTitle.value = json.newTitle;
+                }
             }
-        }
         }
         xhr.open('PUT', '/gestion-projet/list/'+ cardId, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -862,8 +938,12 @@ function tCardSaveEditedTitle(cardId) {
 }
 
 
-function initTModal(item, parent) {
-    console.log(item)
+function initTModal(item, parent, users) {
+    //  hide add member button
+    const div = docQuery('.tmember-available-list');
+    const button = docQuery('.tedit-member-showadd > button');
+    button.removeAttribute('hidden');
+    div.setAttribute('hidden', '');
     // id
     getById('tmodal-litem-id').value = item._id;
     // title
@@ -872,9 +952,23 @@ function initTModal(item, parent) {
     getById('tmodal-litem-parent-title').textContent = parent.title;
     // members
     getById('tmodal-litem-members').innerHTML = '';
+    var membersAvailable = users.map(e => e.email);
     item.members.forEach(member => {
+        // reduce avaiable member
+        if (membersAvailable.indexOf(member) > -1) {
+            membersAvailable.splice(membersAvailable.indexOf(member), 1);
+        }
         let template = tMemberTemplateItem(member);
         getById('tmodal-litem-members').append(template)
+    });
+    const oldmembers = { members: item.members }
+    // set local storage
+    localStorage.setItem('oldmembers', JSON.stringify(oldmembers));
+    // members available list
+    getById('listofmembers').innerHTML = "";
+    membersAvailable.forEach(member => {
+        let template = tMemberListItemTemplate(member);
+        getById('listofmembers').append(template);
     });
     // themes
     getById('tmodal-litem-theme-input').value = item.theme;
@@ -886,7 +980,7 @@ function initTModal(item, parent) {
             if (div.style.background === item.theme) {
                 div.classList.add('selected');
             }
-        });
+        }); 
     } else {
         getById('cust-theme').value = item.theme;
     }
@@ -914,8 +1008,6 @@ function initTModal(item, parent) {
 
 }
 
-const docQuery = query => document.querySelector(query);
-const docQueryAll = query => document.querySelectorAll(query);
 
 // function to update range
 async function tUpdateItemRows() {
@@ -956,9 +1048,11 @@ async function tUpdateItemRows() {
 
 async function tModalUpdateItem(id) {
     // get all data
+    // task title
+    const taskTitle = getById("tmodal-litem-title").textContent;
     // members
     const members = getById("tmodal-litem-members");
-    const memberValues = [...members.children].map(e => e.firstElementChild.textContent)
+    const memberValues = [...members.children].map(e => e.textContent);
     // theme
     const theme = getById('tmodal-litem-theme-input').value;
     // description
@@ -991,7 +1085,9 @@ async function tModalUpdateItem(id) {
         theme: theme,
         description: description,
         checklist: checkList,
-        activity: activity
+        activity: activity,
+        taskTitle: taskTitle,
+        oldmembers: JSON.parse(localStorage.getItem('oldmembers')).members
     }
     
     // send request to server
@@ -1001,12 +1097,18 @@ async function tModalUpdateItem(id) {
             const json = JSON.parse(this.response);
             if (json.status === 1) {
                 const div = docQuery(`div[data-tag='${json.updated._id}']`);
-                const p = div.firstElementChild.firstElementChild;
-                if (theme !== "#fff")
-                    p.style.background = theme;
-                if (p.hasAttribute('hidden'))
-                    p.removeAttribute('hidden');
-                console.log('Item list updated!');
+                if (div) {
+                    const p = div.firstElementChild.firstElementChild;
+                    if (theme !== "#fff")
+                        p.style.background = theme;
+                    if (p.hasAttribute('hidden'))
+                        p.removeAttribute('hidden');
+                    console.log('Item list updated!');
+                    // update members
+                    getById('member-' + json.updated._id).textContent = dataList.members.length;
+                    getById('checklist-' + json.updated._id).textContent = docQuery('.tcard-checklist-progress > .percent').textContent;
+                }
+                
                 tModalDismiss(id);
             }
         }
@@ -1097,4 +1199,12 @@ function tSetThemeColor(input) {
     getById('tmodal-litem-theme-active').style.background = input.value;
     getById('tmodal-litem-theme-active-name').textContent = input.value;
     getById('tmodal-litem-theme-input').value = input.value;
+}
+
+function tShowAvailableMembers(e) {
+    const div = docQuery('.tmember-available-list');
+    if (div.hasAttribute('hidden')) {
+        div.removeAttribute('hidden');
+        e.setAttribute('hidden', '');
+    }
 }

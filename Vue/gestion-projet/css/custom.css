@@ -1144,3 +1144,9 @@ cursor: pointer;
     font-weight: 300;
     margin: 0 4px;
 }
+
+.tback-home {
+    padding: 8px;
+    color: rgb(168, 190, 212);
+    font-weight: 500;
+}

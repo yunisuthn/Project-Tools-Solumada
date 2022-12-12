@@ -188,8 +188,8 @@ function tViewCardTemplateItem(data = {}) {
     const span = document.createElement('span');
     span.className = "item-card-label";
     // limit string length to 17
-    let string = data.title.split('').map((e, i) => i < 40 ? e : '').join('') + '...';
-    span.textContent = data.title.length > 40 ? string : data.title;
+    let string = data.title.split('').map((e, i) => i < 38 ? e : '').join('') + '...';
+    span.textContent = data.title.length > 38 ? string : data.title;
     span.draggable = false;
     div1.append(span);
     div.append(div1);

@@ -1,0 +1,873 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tools Solumada</title>
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="../assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <link rel="stylesheet" href="../assets/fontawesome/fontawesome-free/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../assets/fontawesome/fontawesome-free/css/all.min.css">
+
+    <link rel="stylesheet" href="../assets/css/lib/themify-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/css/lib/flag-icon-css/css/flag-icon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"> -->
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
+</head>
+
+<body>
+
+
+    <!-- Right Panel -->
+    <div id="preloader" class="center"></div>
+    <div id="right-panel" class="right-panel">
+
+        <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
+        <!-- Header-->
+        <header id="header" class="header">
+            <div class="top-left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><img src="images/logo.jpg" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="/"><img src="images/logo 2.jpg" alt="Logo"></a>
+                    <!--a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a-->
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="header-menu">
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <img class="user-avatar rounded-circle" src="images/admin.png" alt="User Avatar">
+                        </a>
+
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/user" id="utilisateur"><i class="fa fa-solid fa-users"></i>
+                                Utilisateur</a>
+                            <a class="nav-link" href="/historique" id="historique"><i
+                                    class="fa fa-thin fa-calendar-check"></i> Historiques</a>
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+    </div>
+    <div class="content">
+        <!-- Header-->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-12 col-sm-4 col-md-4">
+                        <ul class="nav nav-tabs border-delete">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="true" id="getActif"
+                                    style=" font-size: 26px; font-weight: bold; background: aliceblue; border-radius: 10px;"
+                                    aria-expanded="false">Actif - ecran</a>
+                                <div class="dropdown-menu">
+                                    <label for="" class="actif">Actif</label>
+
+                                    <a class="dropdown-item" href="/inventaire"><i class="fa-solid fa-arrow-right"></i>
+                                        UC</a>
+                                    <a class="dropdown-item" href="/inventaireEcran"><i
+                                            class="fa-solid fa-arrow-right"></i> Ecran</a>
+                                    <a class="dropdown-item" href="/inventaireClavier"><i
+                                            class="fa-solid fa-arrow-right"></i> CLAVIER</a>
+                                    <a class="dropdown-item" href="/inventaireSouris"><i
+                                            class="fa-solid fa-arrow-right"></i> SOURIS</a>
+                                    <a class="dropdown-item" href="/inventairePhone"><i
+                                            class="fa-solid fa-arrow-right"></i> PHONE</a>
+                                    <div class="dropdown-divider"></div>
+                                    <label for="" class="actif">Inactif</label>
+
+                                    <a class="dropdown-item" href="/inventaire-inact-uc"><i
+                                            class="fa-solid fa-arrow-right"></i> UC</a>
+                                    <a class="dropdown-item" href="/inventaire-inact-ecran"><i
+                                            class="fa-solid fa-arrow-right"></i> Ecran</a>
+                                    <a class="dropdown-item" href="/inventaire-inact-clavier"><i
+                                            class="fa-solid fa-arrow-right"></i>
+                                        CLAVIER</a>
+                                    <a class="dropdown-item" href="/inventaire-inact-souris"><i
+                                            class="fa-solid fa-arrow-right"></i> SOURIS</a>
+                                    <a class="dropdown-item" href="/inventaire-inact-phone"><i
+                                            class="fa-solid fa-arrow-right"></i> PHONE</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>
+                                    Inventaire ECRAN
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <li class="nav-item" style="list-style-type: none;">
+                                    <a href="/">
+                                        <i class="fa fa-home fa-3x iconCol" aria-hidden="true"></i>
+                                    </a>
+                                </li>&nbsp;
+                                <!-- <ol class="breadcrumb text-right">
+                                    <li><a href="/IT">IT</a></li>
+                                    <li> </li>
+                                    <li class="active">> Inventaire</li>
+                                </ol> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+
+                            <strong class="card-title">
+                                <a href="/it">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                            <div class="float-right">
+                                <button type="button" class="add" id="addInvent" data-toggle="modal"
+                                    data-target="#addInventaire">
+                                    <i class="fa fa-plus"></i> add
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive-lg">
+                                <table id="inventaireEcranActifDataT" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Type</th>
+                                            <th>Localisation</th>
+                                            <th>Fonction</th>
+                                            <th>N° Modèle </th>
+                                            <th>Num de Serie</th>
+                                            <th>Marque</th>
+                                            <!-- <th>Processeur</th>
+                                            <th>RAM</th>
+                                            <th>Disque Dure</th>
+                                            <th>Capacité</th>
+                                            <th>Clé Windows</th> -->
+                                            <th>Taille de l'écran</th>
+                                            <th>Port HDMI</th>
+                                            <th>Port VGA</th>
+                                            <th>Port DVI</th>
+                                            <th>Commentaire</th>
+                                            <!-- <th>Port USB</th>
+                                            <th>Port PCI</th>
+                                            <th>IMEI 1</th>
+                                            <th>IMEI 2</th>
+                                            <th>Chargeur</th>
+                                            <th>Câble</th>
+                                            <th>Housse</th>  -->
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div><!-- .animated -->
+
+        <div class="modal fade" id="addInventaire" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1">
+
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title modalTitre" id="staticBackdropLabel">Nouveau Matériel</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateUserLevel" method="post">
+                            <div class="row form-group">
+                                <div class="col col-md-12">
+                                    <label for="name" class="form-control-label">Actif</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="checkbox" id="actif" placeholder="" value="true" class="form-control">
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-12">
+                                    <label for="name" class="form-control-label">Nom</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select data-placeholder="Choisir un nom" class="form-control" id="nameMat"
+                                        tabindex="1">
+                                        <option value="" disabled selected>Choisir le nom</option>
+                                        <option value="uc">UC</option>
+                                        <option value="ecran">Ecran</option>
+                                        <option value="clavier">Clavier</option>
+                                        <option value="souris">Souris</option>
+                                        <option value="phone">Téléphone</option>
+                                    </select>
+                                    <!-- <input type="text" id="nameMat" placeholder="" class="form-control"> -->
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div>
+                            <div class="row form-group typeUC">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Types</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select id="typeUC" class="form-control">
+                                        <option value="" disabled selected>Choisir le type</option>
+                                        <option value="Desktop">Desktop</option>
+                                        <option value="Laptop">Laptop</option>
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="type" class="form-control"> -->
+                                </div>
+                            </div>
+                            <div class="row form-group type">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Types</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <!-- <select id="type" class="form-control">
+                                        <option value="" disabled selected>Choisir le type</option>
+                                        <option value="Desktop">Desktop</option>
+                                        <option value="Laptop">Laptop</option>
+                                    </select> -->
+                                    <input type="text" name="Mat" id="type" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group localisation">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Localisation</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select name="" id="localisation" class="form-control">
+                                        <option value="" disabled selected>Choisir la localisation</option>
+                                        <option value="IKANO">IKANO</option>
+                                        <option value="TWF">TWF</option>
+                                    </select>
+                                    <!-- <input type="text" name="number" id="localisation" class="form-control"> -->
+                                </div>
+                            </div>
+                            <div class="row form-group departement">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Fonction</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select name="" id="departement" class="form-control">
+                                        <option value="" disabled selected>Choisir fonction</option>
+                                        <option value="Gérant">Gérant</option>
+                                        <option value="RH">RH</option>
+                                        <option value="Assistante RH">Assistante RH</option>
+                                        <option value="Assistante Administrative & finance">Assistante Administrative &
+                                            finance</option>
+                                        <option value="Opérationnel">Opérationnel</option>
+                                        <option value="TeamLeader">TeamLeader</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Agent">Agent</option>
+                                        <option value="Developpeur">Developpeur</option>
+                                        <option value="Reporting">Reporting</option>
+
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="departement" class="form-control"> -->
+                                </div>
+
+                            </div>
+                            <div class="row form-group equipement">
+                                <div class="col col-md-3 equipementClass">
+                                    <label for="name" class="form-control-label">Equipement</label>
+                                </div>
+                                <div class="col col-md-3 modelClass">
+                                    <label for="name" class="form-control-label">Modèle N°</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="equipement" class="form-control">
+
+                                </div>
+                            </div>
+
+                            <div class="row form-group numSerie">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Numéros de Série</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="numSerie" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group marque">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Marque</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="marque" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group processeur">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Processeur</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="processeur" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group ram">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">RAM (Gb)</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="ram" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group diskDur">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Disque Dure</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select name="" id="diskDur" class="form-control">
+                                        <option value="" disabled selected>Choisir le disque dure</option>
+                                        <option value="HDD">HDD</option>
+                                        <option value="SSD">SSD</option>
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="diskDur" class="form-control"> -->
+                                </div>
+
+                            </div>
+                            <div class="row form-group capacite">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Capacité (Gb)</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="capacite" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group cleWin">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Clé windows</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="cleWin" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group resolution">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Résolution</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="resolution" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group antivirus">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Antivirus</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="antivirus" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group vpn">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">VPN</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="vpn" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group usb">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Nombre port USB</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="usb" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group portsEcran">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Ports :</label>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    HDMI
+                                    <input type="checkbox" name="Mat" id="portHdmi" class="form-control" value="false">
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    VGA
+                                    <input type="checkbox" name="Mat" id="portVga" class="form-control">
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    DVI
+                                    <input type="checkbox" name="Mat" id="portDvi" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group portsClavier">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Ports :</label>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    USB
+                                    <input type="checkbox" name="Mat" id="portUsb" class="form-control">
+
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    PCI
+                                    <input type="checkbox" name="Mat" id="portPci" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group imei">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">IMEI :</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    IMEI 1
+                                    <input type="text" name="Mat" id="imei1" class="form-control">
+
+                                </div>
+                                <div class="col-12 col-md-9 ">
+                                    IMEI 2
+                                    <input type="text" name="Mat" id="imei2" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group chargeur-cable-housse">
+                                <div class="col col-md-2">
+                                    <label for="name" class="form-control-label">Chargeur</label>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <input type="checkbox" name="Mat" id="chargeur" class="form-control">
+
+                                </div>
+                                <!-- </div>
+                                                <div class="row form-group"> -->
+                                <div class="col col-md-2">
+                                    <label for="name" class="form-control-label">Câble</label>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <input type="checkbox" name="Mat" id="cable" class="form-control">
+
+                                </div>
+                                <!-- </div>
+                                                <div class="row form-group"> -->
+                                <div class="col col-md-2">
+                                    <label for="name" class="form-control-label">Housse</label>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <input type="checkbox" name="Mat" id="housse" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group commentaire">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Commentaire</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <textarea name="" id="commentaire" cols="10" rows="5"
+                                        class="form-control"></textarea>
+                                    <!-- <input type="text" name="Mat" id="commentaire" class="form-control"> -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            id="cancelMat">Fermer</button>
+                        <button type="button" class="btn btn-success" id="saveMateriel">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalUpdateInventaire" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1">
+
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title modalTitre" id="staticBackdropLabel">Mis à jours matériel</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateUserLevel" method="post">
+                            <div class="row form-group">
+                                <div class="col col-md-12">
+                                    <label for="name" class="form-control-label">Actif</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="checkbox" id="actifUpdat" placeholder="" value="true"
+                                        class="form-control">
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-12">
+                                    <label for="name" class="form-control-label">Nom</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select data-placeholder="Choisir un nom" class="form-control" id="nameMatUpdat"
+                                        tabindex="1">
+                                        <option value="" disabled selected>Choisir le nom</option>
+                                        <option value="uc">UC</option>
+                                        <option value="ecran">Ecran</option>
+                                        <option value="clavier">Clavier</option>
+                                        <option value="souris">Souris</option>
+                                        <option value="phone">Téléphone</option>
+                                    </select>
+                                    <!-- <input type="text" id="nameMat" placeholder="" class="form-control"> -->
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div>
+                            <div class="row form-group typeUCUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Types</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select id="typeUCUpdat" class="form-control">
+                                        <option value="" disabled selected>Choisir le type</option>
+                                        <option value="Desktop">Desktop</option>
+                                        <option value="Laptop">Laptop</option>
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="type" class="form-control"> -->
+                                </div>
+                            </div>
+                            <div class="row form-group typeUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Types</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="typeUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group localisationUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Localisation</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="number" id="localisationUpdat" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group departementUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Fonction</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select name="" id="departementUpdat" class="form-control">
+                                        <option value="" disabled selected>Choisir fonction</option>
+                                        <option value="Gérant">Gérant</option>
+                                        <option value="RH">RH</option>
+                                        <option value="Assistante RH">Assistante RH</option>
+                                        <option value="Assistante Administrative & finance">Assistante Administrative &
+                                            finance</option>
+                                        <option value="Opérationnel">Opérationnel</option>
+                                        <option value="TeamLeader">TeamLeader</option>
+                                        <option value="IT">IT</option>
+                                        <option value="Agent">Agent</option>
+                                        <option value="Developpeur">Developpeur</option>
+                                        <option value="Reporting">Reporting</option>
+
+                                    </select>
+                                    <!-- <input type="text" name="Mat" id="departementUpdat" class="form-control"> -->
+                                </div>
+
+                            </div>
+                            <div class="row form-group equipementUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Modèle N°</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="equipementUpdat" class="form-control">
+
+                                </div>
+                            </div>
+
+                            <div class="row form-group numSerieUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Numéros de Série</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="numSerieUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group marqueUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Marque</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="marqueUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group processeurUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Processeur</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="processeurUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group ramUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">RAM (Gb)</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="ramUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group diskDurUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Disque Dure</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="diskDurUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group capaciteUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Capacité (Gb)</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="capaciteUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group cleWinUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Clé windows</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="cleWinUpdat" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group resolutionUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Résolution</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="resolutionUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group antivirusUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Antivirus</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="antivirusUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group vpnUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">VPN</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="vpnUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group usbUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Nombre port USB</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="usbUpdat" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group portHdmiUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Ports :</label>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    HDMI
+                                    <input type="checkbox" name="Mat" id="portHdmiUpdat" class="form-control"
+                                        value="false">
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    VGA
+                                    <input type="checkbox" name="Mat" id="portVgaUpdat" class="form-control">
+
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    DVI
+                                    <input type="checkbox" name="Mat" id="portDviUpdat" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group portUsbUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Ports :</label>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    USB
+                                    <input type="checkbox" name="Mat" id="portUsbUpdat" class="form-control">
+
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    PCI
+                                    <input type="checkbox" name="Mat" id="portPciUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group imeiUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">IMEI :</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    IMEI 1
+                                    <input type="text" name="Mat" id="imei1Updat" class="form-control">
+
+                                </div>
+                                <div class="col-12 col-md-9 ">
+                                    IMEI 2
+                                    <input type="text" name="Mat" id="imei2Updat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group chargeur-cable-housseUpdat">
+                                <div class="col col-md-2">
+                                    <label for="name" class="form-control-label">Chargeur</label>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <input type="checkbox" name="Mat" id="chargeurUpdat" class="form-control">
+
+                                </div>
+                                <!-- </div>
+                                                                    <div class="row form-group"> -->
+                                <div class="col col-md-2">
+                                    <label for="name" class="form-control-label">Câble</label>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <input type="checkbox" name="Mat" id="cableUpdat" class="form-control">
+
+                                </div>
+                                <!-- </div>
+                                                                    <div class="row form-group"> -->
+                                <div class="col col-md-2">
+                                    <label for="name" class="form-control-label">Housse</label>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <input type="checkbox" name="Mat" id="housseUpdat" class="form-control">
+
+                                </div>
+                            </div>
+                            <div class="row form-group commentaireUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Commentaire</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <textarea name="" id="commentaireUpdat" cols="10" rows="5"
+                                        class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            id="cancelUpdate">Fermer</button>
+                        <button type="button" class="btn btn-success" id="saveUpdateMat">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- .content -->
+
+
+    <div class="clearfix"></div>
+
+
+    </div><!-- /#right-panel -->
+
+    <!-- Right Panel -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+
+
+    <script src="../assets/js/main.js"></script>
+
+    <script src="../assets/fontawesome/js/all.js"></script>
+
+    <script src="../assets/js/lib/data-table/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="../assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="../assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"></script>
+
+    <script src="../assets/js/IT/inventaire.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#bootstrap-data-table-export').DataTable();
+        });
+    </script>
+    <script>
+
+        var loader = document.getElementById("preloader")
+        window.addEventListener("load", function () {
+            loader.style.display = "none"
+            document.body.style.background = "linear-gradient(#A0B9E5, #D1DCF0)";
+        })
+
+    </script>
+
+
+</body>
+
+</html>

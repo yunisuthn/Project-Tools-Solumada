@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors")
 const bodyParser = require("body-parser")
 const route = require('./Route/route')
+const route2 = require('./Route/tRoute')
 const PORT = process.env.PORT || 8000
 const methodOverride = require("method-override")
 //const expression = require('express-session')
@@ -37,6 +38,7 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use("/", route)
+app.use("/gestion-projet", route2);
 
 const server = app.listen(PORT, () => {
     const port = server.address().port;

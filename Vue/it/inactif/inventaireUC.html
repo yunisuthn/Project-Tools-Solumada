@@ -98,30 +98,39 @@
                                 <div class="dropdown-menu">
                                     <label for="" class="actif">Actif</label>
 
-                                    <a class="dropdown-item" href="/inventaire"><i class="fa-solid fa-arrow-right"></i>
-                                        UC</a>
-                                    <a class="dropdown-item" href="/inventaireEcran"><i
-                                            class="fa-solid fa-arrow-right"></i> Ecran</a>
+                                    <a class="dropdown-item" href="/inventaire">
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                        UC (<%= obj.ucA %>)</a>
+                                    <a class="dropdown-item" href="/inventaireEcran">
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                        Ecran (<%= obj.ecranA %>)</a>
                                     <a class="dropdown-item" href="/inventaireClavier"><i
-                                            class="fa-solid fa-arrow-right"></i> CLAVIER</a>
+                                            class="fa-solid fa-arrow-right"></i>
+                                        CLAVIER (<%= obj.clavierA %>)</a>
                                     <a class="dropdown-item" href="/inventaireSouris"><i
-                                            class="fa-solid fa-arrow-right"></i> SOURIS</a>
+                                            class="fa-solid fa-arrow-right"></i>
+                                        SOURIS (<%= obj.sourisA %>)</a>
                                     <a class="dropdown-item" href="/inventairePhone"><i
-                                            class="fa-solid fa-arrow-right"></i> PHONE</a>
+                                            class="fa-solid fa-arrow-right"></i>
+                                        PHONE (<%= obj.phoneA %>)</a>
                                     <div class="dropdown-divider"></div>
                                     <label for="" class="actif">Inactif</label>
 
                                     <a class="dropdown-item" href="/inventaire-inact-uc"><i
-                                            class="fa-solid fa-arrow-right"></i> UC</a>
+                                            class="fa-solid fa-arrow-right"></i>
+                                        UC (<%= obj.ucI %>)</a>
                                     <a class="dropdown-item" href="/inventaire-inact-ecran"><i
-                                            class="fa-solid fa-arrow-right"></i> Ecran</a>
+                                            class="fa-solid fa-arrow-right"></i>
+                                        Ecran (<%= obj.ecranI %>)</a>
                                     <a class="dropdown-item" href="/inventaire-inact-clavier"><i
                                             class="fa-solid fa-arrow-right"></i>
-                                        CLAVIER</a>
+                                        CLAVIER (<%= obj.clavierI %>)</a>
                                     <a class="dropdown-item" href="/inventaire-inact-souris"><i
-                                            class="fa-solid fa-arrow-right"></i> SOURIS</a>
+                                            class="fa-solid fa-arrow-right"></i>
+                                        SOURIS (<%= obj.sourisI %>)</a>
                                     <a class="dropdown-item" href="/inventaire-inact-phone"><i
-                                            class="fa-solid fa-arrow-right"></i> PHONE</a>
+                                            class="fa-solid fa-arrow-right"></i>
+                                        PHONE (<%= obj.phoneI %>)</a>
                                 </div>
                             </li>
                         </ul>
@@ -182,7 +191,6 @@
                                             <th>Nom</th>
                                             <th>Type</th>
                                             <th>Localisation</th>
-                                            <th>Fonction</th>
                                             <th>Equipement</th>
                                             <th>Num de Serie</th>
                                             <th>Marque</th>
@@ -190,10 +198,12 @@
                                             <th>RAM</th>
                                             <th>Disque Dure</th>
                                             <th>Capacité</th>
-                                            <th>Clé Windows</th>
+                                            <th>Clé Windows Craquée</th>
+                                            <th>Clé Windows Originale</th>
                                             <th>Antivirus</th>
                                             <th>VPN</th>
                                             <th>Nombre port USB</th>
+                                            <th>Version windows</th>
                                             <th>Commentaire</th>
                                             <!-- <th>Port USB</th>
                                             <th>Port PCI</th>
@@ -392,10 +402,19 @@
                             </div>
                             <div class="row form-group cleWin">
                                 <div class="col col-md-3">
-                                    <label for="name" class="form-control-label">Clé windows</label>
+                                    <label for="name" class="form-control-label">Clé windows craquée</label>
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <input type="text" name="Mat" id="cleWin" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group cleWinOriginal">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Clé windows originale</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="cleWinOriginal" class="form-control">
                                 </div>
 
                             </div>
@@ -506,6 +525,14 @@
                                 <div class="col-12 col-md-2">
                                     <input type="checkbox" name="Mat" id="housse" class="form-control">
 
+                                </div>
+                            </div>
+                            <div class="row form-group versionWin">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Version Windows</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="versionWin" class="form-control">
                                 </div>
                             </div>
                             <div class="row form-group commentaire">
@@ -686,10 +713,18 @@
                             </div>
                             <div class="row form-group cleWinUpdat">
                                 <div class="col col-md-3">
-                                    <label for="name" class="form-control-label">Clé windows</label>
+                                    <label for="name" class="form-control-label">Clé windows craquée</label>
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <input type="text" name="Mat" id="cleWinUpdat" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row form-group cleWinOriginalUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Clé windows originale</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="cleWinOriginalUpdat" class="form-control">
                                 </div>
 
                             </div>
@@ -801,6 +836,14 @@
                                 <div class="col-12 col-md-2">
                                     <input type="checkbox" name="Mat" id="housseUpdat" class="form-control">
 
+                                </div>
+                            </div>
+                            <div class="row form-group versionWinUpdat">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Version Windows</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="Mat" id="versionWinUpdat" class="form-control">
                                 </div>
                             </div>
                             <div class="row form-group commentaireUpdat">

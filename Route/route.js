@@ -88,51 +88,90 @@ routeExp.route('/production').get(async function (req, res) {
 //Inventaire uc
 routeExp.route('/inventaire').get(async function (req, res) {
     var session = req.session
+    var page = "actif/inventaireUC.html"
+    await nombreIn(page, session, res)
+})
+
+//console.log("nombreIn()", nombreIn());
+async function nombreIn(page, session, res) {
     if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaireUC.html", { type_util: session.typeUtil })
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+                var obj = {}
+                obj.ucA = (await InventaireModel.find({ actif: true, name: "uc" })).length
+                obj.ecranA = (await InventaireModel.find({ actif: true, name: "ecran" })).length
+                obj.clavierA = (await InventaireModel.find({ actif: true, name: "clavier" })).length
+                obj.sourisA = (await InventaireModel.find({ actif: true, name: "souris" })).length
+                obj.phoneA = (await InventaireModel.find({ actif: true, name: "phone" })).length
+
+                obj.ucI = (await InventaireModel.find({ actif: false, name: "uc" })).length
+                obj.ecranI = (await InventaireModel.find({ actif: false, name: "ecran" })).length
+                obj.clavierI = (await InventaireModel.find({ actif: false, name: "clavier" })).length
+                obj.sourisI = (await InventaireModel.find({ actif: false, name: "souris" })).length
+                obj.phoneI = (await InventaireModel.find({ actif: false, name: "phone" })).length
+                //= ucA.length
+                //console.log("obj", obj);
+                res.render("./it/" + page, { type_util: session.typeUtil, obj: obj })
+            })
     } else {
         res.redirect("/")
     }
-})
+}
 
 // Get Inventaire ecran
 routeExp.route('/inventaireEcran').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaire-ecran.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "actif/inventaire-ecran.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //     res.render("./it/actif/inventaire-ecran.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire clavier
 routeExp.route('/inventaireClavier').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaire-clavier.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+
+    var page = "actif/inventaire-clavier.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //     res.render("./it/actif/inventaire-clavier.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire souris
 routeExp.route('/inventaireSouris').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaire-souris.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "actif/inventaire-souris.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //     res.render("./it/actif/inventaire-souris.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire phone
 routeExp.route('/inventairePhone').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaire-phone.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "actif/inventaire-phone.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //     res.render("./it/actif/inventaire-phone.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 
@@ -140,51 +179,61 @@ routeExp.route('/inventairePhone').get(async function (req, res) {
 //Inventaire uc
 routeExp.route('/inventaire-inact-uc').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaireUC.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaireUC.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //     res.render("./it/inactif/inventaireUC.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 // Get Inventaire ecran
 routeExp.route('/inventaire-inact-ecran').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaire-ecran.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaire-ecran.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //     res.render("./it/inactif/inventaire-ecran.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire clavier
 routeExp.route('/inventaire-inact-clavier').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaire-clavier.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaire-clavier.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //     res.render("./it/inactif/inventaire-clavier.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire souris
 routeExp.route('/inventaire-inact-souris').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaire-souris.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaire-souris.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //     res.render("./it/inactif/inventaire-souris.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire phone
 routeExp.route('/inventaire-inact-phone').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaire-phone.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaire-phone.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //     res.render("./it/inactif/inventaire-phone.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 // all instruction

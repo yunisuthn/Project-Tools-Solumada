@@ -3677,11 +3677,12 @@ footer.site-footer .footer-inner a {
   background: linear-gradient(#A0B9E5, #D1DCF0);
   font-weight: 300; }
 
-p {
+ p {
   color: #fff;
   font-weight: 300;
 font-weight: bolder;
     font-size: 26px; }
+
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -4367,14 +4368,4 @@ border-color: #425364 #4c749c #4381be;
 .actif{
     font-size: x-large;
     font-weight: 600;
-}
-
-.identification{
-  display: none;
-}
-
-.table-responsive-lg {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
 }

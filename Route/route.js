@@ -3792,6 +3792,60 @@ routeExp.route("/backup_databas").get(async function (req, res) {
             }
         });
 })
+
+
+// routeExp.route("/addProjetexcel").get(async function (req, res) {
+//     mongoose
+//         .connect(
+//             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+//             {
+//                 useUnifiedTopology: true,
+//                 UseNewUrlParser: true,
+//             }
+//         )
+//         .then(async () => {
+//             const parseExcel = (filename) => {
+
+//                 const excelData = XLSX.readFile(filename);
+
+//                 return Object.keys(excelData.Sheets).map(name => ({
+//                     name,
+//                     data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
+//                 }));
+//             };
+
+//             var liste = []
+//             parseExcel("./Vue/assets/listeCours.xlsx").forEach(element => {
+//                 liste.push(element.data)
+//             });
+
+//             console.log("liste", liste[0].length);
+//             //var membre = await CGNModel.find({ $or: [{ cours: "Problem solving and decision making" }] })
+//             // for (let i = 0; i < liste[0].length; i++) {
+//             //     var elementliste = liste[0][i];
+//             //     for (let j = 0; j < membre.length; j++) {
+//             //         const elementmb = membre[j];
+//             //         //console.log(j, "elementmb", elementmb.name);
+//             //         if (elementmb.name == undefined && (elementliste.EMAIL == elementmb.username)) {
+//             //             var cgn = await CGNModel.findOneAndUpdate({ username: elementmb.username, cours: "Problem solving and decision making" }, { name: elementliste.NOM })
+
+//             //         }
+//             //     }
+//             // }
+//             for (let i = 0; i < liste[0].length; i++) {
+//                 const element = liste[0][i].UP;
+//                 var c = {
+//                     name: element
+//                 }
+//                 console.log("lement", c);
+//                 var proj = await ProjectModel(c).save()
+//                 console.log("proj", proj);
+//             }
+//             res.send("finish")
+
+//         });
+// })
+
 module.exports = routeExp
 
 

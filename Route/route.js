@@ -49,7 +49,7 @@ routeExp.route('/acceuil').get(async function (req, res) {
 routeExp.route('/IT').get(async function (req, res) {
     var session = req.session
     //console.log("session.typeUtil ", session.typeUtil);
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         res.render("./it/IT.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
@@ -58,7 +58,7 @@ routeExp.route('/IT').get(async function (req, res) {
 
 routeExp.route('/operation').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         res.render("./operation/operation.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
@@ -67,7 +67,7 @@ routeExp.route('/operation').get(async function (req, res) {
 
 routeExp.route('/evaluationTL').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         res.render("./operation/evaluationTL.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
@@ -77,7 +77,7 @@ routeExp.route('/evaluationTL').get(async function (req, res) {
 routeExp.route('/production').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         res.render("./production/production.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
@@ -94,7 +94,7 @@ routeExp.route('/inventaire').get(async function (req, res) {
 
 //console.log("nombreIn()", nombreIn());
 async function nombreIn(page, session, res) {
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -130,7 +130,7 @@ routeExp.route('/inventaireEcran').get(async function (req, res) {
     var session = req.session
     var page = "actif/inventaire-ecran.html"
     await nombreIn(page, session, res)
-    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     //     res.render("./it/actif/inventaire-ecran.html", { type_util: session.typeUtil })
     // } else {
     //     res.redirect("/")
@@ -143,7 +143,7 @@ routeExp.route('/inventaireClavier').get(async function (req, res) {
 
     var page = "actif/inventaire-clavier.html"
     await nombreIn(page, session, res)
-    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     //     res.render("./it/actif/inventaire-clavier.html", { type_util: session.typeUtil })
     // } else {
     //     res.redirect("/")
@@ -155,7 +155,7 @@ routeExp.route('/inventaireSouris').get(async function (req, res) {
     var session = req.session
     var page = "actif/inventaire-souris.html"
     await nombreIn(page, session, res)
-    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     //     res.render("./it/actif/inventaire-souris.html", { type_util: session.typeUtil })
     // } else {
     //     res.redirect("/")
@@ -167,7 +167,7 @@ routeExp.route('/inventairePhone').get(async function (req, res) {
     var session = req.session
     var page = "actif/inventaire-phone.html"
     await nombreIn(page, session, res)
-    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     //     res.render("./it/actif/inventaire-phone.html", { type_util: session.typeUtil })
     // } else {
     //     res.redirect("/")
@@ -181,7 +181,7 @@ routeExp.route('/inventaire-inact-uc').get(async function (req, res) {
     var session = req.session
     var page = "inactif/inventaireUC.html"
     await nombreIn(page, session, res)
-    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     //     res.render("./it/inactif/inventaireUC.html", { type_util: session.typeUtil })
     // } else {
     //     res.redirect("/")
@@ -193,7 +193,7 @@ routeExp.route('/inventaire-inact-ecran').get(async function (req, res) {
     var session = req.session
     var page = "inactif/inventaire-ecran.html"
     await nombreIn(page, session, res)
-    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     //     res.render("./it/inactif/inventaire-ecran.html", { type_util: session.typeUtil })
     // } else {
     //     res.redirect("/")
@@ -205,7 +205,7 @@ routeExp.route('/inventaire-inact-clavier').get(async function (req, res) {
     var session = req.session
     var page = "inactif/inventaire-clavier.html"
     await nombreIn(page, session, res)
-    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     //     res.render("./it/inactif/inventaire-clavier.html", { type_util: session.typeUtil })
     // } else {
     //     res.redirect("/")
@@ -217,7 +217,7 @@ routeExp.route('/inventaire-inact-souris').get(async function (req, res) {
     var session = req.session
     var page = "inactif/inventaire-souris.html"
     await nombreIn(page, session, res)
-    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     //     res.render("./it/inactif/inventaire-souris.html", { type_util: session.typeUtil })
     // } else {
     //     res.redirect("/")
@@ -229,7 +229,7 @@ routeExp.route('/inventaire-inact-phone').get(async function (req, res) {
     var session = req.session
     var page = "inactif/inventaire-phone.html"
     await nombreIn(page, session, res)
-    // if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     //     res.render("./it/inactif/inventaire-phone.html", { type_util: session.typeUtil })
     // } else {
     //     res.redirect("/")
@@ -240,7 +240,7 @@ routeExp.route('/inventaire-inact-phone').get(async function (req, res) {
 routeExp.route('/instruction').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -301,7 +301,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     var commentaire = req.body.commentaire
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -351,7 +351,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
 routeExp.route('/allUCActifInventaire').get(async function (req, res) {
     var session = req.session
     //console.log("allUcActif");
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -372,7 +372,7 @@ routeExp.route('/allUCActifInventaire').get(async function (req, res) {
 // Get all Material in inventary Ecran
 routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -395,7 +395,7 @@ routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
 // Get all Material in inventary Clavier
 routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -416,7 +416,7 @@ routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
 // Get all Material in inventary souris
 routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -437,7 +437,7 @@ routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
 // Get all Material in inventary phone
 routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -459,7 +459,7 @@ routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
 //invetiaire UC inactif
 routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -479,7 +479,7 @@ routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary Ecran
 routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -501,7 +501,7 @@ routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary Clavier
 routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -522,7 +522,7 @@ routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary souris
 routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -543,7 +543,7 @@ routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary phone
 routeExp.route('/allPhoneInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -568,7 +568,7 @@ routeExp.route('/getInventaire').post(async function (req, res) {
     var codeM = req.body.code
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -593,7 +593,7 @@ routeExp.route('/getInstruction').post(async function (req, res) {
     var name = req.body.name
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -685,7 +685,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     // console.log("versionWinAUpdat", versionWinUpdat);
     //console.log("nombreInventA ", nombreInventA, " nameInventA ", nameInventA);
     //console.log("session", session);
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1037,7 +1037,7 @@ routeExp.route('/getOneInventaire').post(async function (req, res) {
 
     var id = req.body.id;
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1079,7 +1079,7 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
     var antivirusD = req.body.antivirusD; var vpnD = req.body.vpnD
     var nbUsbD = req.body.nbUsbD
 
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1295,7 +1295,7 @@ routeExp.route('/addInstruction').post(async function (req, res) {
     var instruct = req.body.instruct;
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1338,7 +1338,7 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
     var instructOld = req.body.instructOld;
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1387,7 +1387,7 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
     var session = req.session
 
     //console.log("name", name);
-    //if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1410,7 +1410,7 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
 routeExp.route('/allTL').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1433,7 +1433,7 @@ routeExp.route('/allTL').get(async function (req, res) {
 routeExp.route('/allUser').get(async function (req, res) {
 
     var session = req.session
-    //if (session.typeUtil == "Operation") {
+    //if (session.typeUtil == "Admin") {
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1456,7 +1456,7 @@ routeExp.route('/allUser').get(async function (req, res) {
 routeExp.route('/allHistory').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1486,7 +1486,7 @@ routeExp.route('/addTL').post(async function (req, res) {
     // console.log("rq.b o ", req.body);
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1538,7 +1538,7 @@ routeExp.route("/updateTl").post(async function (req, res) {
     // console.log("weaknessesA ", weaknessesA, " strengthsA ", strengthsA);
     // console.log("nameA ", nameA, " mcode ", oldMCode);
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1590,7 +1590,7 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
     var mcode = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1612,7 +1612,7 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
 //get planning
 routeExp.route('/planning').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
         mongoose
             .connect(
@@ -1663,7 +1663,7 @@ routeExp.route('/planning/:project/:shift').get(async function (req, res) {
     var project = req.params.project;
     // console.log("shift", shift);
     // console.log("project", project);
-    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
     mongoose
         .connect(
@@ -1689,7 +1689,7 @@ routeExp.route('/planning/:project/:shift').get(async function (req, res) {
 routeExp.route('/agent').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1713,7 +1713,7 @@ routeExp.route('/agent').get(async function (req, res) {
 routeExp.route('/evaluationAgent').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1749,7 +1749,7 @@ routeExp.route('/addAgent').post(async function (req, res) {
     var session = req.session
 
     //console.log("project", project);
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1795,7 +1795,7 @@ routeExp.route('/addEvaluationAgent').post(async function (req, res) {
     var comportement = req.body.comportement
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1829,7 +1829,7 @@ routeExp.route('/addEvaluationAgent').post(async function (req, res) {
 routeExp.route('/allAgent').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1853,7 +1853,7 @@ routeExp.route('/allAgent').get(async function (req, res) {
 routeExp.route('/allEvaluationAgent').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1896,7 +1896,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
 
     //console.log("req.body", req.body);
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1976,7 +1976,7 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
     // console.log("name", name);
     // console.log("mcodeN", mcodeN);
     //console.log("req.body", req.body);
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2032,7 +2032,7 @@ routeExp.route("/deleteAgent").post(async function (req, res) {
     var mcode = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2056,7 +2056,7 @@ routeExp.route("/deleteEvalAgent").post(async function (req, res) {
     var mcode = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2078,7 +2078,7 @@ routeExp.route("/deleteEvalAgent").post(async function (req, res) {
 routeExp.route('/user').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2102,7 +2102,7 @@ routeExp.route('/user').get(async function (req, res) {
 routeExp.route('/historique').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2166,7 +2166,7 @@ routeExp.route("/signup").post(async function (req, res) {
     var email = req.body.email;
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2215,7 +2215,7 @@ routeExp.route("/getOneAgent").post(async function (req, res) {
 
     var session = req.session
     //console.log("mcode1", req.body.mcode1);
-    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2239,7 +2239,7 @@ routeExp.route("/getOneTL").post(async function (req, res) {
     var mcode1 = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2273,7 +2273,7 @@ routeExp.route('/updateUser').post(async function (req, res) {
     var session = req.session
 
     //console.log("mcode", req.body);
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2323,7 +2323,7 @@ routeExp.route("/getOneUser").post(async function (req, res) {
     var mcode1 = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2347,7 +2347,7 @@ routeExp.route("/deleteUser").post(async function (req, res) {
     var mcode = req.body.mcode;
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2992,7 +2992,7 @@ routeExp.route("/deletePlanning").post(async function (req, res) {
 routeExp.route('/projet').get(async function (req, res) {
 
     var session = req.session
-    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
     mongoose
         .connect(
@@ -3016,7 +3016,7 @@ routeExp.route('/projet').get(async function (req, res) {
 routeExp.route('/reporting').get(async function (req, res) {
 
     var session = req.session
-    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
     mongoose
         .connect(
@@ -3565,7 +3565,7 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
 routeExp.route('/listecours').get(async function (req, res) {
 
     var session = req.session
-    //if (session.typeUtil == "Operation") {
+    //if (session.typeUtil == "Admin") {
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",

@@ -1,7 +1,42 @@
 .card-projet{
-    background-color: #E5CCA0;
+    /* background-color: #E5CCA0; */
+    background-color: white;
+    color: red;
 }
 
+.projet-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+.projet-actions > div {
+    font-size: 20px;
+}
 .nameProjCard{
     display: none;
+}
+.text-projet {
+    color: rgb(107, 99, 99);
+    font-size: 20px !important;
+}
+.deleteProj {
+    color: rgb(151, 96, 96);
+}
+.deleteProj:hover {
+    cursor: pointer;
+    color: rgb(161, 40, 40);
+}
+.updatProj {
+    color: rgb(64, 160, 80);
+}
+.updatProj:hover {
+    cursor: pointer;
+    color: rgb(1, 175, 30);
+}
+
+@media screen and (max-width: 1800px) {
+    .text-projet {
+        font-size: 18px !important;
+    }
 }

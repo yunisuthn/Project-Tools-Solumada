@@ -1198,7 +1198,7 @@ aside.left-panel:hover {
   box-shadow: none;
   clear: both;
   padding: 0 30px;
-  height: 55px;
+  /* min-height: 70px; */
   position: fixed;
   left: 280px;
   left: 0;
@@ -1227,11 +1227,11 @@ aside.left-panel:hover {
 }
 
 .right-panel .navbar-brand {
-  line-height: 42px;
+  line-height: 55px;
 }
 
 .right-panel .navbar-brand img {
-  max-width: 145px;
+  max-width: 200px;
 }
 
 .right-panel .navbar-brand.hidden {
@@ -1447,6 +1447,7 @@ header .form-inline .search-form.close {
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .header-menu .dropdown {
@@ -4368,4 +4369,195 @@ border-color: #425364 #4c749c #4381be;
 .actif{
     font-size: x-large;
     font-weight: 600;
+}
+
+
+.navbar-header > img {
+  max-width: 400px !important;
+  width: 400px !important;
+}
+/* .header-menu {
+  height: 90px !important;
+} */
+.header-menu > div {
+  line-height: 90px;
+}
+.item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.item-container  div {
+  width: 400px;
+  margin: 10px 0;
+}
+.item {
+  background-color: #ffffff46;
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  transition: all .3s ease-in;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.item:hover {
+  cursor: pointer;
+  background-color: #ebebeb;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.08);
+}
+.item:active {
+  background-color: gainsboro;
+}
+.item:hover > .item-icon{
+  font-size: 90px;
+}
+.item-icon {
+  font-size: 60px;
+  text-align: center;
+}
+.item-icon > div {
+  margin: 0;
+}
+.item-label > p {
+  color: rgb(107, 107, 107);
+  font-size: 22px;
+  font-weight: bold;
+  text-shadow: rgba(255, 255, 255, 0.342) 0 2px;
+  font-family: 'calibri';
+}
+.menu-card {
+  padding: 2px;
+}
+.menu-card > h1 {
+  color: rgb(238, 236, 236);
+  margin: 50px 0;
+  font-size: 40px;
+  text-transform: uppercase;
+  font-family: "calibri";
+  font-weight: bold;
+  text-shadow: rgba(0, 0, 0, 0.05) 0 2px ;
+}
+.home-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-link-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100px;
+  height: 100px;
+  padding: 50px;
+  background: #ffffff41;
+  border-radius: 50%;
+  font-size: 40px;
+}
+
+.home-link-content:hover {
+  background: #fffffff1;
+}
+
+
+@media screen and (max-width: 1370px) {
+  .menu-card > h1 {
+    font-size: 30px;
+  }
+  .item {
+      width: 200px; height: 200px;
+      padding: 0;
+  }
+  .item:hover > .item-icon{
+      font-size: 80px;
+  }
+  .item-icon {
+      font-size: 70px;
+  }
+  .item-label > p {
+      font-size: 20px;
+  }
+  .page-title > h1 {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .menu-card > h1 {
+    font-size: 22px;
+  }
+  .item {
+    width:160px; height:160px;
+    padding: 0;
+  }
+  .item:hover > .item-icon{
+    font-size: 70px;
+  }
+  .item-icon {
+    font-size: 60px;
+  }
+  .item-label > p {
+    font-size: 18px;
+  }
+  
+  .page-title > h1 {
+    font-size: 26px;
+  }
+}
+
+.header > .top-right {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+.rightpanel-header {
+  background: #fff;
+  border-bottom: 1px solid #e8e9ed;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  clear: both;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 70px;
+  z-index: 999;
+}
+.rightpanel-header > .right {
+  width: 100%;
+  padding-right: 20px;
+}
+
+table {
+  max-width: 1000px !important;
+  background: #FFFFFF !important;
+  border-radius: 5px !important;
+}
+.table-card {
+  background-color: #ffffff69;
+}
+.page-title > h1 {
+  color: #4d4d70;
+  line-height: 50px;
+}
+
+.nav-item > a > svg {
+  color:rgb(116, 161, 129) !important;
+}
+.nav-item > a > svg:hover {
+  color:rgb(65, 150, 89) !important;
+}
+a[href="/"] > i[class*="fa-home"], a[href="/"] > svg[class*="fa-home"] {
+  color:rgb(107, 165, 123) !important;
+}
+a[href="/"] > i[class*="fa-home"]:hover, a[href="/"] > svg[class*="fa-home"]:hover {
+  color:rgb(65, 150, 89) !important;
 }

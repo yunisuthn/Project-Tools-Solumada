@@ -3794,6 +3794,71 @@ routeExp.route("/backup_databas").get(async function (req, res) {
 })
 
 
+routeExp.route("/addUserexcel").get(async function (req, res) {
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            const parseExcel = (filename) => {
+                const excelData = XLSX.readFile(filename);
+                return Object.keys(excelData.Sheets).map(name => ({
+                    name,
+                    data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
+                }));
+            };
+
+            var liste = []
+            parseExcel("./Vue/assets/ListeAgents.xlsx").forEach(element => {
+                //console.log("elemetn", element);
+                liste.push(element.data)
+            });
+
+            //console.log("liste", liste[0]);
+            //var membre = await CGNModel.find({ $or: [{ cours: "Problem solving and decision making" }] })
+            // for (let i = 0; i < liste[0].length; i++) {
+            //     var elementliste = liste[0][i];
+            //     for (let j = 0; j < membre.length; j++) {
+            //         const elementmb = membre[j];
+            //         //console.log(j, "elementmb", elementmb.name);
+            //         if (elementmb.name == undefined && (elementliste.EMAIL == elementmb.username)) {
+            //             var cgn = await CGNModel.findOneAndUpdate({ username: elementmb.username, cours: "Problem solving and decision making" }, { name: elementliste.NOM })
+
+            //         }
+            //     }
+            // }
+            //console.log("liste.length", liste[0].length);
+            for (let i = 0; i < liste[0].length; i++) {
+                const agent = liste[0][i];
+                //console.log("agent", liste[0][i]);
+
+                var projet = agent.Projet.split("/")
+                console.log("projet", projet);
+                var c = {
+                    name: agent.NomComplet,
+                    usualName: agent.NomUsuel,
+                    mcode: agent.MCode,
+                    number: agent.Numbering,
+                    shift: agent.Shift,
+                    project: projet,
+                    site: agent.Site,
+                    quartier: agent.Quartier,
+                    tel: agent.Phon
+                }
+                console.log("lement", c);
+                var proj = await AgentModel(c).save()
+                // console.log("proj", proj);
+            }
+            res.send("finish")
+
+        });
+})
+
+
 // routeExp.route("/addProjetexcel").get(async function (req, res) {
 //     mongoose
 //         .connect(
@@ -3845,7 +3910,6 @@ routeExp.route("/backup_databas").get(async function (req, res) {
 
 //         });
 // })
-
 module.exports = routeExp
 
 

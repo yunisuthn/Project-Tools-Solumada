@@ -322,10 +322,10 @@ function planningView() {
                     id: 'date_end'
                 });
                 resp.forEach(el => {
-                    //console.log("el", el);
-                    //data.addRows([[el.m_code, el.nom, new Date(el.date_start), new Date(el.date_end)]])
-                    //data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
-                    data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                    console.log("el", el);
+                    data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+
+                    //data.addRows([[el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                 });
                 dashboard.bind(control, chart);
 
@@ -440,7 +440,7 @@ $(document).on('change', '#filterProj', function () {
 
                     resp.forEach(el => {
                         //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-                        data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                     })
 
                     dashboard.bind(control, chart);
@@ -539,7 +539,7 @@ $(document).on('change', '#filterProj', function () {
                             // console.log("shift", shift);
                             // console.log("project", project);
                             //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-                            data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
@@ -638,7 +638,7 @@ $(document).on('change', '#filterProj', function () {
                     resp.forEach(el => {
                         if (el.users[0].shift == shift) {
                             //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-                            data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
@@ -737,7 +737,7 @@ $(document).on('change', '#filterProj', function () {
                         if (el.users[0].project.includes(project)) {
                             //console.log("el.project", el.project);
                             //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-                            data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
@@ -944,7 +944,7 @@ $(document).on('change', '#filterShift', function () {
 
                     resp.forEach(el => {
                         //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-                        data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                     })
 
                     dashboard.bind(control, chart);
@@ -1036,7 +1036,7 @@ $(document).on('change', '#filterShift', function () {
                     resp.forEach(el => {
                         if (el.users[0].shift == shift) {
                             // data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-                            data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
@@ -1128,7 +1128,7 @@ $(document).on('change', '#filterShift', function () {
                     resp.forEach(el => {
                         if (el.users[0].project.includes(project)) {
                             //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-                            data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
@@ -1224,7 +1224,7 @@ $(document).on('change', '#filterShift', function () {
                         //if ((el.users[0].shift == shift && el.users[0].project == project) || (el.users[0].project.includes(project) && el.users[0].project == project)) {
                         if (el.users[0].project.includes(project) && el.users[0].shift == shift) {
                             // data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-                            data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 

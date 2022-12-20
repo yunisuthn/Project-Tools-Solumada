@@ -5,12 +5,44 @@ var agentDataTable = $('#agentDataTable').DataTable(
             { 'data': 'name' },
             { 'data': "usualName" },
             { 'data': 'mcode' },
-            { 'data': 'number' },
-            { 'data': "shift" },
+            {
+                'data': 'number', 'render': function (number) {
+                    if (number) {
+                        return number
+                    } else {
+                        return ""
+                    }
+                }
+            },
+            {
+                'data': "shift", "render": function (shift) {
+                    if (shift) {
+                        return shift
+                    } else {
+                        return ""
+                    }
+                }
+            },
             { 'data': 'project' },
             { 'data': 'site' },
-            { 'data': "quartier" },
-            { 'data': 'tel' },
+            {
+                'data': "quartier", "render": function (quartier) {
+                    if (quartier) {
+                        return quartier
+                    } else {
+                        return ""
+                    }
+                }
+            },
+            {
+                'data': 'tel', 'render': function (tel) {
+                    if (tel) {
+                        return tel
+                    } else {
+                        return ""
+                    }
+                }
+            },
             {
                 'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -307,12 +339,44 @@ $(document).on("change", "#filterShift", function () {
                 { 'data': 'name' },
                 { 'data': "usualName" },
                 { 'data': 'mcode' },
-                { 'data': 'number' },
-                { 'data': "shift" },
+                {
+                    'data': 'number', "render": function (number) {
+                        if (number) {
+                            return number
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': "shift", "render": function (shift) {
+                        if (shift) {
+                            return shift
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 { 'data': 'project' },
                 { 'data': 'site' },
-                { 'data': "quartier" },
-                { 'data': 'tel' },
+                {
+                    'data': "quartier", "render": function (quartier) {
+                        if (quartier) {
+                            return quartier
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': 'tel', 'render': function (tel) {
+                        if (tel) {
+                            return tel
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 {
                     'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -356,12 +420,44 @@ $(document).on("change", "#filterShift", function () {
                 { 'data': 'name' },
                 { 'data': "usualName" },
                 { 'data': 'mcode' },
-                { 'data': 'number' },
-                { 'data': "shift" },
+                {
+                    'data': 'number', "render": function (number) {
+                        if (number) {
+                            return number
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': "shift", "render": function (shift) {
+                        if (shift) {
+                            return shift
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 { 'data': 'project' },
                 { 'data': 'site' },
-                { 'data': "quartier" },
-                { 'data': 'tel' },
+                {
+                    'data': "quartier", "render": function (quartier) {
+                        if (quartier) {
+                            return quartier
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': 'tel', 'render': function (tel) {
+                        if (tel) {
+                            return tel
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 {
                     'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -412,12 +508,44 @@ $(document).on("change", "#filterShift", function () {
                 { 'data': 'name' },
                 { 'data': "usualName" },
                 { 'data': 'mcode' },
-                { 'data': 'number' },
-                { 'data': "shift" },
+                {
+                    'data': 'number', "render": function (number) {
+                        if (number) {
+                            return number
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': "shift", "render": function (shift) {
+                        if (shift) {
+                            return shift
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 { 'data': 'project' },
                 { 'data': 'site' },
-                { 'data': "quartier" },
-                { 'data': 'tel' },
+                {
+                    'data': "quartier", "render": function (quartier) {
+                        if (quartier) {
+                            return quartier
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': 'tel', 'render': function (tel) {
+                        if (tel) {
+                            return tel
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 {
                     'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -457,15 +585,48 @@ $(document).on("change", "#filterShift", function () {
         $("#agentDataTable").DataTable({
             "ajax": { "url": `/agentFilterProjet/${projet}`, "dataSrc": "" },
             "columns": [
+
                 { 'data': 'name' },
                 { 'data': "usualName" },
                 { 'data': 'mcode' },
-                { 'data': 'number' },
-                { 'data': "shift" },
+                {
+                    'data': 'number', "render": function (number) {
+                        if (number) {
+                            return number
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': "shift", "render": function (shift) {
+                        if (shift) {
+                            return shift
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 { 'data': 'project' },
                 { 'data': 'site' },
-                { 'data': "quartier" },
-                { 'data': 'tel' },
+                {
+                    'data': "quartier", "render": function (quartier) {
+                        if (quartier) {
+                            return quartier
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': 'tel', 'render': function (tel) {
+                        if (tel) {
+                            return tel
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 {
                     'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -514,15 +675,48 @@ $(document).on("change", "#filterProj", function () {
         $("#agentDataTable").DataTable({
             "ajax": { "url": `/allAgent`, "dataSrc": "" },
             "columns": [
+
                 { 'data': 'name' },
                 { 'data': "usualName" },
                 { 'data': 'mcode' },
-                { 'data': 'number' },
-                { 'data': "shift" },
+                {
+                    'data': 'number', "render": function (number) {
+                        if (number) {
+                            return number
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': "shift", "render": function (shift) {
+                        if (shift) {
+                            return shift
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 { 'data': 'project' },
                 { 'data': 'site' },
-                { 'data': "quartier" },
-                { 'data': 'tel' },
+                {
+                    'data': "quartier", "render": function (quartier) {
+                        if (quartier) {
+                            return quartier
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': 'tel', 'render': function (tel) {
+                        if (tel) {
+                            return tel
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 {
                     'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -563,15 +757,48 @@ $(document).on("change", "#filterProj", function () {
         $("#agentDataTable").DataTable({
             "ajax": { "url": `/agentFilterProjet/${projet}`, "dataSrc": "" },
             "columns": [
+
                 { 'data': 'name' },
                 { 'data': "usualName" },
                 { 'data': 'mcode' },
-                { 'data': 'number' },
-                { 'data': "shift" },
+                {
+                    'data': 'number', "render": function (number) {
+                        if (number) {
+                            return number
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': "shift", "render": function (shift) {
+                        if (shift) {
+                            return shift
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 { 'data': 'project' },
                 { 'data': 'site' },
-                { 'data': "quartier" },
-                { 'data': 'tel' },
+                {
+                    'data': "quartier", "render": function (quartier) {
+                        if (quartier) {
+                            return quartier
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': 'tel', 'render': function (tel) {
+                        if (tel) {
+                            return tel
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 {
                     'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -612,15 +839,48 @@ $(document).on("change", "#filterProj", function () {
         $("#agentDataTable").DataTable({
             "ajax": { "url": `/agentFilterProjShift/${shift}/${projet}`, "dataSrc": "" },
             "columns": [
+
                 { 'data': 'name' },
                 { 'data': "usualName" },
                 { 'data': 'mcode' },
-                { 'data': 'number' },
-                { 'data': "shift" },
+                {
+                    'data': 'number', "render": function (number) {
+                        if (number) {
+                            return number
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': "shift", "render": function (shift) {
+                        if (shift) {
+                            return shift
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 { 'data': 'project' },
                 { 'data': 'site' },
-                { 'data': "quartier" },
-                { 'data': 'tel' },
+                {
+                    'data': "quartier", "render": function (quartier) {
+                        if (quartier) {
+                            return quartier
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': 'tel', 'render': function (tel) {
+                        if (tel) {
+                            return tel
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 {
                     'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
@@ -660,15 +920,48 @@ $(document).on("change", "#filterProj", function () {
         $("#agentDataTable").DataTable({
             "ajax": { "url": `/agentFilter/${shift}`, "dataSrc": "" },
             "columns": [
+
                 { 'data': 'name' },
                 { 'data': "usualName" },
                 { 'data': 'mcode' },
-                { 'data': 'number' },
-                { 'data': "shift" },
+                {
+                    'data': 'number', "render": function (number) {
+                        if (number) {
+                            return number
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': "shift", "render": function (shift) {
+                        if (shift) {
+                            return shift
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 { 'data': 'project' },
                 { 'data': 'site' },
-                { 'data': "quartier" },
-                { 'data': 'tel' },
+                {
+                    'data': "quartier", "render": function (quartier) {
+                        if (quartier) {
+                            return quartier
+                        } else {
+                            return ""
+                        }
+                    }
+                },
+                {
+                    'data': 'tel', 'render': function (tel) {
+                        if (tel) {
+                            return tel
+                        } else {
+                            return ""
+                        }
+                    }
+                },
                 {
                     'defaultContent': `\
                     <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\

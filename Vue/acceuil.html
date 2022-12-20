@@ -93,18 +93,17 @@
     </div> -->
 
     <div id="right-panel" class="right-panel">
-        <!-- Header-->
-        <header id="header" class="header">
-            <div class="top-left">
+        <header class="rightpanel-header">
+            <div class="left">
                 <div class="navbar-header">
                     <a class="navbar-brand" href=""><img src="images/logo.jpg" alt="Logo"></a>
                     <a class="navbar-brand hidden" href=""><img src="images/logo 2.jpg" alt="Logo"></a>
                     <!--a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a-->
                 </div>
             </div>
-            <div class="top-right">
+            <div class="right">
                 <div class="header-menu">
-                    <div class="user-area dropdown float-right">
+                    <div class="user-area dropdown">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="images/admin.png" alt="User Avatar">
@@ -119,7 +118,6 @@
                             <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Déconnecter</a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </header>
@@ -131,97 +129,67 @@
         <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
         <div class="animated fadeIn">
             <!-- Widgets  -->
-            <div class="row card-lef">
-                <div class="col-lg-4 col-md-6" id="it">
-                    <a href="/IT">
-                        <div class="card cardClick">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
+            <div class="menu-card">
+                <h1 class="text-center">Bienvenu dans la page d'acceuil</h1>
+                <div class="item-container card-lef">
+                    <div id="it">
+                        <a href="/IT">
+                            <div class="item">
+                                <div class="item-icon">
                                     <div class="stat-icon dib flat-color-1">
                                         <i class="fa-solid fa-plug-circle-minus"></i>
                                     </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text filtre">IT</div>
-                                            <!-- <div class="stat-heading">Information Technologie</div> -->
-                                            <!--div class="stat-text"><span class="count">23569</span></div>
-                                            <div class="stat-heading">IT</div-->
-                                        </div>
-                                    </div>
-
+                                </div>
+                                <div class="item-label">
+                                    <p>IT</p>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6" id="operation">
-                    <a href="/operation">
-                        <div class="card cardClick">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
+                        </a>
+                    </div>
+                    <div id="operation">
+                        <a href="/operation">
+                            <div class="item">
+                                <div class="item-icon">
                                     <div class="stat-icon dib flat-color-2">
                                         <i class="fa-solid fa-hourglass-half"></i>
                                     </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text filtre">Opérations</div>
-                                            <!-- <div class="stat-heading">Opérations</div> -->
-                                            <!--div class="stat-text"><span class="count">3435</span></div>
-                                            <div class="stat-heading">Sales</div-->
-                                        </div>
-                                    </div>
-
+                                </div>
+                                <div class="item-label">
+                                    <p>Opérations</p>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6" id="production">
-                    <a href="/production">
-                        <div class="card cardClick">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
+                        </a>
+                    </div>
+                    <div id="production">
+                        <a href="/production">
+                            <div class="item">
+                                <div class="item-icon">
                                     <div class="stat-icon dib flat-color-3">
                                         <i class="menu-icon fa fa-cogs"></i>
                                     </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text filtre">Productions</div>
-                                            <!-- <div class="stat-heading">Opérations & Productions </div> -->
-                                            <!--div class="stat-text"><span class="count">349</span></div>
-                                            <div class="stat-heading">Templates</div-->
-                                        </div>
-                                    </div>
-
+                                </div>
+                                <div class="item-label">
+                                    <p>Productions</p>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6" id="gestionprojet">
-                    <a href="/gestion-projet">
-                        <div class="card cardClick">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
+                        </a>
+                    </div>
+                    <div id="gestion-projet">
+                        <a href="/gestion-projet">
+                            <div class="item">
+                                <div class="item-icon">
                                     <div class="stat-icon dib flat-color-4">
                                         <i class="fa-solid fa-business-time"></i>
                                     </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text filtre">Gestion du projet</div>
-                                            <!-- <div class="stat-heading">Opérations</div> -->
-                                            <!--div class="stat-text"><span class="count">3435</span></div>
-                                            <div class="stat-heading">Sales</div-->
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="item-label">
+                                    <p>Gestion de projet</p>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>

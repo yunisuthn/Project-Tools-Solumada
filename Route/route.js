@@ -49,7 +49,7 @@ routeExp.route('/acceuil').get(async function (req, res) {
 routeExp.route('/IT').get(async function (req, res) {
     var session = req.session
     //console.log("session.typeUtil ", session.typeUtil);
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         res.render("./it/IT.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
@@ -58,7 +58,7 @@ routeExp.route('/IT').get(async function (req, res) {
 
 routeExp.route('/operation').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         res.render("./operation/operation.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
@@ -67,7 +67,7 @@ routeExp.route('/operation').get(async function (req, res) {
 
 routeExp.route('/evaluationTL').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         res.render("./operation/evaluationTL.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
@@ -77,7 +77,7 @@ routeExp.route('/evaluationTL').get(async function (req, res) {
 routeExp.route('/production').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         res.render("./production/production.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
@@ -88,51 +88,90 @@ routeExp.route('/production').get(async function (req, res) {
 //Inventaire uc
 routeExp.route('/inventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaireUC.html", { type_util: session.typeUtil })
+    var page = "actif/inventaireUC.html"
+    await nombreIn(page, session, res)
+})
+
+//console.log("nombreIn()", nombreIn());
+async function nombreIn(page, session, res) {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+                var obj = {}
+                obj.ucA = (await InventaireModel.find({ actif: true, name: "uc" })).length
+                obj.ecranA = (await InventaireModel.find({ actif: true, name: "ecran" })).length
+                obj.clavierA = (await InventaireModel.find({ actif: true, name: "clavier" })).length
+                obj.sourisA = (await InventaireModel.find({ actif: true, name: "souris" })).length
+                obj.phoneA = (await InventaireModel.find({ actif: true, name: "phone" })).length
+
+                obj.ucI = (await InventaireModel.find({ actif: false, name: "uc" })).length
+                obj.ecranI = (await InventaireModel.find({ actif: false, name: "ecran" })).length
+                obj.clavierI = (await InventaireModel.find({ actif: false, name: "clavier" })).length
+                obj.sourisI = (await InventaireModel.find({ actif: false, name: "souris" })).length
+                obj.phoneI = (await InventaireModel.find({ actif: false, name: "phone" })).length
+                //= ucA.length
+                //console.log("obj", obj);
+                res.render("./it/" + page, { type_util: session.typeUtil, obj: obj })
+            })
     } else {
         res.redirect("/")
     }
-})
+}
 
 // Get Inventaire ecran
 routeExp.route('/inventaireEcran').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaire-ecran.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "actif/inventaire-ecran.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+    //     res.render("./it/actif/inventaire-ecran.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire clavier
 routeExp.route('/inventaireClavier').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaire-clavier.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+
+    var page = "actif/inventaire-clavier.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+    //     res.render("./it/actif/inventaire-clavier.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire souris
 routeExp.route('/inventaireSouris').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaire-souris.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "actif/inventaire-souris.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+    //     res.render("./it/actif/inventaire-souris.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire phone
 routeExp.route('/inventairePhone').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/actif/inventaire-phone.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "actif/inventaire-phone.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+    //     res.render("./it/actif/inventaire-phone.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 
@@ -140,58 +179,68 @@ routeExp.route('/inventairePhone').get(async function (req, res) {
 //Inventaire uc
 routeExp.route('/inventaire-inact-uc').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaireUC.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaireUC.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+    //     res.render("./it/inactif/inventaireUC.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 // Get Inventaire ecran
 routeExp.route('/inventaire-inact-ecran').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaire-ecran.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaire-ecran.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+    //     res.render("./it/inactif/inventaire-ecran.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire clavier
 routeExp.route('/inventaire-inact-clavier').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaire-clavier.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaire-clavier.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+    //     res.render("./it/inactif/inventaire-clavier.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire souris
 routeExp.route('/inventaire-inact-souris').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaire-souris.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaire-souris.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+    //     res.render("./it/inactif/inventaire-souris.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 //Inventaire phone
 routeExp.route('/inventaire-inact-phone').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
-        res.render("./it/inactif/inventaire-phone.html", { type_util: session.typeUtil })
-    } else {
-        res.redirect("/")
-    }
+    var page = "inactif/inventaire-phone.html"
+    await nombreIn(page, session, res)
+    // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+    //     res.render("./it/inactif/inventaire-phone.html", { type_util: session.typeUtil })
+    // } else {
+    //     res.redirect("/")
+    // }
 })
 
 // all instruction
 routeExp.route('/instruction').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -221,6 +270,7 @@ routeExp.route('/instruction').get(async function (req, res) {
 routeExp.route('/addInventaire').post(async function (req, res) {
     var actif = req.body.actif
     var name = req.body.name
+    var nomPoste = req.body.nomPoste
     var type = req.body.type
     var localisation = req.body.localisation
     var departement = req.body.departement
@@ -232,6 +282,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     var diskDur = req.body.diskDur
     var capacite = req.body.capacite
     var cleWin = req.body.cleWin
+    var cleWinOriginal = req.body.cleWinOriginal
     var resolution = req.body.resolution
     var portHdmi = req.body.portHdmi
     var portVga = req.body.portVga
@@ -246,10 +297,11 @@ routeExp.route('/addInventaire').post(async function (req, res) {
     var antivirus = req.body.antivirus
     var vpn = req.body.vpn
     var usb = req.body.usb
+    var versionWin = req.body.versionWin
     var commentaire = req.body.commentaire
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -263,24 +315,26 @@ routeExp.route('/addInventaire').post(async function (req, res) {
                     localisation == "" && departement == "" && equipement == "" && numSerie == "" &&
                     marque == "" && processeur == "" && ram == "" && diskDur == "" && capacite == "" && cleWin == "" && resolution == "" &&
                     portHdmi == "false" && portVga == "false" && portDvi == "false" && portUsb == "false" && portPci == "false" && imei1 == "" && imei2 == "" &&
-                    chargeur == "false" && cable == "false" && housse == "false" && antivirus == "" && vpn == "" && usb == "" && commentaire == "") {
+                    chargeur == "false" && cable == "false" && housse == "false" && antivirus == "" && vpn == "" && usb == "" && commentaire == ""
+                    && versionWin == "" && nomPoste == "") {
                     res.send('error')
                 } else {
                     var newMat = {
-                        actif: actif,
+                        actif: actif, nomPoste: nomPoste,
                         name: name, type: type,
                         localisation: localisation, departement: departement,
                         equipement: equipement, numSerie: numSerie,
                         marque: marque, processeur: processeur,
                         ram: ram, diskDur: diskDur,
                         capacite: capacite, cleWin: cleWin,
+                        cleWinOriginal: cleWinOriginal,
                         resolution: resolution,
                         portHdmi: portHdmi, portVga: portVga, portDvi: portDvi,
                         portUsb: portUsb, portPci: portPci,
                         imei1: imei1, imei2: imei2,
                         chargeur: chargeur, cable: cable, housse: housse,
                         antivirus: antivirus,
-                        vpn: vpn, nbUsb: usb, commentaire: commentaire
+                        vpn: vpn, nbUsb: usb, versionWin: versionWin, commentaire: commentaire
                     }
                     var mat = await InventaireModel(newMat).save()
                     //console.log("addInventaire", mat);
@@ -293,10 +347,11 @@ routeExp.route('/addInventaire').post(async function (req, res) {
 })
 
 //GET DATA inventaire ACTIF
-//invetiaire UC
+//invetaire UC
 routeExp.route('/allUCActifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //console.log("allUcActif");
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -306,17 +361,18 @@ routeExp.route('/allUCActifInventaire').get(async function (req, res) {
                 }
             )
             .then(async () => {
-                var allInv = await InventaireModel.find({ name: "uc", actif: true })
+                var allInv = await InventaireModel.find({ name: "uc", actif: true })//, commentaire: "commentaire" })
                 res.send(allInv)
             })
     } else {
         res.redirect("/")
     }
 })
+
 // Get all Material in inventary Ecran
 routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -339,7 +395,7 @@ routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
 // Get all Material in inventary Clavier
 routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -360,7 +416,7 @@ routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
 // Get all Material in inventary souris
 routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -381,7 +437,7 @@ routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
 // Get all Material in inventary phone
 routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -403,7 +459,7 @@ routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
 //invetiaire UC inactif
 routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -423,7 +479,7 @@ routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary Ecran
 routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -445,7 +501,7 @@ routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary Clavier
 routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -466,7 +522,7 @@ routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary souris
 routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -487,7 +543,7 @@ routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
 // Get all Material in inventary phone
 routeExp.route('/allPhoneInactifInventaire').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -512,7 +568,7 @@ routeExp.route('/getInventaire').post(async function (req, res) {
     var codeM = req.body.code
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -537,7 +593,7 @@ routeExp.route('/getInstruction').post(async function (req, res) {
     var name = req.body.name
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -561,7 +617,6 @@ routeExp.route('/getInstruction').post(async function (req, res) {
 //Update Material
 routeExp.route('/updateInvent').post(async function (req, res) {
     var session = req.session
-    //console.log("req.body.actif;", req.body.actifUpdat);
     var actifUpdat = req.body.actifUpdat;
     var nameMatUpd = req.body.nameMatUpd;
     var typeUpdat = req.body.typeUpdat;
@@ -575,6 +630,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var diskDurUpdat = req.body.diskDurUpdat;
     var capaciteUpdat = req.body.capaciteUpdat;
     var cleWinUpdat = req.body.cleWinUpdat;
+    var cleWinOriginalUpdat = req.body.cleWinOriginalUpdat;
     var resolutionUpdat = req.body.resolutionUpdat;
     var antivirusUpdat = req.body.antivirusUpdat;
     var vpnUpdat = req.body.vpnUpdat;
@@ -589,8 +645,11 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var chargeurUpdat = req.body.chargeurUpdat;
     var cableUpdat = req.body.cableUpdat;
     var housseUpdat = req.body.housseUpdat;
+    var versionWinUpdat = req.body.versionWinUpdat;
     var commentaireUpdat = req.body.commentaireUpdat;
+    var nomPosteUpdat = req.body.nomPosteUpdat;
 
+    var nomPosteA = req.body.nomPosteA;
     var portHdmiA = req.body.portHdmiA;
     var portVgaA = req.body.portVgaA;
     var portDviA = req.body.portDviA;
@@ -618,13 +677,15 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     var vpnA = req.body.vpnA;
     var nbreUsbA = req.body.nbreUsbA
     var actifA = req.body.actifA;
+    var versionWinA = req.body.versionWinA;
     var commentaireA = req.body.commentaireA;
+    var id = req.body.id
 
-    console.log("portDviA", portDviA);
-    console.log("portDviUpdat", portDviUpdat);
+    // console.log("versionWinA", versionWinA);
+    // console.log("versionWinAUpdat", versionWinUpdat);
     //console.log("nombreInventA ", nombreInventA, " nameInventA ", nameInventA);
     //console.log("session", session);
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -635,42 +696,51 @@ routeExp.route('/updateInvent').post(async function (req, res) {
             )
             .then(async () => {
 
-                // console.log("actifA = ", actifA);
-                // console.log("nameMatA = ", nameMatA);
-                // console.log("typeA = ", typeA);
-                // console.log("localisationA = ", localisationA);
-                // console.log("departementA = ", departementA);
-                // console.log("equipementA = ", equipementA);
-                // console.log("numSerieA = ", numSerieA);
-                // console.log("marqueA = ", marqueA);
+                // console.log("actif = ", actifUpdat);
+                // console.log("name = ", nameMatUpd);
+                // console.log("typeA = ", typeUpdat);
+                // console.log("localisationA = ", localisationUpdat);
+                // console.log("departementA = ", departementUpdat);
+                // console.log("equipementA = ", equipementUpdat);
+                // console.log("numSerieA = ", numSerieUpdat);
+                // console.log("marqueA = ", marqueUpdat);
+
+                // console.log("processeurA = ", processeurUpdat);
+                // console.log("ramA = ", ramUpdat);
+                // console.log("diskDurA = ", diskDurUpdat);
+                // console.log("capaciteA = ", capaciteUpdat);
+                // console.log("cleWinA = ", cleWinUpdat);
+                // console.log("antivirusA = ", antivirusUpdat);
+                // console.log("vpnA = ", vpnUpdat);
+                // console.log("nbreUsbA = ", usbUpdat);
+                // console.log("versionWinA = ", versionWinUpdat);
+                // console.log("commentaireA = ", commentaireA);
+
+
                 // console.log("resolutionA = ", resolutionA);
                 // console.log("portHdmiA = ", portHdmiA);
                 // console.log("portVgaA = ", portVgaA);
 
+                var getInvet = await InventaireModel.findById({
+                    _id: id
+                })
+                // console.log("getInve", getInvet);
+                // console.log("id", actifUpdat);
                 var updat
-                if (nameMatA == "uc") {
+                if (getInvet.name == "uc") {
+
+                    //console.log("getInve", getInvet);
+
+                    // updat = await InventaireModel.findOne({
+                    //     _id: id
+                    // })
+                    // console.log("updat", updat);
                     updat = await InventaireModel.findOneAndUpdate({
-                        actif: actifA,
-                        name: nameMatA,
-                        type: typeA,
-                        localisation: localisationA,
-                        departement: departementA,
-                        equipement: equipementA,
-                        numSerie: numSerieA,
-                        marque: marqueA,
-                        processeur: processeurA,
-                        ram: ramA,
-                        diskDur: diskDurA,
-                        capacite: capaciteA,
-                        cleWin: cleWinA,
-                        antivirus: antivirusA,
-                        vpn: vpnA,
-                        nbUsb: nbreUsbA,
-                        commentaire: commentaireA
+                        _id: id
                     },
                         {
                             actif: actifUpdat,
-                            name: nameMatUpd,
+                            name: nameMatUpd, nomPoste: nomPosteUpdat,
                             type: typeUpdat,
                             localisation: localisationUpdat,
                             departement: departementUpdat,
@@ -682,76 +752,66 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                             diskDur: diskDurUpdat,
                             capacite: capaciteUpdat,
                             cleWin: cleWinUpdat,
+                            cleWinOriginal: cleWinOriginalUpdat,
                             antivirus: antivirusUpdat,
                             vpn: vpnUpdat,
                             nbUsb: usbUpdat,
+                            versionWin: versionWinUpdat,
                             commentaire: commentaireUpdat
                         })
+                    // if (getInvet.actif == actifUpdat && nameMatUpd == nameMatA && typeUpdat == typeA
+                    //     && localisationA == localisationUpdat && departementA == departementUpdat
+                    //     && equipementA == equipementUpdat && numSerieUpdat == numSerieA &&
+                    //     marqueUpdat == marqueA
+                    //     && processeurA == processeurUpdat && ramA == ramUpdat
+                    //     && diskDurA == diskDurUpdat && capaciteA == capaciteUpdat &&
+                    //     cleWinA == cleWinUpdat
+                    //     && antivirusA == antivirusUpdat && vpnA == vpnUpdat
+                    //     && nbreUsbA == usbUpdat && commentaireA == commentaireUpdat &&
+                    //     versionWinA == versionWinUpdat) {
 
-                    if (actifA == actifUpdat && nameMatUpd == nameMatA && typeUpdat == typeA
-                        && localisationA == localisationUpdat && departementA == departementUpdat
-                        && equipementA == equipementUpdat && numSerieUpdat == numSerieA &&
-                        marqueUpdat == marqueA
-                        && processeurA == processeurUpdat && ramA == ramUpdat
-                        && diskDurA == diskDurUpdat && capaciteA == capaciteUpdat &&
-                        cleWinA == cleWinUpdat
-                        && antivirusA == antivirusUpdat && vpnA == vpnUpdat
-                        && nbreUsbA == usbUpdat && commentaireA == commentaireUpdat) {
-
-                    } else {
-                        var historique = {
-                            user: session.name,
-                            model: "Inventaire",
-                            crud: "Modification",
-                            date: new Date(),
-                            old: {
-                                actif: actifA,
-                                nameMat: nameMatA,
-                                type: typeA,
-                                localisation: localisationA,
-                                departement: departementA,
-                                equipement: equipementA,
-                                numSerie: numSerieA,
-                                marque: marqueA,
-                                processeur: processeurA, ram: ramA,
-                                diskDur: diskDurA, capacite: capaciteA,
-                                cleWin: cleWinA, antivirus: antivirusA,
-                                vpn: vpnA, nbreUsb: nbreUsbA,
-                                commentaire: commentaireA
-                            },
-                            new: {
-                                actif: actifUpdat,
-                                nameMat: nameMatUpd,
-                                type: typeUpdat,
-                                localisation: localisationUpdat,
-                                departement: departementUpdat,
-                                equipement: equipementUpdat,
-                                numSerie: numSerieUpdat,
-                                marque: marqueUpdat,
-                                processeur: processeurUpdat, ram: ramUpdat,
-                                diskDur: diskDurUpdat, capacite: capaciteUpdat,
-                                cleWin: cleWinUpdat, antivirus: antivirusUpdat,
-                                vpn: vpnUpdat, nbreUsb: usbUpdat, commentaire: commentaireUpdat
-                            }
-                        }
-                        var historie = await HistoriqueModel(historique).save()
-                        //console.log("historique", historie);
-                    }
-                } else if (nameMatA == "ecran") {
+                    // } else {
+                    //     var historique = {
+                    //         user: session.name,
+                    //         model: "Inventaire",
+                    //         crud: "Modification",
+                    //         date: new Date(),
+                    //         old: {
+                    //             actif: actifA,
+                    //             nameMat: nameMatA,
+                    //             type: typeA,
+                    //             localisation: localisationA,
+                    //             departement: departementA,
+                    //             equipement: equipementA,
+                    //             numSerie: numSerieA,
+                    //             marque: marqueA,
+                    //             processeur: processeurA, ram: ramA,
+                    //             diskDur: diskDurA, capacite: capaciteA,
+                    //             cleWin: cleWinA, antivirus: antivirusA,
+                    //             vpn: vpnA, nbreUsb: nbreUsbA,
+                    //             commentaire: commentaireA
+                    //         },
+                    //         new: {
+                    //             actif: actifUpdat,
+                    //             nameMat: nameMatUpd,
+                    //             type: typeUpdat,
+                    //             localisation: localisationUpdat,
+                    //             departement: departementUpdat,
+                    //             equipement: equipementUpdat,
+                    //             numSerie: numSerieUpdat,
+                    //             marque: marqueUpdat,
+                    //             processeur: processeurUpdat, ram: ramUpdat,
+                    //             diskDur: diskDurUpdat, capacite: capaciteUpdat,
+                    //             cleWin: cleWinUpdat, antivirus: antivirusUpdat,
+                    //             vpn: vpnUpdat, nbreUsb: usbUpdat, commentaire: commentaireUpdat
+                    //         }
+                    //     }
+                    //     var historie = await HistoriqueModel(historique).save()
+                    //     // console.log("historique", historie);
+                    // }
+                } else if (getInvet.name == "ecran") {
                     updat = await InventaireModel.findOneAndUpdate({
-                        actif: actifA,
-                        name: nameMatA,
-                        type: typeA,
-                        localisation: localisationA,
-                        departement: departementA,
-                        equipement: equipementA,
-                        numSerie: numSerieA,
-                        marque: marqueA,
-                        resolution: resolutionA,
-                        portHdmi: portHdmiA,
-                        portVga: portVgaA,
-                        portDviA: portDviA,
-                        commentaire: commentaireA
+                        _id: id
                     },
                         {
                             actif: actifUpdat,
@@ -818,7 +878,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         var historie = await HistoriqueModel(historique).save()
                         //console.log("historique", historie);
                     }
-                } else if (nameMatA == "souris" || nameMatA == "clavier") {
+                } else if (getInvet.name == "souris" || getInvet.name == "clavier") {
                     updat = await InventaireModel.findOneAndUpdate({
                         actif: actifA,
                         name: nameMatA,
@@ -889,7 +949,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         var historie = await HistoriqueModel(historique).save()
                         //console.log("historique", historie);
                     }
-                } else if (nameMatA == "phone") {
+                } else if (getInvet.name == "phone") {
 
                     updat = await InventaireModel.findOneAndUpdate({
                         actif: actifA,
@@ -925,7 +985,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
                         imei1A == imei1Updat && imei2A == imei2Updat &&
                         chargeurA == chargeurUpdat && cableA == cableUpdat &&
                         housseA == housseUpdat
-                        && commentaireA == commentaireUpda) {
+                        && commentaireA == commentaireUpdat) {
 
                     } else {
                         var historique = {
@@ -973,12 +1033,36 @@ routeExp.route('/updateInvent').post(async function (req, res) {
     }
 })
 
+routeExp.route('/getOneInventaire').post(async function (req, res) {
+
+    var id = req.body.id;
+    var session = req.session
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+                var invent = await InventaireModel.findOne({ _id: id })
+
+                // console.log("codeM", invent);
+                res.send(invent)
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
 //delete material in inventary
 routeExp.route('/deleteMaterial').post(async function (req, res) {
     var actifD = req.body.actifD;
     var session = req.session
 
-
+    var id = req.body.id
     var nameD = req.body.nameD
     var typeD = req.body.typeD; var localisationD = req.body.localisationD;
     var departementD = req.body.departementD
@@ -995,7 +1079,7 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
     var antivirusD = req.body.antivirusD; var vpnD = req.body.vpnD
     var nbUsbD = req.body.nbUsbD
 
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1005,7 +1089,7 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
                 }
             )
             .then(async () => {
-
+                var deleted = await InventaireModel.findByIdAndDelete({ _id: id })
                 // console.log("actifD", actifD);
                 // console.log("nameD", nameD);
                 // console.log("typeD", typeD);
@@ -1022,178 +1106,180 @@ routeExp.route('/deleteMaterial').post(async function (req, res) {
                 // console.log("antivirusD", antivirusD);
                 // console.log("vpnD", vpnD);
                 // console.log("nbUsbD", nbUsbD);
-                if (nameD == "uc") {
-                    getMat = await InventaireModel.findOne({
-                        actif: actifD,
-                        name: nameD,
-                        type: typeD,
-                        localisation: localisationD,
-                        departement: departementD,
-                        equipement: equipementD,
-                        numSerie: numSerieD,
-                        marque: marqueD,
-                        processeur: processeurD,
-                        ram: ramD,
-                        diskDur: diskDurD,
-                        capacite: capaciteD,
-                        cleWin: cleWinD,
-                        antivirus: antivirusD,
-                        vpn: vpnD,
-                        nbUsb: nbUsbD
-                    })
-                    //console.log("getMat", getMat);
-                    deleteM = await InventaireModel.findOneAndDelete({
-                        actif: actifD,
-                        name: nameD,
-                        type: typeD,
-                        localisation: localisationD,
-                        departement: departementD,
-                        equipement: equipementD,
-                        numSerie: numSerieD,
-                        marque: marqueD,
-                        processeur: processeurD,
-                        ram: ramD,
-                        diskDur: diskDurD,
-                        capacite: capaciteD,
-                        cleWin: cleWinD,
-                        antivirus: antivirusD,
-                        vpn: vpnD,
-                        nbUsb: nbUsbD
-                    })
 
-                    //console.log("delet", deleteM);
 
-                    var historique = {
-                        user: session.name,
-                        model: "Inventaire",
-                        crud: "Delete",
-                        date: new Date(),
-                        old: {
-                            actif: actifD,
-                            nameMat: nameD,
-                            type: typeD,
-                            localisation: localisationD,
-                            departement: departementD,
-                            equipement: equipementD,
-                            numSerie: numSerieD,
-                            marque: marqueD,
-                            processeur: processeurD, ram: ramD,
-                            diskDur: diskDurD, capacite: capaciteD,
-                            cleWin: cleWinD, antivirus: antivirusD,
-                            vpn: vpnD, nbreUsb: nbUsbD
-                        },
-                    }
+                // if (nameD == "uc") {
+                //     getMat = await InventaireModel.findOne({
+                //         actif: actifD,
+                //         name: nameD,
+                //         type: typeD,
+                //         localisation: localisationD,
+                //         departement: departementD,
+                //         equipement: equipementD,
+                //         numSerie: numSerieD,
+                //         marque: marqueD,
+                //         processeur: processeurD,
+                //         ram: ramD,
+                //         diskDur: diskDurD,
+                //         capacite: capaciteD,
+                //         cleWin: cleWinD,
+                //         antivirus: antivirusD,
+                //         vpn: vpnD,
+                //         nbUsb: nbUsbD
+                //     })
+                //     //console.log("getMat", getMat);
+                //     deleteM = await InventaireModel.findOneAndDelete({
+                //         actif: actifD,
+                //         name: nameD,
+                //         type: typeD,
+                //         localisation: localisationD,
+                //         departement: departementD,
+                //         equipement: equipementD,
+                //         numSerie: numSerieD,
+                //         marque: marqueD,
+                //         processeur: processeurD,
+                //         ram: ramD,
+                //         diskDur: diskDurD,
+                //         capacite: capaciteD,
+                //         cleWin: cleWinD,
+                //         antivirus: antivirusD,
+                //         vpn: vpnD,
+                //         nbUsb: nbUsbD
+                //     })
 
-                    var historie = await HistoriqueModel(historique).save()
-                    //console.log("historique", historie);
+                //     //console.log("delet", deleteM);
 
-                } else if (nameD == "ecran") {
-                    updat = await InventaireModel.findOneAndDelete({
-                        actif: actifD,
-                        name: nameD,
-                        type: typeD,
-                        localisation: localisationD,
-                        departement: departementD,
-                        equipement: equipementD,
-                        numSerie: numSerieD,
-                        marque: marqueD,
-                        resolution: resolutionD,
-                        portHdmi: portHdmiD,
-                        portVga: portVgaD
-                    })
-                    console.log("updat", updat);
+                //     var historique = {
+                //         user: session.name,
+                //         model: "Inventaire",
+                //         crud: "Delete",
+                //         date: new Date(),
+                //         old: {
+                //             actif: actifD,
+                //             nameMat: nameD,
+                //             type: typeD,
+                //             localisation: localisationD,
+                //             departement: departementD,
+                //             equipement: equipementD,
+                //             numSerie: numSerieD,
+                //             marque: marqueD,
+                //             processeur: processeurD, ram: ramD,
+                //             diskDur: diskDurD, capacite: capaciteD,
+                //             cleWin: cleWinD, antivirus: antivirusD,
+                //             vpn: vpnD, nbreUsb: nbUsbD
+                //         },
+                //     }
 
-                    var historique = {
-                        user: session.name,
-                        model: "Inventaire",
-                        crud: "Delete",
-                        date: new Date(),
-                        old: {
-                            actif: actifD,
-                            nameMat: nameD,
-                            type: typeD,
-                            localisation: localisationD,
-                            departement: departementD,
-                            equipement: equipementD,
-                            numSerie: numSerieD,
-                            marque: marqueD,
-                            resolution: resolutionD,
-                            portHdmi: portHdmiD,
-                            portVga: portVgaD
-                        }
-                    }
-                    var historie = await HistoriqueModel(historique).save()
-                    //console.log("historique", historie);
+                //     var historie = await HistoriqueModel(historique).save()
+                //     //console.log("historique", historie);
 
-                } else if (nameD == "souris" || nameD == "clavier") {
-                    updat = await InventaireModel.findOneAndDelete({
-                        actif: actifD,
-                        name: nameD,
-                        type: typeD,
-                        localisation: localisationD,
-                        departement: departementD,
-                        equipement: equipementD,
-                        numSerie: numSerieD,
-                        marque: marqueD,
-                        portUsb: portUsbD,
-                        portPci: portPciD,
-                    })
-                    var historique = {
-                        user: session.name,
-                        model: "Inventaire",
-                        crud: "Delete",
-                        date: new Date(),
-                        old: {
-                            "actif": actifD,
-                            "nom": nameD,
-                            "type": typeD,
-                            "localisation": localisationD,
-                            "département": departementD,
-                            "équipement": equipementD,
-                            "num Serie": numSerieD,
-                            "marque": marqueD,
-                            "port Usb": portUsbD, "port Pci": portPciD,
-                        },
-                    }
-                    var historie = await HistoriqueModel(historique).save()
-                    //console.log("historique", historie);
+                // } else if (nameD == "ecran") {
+                //     updat = await InventaireModel.findOneAndDelete({
+                //         actif: actifD,
+                //         name: nameD,
+                //         type: typeD,
+                //         localisation: localisationD,
+                //         departement: departementD,
+                //         equipement: equipementD,
+                //         numSerie: numSerieD,
+                //         marque: marqueD,
+                //         resolution: resolutionD,
+                //         portHdmi: portHdmiD,
+                //         portVga: portVgaD
+                //     })
+                //     console.log("updat", updat);
 
-                } else if (nameD == "phone") {
+                //     var historique = {
+                //         user: session.name,
+                //         model: "Inventaire",
+                //         crud: "Delete",
+                //         date: new Date(),
+                //         old: {
+                //             actif: actifD,
+                //             nameMat: nameD,
+                //             type: typeD,
+                //             localisation: localisationD,
+                //             departement: departementD,
+                //             equipement: equipementD,
+                //             numSerie: numSerieD,
+                //             marque: marqueD,
+                //             resolution: resolutionD,
+                //             portHdmi: portHdmiD,
+                //             portVga: portVgaD
+                //         }
+                //     }
+                //     var historie = await HistoriqueModel(historique).save()
+                //     //console.log("historique", historie);
 
-                    updat = await InventaireModel.findOneAndDelete({
-                        actif: actifD,
-                        name: nameD,
-                        type: typeD,
-                        numSerie: numSerieD,
-                        marque: marqueD,
-                        imei1: imei1D,
-                        imei2: imei2D,
-                        chargeur: chargeurD,
-                        cable: cableD,
-                        housse: housseD,
-                    })
+                // } else if (nameD == "souris" || nameD == "clavier") {
+                //     updat = await InventaireModel.findOneAndDelete({
+                //         actif: actifD,
+                //         name: nameD,
+                //         type: typeD,
+                //         localisation: localisationD,
+                //         departement: departementD,
+                //         equipement: equipementD,
+                //         numSerie: numSerieD,
+                //         marque: marqueD,
+                //         portUsb: portUsbD,
+                //         portPci: portPciD,
+                //     })
+                //     var historique = {
+                //         user: session.name,
+                //         model: "Inventaire",
+                //         crud: "Delete",
+                //         date: new Date(),
+                //         old: {
+                //             "actif": actifD,
+                //             "nom": nameD,
+                //             "type": typeD,
+                //             "localisation": localisationD,
+                //             "département": departementD,
+                //             "équipement": equipementD,
+                //             "num Serie": numSerieD,
+                //             "marque": marqueD,
+                //             "port Usb": portUsbD, "port Pci": portPciD,
+                //         },
+                //     }
+                //     var historie = await HistoriqueModel(historique).save()
+                //     //console.log("historique", historie);
 
-                    var historique = {
-                        user: session.name,
-                        model: "Inventaire",
-                        date: new Date(),
-                        crud: "Delete",
-                        old: {
-                            "actif": actifD,
-                            "nom": nameD,
-                            "type": typeD,
-                            "num Serie": numSerieD,
-                            "marque": marqueD,
-                            "IMEI 1": imei1D, "IMEI 2": imei2D,
-                            "chargeur": chargeurD,
-                            "cable": cableD,
-                            "housse": housseD,
-                        }
-                    }
-                    var historie = await HistoriqueModel(historique).save()
-                    //console.log("historique", historie);
+                // } else if (nameD == "phone") {
 
-                }
+                //     updat = await InventaireModel.findOneAndDelete({
+                //         actif: actifD,
+                //         name: nameD,
+                //         type: typeD,
+                //         numSerie: numSerieD,
+                //         marque: marqueD,
+                //         imei1: imei1D,
+                //         imei2: imei2D,
+                //         chargeur: chargeurD,
+                //         cable: cableD,
+                //         housse: housseD,
+                //     })
+
+                //     var historique = {
+                //         user: session.name,
+                //         model: "Inventaire",
+                //         date: new Date(),
+                //         crud: "Delete",
+                //         old: {
+                //             "actif": actifD,
+                //             "nom": nameD,
+                //             "type": typeD,
+                //             "num Serie": numSerieD,
+                //             "marque": marqueD,
+                //             "IMEI 1": imei1D, "IMEI 2": imei2D,
+                //             "chargeur": chargeurD,
+                //             "cable": cableD,
+                //             "housse": housseD,
+                //         }
+                //     }
+                //     var historie = await HistoriqueModel(historique).save()
+                //     //console.log("historique", historie);
+
+                // }
                 // console.log("delet", delet);
                 res.send("success")
             })
@@ -1209,7 +1295,7 @@ routeExp.route('/addInstruction').post(async function (req, res) {
     var instruct = req.body.instruct;
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1252,7 +1338,7 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
     var instructOld = req.body.instructOld;
 
     var session = req.session
-    if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1301,7 +1387,7 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
     var session = req.session
 
     //console.log("name", name);
-    //if (session.typeUtil == "IT" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1324,7 +1410,7 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
 routeExp.route('/allTL').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1347,7 +1433,7 @@ routeExp.route('/allTL').get(async function (req, res) {
 routeExp.route('/allUser').get(async function (req, res) {
 
     var session = req.session
-    //if (session.typeUtil == "Operation") {
+    //if (session.typeUtil == "Admin") {
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1370,7 +1456,7 @@ routeExp.route('/allUser').get(async function (req, res) {
 routeExp.route('/allHistory').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1400,7 +1486,7 @@ routeExp.route('/addTL').post(async function (req, res) {
     // console.log("rq.b o ", req.body);
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1452,7 +1538,7 @@ routeExp.route("/updateTl").post(async function (req, res) {
     // console.log("weaknessesA ", weaknessesA, " strengthsA ", strengthsA);
     // console.log("nameA ", nameA, " mcode ", oldMCode);
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1504,7 +1590,7 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
     var mcode = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1526,7 +1612,7 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
 //get planning
 routeExp.route('/planning').get(async function (req, res) {
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
         mongoose
             .connect(
@@ -1577,7 +1663,7 @@ routeExp.route('/planning/:project/:shift').get(async function (req, res) {
     var project = req.params.project;
     // console.log("shift", shift);
     // console.log("project", project);
-    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
     mongoose
         .connect(
@@ -1603,7 +1689,7 @@ routeExp.route('/planning/:project/:shift').get(async function (req, res) {
 routeExp.route('/agent').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1627,7 +1713,7 @@ routeExp.route('/agent').get(async function (req, res) {
 routeExp.route('/evaluationAgent').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1663,7 +1749,7 @@ routeExp.route('/addAgent').post(async function (req, res) {
     var session = req.session
 
     //console.log("project", project);
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1709,7 +1795,7 @@ routeExp.route('/addEvaluationAgent').post(async function (req, res) {
     var comportement = req.body.comportement
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1743,7 +1829,7 @@ routeExp.route('/addEvaluationAgent').post(async function (req, res) {
 routeExp.route('/allAgent').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1767,7 +1853,7 @@ routeExp.route('/allAgent').get(async function (req, res) {
 routeExp.route('/allEvaluationAgent').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1810,7 +1896,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
 
     //console.log("req.body", req.body);
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1890,7 +1976,7 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
     // console.log("name", name);
     // console.log("mcodeN", mcodeN);
     //console.log("req.body", req.body);
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1946,7 +2032,7 @@ routeExp.route("/deleteAgent").post(async function (req, res) {
     var mcode = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1970,7 +2056,7 @@ routeExp.route("/deleteEvalAgent").post(async function (req, res) {
     var mcode = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1992,7 +2078,7 @@ routeExp.route("/deleteEvalAgent").post(async function (req, res) {
 routeExp.route('/user').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2016,7 +2102,7 @@ routeExp.route('/user').get(async function (req, res) {
 routeExp.route('/historique').get(async function (req, res) {
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2080,7 +2166,7 @@ routeExp.route("/signup").post(async function (req, res) {
     var email = req.body.email;
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2129,7 +2215,7 @@ routeExp.route("/getOneAgent").post(async function (req, res) {
 
     var session = req.session
     //console.log("mcode1", req.body.mcode1);
-    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2153,7 +2239,7 @@ routeExp.route("/getOneTL").post(async function (req, res) {
     var mcode1 = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2187,7 +2273,7 @@ routeExp.route('/updateUser').post(async function (req, res) {
     var session = req.session
 
     //console.log("mcode", req.body);
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2237,7 +2323,7 @@ routeExp.route("/getOneUser").post(async function (req, res) {
     var mcode1 = req.body.mcode
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2261,7 +2347,7 @@ routeExp.route("/deleteUser").post(async function (req, res) {
     var mcode = req.body.mcode;
 
     var session = req.session
-    if (session.typeUtil == "Operation") {
+    if (session.typeUtil == "Admin") {
         mongoose
             .connect(
                 "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -2906,7 +2992,7 @@ routeExp.route("/deletePlanning").post(async function (req, res) {
 routeExp.route('/projet').get(async function (req, res) {
 
     var session = req.session
-    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
     mongoose
         .connect(
@@ -2930,7 +3016,7 @@ routeExp.route('/projet').get(async function (req, res) {
 routeExp.route('/reporting').get(async function (req, res) {
 
     var session = req.session
-    //if (session.typeUtil == "TL" || session.typeUtil == "Operation") {
+    //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
     mongoose
         .connect(
@@ -3479,7 +3565,7 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
 routeExp.route('/listecours').get(async function (req, res) {
 
     var session = req.session
-    //if (session.typeUtil == "Operation") {
+    //if (session.typeUtil == "Admin") {
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -3706,6 +3792,60 @@ routeExp.route("/backup_databas").get(async function (req, res) {
             }
         });
 })
+
+
+// routeExp.route("/addProjetexcel").get(async function (req, res) {
+//     mongoose
+//         .connect(
+//             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+//             {
+//                 useUnifiedTopology: true,
+//                 UseNewUrlParser: true,
+//             }
+//         )
+//         .then(async () => {
+//             const parseExcel = (filename) => {
+
+//                 const excelData = XLSX.readFile(filename);
+
+//                 return Object.keys(excelData.Sheets).map(name => ({
+//                     name,
+//                     data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
+//                 }));
+//             };
+
+//             var liste = []
+//             parseExcel("./Vue/assets/listeCours.xlsx").forEach(element => {
+//                 liste.push(element.data)
+//             });
+
+//             console.log("liste", liste[0].length);
+//             //var membre = await CGNModel.find({ $or: [{ cours: "Problem solving and decision making" }] })
+//             // for (let i = 0; i < liste[0].length; i++) {
+//             //     var elementliste = liste[0][i];
+//             //     for (let j = 0; j < membre.length; j++) {
+//             //         const elementmb = membre[j];
+//             //         //console.log(j, "elementmb", elementmb.name);
+//             //         if (elementmb.name == undefined && (elementliste.EMAIL == elementmb.username)) {
+//             //             var cgn = await CGNModel.findOneAndUpdate({ username: elementmb.username, cours: "Problem solving and decision making" }, { name: elementliste.NOM })
+
+//             //         }
+//             //     }
+//             // }
+//             for (let i = 0; i < liste[0].length; i++) {
+//                 const element = liste[0][i].UP;
+//                 var c = {
+//                     name: element
+//                 }
+//                 console.log("lement", c);
+//                 var proj = await ProjectModel(c).save()
+//                 console.log("proj", proj);
+//             }
+//             res.send("finish")
+
+//         });
+// })
+
 module.exports = routeExp
 
 

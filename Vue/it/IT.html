@@ -85,15 +85,16 @@
     <div id="right-panel" class="right-panel">
         <!-- Header-->
         <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
-        <header id="header" class="header">
-            <div class="top-left">
+        
+        <header class="rightpanel-header">
+            <div class="left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/"><img src="../images/logo.jpg" alt="Logo"></a>
-                    <a class="navbar-brand hidden" href="/"><img src="../images/logo 2.jpg" alt="Logo"></a>
+                    <a class="navbar-brand" href=""><img src="../images/logo.jpg" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href=""><img src="../images/logo 2.jpg" alt="Logo"></a>
                     <!--a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a-->
                 </div>
             </div>
-            <div class="top-right">
+            <div class="right">
                 <div class="header-menu">
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
@@ -115,7 +116,6 @@
                             <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </header>
@@ -126,68 +126,52 @@
         <!-- Animated -->
         <div class="animated fadeIn">
             <!-- Widgets  -->
-            <div class="row card-lef">
-                <div class="col-lg-4 col-md-6">
-                    <a href="/">
-                        <div class="card cardClick">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-5">
-                                        <i class="fa-sharp fa-solid fa-house"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text filtre">Accueil</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <a href="/inventaire">
-                        <div class="card cardClick">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-3">
+            <div class="menu-card">
+                <h1 class="text-center">IT PAGE</h1>
+                <div class="item-container card-lef">
+                    <div>
+                        <a href="/inventaire">
+                            <div class="item">
+                                <div class="item-icon">
+                                    <div class="stat-icon dib flat-color-1">
                                         <i class="menu-icon fa fa-tasks"></i>
                                     </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text filtre">Inventaire matériel</div>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="item-label">
+                                    <p>Inventaire matériel</p>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <a href="/instruction">
-                        <div class="card cardClick">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/instruction">
+                            <div class="item">
+                                <div class="item-icon">
                                     <div class="stat-icon dib flat-color-2">
-                                        <!-- <i class="menu-icon fa fa-pencil-square"></i> -->
                                         <i class="fa-sharp fa-solid fa-pen-to-square"></i>
                                     </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text filtre">Instruction intervention</div>
-                                            <!-- <div class="stat-heading">Opérations</div> -->
-                                            <!--div class="stat-text"><span class="count">3435</span></div>
-                                            <div class="stat-heading">Sales</div-->
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="item-label">
+                                    <p>Instruction intervention</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row card-lef">
+                <div class="col-12">
+                    <a href="/">
+                        <div class="home-link">
+                            <div class="home-link-content">
+                                <div class="stat-icon dib flat-color-5">
+                                    <i class="fa-sharp fa-solid fa-house"></i>
                                 </div>
                             </div>
                         </div>
                     </a>
                 </div>
-
-
             </div>
         </div>
     </div>

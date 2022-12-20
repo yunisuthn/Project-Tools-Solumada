@@ -89,15 +89,15 @@
     <div id="right-panel" class="right-panel">
         <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
         <!-- Header-->
-        <header id="header" class="header">
-            <div class="top-left">
+        <header id="header" class="rightpanel-header">
+            <div class="left">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/"><img src="../images/logo.jpg" alt="Logo"></a>
                     <a class="navbar-brand hidden" href=""><img src="../images/logo 2.jpg" alt="Logo"></a>
                     <!--a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a-->
                 </div>
             </div>
-            <div class="top-right">
+            <div class="right">
                 <div class="header-menu">
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
@@ -130,45 +130,33 @@
         <!-- Animated -->
         <div class="animated fadeIn">
             <!-- Widgets  -->
-            <div class="row card-lef">
-
-
-                <div class="col-lg-4 col-md-6">
-                    <a href="/">
-                        <div class="card cardClick">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-5">
-                                        <i class="fa-sharp fa-solid fa-house"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text filtre">Accueil</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <a href="/evaluationTL">
-                        <div class="card cardClick">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
+            <div class="menu-card">
+                <h1 class="text-center">Opérations page</h1>
+                <div class="item-container card-lef">
+                    <div>
+                        <a href="/evaluationTL">
+                            <div class="item">
+                                <div class="item-icon">
                                     <div class="stat-icon dib flat-color-3">
-                                        <!-- <i class="fa fa-solid fa-building"></i>                            -->
                                         <i class="fa fa-thin fa-book"></i>
                                     </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text filtre">Evaluation TL</div>
-                                            <!-- <div class="stat-heading">Opérations & Productions </div> -->
-                                            <!--div class="stat-text"><span class="count">349</span></div>
-                                            <div class="stat-heading">Templates</div-->
-                                        </div>
-                                    </div>
-
+                                </div>
+                                <div class="item-label">
+                                    <p>Evaluation TL</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row card-lef">
+                <div class="col-12">
+                    <a href="/">
+                        <div class="home-link">
+                            <div class="home-link-content">
+                                <div class="stat-icon dib flat-color-5">
+                                    <i class="fa-sharp fa-solid fa-house"></i>
                                 </div>
                             </div>
                         </div>

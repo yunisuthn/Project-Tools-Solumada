@@ -2791,7 +2791,6 @@ routeExp.route("/allPlannigView").get(async function (req, res) {
         }
     ])
         .then(user => {
-            //console.log("user");
             var newUs = []
             var allProjet = []
             for (let i = 0; i < user.length; i++) {

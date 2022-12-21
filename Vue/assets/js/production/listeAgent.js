@@ -137,10 +137,25 @@ var nameA = ""
 var usualName = ""
 var number = ""
 var shift = ""
-var project = ""
+var project = []
 var site = ""
 var quartier = ""
 var phon = ""
+
+var allProjet = []
+$.ajax({
+    url: "/getAllProjet",
+    method: "get",
+    dataType: 'json',
+    success: function (res) {
+        for (let r = 0; r < res.length; r++) {
+            const element = res[r];
+            allProjet.push(element.name)
+        }
+    }
+})
+
+//console.log("allProjet", allProjet);
 
 $(document).on('click', '.btnUpdateAgent', function () {
     //console.log("btnUpdateAgent");
@@ -150,7 +165,7 @@ $(document).on('click', '.btnUpdateAgent', function () {
     usualName = getCol.find('td:eq(1)').text()
     number = getCol.find('td:eq(3)').text()
     shift = getCol.find('td:eq(4)').text()
-    project = getCol.find('td:eq(5)').text()
+    //project = getCol.find('td:eq(5)').text()
     site = getCol.find('td:eq(6)').text()
     quartier = getCol.find('td:eq(7)').text()
     phon = getCol.find('td:eq(8)').text()
@@ -165,12 +180,30 @@ $(document).on('click', '.btnUpdateAgent', function () {
     $("#telUpdat").val(phon)
     $("#mcodeUpdat").val(mcode)
     // console.log("mcode", mcode);
-    // UserUpdat = {
-    //     name: $()
-    // }
+    var userUpdat = {
+        mcode: mcode
+    }
     $('#projectUpdat').val(null).trigger('change');
 
+    $.ajax({
+        url: "/getOneAgent",
+        method: "post",
+        data: userUpdat,
+        success: function (res) {
+            project = res.project
 
+            $('#projectUpdat').empty()
+            allProjet.forEach(agent => {
+                if (project.includes(agent)) {
+                    $('#projectUpdat').append(`<option value="${agent}" selected>${agent}</option>`)
+                } else {
+                    $('#projectUpdat').append(`<option value="${agent}" >${agent}</option>`)
+
+                }
+            })
+
+        }
+    })
 })
 
 //save update user

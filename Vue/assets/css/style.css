@@ -4561,3 +4561,145 @@ a[href="/"] > i[class*="fa-home"], a[href="/"] > svg[class*="fa-home"] {
 a[href="/"] > i[class*="fa-home"]:hover, a[href="/"] > svg[class*="fa-home"]:hover {
   color:rgb(65, 150, 89) !important;
 }
+
+.nav.nav-tabs.border-delete > li .dropdown-menu {
+  padding: 5px 20px !important;
+  animation: grow-height 1s forwards ease;
+  transform-origin: top;
+  transition: transform .5s ease;
+  opacity: 0;
+}
+@keyframes grow-height {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.nav.nav-tabs.border-delete > li .dropdown-menu > label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.nav.nav-tabs.border-delete > li .dropdown-menu > a {
+  font-size: 14px;
+}
+.nav-item.dropdown > a[id="getActif"] {
+  font-size: 20px !important;
+  border-radius: 5px !important;
+  padding: 10px !important;
+}
+.checkbox-interupt {
+  width: max-content;
+}
+.checkbox-interupt > input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 60px; height: 30px;
+  position: relative;
+  outline: none;
+  transition: .5s;
+  border-radius: 20px;
+  background-color: #eee;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.checkbox-interupt > input:checked[type="checkbox"] {
+  background-color: rgb(89, 142, 221);
+}
+
+.checkbox-interupt > input[type="checkbox"]::before {
+  content: '';
+  position: absolute;
+  width: 30px; height: 30px;
+  top: 0; left: 0;
+  background: #fff;
+  transform: scale(1, 1);
+  transition: .5s;
+  border-radius: 40px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-interupt > input:checked[type="checkbox"]::before {
+  left: 30px;
+}
+td.child > ul > li {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+li > span.dtr-title {
+  margin-right: 20px !important;
+  width: 200px;
+  color: #335570 !important;
+}
+table.datatable-responsive tr > th {
+  color: #335570 !important;
+}
+/*
+<div class="dataTables_paginate paging_simple_numbers" id="inventaireUCActifDataT_paginate">
+<a class="paginate_button previous disabled" aria-controls="inventaireUCActifDataT" data-dt-idx="0" tabindex="0" id="inventaireUCActifDataT_previous">Previous</a>
+<span>
+  <a class="paginate_button current" aria-controls="inventaireUCActifDataT" data-dt-idx="1" tabindex="0">1</a>
+  <a class="paginate_button " aria-controls="inventaireUCActifDataT" data-dt-idx="2" tabindex="0">2</a>
+  <span class="ellipsis">…</span>
+  <a class="paginate_button " aria-controls="inventaireUCActifDataT" data-dt-idx="6" tabindex="0">12</a>
+</span>
+<a class="paginate_button next" aria-controls="inventaireUCActifDataT" data-dt-idx="7" tabindex="0" id="inventaireUCActifDataT_next">Next</a></div>
+*/
+
+div.dataTables_paginate > .paginate_button{
+  padding: 8px 12px;
+  background-color: #fff;
+  border: 1px solid rgb(230, 230, 230);
+}
+div.dataTables_paginate > .paginate_button:hover {
+  color: #fff;
+  background-color: #000;
+}
+div.dataTables_paginate span > .paginate_button {
+  background-color: #fff;
+  border: 1px solid rgb(230, 230, 230);
+  min-width: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+div.dataTables_paginate span > .paginate_button.current {
+  background-color: #104175;
+  color: #fff;
+}
+
+table.table-fixed {
+  border: 1px solid rgb(197, 197, 197);
+  border-collapse: separate !important;
+  width: 100%;
+  margin: 0 !important;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: red;
+}
+
+.table-fixed th {
+  position: sticky !important;
+  z-index: 99;
+  top: -1px;
+  background-color: #6e8dc7;
+  color: white;
+}
+
+.table-wrapper {
+  max-height: 650px;
+  overflow-y: scroll;
+}
+.table-fixed th, .table-fixed td {
+  border: 1px solid rgb(228, 228, 228);
+  padding: 8px;
+  max-width: fit-content;
+}
+.outer-wrapper {
+  margin: 20px;
+}

@@ -185,24 +185,28 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="inventaireSourisInActifDataT" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom</th>
-                                            <th>Type</th>
-                                            <th>Localisation</th>
-                                            <th>N° Modèle</th>
-                                            <th>Num de Serie</th>
-                                            <th>Marque</th>
-                                            <th>Port USB</th>
-                                            <th>Port PCI</th>
-                                            <th>Commentaire</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="inventaireSourisInActifDataT" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nom</th>
+                                                    <th>Type</th>
+                                                    <th>Localisation</th>
+                                                    <th>N° Modèle</th>
+                                                    <th>Num de Serie</th>
+                                                    <th>Marque</th>
+                                                    <th>Port USB</th>
+                                                    <th>Port PCI</th>
+                                                    <th>Commentaire</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
 
-                                </table>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -212,7 +216,7 @@
             </div>
         </div><!-- .animated -->
 
-        <div class="modal fade" id="addInventaire" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+        <div class="modal fade show in" id="addInventaire" aria-hidden="true" style="display: none;" aria-labelledby="exampleModalToggleLabel"
             tabindex="-1">
 
             <div class="modal-dialog modal-lg">
@@ -223,16 +227,18 @@
                     <div class="modal-body">
                         <form id="updateUserLevel" method="post">
                             <div class="row form-group">
-                                <div class="col col-md-12">
+                                <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Actif</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="checkbox" id="actif" placeholder="" value="true" class="form-control">
+                                    <div class="checkbox-interupt">
+                                        <input type="checkbox" id="actif" value="true">
+                                    </div>
                                     <small id="" style="color: red; font-size: smaller; display: none;"></small>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col col-md-12">
+                                <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Nom</label>
                                 </div>
                                 <div class="col-12 col-md-9">
@@ -442,32 +448,48 @@
                                 <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Ports :</label>
                                 </div>
-                                <div class="col-12 col-md-4">
-                                    HDMI
-                                    <input type="checkbox" name="Mat" id="portHdmi" class="form-control" value="false">
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    VGA
-                                    <input type="checkbox" name="Mat" id="portVga" class="form-control">
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    DVI
-                                    <input type="checkbox" name="Mat" id="portDvi" class="form-control">
+                                <div class="col-12 col-md-9">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <span>HDMI</span>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="portHdmi" value="false">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <span>VGA</span>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="portVga">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <span>DVI</span>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="portDvi">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row form-group portsClavier">
                                 <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Ports :</label>
                                 </div>
-                                <div class="col-12 col-md-4">
-                                    USB
-                                    <input type="checkbox" name="Mat" id="portUsb" class="form-control">
-
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    PCI
-                                    <input type="checkbox" name="Mat" id="portPci" class="form-control">
-
+                                <div class="col col-md-9">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <span>USB</span>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="portUsb">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <span>PCI</span>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="portPci">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row form-group imei">
@@ -475,41 +497,44 @@
                                     <label for="name" class="form-control-label">IMEI :</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    IMEI 1
-                                    <input type="text" name="Mat" id="imei1" class="form-control">
-
-                                </div>
-                                <div class="col-12 col-md-9 ">
-                                    IMEI 2
-                                    <input type="text" name="Mat" id="imei2" class="form-control">
+                                    <div class="row">
+                                        <div class="col-12 col-md-9">
+                                            <span>IMEI 1</span>
+                                            <input type="text" name="Mat" id="imei1" class="form-control">
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <span>IMEI 2</span>
+                                            <input type="text" name="Mat" id="imei2" class="form-control">
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
                             <div class="row form-group chargeur-cable-housse">
-                                <div class="col col-md-2">
-                                    <label for="name" class="form-control-label">Chargeur</label>
+                                <div class="col col-md-3">
+                                    <label for="">Accessoires</label>
                                 </div>
-                                <div class="col-12 col-md-2">
-                                    <input type="checkbox" name="Mat" id="chargeur" class="form-control">
-
-                                </div>
-                                <!-- </div>
-                                                <div class="row form-group"> -->
-                                <div class="col col-md-2">
-                                    <label for="name" class="form-control-label">Câble</label>
-                                </div>
-                                <div class="col-12 col-md-2">
-                                    <input type="checkbox" name="Mat" id="cable" class="form-control">
-
-                                </div>
-                                <!-- </div>
-                                                <div class="row form-group"> -->
-                                <div class="col col-md-2">
-                                    <label for="name" class="form-control-label">Housse</label>
-                                </div>
-                                <div class="col-12 col-md-2">
-                                    <input type="checkbox" name="Mat" id="housse" class="form-control">
-
+                                <div class="col-12 col-md-9">
+                                    <div class="row">
+                                        <div class="col col-md-4">
+                                            <label for="name" class="form-control-label">Chargeur</label>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="chargeur">
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-4">
+                                            <label for="name" class="form-control-label">Câble</label>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="cable">
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-4">
+                                            <label for="name" class="form-control-label">Housse</label>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="housse">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row form-group versionWin">
@@ -551,20 +576,21 @@
                     <div class="modal-body">
                         <form id="updateUserLevel" method="post">
                             <div class="row form-group">
-                                <div class="col col-md-12">
+                                <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Actif</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="checkbox" id="actifUpdat" placeholder="" value="true"
-                                        class="form-control">
+                                    <div class="checkbox-interupt">
+                                        <input type="checkbox" id="actifUpdat" value="true">
+                                    </div>
                                     <small id="" style="color: red; font-size: smaller; display: none;"></small>
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col col-md-12">
+                                <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Nom</label>
                                 </div>
-                                <div class="col-12 col-md-9">
+                                <div class="col col-md-9">
                                     <select data-placeholder="Choisir un nom" class="form-control" id="nameMatUpdat"
                                         tabindex="1">
                                         <option value="" disabled selected>Choisir le nom</option>
@@ -595,10 +621,9 @@
                                 <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Types</label>
                                 </div>
-                                <div class="col-12 col-md-9">
+                                <div class="col col-md-9">
                                     <input type="text" name="Mat" id="typeUpdat" class="form-control">
                                 </div>
-
                             </div>
                             <div class="row form-group localisationUpdat">
                                 <div class="col col-md-3">
@@ -676,7 +701,6 @@
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <input type="text" name="Mat" id="ramUpdat" class="form-control">
-
                                 </div>
                             </div>
                             <div class="row form-group diskDurUpdat">
@@ -745,18 +769,27 @@
                                 <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Ports :</label>
                                 </div>
-                                <div class="col-12 col-md-4">
-                                    HDMI
-                                    <input type="checkbox" name="Mat" id="portHdmiUpdat" class="form-control"
-                                        value="false">
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    VGA
-                                    <input type="checkbox" name="Mat" id="portVgaUpdat" class="form-control">
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    DVI
-                                    <input type="checkbox" name="Mat" id="portDviUpdat" class="form-control">
+                                <div class="col-12 col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span>HDMI</span>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="portHdmiUpdat" value="false">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span>VGA</span>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="portVgaUpdat">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span>DVI</span>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="portDviUpdat">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row form-group portUsbUpdat">
@@ -764,14 +797,16 @@
                                     <label for="name" class="form-control-label">Ports :</label>
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    USB
-                                    <input type="checkbox" name="Mat" id="portUsbUpdat" class="form-control">
-
+                                    <span>USB</span>
+                                    <div class="checkbox-interupt">
+                                        <input type="checkbox" name="Mat" id="portUsbUpdat">
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    PCI
-                                    <input type="checkbox" name="Mat" id="portPciUpdat" class="form-control">
-
+                                    <span>PCI</span>
+                                    <div class="checkbox-interupt">
+                                        <input type="checkbox" name="Mat" id="portPciUpdat">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row form-group imeiUpdat">
@@ -779,41 +814,44 @@
                                     <label for="name" class="form-control-label">IMEI :</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    IMEI 1
-                                    <input type="text" name="Mat" id="imei1Updat" class="form-control">
-
-                                </div>
-                                <div class="col-12 col-md-9 ">
-                                    IMEI 2
-                                    <input type="text" name="Mat" id="imei2Updat" class="form-control">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <span>IMEI 1</span>
+                                            <input type="text" name="Mat" id="imei1Updat" class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <span>IMEI 2</span>
+                                            <input type="text" name="Mat" id="imei2Updat" class="form-control">
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
                             <div class="row form-group chargeur-cable-housseUpdat">
-                                <div class="col col-md-2">
-                                    <label for="name" class="form-control-label">Chargeur</label>
+                                <div class="col col-md-3">
+                                    <label for="">Accessoires</label>
                                 </div>
-                                <div class="col-12 col-md-2">
-                                    <input type="checkbox" name="Mat" id="chargeurUpdat" class="form-control">
-
-                                </div>
-                                <!-- </div>
-                                                                                        <div class="row form-group"> -->
-                                <div class="col col-md-2">
-                                    <label for="name" class="form-control-label">Câble</label>
-                                </div>
-                                <div class="col-12 col-md-2">
-                                    <input type="checkbox" name="Mat" id="cableUpdat" class="form-control">
-
-                                </div>
-                                <!-- </div>
-                                                                                        <div class="row form-group"> -->
-                                <div class="col col-md-2">
-                                    <label for="name" class="form-control-label">Housse</label>
-                                </div>
-                                <div class="col-12 col-md-2">
-                                    <input type="checkbox" name="Mat" id="housseUpdat" class="form-control">
-
+                                <div class="col-12 col-md-9">
+                                    <div class="row">
+                                        <div class="col col-md-4">
+                                            <label for="name" class="form-control-label">Chargeur</label>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="chargeurUpdat">
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-4">
+                                            <label for="name" class="form-control-label">Câble</label>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="cableUpdat">
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-4">
+                                            <label for="name" class="form-control-label">Housse</label>
+                                            <div class="checkbox-interupt">
+                                                <input type="checkbox" name="Mat" id="housseUpdat">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row form-group commentaireUpdat">

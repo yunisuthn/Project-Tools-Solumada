@@ -1623,31 +1623,11 @@ routeExp.route('/planning').get(async function (req, res) {
                 }
             )
             .then(async () => {
-
-                var planning = await PlanningModel.aggregate([
-                    {
-                        $sort: {
-                            project: 1
-                        }
-                    },
-                    {
-                        $group: {
-                            _id: "$project",
-
-                        }
-                    },
-                    {
-                        $project: {
-                            _id: 0,
-                            project: "$_id",
-
-                        }
-                    }
-                ])
+                var allPlaning = await PlanningModel.find()
                 var agent = await AgentModel.find()
 
                 var plan = await ProjectModel.find()
-                //console.log("plan", plan);
+                console.log("allPlaning", allPlaning);
                 res.render("./production/planning.html", { type_util: session.typeUtil, plan: plan, agent: agent })
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
@@ -1707,6 +1687,43 @@ routeExp.route('/agent').get(async function (req, res) {
     } else {
         res.redirect("/")
     }
+})
+
+//get agence
+routeExp.route("/getOneAgent").post(async function (req, res) {
+    var mcode = req.body.mcode
+    console.log("log", mcode);
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var agent = await AgentModel.findOne({ mcode: mcode })
+            console.log("agent", agent);
+            res.send(agent)
+        })
+})
+
+//get all project
+routeExp.route("/getAllProjet").get(async function (req, res) {
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true
+            }
+        )
+        .then(async () => {
+            var projet = await ProjectModel.find()
+            console.log("projet", projet);
+            res.send(projet)
+        })
 })
 
 //Evaluation agent
@@ -2774,7 +2791,6 @@ routeExp.route("/allPlannigView").get(async function (req, res) {
         }
     ])
         .then(user => {
-            //console.log("user");
             var newUs = []
             var allProjet = []
             for (let i = 0; i < user.length; i++) {
@@ -2813,6 +2829,70 @@ routeExp.route("/allPlannigView").get(async function (req, res) {
             res.send(newUs)
         })
 });
+
+// get year
+routeExp.route("/getAnnee").get(async function (req, res) {
+    var anne = await leaveModel.find()
+    var getAnne = []
+    console.log("anne", anne);
+    for (let i = 0; i < anne.length; i++) {
+        const element = anne[i];
+        var date = new Date(element.date_start)
+        // console.log("date", date.getFullYear());
+        if (!getAnne.includes(date.getFullYear())) {
+            getAnne.push(date.getFullYear())
+        }
+        var date1 = new Date(element.date_end)
+        //console.log("date", date1.getFullYear());
+        if (!getAnne.includes(date1.getFullYear())) {
+            getAnne.push(date1.getFullYear())
+        }
+
+    }
+    console.log("element", getAnne);
+    res.send("ok")
+})
+
+
+// get month
+routeExp.route("/getMonth").get(async function (req, res) {
+    var anne = await leaveModel.find()
+    var getAnne = []
+    //console.log("anne", anne);
+    for (let i = 0; i < anne.length; i++) {
+        const element = anne[i];
+
+        var date = new Date(element.date_start)
+        // console.log("date", date.getFullYear());
+        var dateStart = date.toLocaleString('default', { month: 'long' }) + " " + date.getFullYear()
+        //console.log("newDate", dateStart);
+        if (!getAnne.includes(dateStart)) {
+            getAnne.push(dateStart)
+        }
+
+        var date1 = new Date(element.date_end)
+        var dateEnd = date1.toLocaleString('default', { month: 'long' }) + " " + date1.getFullYear()
+        if (!getAnne.includes(dateEnd)) {
+            getAnne.push(dateEnd)
+        }
+
+    }
+    const monthOrder = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+    let sortYearMonth = (a, b) => {
+        let monthA = monthOrder.indexOf(a.slice(0, 3))
+        let yearA = a.slice(3, 6)
+        let monthB = monthOrder.indexOf(b.slice(0, 3))
+        let yearB = b.slice(3, 6)
+        return (`${yearA}-${monthA}` < `${yearB}-${monthB}`) ? -1 : (`${yearA}-${monthA}` > `${yearB}-${monthB}`) ? 1 : 0
+    }
+
+    let sortedMonths = getAnne.sort(sortYearMonth)
+
+
+    console.log("indices", sortedMonths);
+    res.send("ok")
+})
 
 // routeExp.route("/allPlannigView").get(async function (req, res) {
 //     mongoose
@@ -3794,69 +3874,69 @@ routeExp.route("/backup_databas").get(async function (req, res) {
 })
 
 
-routeExp.route("/addUserexcel").get(async function (req, res) {
-    mongoose
-        .connect(
-            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-            {
-                useUnifiedTopology: true,
-                UseNewUrlParser: true,
-            }
-        )
-        .then(async () => {
-            const parseExcel = (filename) => {
-                const excelData = XLSX.readFile(filename);
-                return Object.keys(excelData.Sheets).map(name => ({
-                    name,
-                    data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
-                }));
-            };
+// routeExp.route("/addUserexcel").get(async function (req, res) {
+//     mongoose
+//         .connect(
+//             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+//             {
+//                 useUnifiedTopology: true,
+//                 UseNewUrlParser: true,
+//             }
+//         )
+//         .then(async () => {
+//             const parseExcel = (filename) => {
+//                 const excelData = XLSX.readFile(filename);
+//                 return Object.keys(excelData.Sheets).map(name => ({
+//                     name,
+//                     data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
+//                 }));
+//             };
 
-            var liste = []
-            parseExcel("./Vue/assets/ListeAgents.xlsx").forEach(element => {
-                //console.log("elemetn", element);
-                liste.push(element.data)
-            });
+//             var liste = []
+//             parseExcel("./Vue/assets/ListeAgents.xlsx").forEach(element => {
+//                 //console.log("elemetn", element);
+//                 liste.push(element.data)
+//             });
 
-            //console.log("liste", liste[0]);
-            //var membre = await CGNModel.find({ $or: [{ cours: "Problem solving and decision making" }] })
-            // for (let i = 0; i < liste[0].length; i++) {
-            //     var elementliste = liste[0][i];
-            //     for (let j = 0; j < membre.length; j++) {
-            //         const elementmb = membre[j];
-            //         //console.log(j, "elementmb", elementmb.name);
-            //         if (elementmb.name == undefined && (elementliste.EMAIL == elementmb.username)) {
-            //             var cgn = await CGNModel.findOneAndUpdate({ username: elementmb.username, cours: "Problem solving and decision making" }, { name: elementliste.NOM })
+//             //console.log("liste", liste[0]);
+//             //var membre = await CGNModel.find({ $or: [{ cours: "Problem solving and decision making" }] })
+//             // for (let i = 0; i < liste[0].length; i++) {
+//             //     var elementliste = liste[0][i];
+//             //     for (let j = 0; j < membre.length; j++) {
+//             //         const elementmb = membre[j];
+//             //         //console.log(j, "elementmb", elementmb.name);
+//             //         if (elementmb.name == undefined && (elementliste.EMAIL == elementmb.username)) {
+//             //             var cgn = await CGNModel.findOneAndUpdate({ username: elementmb.username, cours: "Problem solving and decision making" }, { name: elementliste.NOM })
 
-            //         }
-            //     }
-            // }
-            //console.log("liste.length", liste[0].length);
-            for (let i = 0; i < liste[0].length; i++) {
-                const agent = liste[0][i];
-                //console.log("agent", liste[0][i]);
+//             //         }
+//             //     }
+//             // }
+//             //console.log("liste.length", liste[0].length);
+//             for (let i = 0; i < liste[0].length; i++) {
+//                 const agent = liste[0][i];
+//                 //console.log("agent", liste[0][i]);
 
-                var projet = agent.Projet.split("/")
-                console.log("projet", projet);
-                var c = {
-                    name: agent.NomComplet,
-                    usualName: agent.NomUsuel,
-                    mcode: agent.MCode,
-                    number: agent.Numbering,
-                    shift: agent.Shift,
-                    project: projet,
-                    site: agent.Site,
-                    quartier: agent.Quartier,
-                    tel: agent.Phon
-                }
-                console.log("lement", c);
-                var proj = await AgentModel(c).save()
-                // console.log("proj", proj);
-            }
-            res.send("finish")
+//                 var projet = agent.Projet.split("/")
+//                 console.log("projet", projet);
+//                 var c = {
+//                     name: agent.NomComplet,
+//                     usualName: agent.NomUsuel,
+//                     mcode: agent.MCode,
+//                     number: agent.Numbering,
+//                     shift: agent.Shift,
+//                     project: projet,
+//                     site: agent.Site,
+//                     quartier: agent.Quartier,
+//                     tel: agent.Phon
+//                 }
+//                 console.log("lement", c);
+//                 var proj = await AgentModel(c).save()
+//                 // console.log("proj", proj);
+//             }
+//             res.send("finish")
 
-        });
-})
+//         });
+// })
 
 
 // routeExp.route("/addProjetexcel").get(async function (req, res) {

@@ -1,10 +1,14 @@
 var planningDataTable = $("#planningDataTable").DataTable({
-    "ajax": { "url": "/allPlanning", "dataSrc": "" },
+    "ajax": { "url": "/allPlannigView", "dataSrc": "" },
     "columns": [
         //{ "data": "shift" },
         { "data": "nom" },
         { "data": "m_code" },
-        //{ "data": "project" },
+        { "data": "users[0].shift" },
+        { "data": "users[0].project" },
+        {
+            "data": "users[0].remaining_leave"
+        },
         {
             "data": "date_start"
         },
@@ -216,6 +220,7 @@ function planningView() {
             });
             google.setOnLoadCallback(drawVisualization);
 
+            //console.log("resp", resp);
             function drawVisualization() {
                 var dashboard = new google.visualization.Dashboard(
                     document.getElementById('dashboard'));
@@ -299,13 +304,13 @@ function planningView() {
                     }
                 };
                 var data = new google.visualization.DataTable();
-                // data.addColumn({
-                //     type: 'string',
-                //     id: 'Shift'
-                // });
                 data.addColumn({
                     type: 'string',
-                    id: 'nom'
+                    id: 'MCode'
+                });
+                data.addColumn({
+                    type: 'string',
+                    id: 'Nom'
                 })
 
                 data.addColumn({
@@ -317,7 +322,10 @@ function planningView() {
                     id: 'date_end'
                 });
                 resp.forEach(el => {
-                    data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                    console.log("el", el);
+                    data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+
+                    //data.addRows([[el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                 });
                 dashboard.bind(control, chart);
 
@@ -339,13 +347,17 @@ function planningView() {
 
 }
 
-
 $(document).on('change', '#filterProj', function () {
     var project = $('#filterProj').val();
     var shift = $('#filterShift').val();
     $('#filterProj').val(project);
     $('#filterShift').val(shift);
+
+    // console.log("project", project);
+    // console.log("shift", shift);
+
     if (project == "all" && shift == "all") {
+        //console.log('project == "all" && shift == "all"');
         $.ajax({
             url: "/allPlannigView",
             method: "get",
@@ -427,7 +439,8 @@ $(document).on('change', '#filterProj', function () {
                     })
 
                     resp.forEach(el => {
-                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                     })
 
                     dashboard.bind(control, chart);
@@ -435,7 +448,111 @@ $(document).on('change', '#filterProj', function () {
                 }
             }
         })
+    } else if (project !== "all" && shift !== "all") {
+        console.log('project !== "all" && shift !== "all" || shift !== "all" && project !== "all"');
+        // console.log("project !== && shift !== ", project, shift);
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 985,
+                                    'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 900,
+                            // 'height': 600,
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        // console.log("el===>", el.users[0].project.includes(project));
+                        // if ((el.users[0].shift == shift && el.users[0].project == project) || (el.users[0].project.includes(project) && el.users[0].project == project)) {
+                        if (el.users[0].shift == shift && el.users[0].project.includes(project)) {
+                            // console.log("shift", shift);
+                            // console.log("project", project);
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+
+
+                    dashboard.draw(data)
+                }
+            }
+        })
     } else if (project == 'all' && shift !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
         $.ajax({
             url: '/allPlannigView',
             method: 'get',
@@ -519,9 +636,9 @@ $(document).on('change', '#filterProj', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.shift == shift) {
-                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-
+                        if (el.users[0].shift == shift) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
@@ -531,7 +648,7 @@ $(document).on('change', '#filterProj', function () {
             }
         })
     } else if (project !== "all" && shift == "all") {
-
+        // console.log('project !== "all" && shift == "all"');
         $.ajax({
             url: '/allPlannigView',
             method: 'get',
@@ -613,10 +730,14 @@ $(document).on('change', '#filterProj', function () {
                         id: 'End'
                     })
 
+                    //      console.log("resp", resp);
                     resp.forEach(el => {
-                        if (el.project == project) {
-                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-
+                        //console.log("el", el.users[0].project);
+                        // if ((el.users[0].project == project) || (el.users[0].project.includes(project))) {
+                        if (el.users[0].project.includes(project)) {
+                            //console.log("el.project", el.project);
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
@@ -626,110 +747,109 @@ $(document).on('change', '#filterProj', function () {
             }
         })
 
-    } else if (project !== "all" && shift !== "all") {
-
-        $.ajax({
-            url: '/allPlannigView',
-            method: 'get',
-            success: function (resp) {
-                google.load('visualization', '1', {
-                    'packages': ['controls']
-                });
-                google.setOnLoadCallback(drawVisualization);
-                function drawVisualization() {
-                    var dashboard = new google.visualization.Dashboard(
-                        document.getElementById('dashboard')
-                    );
-                    var control = new google.visualization.ControlWrapper({
-                        'controlType': 'ChartRangeFilter',
-                        'containerId': 'control',
-                        'options': {
-                            'filterColumnIndex': 2,
-                            'ui': {
-                                'chartType': 'LineChart',
-                                'chartOptions': {
-                                    'width': 985,
-                                    'height': 70,
-                                    'chartArea': {
-                                        width: '80%',
-                                        height: '80%'
-                                    },
-                                    'hAxis': {
-                                        'baselineColor': 'none'
-                                    }
-                                },
-                                'chartView': {
-                                    'columns': [2, 3]
-                                }
-                            }
-                        }
-
-                    })
-
-
-
-
-                    var chart = new google.visualization.ChartWrapper({
-                        'chartType': 'Timeline',
-                        'containerId': 'chart',
-                        'options': {
-                            // 'width': 900,
-                            // 'height': 600,
-                            // 'width': 1100,
-                            // 'height': 400,
-                            // 'chartArea': {
-                            //     width: '80%',
-                            //     height: '80%'
-                            // },
-
-                            'height': 350,
-                            'backgroundColor': '#ffd'
-                        },
-                        'view': {
-                            'columns': [0, 1, 2, 3]
-                        }
-                    });
-                    var data = new google.visualization.DataTable();
-                    data.addColumn({
-                        type: 'string',
-                        id: 'Shift'
-                    });
-
-                    data.addColumn({
-                        type: 'string',
-                        id: 'Nom'
-                    });
-
-
-                    data.addColumn({
-                        type: 'date',
-                        id: 'Start'
-                    })
-
-                    data.addColumn({
-                        type: 'date',
-                        id: 'End'
-                    })
-
-                    resp.forEach(el => {
-                        if (el.shift == shift && el.project == project) {
-                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-
-                        }
-                    })
-
-                    dashboard.bind(control, chart);
-
-
-                    dashboard.draw(data)
-                }
-            }
-        })
     }
-    else {
-        console.log("else non data");
-        $("#error").append("<h3>Error</h3>")
-    }
+    // else { //if (project !== "all" && shift !== "all") {
+    //     console.log("****====***");
+    //     //console.log("project !== && shift !== ", project, shift);
+    //     // $.ajax({
+    //     //     url: '/allPlannigView',
+    //     //     method: 'get',
+    //     //     success: function (resp) {
+    //     //         google.load('visualization', '1', {
+    //     //             'packages': ['controls']
+    //     //         });
+    //     //         google.setOnLoadCallback(drawVisualization);
+    //     //         function drawVisualization() {
+    //     //             var dashboard = new google.visualization.Dashboard(
+    //     //                 document.getElementById('dashboard')
+    //     //             );
+    //     //             var control = new google.visualization.ControlWrapper({
+    //     //                 'controlType': 'ChartRangeFilter',
+    //     //                 'containerId': 'control',
+    //     //                 'options': {
+    //     //                     'filterColumnIndex': 2,
+    //     //                     'ui': {
+    //     //                         'chartType': 'LineChart',
+    //     //                         'chartOptions': {
+    //     //                             'width': 985,
+    //     //                             'height': 70,
+    //     //                             'chartArea': {
+    //     //                                 width: '80%',
+    //     //                                 height: '80%'
+    //     //                             },
+    //     //                             'hAxis': {
+    //     //                                 'baselineColor': 'none'
+    //     //                             }
+    //     //                         },
+    //     //                         'chartView': {
+    //     //                             'columns': [2, 3]
+    //     //                         }
+    //     //                     }
+    //     //                 }
+
+    //     //             })
+
+
+    //     //             var chart = new google.visualization.ChartWrapper({
+    //     //                 'chartType': 'Timeline',
+    //     //                 'containerId': 'chart',
+    //     //                 'options': {
+    //     //                     // 'width': 900,
+    //     //                     // 'height': 600,
+    //     //                     // 'width': 1100,
+    //     //                     // 'height': 400,
+    //     //                     // 'chartArea': {
+    //     //                     //     width: '80%',
+    //     //                     //     height: '80%'
+    //     //                     // },
+
+    //     //                     'height': 350,
+    //     //                     'backgroundColor': '#ffd'
+    //     //                 },
+    //     //                 'view': {
+    //     //                     'columns': [0, 1, 2, 3]
+    //     //                 }
+    //     //             });
+    //     //             var data = new google.visualization.DataTable();
+    //     //             data.addColumn({
+    //     //                 type: 'string',
+    //     //                 id: 'Shift'
+    //     //             });
+
+    //     //             data.addColumn({
+    //     //                 type: 'string',
+    //     //                 id: 'Nom'
+    //     //             });
+
+
+    //     //             data.addColumn({
+    //     //                 type: 'date',
+    //     //                 id: 'Start'
+    //     //             })
+
+    //     //             data.addColumn({
+    //     //                 type: 'date',
+    //     //                 id: 'End'
+    //     //             })
+
+    //     //             resp.forEach(el => {
+    //     //                 console.log("el", el.users[0].project);
+    //     //                 if (el.users[0].shift == shift && el.users[0].project == project) {
+    //     //                     console.log("shift", shift);
+    //     //                     console.log("project", project);
+    //     //                     //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+    //     //                     data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+    //     //                 }
+    //     //             })
+
+    //     //             dashboard.bind(control, chart);
+
+
+    //     //             dashboard.draw(data)
+    //     //         }
+    //     //     }
+    //     // })
+    // }
 })
 
 
@@ -823,7 +943,8 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     resp.forEach(el => {
-                        data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                     })
 
                     dashboard.bind(control, chart);
@@ -913,9 +1034,9 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.shift == shift) {
-                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-
+                        if (el.users[0].shift == shift) {
+                            // data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
@@ -1005,9 +1126,9 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.project == project) {
-                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-
+                        if (el.users[0].project.includes(project)) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
@@ -1100,8 +1221,10 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.shift == shift && el.project == project) {
-                            data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        //if ((el.users[0].shift == shift && el.users[0].project == project) || (el.users[0].project.includes(project) && el.users[0].project == project)) {
+                        if (el.users[0].project.includes(project) && el.users[0].shift == shift) {
+                            // data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 

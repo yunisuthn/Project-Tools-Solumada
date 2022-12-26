@@ -322,7 +322,6 @@ function planningView() {
                     id: 'date_end'
                 });
                 resp.forEach(el => {
-                    console.log("el", el);
                     data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
 
                     //data.addRows([[el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
@@ -350,13 +349,13 @@ function planningView() {
 $(document).on('change', '#filterProj', function () {
     var project = $('#filterProj').val();
     var shift = $('#filterShift').val();
+    var date = $('#filterAnnee').val();
     $('#filterProj').val(project);
     $('#filterShift').val(shift);
+    $('#filterAnnee').val(date)
 
-    // console.log("project", project);
-    // console.log("shift", shift);
-
-    if (project == "all" && shift == "all") {
+    var valMonth = date.split('-')
+    if (project == "all" && shift == "all" && date == "all") {
         //console.log('project == "all" && shift == "all"');
         $.ajax({
             url: "/allPlannigView",
@@ -439,6 +438,7 @@ $(document).on('change', '#filterProj', function () {
                     })
 
                     resp.forEach(el => {
+                        //console.log("new Date(el.date_start)", new Date(el.date_start));
                         //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                         data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                     })
@@ -448,8 +448,8 @@ $(document).on('change', '#filterProj', function () {
                 }
             }
         })
-    } else if (project !== "all" && shift !== "all") {
-        console.log('project !== "all" && shift !== "all" || shift !== "all" && project !== "all"');
+    } else if (project !== "all" && shift !== "all" && date !== "all") {
+        //console.log('project !== "all" && shift !== "all" || shift !== "all" && project !== "all"');
         // console.log("project !== && shift !== ", project, shift);
         $.ajax({
             url: '/allPlannigView',
@@ -535,9 +535,12 @@ $(document).on('change', '#filterProj', function () {
                     resp.forEach(el => {
                         // console.log("el===>", el.users[0].project.includes(project));
                         // if ((el.users[0].shift == shift && el.users[0].project == project) || (el.users[0].project.includes(project) && el.users[0].project == project)) {
-                        if (el.users[0].shift == shift && el.users[0].project.includes(project)) {
-                            // console.log("shift", shift);
-                            // console.log("project", project);
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year &&
+                            el.users[0].shift == shift && el.users[0].project.includes(project)) {
                             //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                             data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
@@ -550,7 +553,7 @@ $(document).on('change', '#filterProj', function () {
                 }
             }
         })
-    } else if (project == 'all' && shift !== 'all') {
+    } else if (project !== 'all' && shift == 'all' && date == 'all') {
         //console.log("project == 'all' && shift !== 'all'");
         // console.log("project == shift !==");
         $.ajax({
@@ -636,7 +639,7 @@ $(document).on('change', '#filterProj', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.users[0].shift == shift) {
+                        if (el.users[0].project.includes(project)) {
                             //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                             data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
@@ -647,8 +650,9 @@ $(document).on('change', '#filterProj', function () {
                 }
             }
         })
-    } else if (project !== "all" && shift == "all") {
-        // console.log('project !== "all" && shift == "all"');
+    } else if (project == 'all' && shift !== 'all' && date == 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
         $.ajax({
             url: '/allPlannigView',
             method: 'get',
@@ -669,8 +673,10 @@ $(document).on('change', '#filterProj', function () {
                             'ui': {
                                 'chartType': 'LineChart',
                                 'chartOptions': {
-                                    'width': 985,
-                                    'height': 70,
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
                                     'chartArea': {
                                         width: '80%',
                                         height: '80%'
@@ -691,15 +697,14 @@ $(document).on('change', '#filterProj', function () {
                         'chartType': 'Timeline',
                         'containerId': 'chart',
                         'options': {
-                            // 'width': 900,
-                            // 'height': 600,
                             // 'width': 1100,
                             // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
                             // 'chartArea': {
                             //     width: '80%',
                             //     height: '80%'
                             // },
-
 
                             'height': 350,
                             'backgroundColor': '#ffd'
@@ -730,12 +735,8 @@ $(document).on('change', '#filterProj', function () {
                         id: 'End'
                     })
 
-                    //      console.log("resp", resp);
                     resp.forEach(el => {
-                        //console.log("el", el.users[0].project);
-                        // if ((el.users[0].project == project) || (el.users[0].project.includes(project))) {
-                        if (el.users[0].project.includes(project)) {
-                            //console.log("el.project", el.project);
+                        if (el.users[0].shift.includes(shift)) {
                             //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                             data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
@@ -746,119 +747,424 @@ $(document).on('change', '#filterProj', function () {
                 }
             }
         })
+    } else if (project == 'all' && shift == 'all' && date !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
 
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project !== 'all' && shift !== 'all' && date == 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+
+                        if (el.users[0].project.includes(project) && el.users[0].shift == shift) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project !== 'all' && shift == 'all' && date !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year && el.users[0].project.includes(project)) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project == 'all' && shift !== 'all' && date !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year && el.users[0].shift == shift) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
     }
-    // else { //if (project !== "all" && shift !== "all") {
-    //     console.log("****====***");
-    //     //console.log("project !== && shift !== ", project, shift);
-    //     // $.ajax({
-    //     //     url: '/allPlannigView',
-    //     //     method: 'get',
-    //     //     success: function (resp) {
-    //     //         google.load('visualization', '1', {
-    //     //             'packages': ['controls']
-    //     //         });
-    //     //         google.setOnLoadCallback(drawVisualization);
-    //     //         function drawVisualization() {
-    //     //             var dashboard = new google.visualization.Dashboard(
-    //     //                 document.getElementById('dashboard')
-    //     //             );
-    //     //             var control = new google.visualization.ControlWrapper({
-    //     //                 'controlType': 'ChartRangeFilter',
-    //     //                 'containerId': 'control',
-    //     //                 'options': {
-    //     //                     'filterColumnIndex': 2,
-    //     //                     'ui': {
-    //     //                         'chartType': 'LineChart',
-    //     //                         'chartOptions': {
-    //     //                             'width': 985,
-    //     //                             'height': 70,
-    //     //                             'chartArea': {
-    //     //                                 width: '80%',
-    //     //                                 height: '80%'
-    //     //                             },
-    //     //                             'hAxis': {
-    //     //                                 'baselineColor': 'none'
-    //     //                             }
-    //     //                         },
-    //     //                         'chartView': {
-    //     //                             'columns': [2, 3]
-    //     //                         }
-    //     //                     }
-    //     //                 }
-
-    //     //             })
 
 
-    //     //             var chart = new google.visualization.ChartWrapper({
-    //     //                 'chartType': 'Timeline',
-    //     //                 'containerId': 'chart',
-    //     //                 'options': {
-    //     //                     // 'width': 900,
-    //     //                     // 'height': 600,
-    //     //                     // 'width': 1100,
-    //     //                     // 'height': 400,
-    //     //                     // 'chartArea': {
-    //     //                     //     width: '80%',
-    //     //                     //     height: '80%'
-    //     //                     // },
-
-    //     //                     'height': 350,
-    //     //                     'backgroundColor': '#ffd'
-    //     //                 },
-    //     //                 'view': {
-    //     //                     'columns': [0, 1, 2, 3]
-    //     //                 }
-    //     //             });
-    //     //             var data = new google.visualization.DataTable();
-    //     //             data.addColumn({
-    //     //                 type: 'string',
-    //     //                 id: 'Shift'
-    //     //             });
-
-    //     //             data.addColumn({
-    //     //                 type: 'string',
-    //     //                 id: 'Nom'
-    //     //             });
-
-
-    //     //             data.addColumn({
-    //     //                 type: 'date',
-    //     //                 id: 'Start'
-    //     //             })
-
-    //     //             data.addColumn({
-    //     //                 type: 'date',
-    //     //                 id: 'End'
-    //     //             })
-
-    //     //             resp.forEach(el => {
-    //     //                 console.log("el", el.users[0].project);
-    //     //                 if (el.users[0].shift == shift && el.users[0].project == project) {
-    //     //                     console.log("shift", shift);
-    //     //                     console.log("project", project);
-    //     //                     //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
-    //     //                     data.addRows([[el.users[0].last_name + ' | ' + el.users[0].shift + ' | ' + el.users[0].project + ' | ' + el.users[0].remaining_leave, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
-    //     //                 }
-    //     //             })
-
-    //     //             dashboard.bind(control, chart);
-
-
-    //     //             dashboard.draw(data)
-    //     //         }
-    //     //     }
-    //     // })
-    // }
 })
 
 
 $(document).on('change', '#filterShift', function () {
     var project = $('#filterProj').val();
     var shift = $('#filterShift').val();
+    var date = $('#filterAnnee').val();
     $('#filterProj').val(project);
     $('#filterShift').val(shift);
-    if (project == "all" && shift == "all") {
+    $('#filterAnnee').val(date)
+
+    var valMonth = date.split('-')
+    if (project == "all" && shift == "all" && date == "all") {
+        //console.log('project == "all" && shift == "all"');
         $.ajax({
             url: "/allPlannigView",
             method: "get",
@@ -881,7 +1187,6 @@ $(document).on('change', '#filterShift', function () {
                             'ui': {
                                 'chartType': 'LineChart',
                                 'chartOptions': {
-
                                     'width': 985,
                                     'height': 70,
                                     'chartArea': {
@@ -903,10 +1208,8 @@ $(document).on('change', '#filterShift', function () {
                         'chartType': 'Timeline',
                         'containerId': 'chart',
                         'options': {
-
                             // 'width': 1100,
                             // 'height': 400,
-
                             // // 'width': 900,
                             // // 'height': 600,
                             // 'chartArea': {
@@ -943,6 +1246,7 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     resp.forEach(el => {
+                        //console.log("new Date(el.date_start)", new Date(el.date_start));
                         //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                         data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                     })
@@ -952,7 +1256,9 @@ $(document).on('change', '#filterShift', function () {
                 }
             }
         })
-    } else if (project == 'all' && shift !== 'all') {
+    } else if (project !== "all" && shift !== "all" && date !== "all") {
+        //console.log('project !== "all" && shift !== "all" || shift !== "all" && project !== "all"');
+        // console.log("project !== && shift !== ", project, shift);
         $.ajax({
             url: '/allPlannigView',
             method: 'get',
@@ -990,6 +1296,7 @@ $(document).on('change', '#filterShift', function () {
                         }
 
                     })
+
 
                     var chart = new google.visualization.ChartWrapper({
                         'chartType': 'Timeline',
@@ -1034,19 +1341,29 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     resp.forEach(el => {
-                        if (el.users[0].shift == shift) {
-                            // data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        // console.log("el===>", el.users[0].project.includes(project));
+                        // if ((el.users[0].shift == shift && el.users[0].project == project) || (el.users[0].project.includes(project) && el.users[0].project == project)) {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year &&
+                            el.users[0].shift == shift && el.users[0].project.includes(project)) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                             data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
                     dashboard.bind(control, chart);
+
+
                     dashboard.draw(data)
                 }
             }
         })
-    } else if (project !== "all" && shift == "all") {
-
+    } else if (project !== 'all' && shift == 'all' && date == 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
         $.ajax({
             url: '/allPlannigView',
             method: 'get',
@@ -1067,8 +1384,10 @@ $(document).on('change', '#filterShift', function () {
                             'ui': {
                                 'chartType': 'LineChart',
                                 'chartOptions': {
-                                    'width': 985,
-                                    'height': 70,
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
                                     'chartArea': {
                                         width: '80%',
                                         height: '80%'
@@ -1089,8 +1408,10 @@ $(document).on('change', '#filterShift', function () {
                         'chartType': 'Timeline',
                         'containerId': 'chart',
                         'options': {
-                            // 'width': 900,
-                            // 'height': 600,
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
                             // 'chartArea': {
                             //     width: '80%',
                             //     height: '80%'
@@ -1137,9 +1458,615 @@ $(document).on('change', '#filterShift', function () {
                 }
             }
         })
+    } else if (project == 'all' && shift !== 'all' && date == 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
 
-    } else if (project !== "all" && shift !== "all") {
+                    })
 
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        if (el.users[0].shift.includes(shift)) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project == 'all' && shift == 'all' && date !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project !== 'all' && shift !== 'all' && date == 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+
+                        if (el.users[0].project.includes(project) && el.users[0].shift == shift) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project !== 'all' && shift == 'all' && date !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year && el.users[0].project.includes(project)) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project == 'all' && shift !== 'all' && date !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year && el.users[0].shift == shift) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    }
+
+})
+
+// filtre mois et année
+$(document).on('change', '#filterAnnee', function () {
+    // console.log("filterAnnee");
+    var project = $('#filterProj').val();
+    var shift = $('#filterShift').val();
+    var date = $('#filterAnnee').val();
+    $('#filterProj').val(project);
+    $('#filterShift').val(shift);
+    $('#filterAnnee').val(date)
+
+    var valMonth = date.split('-')
+    if (project == "all" && shift == "all" && date == "all") {
+        //console.log('project == "all" && shift == "all"');
+        $.ajax({
+            url: "/allPlannigView",
+            method: "get",
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    packages: ['controls']
+                })
+                google.setOnLoadCallback(drawVisualization)
+
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    )
+
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 985,
+                                    'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    })
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        //console.log("new Date(el.date_start)", new Date(el.date_start));
+                        //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project !== "all" && shift !== "all" && date !== "all") {
+        //console.log('project !== "all" && shift !== "all" || shift !== "all" && project !== "all"');
+        // console.log("project !== && shift !== ", project, shift);
         $.ajax({
             url: '/allPlannigView',
             method: 'get',
@@ -1177,6 +2104,7 @@ $(document).on('change', '#filterShift', function () {
                         }
 
                     })
+
 
                     var chart = new google.visualization.ChartWrapper({
                         'chartType': 'Timeline',
@@ -1221,28 +2149,626 @@ $(document).on('change', '#filterShift', function () {
                     })
 
                     resp.forEach(el => {
-                        //if ((el.users[0].shift == shift && el.users[0].project == project) || (el.users[0].project.includes(project) && el.users[0].project == project)) {
-                        if (el.users[0].project.includes(project) && el.users[0].shift == shift) {
-                            // data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                        // console.log("el===>", el.users[0].project.includes(project));
+                        // if ((el.users[0].shift == shift && el.users[0].project == project) || (el.users[0].project.includes(project) && el.users[0].project == project)) {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year &&
+                            el.users[0].shift == shift && el.users[0].project.includes(project)) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
                             data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
 
                     dashboard.bind(control, chart);
-                    dashboard.draw(data, {
-                        hAxis: {
-                            format: 'd,M,Y'//Y,M,d'
+
+
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project !== 'all' && shift == 'all' && date == 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        if (el.users[0].project.includes(project)) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
                         }
                     })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project == 'all' && shift !== 'all' && date == 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        if (el.users[0].shift.includes(shift)) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project == 'all' && shift == 'all' && date !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project !== 'all' && shift !== 'all' && date == 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+
+                        if (el.users[0].project.includes(project) && el.users[0].shift == shift) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project !== 'all' && shift == 'all' && date !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year && el.users[0].project.includes(project)) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
+                }
+            }
+        })
+    } else if (project == 'all' && shift !== 'all' && date !== 'all') {
+        //console.log("project == 'all' && shift !== 'all'");
+        // console.log("project == shift !==");
+        $.ajax({
+            url: '/allPlannigView',
+            method: 'get',
+            success: function (resp) {
+                google.load('visualization', '1', {
+                    'packages': ['controls']
+                });
+                google.setOnLoadCallback(drawVisualization);
+                function drawVisualization() {
+                    var dashboard = new google.visualization.Dashboard(
+                        document.getElementById('dashboard')
+                    );
+                    var control = new google.visualization.ControlWrapper({
+                        'controlType': 'ChartRangeFilter',
+                        'containerId': 'control',
+                        'options': {
+                            'filterColumnIndex': 2,
+                            'ui': {
+                                'chartType': 'LineChart',
+                                'chartOptions': {
+                                    'width': 1100,
+                                    'height': 400,
+                                    // 'width': 985,
+                                    // 'height': 70,
+                                    'chartArea': {
+                                        width: '80%',
+                                        height: '80%'
+                                    },
+                                    'hAxis': {
+                                        'baselineColor': 'none'
+                                    }
+                                },
+                                'chartView': {
+                                    'columns': [2, 3]
+                                }
+                            }
+                        }
+
+                    })
+
+                    var chart = new google.visualization.ChartWrapper({
+                        'chartType': 'Timeline',
+                        'containerId': 'chart',
+                        'options': {
+                            // 'width': 1100,
+                            // 'height': 400,
+                            // // 'width': 900,
+                            // // 'height': 600,
+                            // 'chartArea': {
+                            //     width: '80%',
+                            //     height: '80%'
+                            // },
+
+                            'height': 350,
+                            'backgroundColor': '#ffd'
+                        },
+                        'view': {
+                            'columns': [0, 1, 2, 3]
+                        }
+                    });
+                    var data = new google.visualization.DataTable();
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Shift'
+                    });
+
+                    data.addColumn({
+                        type: 'string',
+                        id: 'Nom'
+                    });
+
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'Start'
+                    })
+
+                    data.addColumn({
+                        type: 'date',
+                        id: 'End'
+                    })
+
+                    resp.forEach(el => {
+                        var startD = new Date(el.date_start)
+                        var year = startD.getFullYear()
+                        var month = startD.getMonth() + 1
+
+                        if (valMonth[0] == month && valMonth[1] == year && el.users[0].shift == shift) {
+                            //data.addRows([[el.usualName + ' | ' + el.shift + ' | ' + el.project, el.mcode, new Date(el.start), new Date(el.end)]])
+                            data.addRows([[el.m_code + ' | ' + el.users[0].project + ' | ' + el.users[0].shift, el.m_code, new Date(el.date_start), new Date(el.date_end)]])
+                        }
+                    })
+
+                    dashboard.bind(control, chart);
+                    dashboard.draw(data)
                 }
             }
         })
     }
-    else {
 
-        $("#error").append("<h3>Error</h3>")
-    }
 })
+
+
 $(document).on('change', '#mcode-plan', function () {
     var mcode = $('#mcode-plan').val()
     var donner = {

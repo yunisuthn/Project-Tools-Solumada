@@ -1264,49 +1264,49 @@ $("#addInvent").on('click', function () {
 
 $("#nameMat").on("change", function () {
     //console.log("nameMat", $("#nameMat").val());
-    $(".marque").css('display', "block")
-    $(".numSerie").css('display', "block")
-    $(".commentaire").css('display', "block")
+    $(".marque").css('display', "flex")
+    $(".numSerie").css('display', "flex")
+    $(".commentaire").css('display', "flex")
 
 
     if ($("#nameMat").val() == "uc") {
-        $(".nomPoste").css('display', "block")
-        $(".typeUC").css('display', "block")
-        $(".localisation").css('display', "block")
-        $(".departement").css('display', "block")
-        $(".equipement").css('display', "block")
-        $(".processeur").css('display', "block")
-        $(".ram").css('display', "block")
-        $(".diskDur").css('display', "block")
-        $(".capacite").css('display', "block")
-        $(".cleWin").css('display', "block")
-        $(".cleWinOriginal").css('display', "block")
-        $(".antivirus").css('display', "block")
-        $(".vpn").css('display', "block")
-        $(".usb").css('display', "block")
+        $(".nomPoste").css('display', "flex")
+        $(".typeUC").css('display', "flex")
+        $(".localisation").css('display', "flex")
+        $(".departement").css('display', "flex")
+        $(".equipement").css('display', "flex")
+        $(".processeur").css('display', "flex")
+        $(".ram").css('display', "flex")
+        $(".diskDur").css('display', "flex")
+        $(".capacite").css('display', "flex")
+        $(".cleWin").css('display', "flex")
+        $(".cleWinOriginal").css('display', "flex")
+        $(".antivirus").css('display', "flex")
+        $(".vpn").css('display', "flex")
+        $(".usb").css('display', "flex")
         $(".portsClavier").css('display', "none")
         $(".portsEcran").css('display', "none")
         $(".imei").css('display', "none")
         $(".resolution").css('display', 'none')
         $(".modelClass").css('display', 'none')
-        $(".equipementClass").css('display', 'block')
-        $(".versionWin").css('display', 'block')
+        $(".equipementClass").css('display', 'flex')
+        $(".versionWin").css('display', 'flex')
 
         $(".type").css('display', "none")
 
         $(".chargeur-cable-housse").css('display', "none")
 
     } else if ($("#nameMat").val() == "ecran") {
-        $(".type").css('display', "block")
-        $(".localisation").css('display', "block")
-        $(".departement").css('display', "block")
-        $(".equipement").css('display', "block")
-        $(".resolution").css('display', 'block')
-        $(".portsEcran").css('display', 'block')
+        $(".type").css('display', "flex")
+        $(".localisation").css('display', "flex")
+        $(".departement").css('display', "flex")
+        $(".equipement").css('display', "flex")
+        $(".resolution").css('display', 'flex')
+        $(".portsEcran").css('display', 'flex')
 
         $(".nomPoste").css('display', "none")
         $(".equipementClass").css('display', 'none')
-        $(".modelClass").css('display', 'block')
+        $(".modelClass").css('display', 'flex')
         $(".typeUC").css('display', "none")
         $(".processeur").css('display', "none")
         $(".ram").css('display', "none")
@@ -1323,19 +1323,19 @@ $("#nameMat").on("change", function () {
         $(".chargeur-cable-housse").css('display', "none")
     } else if ($("#nameMat").val() == "clavier" || $("#nameMat").val() == 'souris') {
 
-        $(".type").css('display', "block")
+        $(".type").css('display', "flex")
         $(".processeur").css('display', "none")
         $(".ram").css('display', "none")
         $(".diskDur").css('display', "none")
         $(".capacite").css('display', "none")
         $(".cleWin").css('display', "none")
         $(".cleWinOriginal").css('display', "none")
-        $(".localisation").css('display', "block")
-        $(".departement").css('display', "block")
-        $(".equipement").css('display', "block")
-        $(".portsClavier").css('display', "block")
+        $(".localisation").css('display', "flex")
+        $(".departement").css('display', "flex")
+        $(".equipement").css('display', "flex")
+        $(".portsClavier").css('display', "flex")
         $(".equipementClass").css('display', 'none')
-        $(".modelClass").css('display', 'block')
+        $(".modelClass").css('display', 'flex')
         $(".portsEcran").css('display', "none")
         $(".imei").css('display', "none")
         $(".typeUC").css('display', "none")
@@ -1348,9 +1348,9 @@ $("#nameMat").on("change", function () {
         $(".versionWin").css('display', 'none')
     } else if ($("#nameMat").val() == 'phone') {
 
-        $(".type").css('display', "block")
-        $(".imei").css('display', "block")
-        $(".chargeur-cable-housse").css('display', "block")
+        $(".type").css('display', "flex")
+        $(".imei").css('display', "flex")
+        $(".chargeur-cable-housse").css('display', "flex")
         $(".nomPoste").css('display', "none")
         $(".processeur").css('display', "none")
         $(".ram").css('display', "none")
@@ -1689,25 +1689,25 @@ function btnUpdateInventaire(id) {
                 nbreUsbA = res.nbUsb
                 versionWinA = res.versionWin
                 commentaireA = res.commentaire
-                $(".typeUCUpdat").css('display', "block")
-                $(".nomPosteUpdat").css('display', "block")
-                $(".localisationUpdat").css('display', "block")
-                // $(".departementUpdat").css('display', "block")
-                $(".equipementUpdat").css('display', "block")
-                $(".numSerieUpdat").css('display', "block")
-                $(".marqueUpdat").css('display', "block")
-                $(".versionWinUpdat").css('display', "block")
-                $(".commentaireUpdat").css('display', "block")
+                $(".typeUCUpdat").css('display', "flex")
+                $(".nomPosteUpdat").css('display', "flex")
+                $(".localisationUpdat").css('display', "flex")
+                // $(".departementUpdat").css('display', "flex")
+                $(".equipementUpdat").css('display', "flex")
+                $(".numSerieUpdat").css('display', "flex")
+                $(".marqueUpdat").css('display', "flex")
+                $(".versionWinUpdat").css('display', "flex")
+                $(".commentaireUpdat").css('display', "flex")
 
-                $(".processeurUpdat").css('display', "block")
-                $(".ramUpdat").css('display', "block")
-                $(".diskDurUpdat").css('display', "block")
-                $(".capaciteUpdat").css('display', "block")
-                $(".cleWinUpdat").css('display', "block")
-                $(".cleWinOriginalUpdat").css('display', "block")
-                $(".antivirusUpdat").css('display', "block")
-                $(".vpnUpdat").css('display', "block")
-                $(".usbUpdat").css('display', "block")
+                $(".processeurUpdat").css('display', "flex")
+                $(".ramUpdat").css('display', "flex")
+                $(".diskDurUpdat").css('display', "flex")
+                $(".capaciteUpdat").css('display', "flex")
+                $(".cleWinUpdat").css('display', "flex")
+                $(".cleWinOriginalUpdat").css('display', "flex")
+                $(".antivirusUpdat").css('display', "flex")
+                $(".vpnUpdat").css('display', "flex")
+                $(".usbUpdat").css('display', "flex")
                 $(".portHdmiUpdat").css('display', "none")
                 $(".portUsbUpdat").css('display', "none")
                 $(".imeiUpdat").css('display', "none")
@@ -1717,7 +1717,7 @@ function btnUpdateInventaire(id) {
 
                 if (numAct == "Actif") {
                     //     console.log("Actif");
-                    $(".departementUpdat").css('display', "block")
+                    $(".departementUpdat").css('display', "flex")
                 } else {
                     $(".departementUpdat").css('display', "none")
 
@@ -1747,15 +1747,15 @@ function btnUpdateInventaire(id) {
                     $("#portDviUpdat").prop("checked", true)
                 }
                 //console.log("portHdmiA", portHdmiA);
-                $(".numSerieUpdat").css('display', "block")
-                $(".marqueUpdat").css('display', "block")
-                $(".localisationUpdat").css('display', "block")
-                //$(".departementUpdat").css('display', "block")
-                $(".equipementUpdat").css('display', "block")
-                $(".resolutionUpdat").css('display', 'block')
-                $(".portsEcranUpdat").css('display', 'block')
-                $(".commentaireUpdat").css('display', 'block')
-                $(".typeUpdat").css('display', "block")
+                $(".numSerieUpdat").css('display', "flex")
+                $(".marqueUpdat").css('display', "flex")
+                $(".localisationUpdat").css('display', "flex")
+                //$(".departementUpdat").css('display', "flex")
+                $(".equipementUpdat").css('display', "flex")
+                $(".resolutionUpdat").css('display', 'flex')
+                $(".portsEcranUpdat").css('display', 'flex')
+                $(".commentaireUpdat").css('display', 'flex')
+                $(".typeUpdat").css('display', "flex")
 
                 $(".nomPosteUpdat").css('display', "none")
                 $(".versionWinUpdat").css('display', "none")
@@ -1775,16 +1775,16 @@ function btnUpdateInventaire(id) {
                 $(".chargeur-cable-housseUpdat").css('display', "none")
                 if (numAct == "Actif") {
                     //     console.log("Actif");
-                    $(".departementUpdat").css('display', "block")
+                    $(".departementUpdat").css('display', "flex")
                 } else {
                     $(".departementUpdat").css('display', "none")
 
                 }
             } else if (res.name == "clavier" || res.name == "souris") {
-                typeA = res.name
-                localisationA = res.name
-                departementA = res.name
-                equipementA = res.name
+                typeA = res.type
+                localisationA = res.localisation
+                departementA = res.departement
+                equipementA = res.equipement
                 numSerieA = res.numSerie
                 marqueA = res.marque
                 portUsbA = res.portUsb
@@ -1798,27 +1798,27 @@ function btnUpdateInventaire(id) {
                 $(".capaciteUpdat").css('display', "none")
                 $(".cleWinUpdat").css('display', "none")
                 $(".cleWinOriginalUpdat").css('display', "none")
-                $(".localisationUpdat").css('display', "block")
-                //$(".departementUpdat").css('display', "block")
-                $(".equipementUpdat").css('display', "block")
-                $(".portsClavierUpdat").css('display', "block")
+                $(".localisationUpdat").css('display', "flex")
+                //$(".departementUpdat").css('display', "flex")
+                $(".equipementUpdat").css('display', "flex")
+                $(".portsClavierUpdat").css('display', "flex")
                 $(".portsEcranUpdat").css('display', "none")
                 $(".portHdmiUpdat").css('display', "none")
                 $(".imeiUpdat").css('display', "none")
                 $(".antivirusUpdat").css('display', "none")
                 $(".vpnUpdat").css('display', "none")
                 $(".usbUpdat").css('display', "none")
-                $(".numSerieUpdat").css('display', "block")
-                $(".marqueUpdat").css('display', "block")
-                $(".typeUpdat").css('display', "block")
-                $(".commentaireUpdat").css('display', "block")
+                $(".numSerieUpdat").css('display', "flex")
+                $(".marqueUpdat").css('display', "flex")
+                $(".typeUpdat").css('display', "flex")
+                $(".commentaireUpdat").css('display', "flex")
                 $(".versionWinUpdat").css('display', "none")
                 $(".typeUCUpdat").css('display', "none")
 
                 $(".chargeur-cable-housseUpdat").css('display', "none")
                 if (numAct == "Actif") {
                     //     console.log("Actif");
-                    $(".departementUpdat").css('display', "block")
+                    $(".departementUpdat").css('display', "flex")
                 } else {
                     $(".departementUpdat").css('display', "none")
 
@@ -1834,8 +1834,8 @@ function btnUpdateInventaire(id) {
                 housseA = res.housse
                 commentaireA = res.commentaire
 
-                $(".imeiUpdat").css('display', "block")
-                $(".chargeur-cable-housseUpdat").css('display', "block")
+                $(".imeiUpdat").css('display', "flex")
+                $(".chargeur-cable-housseUpdat").css('display', "flex")
                 $(".processeurUpdat").css('display', "none")
                 $(".ramUpdat").css('display', "none")
                 $(".nomPosteUpdat").css('display', "none")
@@ -1852,11 +1852,11 @@ function btnUpdateInventaire(id) {
                 $(".usbUpdat").css('display', "none")
                 $(".portsEcranUpdat").css('display', "none")
                 $(".portUsbUpdat").css('display', "none")
-                $(".numSerieUpdat").css('display', "block")
-                $(".marqueUpdat").css('display', "block")
-                $(".typeUpdat").css('display', "block")
+                $(".numSerieUpdat").css('display', "flex")
+                $(".marqueUpdat").css('display', "flex")
+                $(".typeUpdat").css('display', "flex")
                 $(".versionWinUpdat").css('display', "none")
-                $(".commentaireUpdat").css('display', "block")
+                $(".commentaireUpdat").css('display', "flex")
 
                 $(".typeUCUpdat").css('display', "none")
 

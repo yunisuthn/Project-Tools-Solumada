@@ -11,15 +11,18 @@
     -khtml-user-drag: element;
     -webkit-user-drag: element;
 }
-
+body {
+    height: fit-content !important;
+}
 .tcontainer {
     width: 100%;
     padding: 0;
     margin: 0;
     display: flex;
     overflow: hidden;
-    height: 100vh !important;
+    height: calc(100vh - 60px) !important;
     font: var(--bs-font-monospace);
+    margin-top: 70px;
 }
 .tleft-navbar {
     width: 400px;
@@ -1146,7 +1149,11 @@ cursor: pointer;
 }
 
 .tback-home {
+    position: sticky !important;
+    top: 0px;
+    z-index: 99;
     padding: 8px;
     color: rgb(168, 190, 212);
     font-weight: 500;
+    font-size: 25px;
 }

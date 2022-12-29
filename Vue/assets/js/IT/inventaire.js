@@ -175,7 +175,7 @@ var inventaireUCDataT = $('#inventaireUCActifDataT').DataTable(
                 "render": function (data, type, row) {
                     return (`\
                      <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
-                       <button type='button' onclick="btnUpdateInventaire('${data._id}')" class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning ' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
+                        <button type='button' onclick="btnUpdateInventaire('${data._id}')" class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning ' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
                         <button type='button' onclick="btnDeleteInventaire('${data._id}')" class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
                     <div>\
                  `
@@ -312,7 +312,7 @@ var inventaireEcranDataT = $('#inventaireEcranActifDataT').DataTable(
                     return (`\
                      <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
                        <button type='button' onclick="btnUpdateInventaire('${data._id}')" class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning ' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
-                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+                        <button type='button' onclick="btnDeleteInventaire('${data._id}')" class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
                     <div>\
                  `
                     )
@@ -418,7 +418,7 @@ var inventaireClavierActifDataT = $('#inventaireClavierActifDataT').DataTable(
                     return (`\
                      <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
                        <button type='button' onclick="btnUpdateInventaire('${data._id}')" class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning ' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
-                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+                        <button type='button' onclick="btnDeleteInventaire('${data._id}')" class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
                     <div>\
                  `
                     )
@@ -523,7 +523,7 @@ var inventaireSourisActifDataT = $('#inventaireSourisActifDataT').DataTable(
                     return (`\
                      <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
                        <button type='button' onclick="btnUpdateInventaire('${data._id}')" class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning ' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
-                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+                        <button type='button' onclick="btnDeleteInventaire('${data._id}')" class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
                     <div>\
                  `
                     )
@@ -629,7 +629,7 @@ var inventairePhoneActifDataT = $('#inventairePhoneActifDataT').DataTable(
                     return (`\
                      <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
                        <button type='button' onclick="btnUpdateInventaire('${data._id}')" class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning ' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
-                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+                        <button type='button' onclick="btnDeleteInventaire('${data._id}')" class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
                     <div>\
                  `
                     )
@@ -1220,7 +1220,7 @@ var inventairePhoneInActifDataT = $('#inventairePhoneInActifDataT').DataTable(
                     return (`\
                      <div class= 'btn-group d-flex justify-content-center' role='group' aria-label='Basic mixed styles example'>\
                        <button type='button' onclick="btnUpdateInventaire('${data._id}')" class='btn px-2 px-2 rounded mx-1 btn-sm btn-warning ' data-toggle='modal' data-target='#modalUpdateInventaire' data-bs-whatever='@getbootstrap'><i class='fa fa-edit'></i></button>\
-                        <button type='button' class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
+                        <button type='button' onclick="btnDeleteInventaire('${data._id}')" class='btn px2 btn-sm rounded btn-danger btnDeleteInventaire'><i class='fa fa-trash'></i></button>\
                     <div>\
                  `
                     )
@@ -2415,11 +2415,13 @@ $(document).on('click', '#saveUpdateMat', function () {
         }
     })
 })
+
+console.log("delet");
 //resetTimeTableForm
 //Delete material in inventary
 //$(document).on('click', '.btnDeleteInventaire', function () {
 function btnDeleteInventaire(id) {
-
+    console.log("btnDeleteInventaire");
     var getActif = $("#getActif").text()
     var numAct = getActif.search("Actif")
     var actifD

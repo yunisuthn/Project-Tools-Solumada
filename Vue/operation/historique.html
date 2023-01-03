@@ -134,57 +134,67 @@
                             </span>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive table-responsive-data2">
-                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom</th>
-                                            <th>Titre</th>
-                                            <th>Date et heure de Modification</th>
-                                            <th>Avant Modification</th>
-                                            <th>Après Modification</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                            <div class="table-responsive">
+                                <!-- <table id="inventaireUCActifDataT" class="table table-striped table-bordered"> -->
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <div class="table-responsive table-responsive-data2">
+                                            <table id="bootstrap-data-table"
+                                                class="table table-striped table-bordered nowrap table-fixed"
+                                                cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nom</th>
+                                                        <th>Titre</th>
+                                                        <th>Date et heure de Modification</th>
+                                                        <th>Avant Modification</th>
+                                                        <th>Après Modification</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                                        <% history.forEach(element=> {
-                                            %>
-                                            <tr>
-                                                <td>
-                                                    <%= element.user %>
-                                                </td>
-                                                <td>
-                                                    <%= element.model %>
-                                                </td>
-                                                <td>
-                                                    <%= element.heure %>
-                                                </td>
-                                                <td>
-                                                    <% for ( var i in element.old){ %>
-                                                        <ul>
-                                                            <ol>
-                                                                <%= i %> : <%= element.old[i] %>
-                                                            </ol>
+                                                    <% history.forEach(element=> {
+                                                        %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= element.user %>
+                                                            </td>
+                                                            <td>
+                                                                <%= element.model %>
+                                                            </td>
+                                                            <td>
+                                                                <%= element.heure %>
+                                                            </td>
+                                                            <td>
+                                                                <% for ( var i in element.old){ %>
+                                                                    <ul>
+                                                                        <ol>
+                                                                            <%= i %> : <%= element.old[i] %>
+                                                                        </ol>
 
-                                                        </ul>
-                                                        <% } %>
-                                                </td>
-                                                <td>
-                                                    <% for ( var i in element.new){ %>
-                                                        <ul>
-                                                            <ol>
-                                                                <%= i %> : <%= element.new[i] %>
-                                                            </ol>
+                                                                    </ul>
+                                                                    <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <% for ( var i in element.new){ %>
+                                                                    <ul>
+                                                                        <ol>
+                                                                            <%= i %> : <%= element.new[i] %>
+                                                                        </ol>
 
-                                                        </ul>
-                                                        <% } %>
-                                                </td>
-                                            </tr>
-                                            <% }); %>
-                                    </tbody>
-                                </table>
+                                                                    </ul>
+                                                                    <% } %>
+                                                            </td>
+                                                        </tr>
+                                                        <% }); %>
+                                                </tbody>
+                                            </table>
 
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

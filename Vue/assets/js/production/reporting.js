@@ -193,6 +193,24 @@ $("#saveUpdateMat").on("click", function () {
     })
 })
 
+$("#myfile").on("change", function () {
+    console.log("myfile");
+    //var file = $(this)[0].files[0];
+    //var upload = new Upload(file);
+    var formData = new FormData();
+    formData.append('file', $('#myfile')[0].files[0]);
+    console.log("upload", formData);
+
+    $.ajax({
+        url: "/addReportingExcel",
+        data: formData,
+        method: "post",
+        success: function (res) {
+            console.log("res", res);
+        }
+    })
+
+})
 $(document).on("click", '.btnDeleteReporting', function () {
     Swal.fire({
         title: 'Delete Reporting',

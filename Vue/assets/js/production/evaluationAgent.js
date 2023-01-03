@@ -121,7 +121,7 @@ $(document).on('click', '#saveUpdatUser', function () {
     var mcodeN = $('#mcodeUdpat').val();
     var nameUpdat = $('#nameUpdat').val();
 
-    console.log("mcodeN ", mcodeN, " ", nameUpdat);
+    //console.log("mcodeN ", mcodeN, " ", nameUpdat);
     var userUpdate = {
         mcodeOld: mcode,
         production: productionUdp,

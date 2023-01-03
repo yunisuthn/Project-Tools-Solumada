@@ -495,6 +495,15 @@ a:focus {
   color: #000;
 }
 
+.add:hover{
+  text-decoration: auto;
+  background-color: #fff!important;
+  cursor: pointer;
+  color: #789BDA !important;
+  border-color: #789BDA !important;
+
+}
+
 h1,
 h2,
 h3,
@@ -512,6 +521,7 @@ ul,
 ol {
   padding-left: 0;
 }
+
 
 .btn:focus,
 button:focus {
@@ -4702,4 +4712,8 @@ table.table-fixed {
 }
 .outer-wrapper {
   margin: 20px;
+}
+
+.instructionList{
+  color: #000 !important;
 }

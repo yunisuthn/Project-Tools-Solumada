@@ -1,0 +1,724 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tools Solumada</title>
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="../assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
+</head>
+
+<body>
+    <!-- Left Panel -->
+
+
+    <!-- Left Panel -->
+
+    <!-- Right Panel -->
+    <div id="preloader" class="center"></div>
+    <div id="right-panel" class="right-panel">
+
+        <input type="hidden" name="" id="typeUtil" value="<%= type_util %> ">
+        <!-- Header-->
+        <header id="header" class="rightpanel-header">
+            <div class="left">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><img src="../images/logo.jpg" alt="Logo"></a>
+                    <a class="navbar-brand hidden" href="/"><img src="../images/logo 2.jpg" alt="Logo"></a>
+                    <!--a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a-->
+                </div>
+            </div>
+            <div class="right">
+                <div class="header-menu">
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <img class="user-avatar rounded-circle" src="../images/admin.png" alt="User Avatar">
+                        </a>
+
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="/profil"> <i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="/user" id="utilisateur"><i class="fa fa-solid fa-users"></i>
+                                Utilisateur</a>
+                            <a class="nav-link" href="/historique" id="historique"><i class="fa fa-solid fa-users"></i>
+                                Historiques</a>
+                            <!--a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
+
+                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a-->
+
+                            <a class="nav-link" href="/logout"><i class="fa fa-power-off"></i> Logout</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+    </div>
+    <div class="content">
+        <!-- Header-->
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4 col-md-4 ">
+                        <a href="/">
+                            <i class="fa fa-home fa-3x iconCol" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Operation Sheets</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 menu-haut ">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/operation">Admin</a></li>
+                                    <li> </li>
+                                    <li class="active">> Operation Sheets</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="animated fadeIn mt-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <select name="selectSm" id="operation" onchange="SelectControl();" class="custom-select">
+                                <option value="0">Please select</option>
+                                <option value="choose_project">Projects</option>
+                                <option value="choose_organization">Global organisation</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <i class="fa fa-arrow-circle-o-right" style="font-size: 40px;"></i>
+                        </div>
+                        <div class="col-md-5">
+                            <select name="selectSm" id="choose_project" onchange="ProjectControl()" style="display: none;" class="form-control-sm form-control">
+                                <option value="SettledProject">Settled Projects</option>
+                                <option value="SafeProject">Safe Projects</option>
+                                <option value="InProgress">In Progress</option>
+                                <option value="Unsettled">Unsettled</option>
+                                <option value="OtherTasks">Other Tasks</option>
+                                <option value="FormerProjects">Former projects</option>
+                                <option value="Upcoming">Upcoming</option>
+                            </select>
+                            <select name="selectSm" id="choose_organization" onchange="organizationControl()" style="display: none;" class="form-control-sm form-control">
+                                <option value="NewUnified">New Unified Post Projects</option>
+                                <option value="OrganisationSettled">Settled Projects</option>
+                            </select>
+                        </div>
+                    </div>
+                            
+                </div>
+                <div class="col-md-12 mt-5" id="home">
+                    <div class="card table-card">
+                        <div class="card-body text-center" style="height: 600px !important; align-items: center;justify-items: center;text-align: center !important;">
+                            <!-- Accueil -->
+                            
+                                    <div style="margin-top: 7%;">
+                                    <h2><span class="fa fa-th-large" style="font-size: 200px;color: rgb(23, 150, 223);"></span></h2>
+                                    <h1>OPERATION SHEETS</h1>
+                                    <p class="mt-1" style="color: rgb(19, 48, 73);">
+                                        Gérer vos operations en toute simplicité
+                                    </p>
+                                </div>
+                           
+                            
+                    </div>
+                </div>
+                </div>
+                <!-- Name SettledProjects -->
+                <div class="col-md-12 mt-3" id="TableSettledProject" style="display: none;">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <a href="/operation">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                            <span class="float-right">
+                                <button class="btn btn-primary" onclick="adding_row()" >
+                                    <i class="fa fa-plus"></i> Ajouter
+                                </button>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table 1 -->
+                            <div class="table-responsive">
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="SettledProject" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Settled Projects</th>
+                                                    <th>Project Leader in charge</th>
+                                                    <th>Team Leaders</th>
+                                                    <th>Starting Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="settled_row">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Name SafeProject -->
+                 <div class="col-md-12 mt-3" id="TableSafeProject" style="display: none;">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <a href="/operation">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                            <span class="float-right">
+                                <button class="btn btn-primary" onclick="adding_row()" >
+                                    <i class="fa fa-plus"></i> Ajouter
+                                </button>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table 1 -->
+                            <div class="table-responsive">
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="SafeProject" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Safe Projects</th>
+                                                    <th>Project Leader in charge</th>
+                                                    <th>Team Leaders</th>
+                                                    <th>Starting Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Name InProgress -->
+                 <div class="col-md-12 mt-3" id="TableInProgress" style="display: none;">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <a href="/operation">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                            <span class="float-right">
+                                <button class="btn btn-primary" onclick="adding_row()" >
+                                    <i class="fa fa-plus"></i> Ajouter
+                                </button>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table 1 -->
+                            <div class="table-responsive">
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="InProgress" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>In progress</th>
+                                                    <th>Project Leader in charge</th>
+                                                    <th>Team Leaders</th>
+                                                    <th>Starting Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Name Unsettled -->
+                 <div class="col-md-12 mt-3" id="TableUnsettled" style="display: none;">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <a href="/operation">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                            <span class="float-right">
+                                <button class="btn btn-primary" onclick="adding_row()" >
+                                    <i class="fa fa-plus"></i> Ajouter
+                                </button>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table 1 -->
+                            <div class="table-responsive">
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="Unsettled" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Unsettled Projects</th>
+                                                    <th>Project Leader in charge</th>
+                                                    <th>Team Leaders</th>
+                                                    <th>Starting Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Name OtherTasks -->
+                 <div class="col-md-12 mt-3" id="TableOtherTasks" style="display: none;">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <a href="/operation">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                            <span class="float-right">
+                                <button class="btn btn-primary" onclick="adding_row()" >
+                                    <i class="fa fa-plus"></i> Ajouter
+                                </button>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table 1 -->
+                            <div class="table-responsive">
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="OtherTasks" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Other Tasks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Name FormerProjects -->
+                <div class="col-md-12 mt-3" id="TableFormerProjects" style="display: none;">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <a href="/operation">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                            <span class="float-right">
+                                <button class="btn btn-primary" onclick="adding_row()" >
+                                    <i class="fa fa-plus"></i> Ajouter
+                                </button>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table 1 -->
+                            <div class="table-responsive">
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="FormerProjects" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Former Projects</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Name Upcoming -->
+                 <div class="col-md-12 mt-3" id="TableUpcoming" style="display: none;">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <a href="/operation">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                                <span class="float-right">
+                                    <button class="btn btn-primary" onclick="adding_row()" >
+                                        <i class="fa fa-plus"></i> Ajouter
+                                    </button>
+                                </span>
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table 1 -->
+                            <div class="table-responsive">
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="Upcoming" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Upcoming</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Name NewUnified -->
+                 <div class="col-md-12 mt-3" id="TableNewUnified" style="display: none;">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <a href="/operation">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table 1 -->
+                            <div class="table-responsive">
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="NewUnified" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Reporting References</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>AGROBOX</th>
+                                                    <th>AGROBOX</th>
+                                                    <th>AGROBOX</th>
+                                                    <th>AGROBOX</th>
+                                                    <th></th>
+                                                    <th>UPC BALLAST</th>
+                                                    <th>AGROBOX</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Name OrganisationSettled -->
+                 <div class="col-md-12 mt-3" id="TableOrganisationSettled" style="display: none;">
+                    <div class="card table-card">
+                        <div class="card-header">
+                            <strong class="card-title">
+                                <a href="/operation">
+                                    <!-- <i class="fa fa-undo fa-1x" aria-hidden="true"></i> -->
+                                    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table 1 -->
+                            <div class="table-responsive">
+                                <div class="outer-wrapper">
+                                    <div class="table-wrapper">
+                                        <table id="OrganisationSettled" class="table table-striped table-bordered table-fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>SHIFT</th>
+                                                    <th>AGENTS</th>
+                                                    <th>Code</th>
+                                                    <th>UP</th>
+                                                    <th>AGROBOX</th>
+                                                    <th>JEFACTURE</th>
+                                                    <th>SPOTCHECK - UP</th>
+                                                    <th>UPC BALLAST</th>
+                                                    <th>UPC VAN DORP</th>
+                                                    <th>ARCO</th>
+                                                    <th>DPS</th>
+                                                    <th>DUVAL UNION</th>
+                                                    <th>HUVEPHARMA</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- .animated -->
+    </div><!-- .content -->
+
+
+    <div class="modal fade" id="addTL" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Nouveau Team Leader</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="updateUserLevel" method="post">
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="name" class="form-control-label">Nom</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="nameTL" placeholder="nom" class="form-control">
+                                <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">M-code</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" name="" id="m-code" class="form-control" placeholder="m-code">
+                            </div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">
+                                    <!--Strengths-->Points forts
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea type="text" name="" id="strengths" rows="3" class="form-control"
+                                    placeholder="Point fort"> </textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">
+                                    <!--Weaknesses-->Faiblesses
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea type="text" name="" id="weaknesses" rows="3" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">Opportunités</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea type="text" name="" id="opportunities" rows="3"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">
+                                    <!--Threats-->Menaces
+                                </label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea type="text" name="" id="threats" rows="3" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelTL">Fermer</button>
+                    <button type="button" class="btn btn-success" id="saveTL">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalUpdateInventaire" aria-hidden="true" aria-labelledby="examplemodalToggleLabel"
+        tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title modalTitre" id="staticBackdropLabel">Mis à jours TL</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="" id="updateUser" method="post">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="" class="form-control-label">Nom</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="nameUpdat" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">M-code</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" name="" id="mcodeUpdate" class="form-control">
+                            </div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">Points forts</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea rows="3" type="text" name="" id="strengthsUpdatTL"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">Faiblesses</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea rows="3" type="text" name="" id="weaknessesUpdat"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">Opportunités</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea rows="3" type="text" name="" id="opportunitiesUpdatTL"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="form-control-label">Menaces</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <textarea rows="3" type="text" name="" id="threatsUpdat"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelTL">Fermer</button>
+                    <button type="button" class="btn btn-success" id="saveUpdatTL">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="clearfix"></div>
+
+
+    </div><!-- /#right-panel -->
+
+    <!-- Right Panel -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
+    <script src="../assets/js/main.js"></script>
+
+    <script src="../assets/js/lib/data-table/jquery.dataTables.min.js"></script>
+    <script src="../assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="../assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="../assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <!-- <script src="../assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="../assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="../assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="../assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="../assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="../assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="../assets/js/init/datatables-init.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"></script>
+
+    <script src="../assets/js/operation/operation_sheet.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#bootstrap-data-table-export').DataTable();
+        });
+    </script>
+    <script>
+
+        var loader = document.getElementById("preloader")
+        window.addEventListener("load", function () {
+            loader.style.display = "none"
+            document.body.style.background = "linear-gradient(#A0B9E5, #D1DCF0)";
+        })
+
+
+    </script>
+
+</body>
+
+</html>

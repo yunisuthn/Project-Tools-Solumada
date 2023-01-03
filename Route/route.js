@@ -30,91 +30,91 @@ routeExp.route('/operation').get(async function (req, res) {
 
 routeExp.route('/add_row/:options').post(async function (req, res) {
     var session = req.session
-    var exception = ["OtherTasks","FormerProjects","Upcoming"]
+    var exception = ["OtherTasks", "FormerProjects", "Upcoming"]
     var opt = req.params.options;
     var id = req.body.id;
     if (session.typeUtil == "Admin") {
         mongoose
-        .connect(
-            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-            {
-                useUnifiedTopology: true,
-                UseNewUrlParser: true
-            }
-        )
-        .then(async () => {
-            if (id==""){
-                var data = {
-                    type:opt,
-                    option:"",
-                    name:"",
-                    project_leader: "",
-                    team_leader: "",
-                    date_start:""
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+                if (id == "") {
+                    var data = {
+                        type: opt,
+                        option: "",
+                        name: "",
+                        project_leader: "",
+                        team_leader: "",
+                        date_start: ""
                     }
-                   var last = await ProjectSheets(data).save()
-                   if (exception.includes(opt)){
-                    await ProjectSheets.findOneAndUpdate({_id:last._id},{
-                        option:"<div class='row'>"+
-                        "<div class='col-md-6'>"+
-                        "<i class='fa fa-save' onclick=save("+"'"+last._id+"'"+") style='color:green;font-size:30px;cursor:pointer'></i></div>"+
-                        "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project("+"'"+last._id+"'"+") style='color:red;font-size:30px;cursor:pointer'></i></div>"+"</div>",
-                        name:"<input type='text' class= 'form-control new"+last._id+"' >",
-                        project_leader: "",
-                        team_leader: "",
-                        date_start:""
-                       })
-                       res.send("Ok");
-                   }
-                   else {
-                    await ProjectSheets.findOneAndUpdate({_id:last._id},{
-                        option:"<div class='row'>"+
-                        "<div class='col-md-6'>"+
-                        "<i class='fa fa-save' onclick=save("+"'"+last._id+"'"+") style='color:green;font-size:30px;cursor:pointer'></i></div>"+
-                        "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project("+"'"+last._id+"'"+") style='color:red;font-size:30px;cursor:pointer'></i></div>"+"</div>",
-                        name:"<input type='text' class= 'form-control new"+last._id+"' >",
-                        project_leader: "<input type='text' class= 'form-control new"+last._id+"'  >",
-                        team_leader: "<input type='text' class= 'form-control new"+last._id+"'  >",
-                        date_start:"<input type='date' class= 'form-control new"+last._id+"'  >"
-                       })
-                       res.send("Ok");
-                   }    
-                  
-                   
-            }
-            else {
-                var last = await ProjectSheets.findOne({_id:id});
-                if (exception.includes(opt)){
-                    await ProjectSheets.findOneAndUpdate({_id:id},{
-                        option:"<div class='row'>"+
-                        "<div class='col-md-6'>"+
-                        "<i class='fa fa-save' onclick=save("+"'"+id+"'"+") style='color:green;font-size:30px;cursor:pointer'></i></div>"+
-                        "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project("+"'"+id+"'"+") style='color:red;font-size:30px;cursor:pointer'></i></div>"+"</div>",
-                        name:"<input type='text' value='"+last.name+"' class= 'form-control new"+id+"' >",
-                        project_leader: "",
-                        team_leader: "",
-                        date_start:""
-                       })
-                       res.send("Ok")
+                    var last = await ProjectSheets(data).save()
+                    if (exception.includes(opt)) {
+                        await ProjectSheets.findOneAndUpdate({ _id: last._id }, {
+                            option: "<div class='row'>" +
+                                "<div class='col-md-6'>" +
+                                "<i class='fa fa-save' onclick=save(" + "'" + last._id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+                                "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + last._id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>",
+                            name: "<input type='text' class= 'form-control new" + last._id + "' >",
+                            project_leader: "",
+                            team_leader: "",
+                            date_start: ""
+                        })
+                        res.send("Ok");
+                    }
+                    else {
+                        await ProjectSheets.findOneAndUpdate({ _id: last._id }, {
+                            option: "<div class='row'>" +
+                                "<div class='col-md-6'>" +
+                                "<i class='fa fa-save' onclick=save(" + "'" + last._id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+                                "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + last._id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>",
+                            name: "<input type='text' class= 'form-control new" + last._id + "' >",
+                            project_leader: "<input type='text' class= 'form-control new" + last._id + "'  >",
+                            team_leader: "<input type='text' class= 'form-control new" + last._id + "'  >",
+                            date_start: "<input type='date' class= 'form-control new" + last._id + "'  >"
+                        })
+                        res.send("Ok");
+                    }
+
+
                 }
                 else {
-                    await ProjectSheets.findOneAndUpdate({_id:id},{
-                        option:"<div class='row'>"+
-                        "<div class='col-md-6'>"+
-                        "<i class='fa fa-save' onclick=save("+"'"+id+"'"+") style='color:green;font-size:30px;cursor:pointer'></i></div>"+
-                        "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project("+"'"+id+"'"+") style='color:red;font-size:30px;cursor:pointer'></i></div>"+"</div>",
-                        name:"<input type='text' value='"+last.name+"' class= 'form-control new"+id+"' >",
-                        project_leader: "<input type='text' value='"+last.project_leader+"' class= 'form-control new"+id+"'  >",
-                        team_leader: "<input type='text' value='"+last.team_leader+"' class= 'form-control new"+last._id+"'  >",
-                        date_start:"<input type='date' value='"+last.date_start+"' class= 'form-control new"+last._id+"'  >"
-                       })
-                       res.send("Ok")
+                    var last = await ProjectSheets.findOne({ _id: id });
+                    if (exception.includes(opt)) {
+                        await ProjectSheets.findOneAndUpdate({ _id: id }, {
+                            option: "<div class='row'>" +
+                                "<div class='col-md-6'>" +
+                                "<i class='fa fa-save' onclick=save(" + "'" + id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+                                "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>",
+                            name: "<input type='text' value='" + last.name + "' class= 'form-control new" + id + "' >",
+                            project_leader: "",
+                            team_leader: "",
+                            date_start: ""
+                        })
+                        res.send("Ok")
+                    }
+                    else {
+                        await ProjectSheets.findOneAndUpdate({ _id: id }, {
+                            option: "<div class='row'>" +
+                                "<div class='col-md-6'>" +
+                                "<i class='fa fa-save' onclick=save(" + "'" + id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+                                "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>",
+                            name: "<input type='text' value='" + last.name + "' class= 'form-control new" + id + "' >",
+                            project_leader: "<input type='text' value='" + last.project_leader + "' class= 'form-control new" + id + "'  >",
+                            team_leader: "<input type='text' value='" + last.team_leader + "' class= 'form-control new" + last._id + "'  >",
+                            date_start: "<input type='date' value='" + last.date_start + "' class= 'form-control new" + last._id + "'  >"
+                        })
+                        res.send("Ok")
+                    }
+
+
                 }
-                
-                   
-            }
-           
-        })
+
+            })
         // option:"<div class='row'>"+
         // "<div class='col-md-6'><i class='fa fa-save' style='color:green;font-size:30px;cursor:pointer'></i></div>"+
         // "<div class='col-md-6'><i class='fa fa-trash-o' style='color:red;font-size:30px;cursor:pointer'></i></div>"+"</div>"
@@ -128,18 +128,18 @@ routeExp.route('/get_data/:options').get(async function (req, res) {
     var opt = req.params.options
     if (session.typeUtil == "Admin") {
         mongoose
-        .connect(
-            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-            {
-                useUnifiedTopology: true,
-                UseNewUrlParser: true
-            }
-        )
-        .then(async () => {
-           
-           var data_send = await ProjectSheets.find({type:opt});
-           res.send(data_send);
-        })
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+
+                var data_send = await ProjectSheets.find({ type: opt });
+                res.send(data_send);
+            })
     } else {
         res.redirect("/")
     }
@@ -149,7 +149,7 @@ routeExp.route('/delete_project').post(async function (req, res) {
     var session = req.session
     var id = req.body.id;
     if (session.typeUtil == "Admin") {
-        await ProjectSheets.findOneAndDelete({_id:id})
+        await ProjectSheets.findOneAndDelete({ _id: id })
         res.send("Ok");
     }
     else {
@@ -161,36 +161,36 @@ routeExp.route('/save').post(async function (req, res) {
     var session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
-        .connect(
-            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-            {
-                useUnifiedTopology: true,
-                UseNewUrlParser: true
-            }
-        )
-        .then(async () => {
-            await ProjectSheets.findOneAndUpdate({_id:req.body.id},{
-                name:req.body.name,
-                option:update_generator(req.body.id),
-                project_leader:req.body.project_leader,
-                team_leader:req.body.team_leader,
-                date_start: valid_date(moment(req.body.date_start).format("YYYY-MM-DD"))
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+                await ProjectSheets.findOneAndUpdate({ _id: req.body.id }, {
+                    name: req.body.name,
+                    option: update_generator(req.body.id),
+                    project_leader: req.body.project_leader,
+                    team_leader: req.body.team_leader,
+                    date_start: valid_date(moment(req.body.date_start).format("YYYY-MM-DD"))
+                })
+                res.send("Ok")
             })
-            res.send("Ok")
-        })
     }
     else {
         res.redirect("/")
     }
 })
-function update_generator(id){
-    return "<div class='row'>"+
-    "<div class='col-md-6'>"+
-    "<i class='fa fa-edit' onclick=update_project("+"'"+id+"'"+") style='color:green;font-size:30px;cursor:pointer'></i></div>"+
-    "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project("+"'"+id+"'"+") style='color:red;font-size:30px;cursor:pointer'></i></div>"+"</div>"
+function update_generator(id) {
+    return "<div class='row'>" +
+        "<div class='col-md-6'>" +
+        "<i class='fa fa-edit' onclick=update_project(" + "'" + id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+        "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>"
 };
-function valid_date(date){
-    if (date == "Invalid date"){
+function valid_date(date) {
+    if (date == "Invalid date") {
         return ""
     }
     else {
@@ -224,8 +224,9 @@ const nodemailer = require("nodemailer")
 const { findOneAndUpdate } = require('../Model/InventaireModel')
 // const { route } = require('express/lib/application')
 //login
+var session
 routeExp.route('/').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.name) {
         res.redirect("/acceuil")
     } else {
@@ -235,7 +236,7 @@ routeExp.route('/').get(async function (req, res) {
 
 //acceuil
 routeExp.route('/acceuil').get(async function (req, res) {
-    var session = req.session;
+    session = req.session;
     //console.log("session", session);
     if (session.email) {
         res.render("acceuil.html", { type_util: session.typeUtil })
@@ -245,7 +246,7 @@ routeExp.route('/acceuil').get(async function (req, res) {
 })
 
 routeExp.route('/IT').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     //console.log("session.typeUtil ", session.typeUtil);
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         res.render("./it/IT.html", { type_util: session.typeUtil })
@@ -265,7 +266,7 @@ routeExp.route('/op_sheet').get(async function (req, res) {
 })
 
 routeExp.route('/evaluationTL').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         res.render("./operation/evaluationTL.html", { type_util: session.typeUtil })
     } else {
@@ -275,7 +276,7 @@ routeExp.route('/evaluationTL').get(async function (req, res) {
 
 routeExp.route('/production').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         res.render("./production/production.html", { type_util: session.typeUtil })
     } else {
@@ -286,7 +287,7 @@ routeExp.route('/production').get(async function (req, res) {
 //ACTIF Inventaire
 //Inventaire uc
 routeExp.route('/inventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var page = "actif/inventaireUC.html"
     await nombreIn(page, session, res)
 })
@@ -326,7 +327,7 @@ async function nombreIn(page, session, res) {
 
 // Get Inventaire ecran
 routeExp.route('/inventaireEcran').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var page = "actif/inventaire-ecran.html"
     await nombreIn(page, session, res)
     // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
@@ -338,7 +339,7 @@ routeExp.route('/inventaireEcran').get(async function (req, res) {
 
 //Inventaire clavier
 routeExp.route('/inventaireClavier').get(async function (req, res) {
-    var session = req.session
+    session = req.session
 
     var page = "actif/inventaire-clavier.html"
     await nombreIn(page, session, res)
@@ -351,7 +352,7 @@ routeExp.route('/inventaireClavier').get(async function (req, res) {
 
 //Inventaire souris
 routeExp.route('/inventaireSouris').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var page = "actif/inventaire-souris.html"
     await nombreIn(page, session, res)
     // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
@@ -363,7 +364,7 @@ routeExp.route('/inventaireSouris').get(async function (req, res) {
 
 //Inventaire phone
 routeExp.route('/inventairePhone').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var page = "actif/inventaire-phone.html"
     await nombreIn(page, session, res)
     // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
@@ -377,7 +378,7 @@ routeExp.route('/inventairePhone').get(async function (req, res) {
 //INACTIF Inventaire
 //Inventaire uc
 routeExp.route('/inventaire-inact-uc').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var page = "inactif/inventaireUC.html"
     await nombreIn(page, session, res)
     // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
@@ -389,7 +390,7 @@ routeExp.route('/inventaire-inact-uc').get(async function (req, res) {
 
 // Get Inventaire ecran
 routeExp.route('/inventaire-inact-ecran').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var page = "inactif/inventaire-ecran.html"
     await nombreIn(page, session, res)
     // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
@@ -401,7 +402,7 @@ routeExp.route('/inventaire-inact-ecran').get(async function (req, res) {
 
 //Inventaire clavier
 routeExp.route('/inventaire-inact-clavier').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var page = "inactif/inventaire-clavier.html"
     await nombreIn(page, session, res)
     // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
@@ -413,7 +414,7 @@ routeExp.route('/inventaire-inact-clavier').get(async function (req, res) {
 
 //Inventaire souris
 routeExp.route('/inventaire-inact-souris').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var page = "inactif/inventaire-souris.html"
     await nombreIn(page, session, res)
     // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
@@ -425,7 +426,7 @@ routeExp.route('/inventaire-inact-souris').get(async function (req, res) {
 
 //Inventaire phone
 routeExp.route('/inventaire-inact-phone').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var page = "inactif/inventaire-phone.html"
     await nombreIn(page, session, res)
     // if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
@@ -438,7 +439,7 @@ routeExp.route('/inventaire-inact-phone').get(async function (req, res) {
 // all instruction
 routeExp.route('/instruction').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -584,7 +585,7 @@ routeExp.route('/addInventaire').post(async function (req, res) {
 //GET DATA inventaire ACTIF
 //invetaire UC
 routeExp.route('/allUCActifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     //console.log("allUcActif");
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
@@ -606,7 +607,7 @@ routeExp.route('/allUCActifInventaire').get(async function (req, res) {
 
 // Get all Material in inventary Ecran
 routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -629,7 +630,7 @@ routeExp.route('/allEcranActifInventaire').get(async function (req, res) {
 
 // Get all Material in inventary Clavier
 routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -650,7 +651,7 @@ routeExp.route('/allClavierActifInventaire').get(async function (req, res) {
 
 // Get all Material in inventary souris
 routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -671,7 +672,7 @@ routeExp.route('/allSourisActifInventaire').get(async function (req, res) {
 
 // Get all Material in inventary phone
 routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -693,7 +694,7 @@ routeExp.route('/allPhoneActifInventaire').get(async function (req, res) {
 //GET DATA inventaire INACTIF
 //invetiaire UC inactif
 routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -713,7 +714,7 @@ routeExp.route('/allUCInactifInventaire').get(async function (req, res) {
 })
 // Get all Material in inventary Ecran
 routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -735,7 +736,7 @@ routeExp.route('/allEcranInactifInventaire').get(async function (req, res) {
 
 // Get all Material in inventary Clavier
 routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -756,7 +757,7 @@ routeExp.route('/allClavierInactifInventaire').get(async function (req, res) {
 
 // Get all Material in inventary souris
 routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -777,7 +778,7 @@ routeExp.route('/allSourisInactifInventaire').get(async function (req, res) {
 
 // Get all Material in inventary phone
 routeExp.route('/allPhoneInactifInventaire').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -802,7 +803,7 @@ routeExp.route('/allPhoneInactifInventaire').get(async function (req, res) {
 routeExp.route('/getInventaire').post(async function (req, res) {
     var codeM = req.body.code
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -827,7 +828,7 @@ routeExp.route('/getInventaire').post(async function (req, res) {
 routeExp.route('/getInstruction').post(async function (req, res) {
     var name = req.body.name
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -851,7 +852,7 @@ routeExp.route('/getInstruction').post(async function (req, res) {
 
 //Update Material
 routeExp.route('/updateInvent').post(async function (req, res) {
-    var session = req.session
+    session = req.session
     var actifUpdat = req.body.actifUpdat;
     var nameMatUpd = req.body.nameMatUpd;
     var typeUpdat = req.body.typeUpdat;
@@ -1268,7 +1269,7 @@ routeExp.route('/updateInvent').post(async function (req, res) {
 routeExp.route('/getOneInventaire').post(async function (req, res) {
 
     var id = req.body.id;
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1292,7 +1293,7 @@ routeExp.route('/getOneInventaire').post(async function (req, res) {
 //delete material in inventary
 routeExp.route('/deleteMaterial').post(async function (req, res) {
     var actifD = req.body.actifD;
-    var session = req.session
+    session = req.session
 
     var id = req.body.id
     var nameD = req.body.nameD
@@ -1365,7 +1366,7 @@ routeExp.route('/addInstruction').post(async function (req, res) {
     var titre = req.body.titre;
     var instruct = req.body.instruct;
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1390,6 +1391,19 @@ routeExp.route('/addInstruction').post(async function (req, res) {
                         instruction: instruct
                     }
                     var inst = await InstructionModel(newInst).save()
+
+                    var historique = {
+                        user: session.name,
+                        model: "Ajout Instruction",
+                        crud: "jout",
+                        date: new Date(),
+                        old: {
+                            "Nom": name,
+                            "Titre": titre,
+                            "Instruction": instruct
+                        }
+                    }
+                    await HistoriqueModel(historique).save()
                     // console.log("instruction", inst);
                     res.send("success")
                 }
@@ -1408,7 +1422,7 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
     var titleOld = req.body.titleOld;
     var instructOld = req.body.instructOld;
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1426,18 +1440,18 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
                 } else {
                     var historique = {
                         user: session.name,
-                        model: "Instruction",
+                        model: "Update Instruction",
                         crud: "Modification",
                         date: new Date(),
                         new: {
-                            "name": name,
-                            "title": title,
-                            "instruction": instruct
+                            "Nom": name,
+                            "Titre": title,
+                            "Instruction": instruct
                         },
                         old: {
-                            "name": oldName,
-                            "title": titleOld,
-                            "instruction": instructOld
+                            "Nom": oldName,
+                            "Titre": titleOld,
+                            "Instruction": instructOld
                         }
                     }
                     var historie = await HistoriqueModel(historique).save()
@@ -1455,7 +1469,7 @@ routeExp.route("/UpdateInstruct").post(async function (req, res) {
 routeExp.route('/deleteInstruction').post(async function (req, res) {
     var name = req.body.name;
 
-    var session = req.session
+    session = req.session
 
     //console.log("name", name);
     //if (session.typeUtil == "IT" || session.typeUtil == "Admin") {
@@ -1468,6 +1482,22 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
             }
         )
         .then(async () => {
+
+            var getInstruct = await InstructionModel.findOne({ name: name })
+            var historique = {
+                user: session.name,
+                model: "Supression Instruction",
+                crud: "Delete",
+                date: new Date(),
+                old: {
+
+                    "Nom": getInstruct.name,
+                    "Titre": getInstruct.title,
+                    "Instruction": getInstruct.instruction
+                }
+            }
+            await HistoriqueModel(historique).save()
+
             await InstructionModel.findOneAndDelete({ name: name })
             //console.log("delet", delet);
             res.send("success")
@@ -1480,7 +1510,7 @@ routeExp.route('/deleteInstruction').post(async function (req, res) {
 //all Team Leader
 routeExp.route('/allTL').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1503,7 +1533,7 @@ routeExp.route('/allTL').get(async function (req, res) {
 //all user to login
 routeExp.route('/allUser').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     //if (session.typeUtil == "Admin") {
     mongoose
         .connect(
@@ -1526,7 +1556,7 @@ routeExp.route('/allUser').get(async function (req, res) {
 //all history
 routeExp.route('/allHistory').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1556,7 +1586,7 @@ routeExp.route('/addTL').post(async function (req, res) {
     var threats = req.body.threats
     // console.log("rq.b o ", req.body);
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1580,6 +1610,24 @@ routeExp.route('/addTL').post(async function (req, res) {
                         threats: threats,
                     }
                     var tl = await TLModel(newTL).save()
+
+                    var historique = {
+                        user: session.name,
+                        model: "Ajout Evaluation TL",
+                        date: new Date(),
+                        crud: "Ajout",
+                        old: {
+                            "Name": name,
+                            "Mcode": mcode,
+                            "Points forts": strengths,
+                            "Faiblesses": weaknesses,
+                            "Opportunités": opportunities,
+                            "Menaces": threats,
+                        }
+                    }
+                    var historie = await HistoriqueModel(historique).save()
+
+
                     // console.log("addInventaire", tl);
                     res.send("success")
                 }
@@ -1608,7 +1656,7 @@ routeExp.route("/updateTl").post(async function (req, res) {
     // console.log("threatsA ", threatsA, " opportunitiesA ", opportunitiesA);
     // console.log("weaknessesA ", weaknessesA, " strengthsA ", strengthsA);
     // console.log("nameA ", nameA, " mcode ", oldMCode);
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1626,7 +1674,7 @@ routeExp.route("/updateTl").post(async function (req, res) {
                 } else {
                     var historique = {
                         user: session.name,
-                        model: "Evaluation TL",
+                        model: "Update Evaluation TL",
                         date: new Date(),
                         crud: "Modification",
                         old: {
@@ -1660,7 +1708,7 @@ routeExp.route("/updateTl").post(async function (req, res) {
 routeExp.route("/deleteTeamLeader").post(async function (req, res) {
     var mcode = req.body.mcode
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1671,6 +1719,23 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
                 }
             )
             .then(async () => {
+                var tl = await TLModel.findOne({ mcode: mcode })
+                // console.log("tl", tl);
+                var historique = {
+                    user: session.name,
+                    model: "Delete Evaluation TL",
+                    date: new Date(),
+                    old: {
+                        "Name": tl.name,
+                        "Mcode": tl.mcode,
+                        "Points forts": tl.strengths,
+                        "Faiblesses": tl.weaknesses,
+                        "Opportunités": tl.opportunities,
+                        "Menaces": tl.threats,
+                    }
+                }
+                await HistoriqueModel(historique).save()
+
                 var deleteUser = await TLModel.findOneAndDelete({ mcode: mcode })
                 // console.log("deleteUser", deleteUser);
                 res.send("success")
@@ -1682,7 +1747,7 @@ routeExp.route("/deleteTeamLeader").post(async function (req, res) {
 
 //get planning
 routeExp.route('/planning').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
         mongoose
@@ -1698,7 +1763,7 @@ routeExp.route('/planning').get(async function (req, res) {
                 var agent = await AgentModel.find()
 
                 var plan = await ProjectModel.find()
-                console.log("allPlaning", allPlaning);
+                // console.log("allPlaning", allPlaning);
                 res.render("./production/planning.html", { type_util: session.typeUtil, plan: plan, agent: agent })
                 //res.render("./production/charteRangeFilter.html", {plan: allPlaning, agent: agent})
             })
@@ -1709,7 +1774,7 @@ routeExp.route('/planning').get(async function (req, res) {
 
 //get planning
 routeExp.route('/planning/:project/:shift').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var shift = req.params.shift
     var project = req.params.project;
     // console.log("shift", shift);
@@ -1739,7 +1804,7 @@ routeExp.route('/planning/:project/:shift').get(async function (req, res) {
 //liste agent
 routeExp.route('/agent').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1762,8 +1827,8 @@ routeExp.route('/agent').get(async function (req, res) {
 
 //get agence
 routeExp.route("/getOneAgent").post(async function (req, res) {
-    var mcode = req.body.mcode
-    console.log("log", mcode);
+    var mcode = req.body.mcode1
+    //console.log("log", mcode);
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -1774,7 +1839,7 @@ routeExp.route("/getOneAgent").post(async function (req, res) {
         )
         .then(async () => {
             var agent = await AgentModel.findOne({ mcode: mcode })
-            console.log("agent", agent);
+            //console.log("agent", agent);
             res.send(agent)
         })
 })
@@ -1792,7 +1857,6 @@ routeExp.route("/getAllProjet").get(async function (req, res) {
         )
         .then(async () => {
             var projet = await ProjectModel.find()
-            console.log("projet", projet);
             res.send(projet)
         })
 })
@@ -1800,7 +1864,7 @@ routeExp.route("/getAllProjet").get(async function (req, res) {
 //Evaluation agent
 routeExp.route('/evaluationAgent').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1834,7 +1898,7 @@ routeExp.route('/addAgent').post(async function (req, res) {
     var phon = req.body.phon
 
 
-    var session = req.session
+    session = req.session
 
     //console.log("project", project);
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
@@ -1863,6 +1927,25 @@ routeExp.route('/addAgent').post(async function (req, res) {
                         tel: phon
                     }
                     var agent = await AgentModel(newTL).save()
+                    var historique = {
+                        user: session.name,
+                        model: "Ajout Agent",
+                        date: new Date(),
+                        crud: "Ajout",
+                        old: {
+                            "Nom": name,
+                            "Prénom usuel": usuelName,
+                            "Mcode": mcode,
+                            "Numéro": number,
+                            "Shift": shift,
+                            "Projet": project,
+                            "Site": site,
+                            "Quartier": quartier,
+                            "Téléphone": phon
+                        }
+                    }
+                    var historie = await HistoriqueModel(historique).save()
+
                     // console.log("agent", agent);
                     res.send("success")
                 }
@@ -1882,7 +1965,7 @@ routeExp.route('/addEvaluationAgent').post(async function (req, res) {
     var quality = req.body.quality
     var comportement = req.body.comportement
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1904,6 +1987,21 @@ routeExp.route('/addEvaluationAgent').post(async function (req, res) {
                         quality: quality,
                         comportement: comportement,
                     }
+                    var historique = {
+                        user: session.name,
+                        model: "Ajout Agent",
+                        date: new Date(),
+                        crud: "Ajout",
+                        old: {
+                            "Prénom usuel": name,
+                            "Mcode": mcode,
+                            "Production": production,
+                            "Qualité": quality,
+                            "Comportement": comportement,
+                        }
+                    }
+                    var historie = await HistoriqueModel(historique).save()
+
                     var agent = await EvaluationAgent(newAgent).save()
                     // console.log("agent", agent);
                     res.send("success")
@@ -1916,7 +2014,7 @@ routeExp.route('/addEvaluationAgent').post(async function (req, res) {
 // get all Agent
 routeExp.route('/allAgent').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1940,7 +2038,7 @@ routeExp.route('/allAgent').get(async function (req, res) {
 // get all evaluation Agent
 routeExp.route('/allEvaluationAgent').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -1983,7 +2081,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
     var phonA = req.body.telA;
 
     //console.log("req.body", req.body);
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -2004,7 +2102,7 @@ routeExp.route("/updateAgent").post(async function (req, res) {
                     } else {
                         var historique = {
                             user: session.name,
-                            model: "Agent",
+                            model: "Update Agent",
                             date: new Date(),
                             crud: "Modification",
                             old: {
@@ -2058,7 +2156,7 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
     var qualityA = req.body.qualityA;
     var comportementA = req.body.comportementA;
 
-    var session = req.session
+    session = req.session
 
     // console.log("req.body", req.body);
     // console.log("name", name);
@@ -2085,22 +2183,22 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
                     } else {
                         var historique = {
                             user: session.name,
-                            model: "Evaluation Agent",
+                            model: "Update Evaluation Agent",
                             date: new Date(),
                             crud: "Modification",
                             old: {
-                                "mcode": oldMCode,
-                                "name": nameA,
-                                "production": productionA,
-                                "quality": qualityA,
-                                "comportement": comportementA,
+                                "Mcode": oldMCode,
+                                "Nom usuel": nameA,
+                                "Production": productionA,
+                                "Qualité": qualityA,
+                                "Comportement": comportementA,
                             },
                             new: {
-                                "mcode": mcodeN,
-                                "name": name,
-                                "production": production,
-                                "quality": quality,
-                                "comportement": comportement,
+                                "Mcode": mcodeN,
+                                "Nom usuel": name,
+                                "Production": production,
+                                "Qualité": quality,
+                                "Comportement": comportement,
                             }
                         }
                         var historie = await HistoriqueModel(historique).save()
@@ -2119,7 +2217,7 @@ routeExp.route("/updateEvalAgent").post(async function (req, res) {
 routeExp.route("/deleteAgent").post(async function (req, res) {
     var mcode = req.body.mcode
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -2130,6 +2228,27 @@ routeExp.route("/deleteAgent").post(async function (req, res) {
                 }
             )
             .then(async () => {
+                var getAgent = await AgentModel.findOne({ mcode: mcode });
+                console.log("getAgent", getAgent);
+                var historique = {
+                    user: session.name,
+                    model: "Delete Agent",
+                    date: new Date(),
+                    crud: "Delete",
+                    old: {
+                        "Name": getAgent.name,
+                        "Prénom usuel": getAgent.usuelName,
+                        "Mcode": getAgent.mcode,
+                        "Numéro": getAgent.number,
+                        "Shift": getAgent.shift,
+                        "Projet": getAgent.project,
+                        "Site": getAgent.site,
+                        "Quartier": getAgent.quartier,
+                        "Téléphone": getAgent.phon
+                    }
+                }
+                var historie = await HistoriqueModel(historique).save()
+
                 var deleteUser = await AgentModel.findOneAndDelete({ mcode: mcode })
                 // console.log("deleteUser", deleteUser);
                 res.send("success")
@@ -2143,7 +2262,7 @@ routeExp.route("/deleteAgent").post(async function (req, res) {
 routeExp.route("/deleteEvalAgent").post(async function (req, res) {
     var mcode = req.body.mcode
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -2154,6 +2273,24 @@ routeExp.route("/deleteEvalAgent").post(async function (req, res) {
                 }
             )
             .then(async () => {
+
+                var dUser = await EvaluationAgent.findOne({ mcode: mcode })
+                //console.log("dUser.", dUser);
+                var historique = {
+                    user: session.name,
+                    model: "Delete Evaluation Agent",
+                    date: new Date(),
+                    crud: "Ajout",
+                    old: {
+                        "Prénom usuel": dUser.usuelName,
+                        "Mcode": dUser.mcode,
+                        "Production": dUser.production,
+                        "Qualité": dUser.quality,
+                        "Comportement": dUser.comportement
+                    }
+                }
+                var historie = await HistoriqueModel(historique).save()
+
                 var deleteUser = await EvaluationAgent.findOneAndDelete({ mcode: mcode })
                 // console.log("deleteUser", deleteUser);
                 res.send("success")
@@ -2165,7 +2302,7 @@ routeExp.route("/deleteEvalAgent").post(async function (req, res) {
 //get user
 routeExp.route('/user').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -2189,7 +2326,7 @@ routeExp.route('/user').get(async function (req, res) {
 //historique
 routeExp.route('/historique').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -2253,7 +2390,7 @@ routeExp.route("/signup").post(async function (req, res) {
     var name = req.body.name;
     var email = req.body.email;
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -2301,7 +2438,7 @@ function randomPassword() {
 routeExp.route("/getOneAgent").post(async function (req, res) {
     var mcode1 = req.body.mcode1
 
-    var session = req.session
+    session = req.session
     //console.log("mcode1", req.body.mcode1);
     //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
     mongoose
@@ -2326,7 +2463,7 @@ routeExp.route("/getOneAgent").post(async function (req, res) {
 routeExp.route("/getOneTL").post(async function (req, res) {
     var mcode1 = req.body.mcode
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -2358,7 +2495,7 @@ routeExp.route('/updateUser').post(async function (req, res) {
     var typeA = req.body.typeA;
     var mcode = req.body.mcode
 
-    var session = req.session
+    session = req.session
 
     //console.log("mcode", req.body);
     if (session.typeUtil == "Admin") {
@@ -2410,7 +2547,7 @@ routeExp.route('/updateUser').post(async function (req, res) {
 routeExp.route("/getOneUser").post(async function (req, res) {
     var mcode1 = req.body.mcode
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -2434,7 +2571,7 @@ routeExp.route("/getOneUser").post(async function (req, res) {
 routeExp.route("/deleteUser").post(async function (req, res) {
     var mcode = req.body.mcode;
 
-    var session = req.session
+    session = req.session
     if (session.typeUtil == "Admin") {
         mongoose
             .connect(
@@ -2458,7 +2595,7 @@ routeExp.route("/deleteUser").post(async function (req, res) {
 
 //post login
 routeExp.route('/login').post(async function (req, res) {
-    var session = req.session;
+    session = req.session;
     var email = req.body.email;
     var password = req.body.password;
     // console.log("req", req.body);
@@ -2504,7 +2641,7 @@ async function login(email, password, session, res) {
 }
 
 routeExp.route("/logout").get(async function (req, res) {
-    var session = req.session;
+    session = req.session;
     session.name = null;
     session.email = null;
     session.typeUtil = null;
@@ -2514,7 +2651,7 @@ routeExp.route("/logout").get(async function (req, res) {
 })
 
 routeExp.route("/profil").get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.name) {
         mongoose
             .connect(
@@ -2537,7 +2674,7 @@ routeExp.route("/profil").get(async function (req, res) {
 
 //reset password
 routeExp.route("/resetPassword").get(async function (req, res) {
-    var session = req.session
+    session = req.session
     if (session.mailconfirm) {
         res.redirect('/sendMail')
     } else {
@@ -2547,7 +2684,7 @@ routeExp.route("/resetPassword").get(async function (req, res) {
 
 //send mail
 routeExp.route("/sendMail").post(async function (req, res) {
-    var session = req.session
+    session = req.session
     var email = req.body.email
     // console.log("email", email);
     mongoose
@@ -2575,7 +2712,7 @@ routeExp.route("/sendMail").post(async function (req, res) {
 })
 
 routeExp.route("/sendMail").get(async function (req, res) {
-    var session = req.session;
+    session = req.session;
     if (session.mailconfirm) {
         res.render("resetPassword1.html", { err: "" })
     } else {
@@ -2629,7 +2766,7 @@ var transporter = nodemailer.createTransport({
 });
 
 routeExp.route("/check").post(async function (req, res) {
-    var session = req.session
+    session = req.session
     //console.log("session", session);
     if (session.code == req.body.code) {
         res.send("match")
@@ -2640,7 +2777,7 @@ routeExp.route("/check").post(async function (req, res) {
 
 routeExp.route("/changePassword").post(async function (req, res) {
     var newpass = req.body.pass;
-    var session = req.session;
+    session = req.session;
 
     // console.log("session", session);
     mongoose
@@ -3073,7 +3210,7 @@ routeExp.route("/udpatePlanning").post(async function (req, res) {
     //console.log("req", req.body);
 
 
-    var session = req.session
+    session = req.session
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -3142,7 +3279,7 @@ routeExp.route("/deletePlanning").post(async function (req, res) {
 //get projet
 routeExp.route('/projet').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
     mongoose
@@ -3166,7 +3303,7 @@ routeExp.route('/projet').get(async function (req, res) {
 //get reporting
 routeExp.route('/reporting').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     //if (session.typeUtil == "TL" || session.typeUtil == "Admin") {
 
     mongoose
@@ -3190,7 +3327,7 @@ routeExp.route('/reporting').get(async function (req, res) {
 //New Projet
 routeExp.route('/newProjet').post(async function (req, res) {
     var name = req.body.name;
-
+    session = req.session;
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -3216,6 +3353,17 @@ routeExp.route('/newProjet').post(async function (req, res) {
                         var newP = {
                             name: name
                         }
+                        var historique = {
+                            user: session.name,
+                            model: "Ajout Projet",
+                            date: new Date(),
+                            crud: "Ajout",
+                            old: {
+                                "Nom": name
+                            }
+                        }
+                        var historie = await HistoriqueModel(historique).save()
+
                         var Proj = await ProjectModel(newP).save()
                         //console.log("proje", Proj);
                         res.send("success")
@@ -3228,6 +3376,7 @@ routeExp.route('/newProjet').post(async function (req, res) {
 routeExp.route('/updateProjet').post(async function (req, res) {
     var nameOld = req.body.nameOld;
     var nameNew = req.body.nameNew;
+    session = req.session;
 
     mongoose
         .connect(
@@ -3251,6 +3400,20 @@ routeExp.route('/updateProjet').post(async function (req, res) {
                     if ((await ProjectModel.findOne({ name: nameNew })) || nameNew == "") {
                         res.send('error')
                     } else {
+                        var historique = {
+                            user: session.name,
+                            model: "Update Agent",
+                            date: new Date(),
+                            crud: "Ajout",
+                            old: {
+                                "Nom": nameOld
+                            },
+                            new: {
+                                "Nom": nameNew
+                            }
+                        }
+                        var historie = await HistoriqueModel(historique).save()
+
                         var Proj = await ProjectModel.findOneAndUpdate({ name: nameOld }, { name: nameNew })
                         //console.log("proje", Proj);
                         res.send("success")
@@ -3262,6 +3425,7 @@ routeExp.route('/updateProjet').post(async function (req, res) {
 //Delete Projet
 routeExp.route('/deleteProjet').post(async function (req, res) {
     var name = req.body.name;
+    session = req.session;
 
     mongoose
         .connect(
@@ -3273,28 +3437,26 @@ routeExp.route('/deleteProjet').post(async function (req, res) {
         )
         .then(async () => {
 
-            // mongoose
-            //     .connect(
-            //         "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-            //         {
-            //             useUnifiedTopology: true,
-            //             UseNewUrlParser: true,
-            //         }
-            //     )
-            //     .then(async () => {
-            // if ((await ProjectModel.findOne({ name: nameNew })) || nameNew == "") {
-            //     res.send('error')
-            // } else {
+            var projet = await ProjectModel.findOne({ name: name })
+            console.log("projet", projet);
+            var historique = {
+                user: session.name,
+                model: "Delete Projet",
+                date: new Date(),
+                crud: "Delete",
+                old: {
+                    "Nom": name
+                }
+            }
+            var historie = await HistoriqueModel(historique).save()
+
             var Proj = await ProjectModel.findOneAndDelete({ name: name })
-            //console.log("proje", Proj);
             res.send("success")
-            //}
-            //})
         })
 })
 
 routeExp.route('/projet/:projet').get(async function (req, res) {
-    var session = req.session
+    session = req.session
     var projet = req.params.projet
     //console.log("projet", projet);
     res.render('./production/projetPDF.html', { type_util: session.typeUtil, projet: projet })
@@ -3387,7 +3549,7 @@ routeExp.route("/addReporting").post(async function (req, res) {
     var faute = req.body.faute;
     var start = req.body.start;
     var end = req.body.end;
-
+    session = req.session;
     //console.log("end", end);
     mongoose
         .connect(
@@ -3411,6 +3573,23 @@ routeExp.route("/addReporting").post(async function (req, res) {
                 }
 
                 var saveR = await ReportingModel(dataReport).save()
+
+                var historique = {
+                    user: session.name,
+                    model: "Ajout Reporting",
+                    date: new Date(),
+                    crud: "Ajout",
+                    old: {
+                        "Nom": name,
+                        "Mcode": mcode,
+                        "Production": production,
+                        "Faute": faute,
+                        "Début": start,
+                        "Fin": end
+                    }
+                }
+                var historie = await HistoriqueModel(historique).save()
+
                 //console.log("saeve", saveR);
                 res.send("success")
             }
@@ -3669,7 +3848,30 @@ routeExp.route('/updateReporting').post(async function (req, res) {
                 console.log("error");
                 res.send("error")
             } else {
+                var historique = {
+                    user: session.name,
+                    model: "Update Reporting",
+                    date: new Date(),
+                    crud: "Ajout",
+                    old: {
+                        "Mcode": mcodeA,
+                        "Production": productionA,
+                        "Faute": fauteA,
+                        "Début": debutA,
+                        "Fin": finA
+                    },
+                    new: {
+                        "Mcode": mcode,
+                        "Production": production,
+                        "Faute": faute,
+                        "Début": debut,
+                        "Fin": fin
+                    }
+                }
+                var historie = await HistoriqueModel(historique).save()
+
                 var updateReport = await ReportingModel.findOneAndUpdate({ mcode: mcodeA, production: productionA, faute: fauteA, start: debutA, end: finA }, { mcode: mcode, name: name, production: production, faute: faute, start: debut, end: fin })
+
                 //console.log("updateReport", updateReport);
                 res.send("succes")
             }
@@ -3695,6 +3897,25 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
             }
         )
         .then(async () => {
+            var getHistor = await ReportingModel.findOne({ mcode: mcode, name: name, production: production, faute: faute, start: start, end: end })
+            var startR = new Date(getHistor.start)
+            var EndR = new Date(getHistor.end)
+            var historique = {
+                user: session.name,
+                model: "Delete Reporting",
+                date: new Date(),
+                crud: "Ajout",
+                old: {
+                    "Mcode": getHistor.mcode,
+                    "Nom": getHistor.name,
+                    "Production": getHistor.production,
+                    "Faute": getHistor.faute,
+                    "Début": startR.toLocaleDateString("fr"),
+                    "Fin": EndR.toLocaleDateString('fr')
+                }
+            }
+            var historie = await HistoriqueModel(historique).save()
+
             var deleteRep = await ReportingModel.findOneAndDelete({ mcode: mcode, name: name, production: production, faute: faute, start: start, end: end })
             res.send("succes")
             //console.log("deleteRep", deleteRep);
@@ -3704,7 +3925,7 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
 
 
 // routeExp.route('/listeUser').get(async function (req, res) {
-//     var session = req.session
+//     session = req.session
 //     var projet = req.params.projet
 //     //console.log("projet", projet);
 //     res.render('./it/ListeUser', { type_util: session.typeUtil, projet: projet })
@@ -3715,7 +3936,7 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
 //get user
 routeExp.route('/listecours').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     //if (session.typeUtil == "Admin") {
     mongoose
         .connect(
@@ -3814,7 +4035,7 @@ routeExp.route("/addAgentFile").get(async function (req, res) {
 //liste agent filter par shift
 routeExp.route('/agentFilter/:shift').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     var shift = req.params.shift;
 
     mongoose
@@ -3837,7 +4058,7 @@ routeExp.route('/agentFilter/:shift').get(async function (req, res) {
 //liste agent filter par agent
 routeExp.route('/agentFilterProjet/:projet').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     var projet = req.params.projet;
 
     //console.log("projet", projet);
@@ -3860,7 +4081,7 @@ routeExp.route('/agentFilterProjet/:projet').get(async function (req, res) {
 //liste agent filter
 routeExp.route('/agentFilterProjShift/:shift/:projet').get(async function (req, res) {
 
-    var session = req.session
+    session = req.session
     var shift = req.params.shift;
     var projet = req.params.projet;
 
@@ -3937,6 +4158,7 @@ routeExp.route("/backup_databas").get(async function (req, res) {
                     //console.log("New data added");
                 });
                 console.log("finish backup");
+                res.send("finish backup")
             } catch (err) {
                 console.log(err);
                 res.send(data)
@@ -3944,6 +4166,48 @@ routeExp.route("/backup_databas").get(async function (req, res) {
         });
 })
 
+
+routeExp.route("/addReportingExcel").post(async function (req, res) {
+
+    console.log("req", req.files["file"]);
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            const parseExcel = (filename) => {
+
+                const excelData = XLSX.readFile(filename);
+
+                return Object.keys(excelData.Sheets).map(name => ({
+                    name,
+                    data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
+                }));
+            };
+
+            var liste = []
+            // parseExcel("./Vue/assets/listeCours.xlsx").forEach(element => {
+            //     liste.push(element.data)
+            // });
+
+            console.log("liste", liste[0].length);
+            // for (let i = 0; i < liste[0].length; i++) {
+            //     const element = liste[0][i].UP;
+            //     var c = {
+            //         name: element
+            //     }
+            //     console.log("lement", c);
+            //     var proj = await ProjectModel(c).save()
+            //     console.log("proj", proj);
+            // }
+            res.send("finish")
+
+        });
+})
 
 // routeExp.route("/addUserexcel").get(async function (req, res) {
 //     mongoose

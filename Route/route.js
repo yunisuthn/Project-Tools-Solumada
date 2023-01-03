@@ -12,9 +12,206 @@ const PlanningModel = require("../Model/PlanningModel")
 const HistoriqueModel = require("../Model/HistoriqueModel")
 const ProjectModel = require("../Model/ProjectModel")
 const ProjetFileModel = require("../Model/ProjetFileModel")
+const moment = require("moment")
+
 const ReportingModel = require("../Model/ReportingModel");
 
-//planning congé Ricardo Base de donné
+const ProjectSheets = require('../Model/ProjectSheets')
+
+//Operation Sheets
+routeExp.route('/operation').get(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "Admin") {
+        res.render("./operation/operation.html", { type_util: session.typeUtil })
+    } else {
+        res.redirect("/")
+    }
+})
+
+routeExp.route('/add_row/:options').post(async function (req, res) {
+    var session = req.session
+    var exception = ["OtherTasks", "FormerProjects", "Upcoming"]
+    var opt = req.params.options;
+    var id = req.body.id;
+    if (session.typeUtil == "Admin") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+                if (id == "") {
+                    var data = {
+                        type: opt,
+                        option: "",
+                        name: "",
+                        project_leader: "",
+                        team_leader: "",
+                        date_start: ""
+                    }
+                    var last = await ProjectSheets(data).save()
+                    if (exception.includes(opt)) {
+                        await ProjectSheets.findOneAndUpdate({ _id: last._id }, {
+                            option: "<div class='row'>" +
+                                "<div class='col-md-6'>" +
+                                "<i class='fa fa-save' onclick=save(" + "'" + last._id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+                                "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + last._id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>",
+                            name: "<input type='text' class= 'form-control new" + last._id + "' >",
+                            project_leader: "",
+                            team_leader: "",
+                            date_start: ""
+                        })
+                        res.send("Ok");
+                    }
+                    else {
+                        await ProjectSheets.findOneAndUpdate({ _id: last._id }, {
+                            option: "<div class='row'>" +
+                                "<div class='col-md-6'>" +
+                                "<i class='fa fa-save' onclick=save(" + "'" + last._id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+                                "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + last._id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>",
+                            name: "<input type='text' class= 'form-control new" + last._id + "' >",
+                            project_leader: "<input type='text' class= 'form-control new" + last._id + "'  >",
+                            team_leader: "<input type='text' class= 'form-control new" + last._id + "'  >",
+                            date_start: "<input type='date' class= 'form-control new" + last._id + "'  >"
+                        })
+                        res.send("Ok");
+                    }
+
+
+                }
+                else {
+                    var last = await ProjectSheets.findOne({ _id: id });
+                    if (exception.includes(opt)) {
+                        await ProjectSheets.findOneAndUpdate({ _id: id }, {
+                            option: "<div class='row'>" +
+                                "<div class='col-md-6'>" +
+                                "<i class='fa fa-save' onclick=save(" + "'" + id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+                                "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>",
+                            name: "<input type='text' value='" + last.name + "' class= 'form-control new" + id + "' >",
+                            project_leader: "",
+                            team_leader: "",
+                            date_start: ""
+                        })
+                        res.send("Ok")
+                    }
+                    else {
+                        await ProjectSheets.findOneAndUpdate({ _id: id }, {
+                            option: "<div class='row'>" +
+                                "<div class='col-md-6'>" +
+                                "<i class='fa fa-save' onclick=save(" + "'" + id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+                                "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>",
+                            name: "<input type='text' value='" + last.name + "' class= 'form-control new" + id + "' >",
+                            project_leader: "<input type='text' value='" + last.project_leader + "' class= 'form-control new" + id + "'  >",
+                            team_leader: "<input type='text' value='" + last.team_leader + "' class= 'form-control new" + last._id + "'  >",
+                            date_start: "<input type='date' value='" + last.date_start + "' class= 'form-control new" + last._id + "'  >"
+                        })
+                        res.send("Ok")
+                    }
+
+
+                }
+
+            })
+        // option:"<div class='row'>"+
+        // "<div class='col-md-6'><i class='fa fa-save' style='color:green;font-size:30px;cursor:pointer'></i></div>"+
+        // "<div class='col-md-6'><i class='fa fa-trash-o' style='color:red;font-size:30px;cursor:pointer'></i></div>"+"</div>"
+    } else {
+        res.redirect("/")
+    }
+})
+
+routeExp.route('/get_data/:options').get(async function (req, res) {
+    var session = req.session
+    var opt = req.params.options
+    if (session.typeUtil == "Admin") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+
+                var data_send = await ProjectSheets.find({ type: opt });
+                res.send(data_send);
+            })
+    } else {
+        res.redirect("/")
+    }
+})
+
+routeExp.route('/delete_project').post(async function (req, res) {
+    var session = req.session
+    var id = req.body.id;
+    if (session.typeUtil == "Admin") {
+        await ProjectSheets.findOneAndDelete({ _id: id })
+        res.send("Ok");
+    }
+    else {
+        res.redirect("/")
+    }
+})
+
+routeExp.route('/save').post(async function (req, res) {
+    var session = req.session
+    if (session.typeUtil == "Admin") {
+        mongoose
+            .connect(
+                "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                {
+                    useUnifiedTopology: true,
+                    UseNewUrlParser: true
+                }
+            )
+            .then(async () => {
+                await ProjectSheets.findOneAndUpdate({ _id: req.body.id }, {
+                    name: req.body.name,
+                    option: update_generator(req.body.id),
+                    project_leader: req.body.project_leader,
+                    team_leader: req.body.team_leader,
+                    date_start: valid_date(moment(req.body.date_start).format("YYYY-MM-DD"))
+                })
+                res.send("Ok")
+            })
+    }
+    else {
+        res.redirect("/")
+    }
+})
+function update_generator(id) {
+    return "<div class='row'>" +
+        "<div class='col-md-6'>" +
+        "<i class='fa fa-edit' onclick=update_project(" + "'" + id + "'" + ") style='color:green;font-size:30px;cursor:pointer'></i></div>" +
+        "<div class='col-md-6'><i class='fa fa-trash-o' onclick=delete_project(" + "'" + id + "'" + ") style='color:red;font-size:30px;cursor:pointer'></i></div>" + "</div>"
+};
+function valid_date(date) {
+    if (date == "Invalid date") {
+        return ""
+    }
+    else {
+        return date
+    }
+}
+
+// mongoose
+//         .connect(
+//             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+//             {
+//                 useUnifiedTopology: true,
+//                 UseNewUrlParser: true
+//             }
+//         )
+//         .then(async () => {
+//             await ProjectSheets.deleteMany({});
+//             console.log("done");
+//         })
+
+//planning congé Ricardo Base de donnée
 const leaveModel = require("../Model/leave")
 const userModelClock = require("../Model/User")
 
@@ -24,6 +221,7 @@ const fs = require("fs")
 
 var dateTime = require('node-datetime');
 const nodemailer = require("nodemailer")
+const { findOneAndUpdate } = require('../Model/InventaireModel')
 // const { route } = require('express/lib/application')
 //login
 var session
@@ -57,10 +255,11 @@ routeExp.route('/IT').get(async function (req, res) {
     }
 })
 
-routeExp.route('/operation').get(async function (req, res) {
-    session = req.session
+
+routeExp.route('/op_sheet').get(async function (req, res) {
+    var session = req.session
     if (session.typeUtil == "Admin") {
-        res.render("./operation/operation.html", { type_util: session.typeUtil })
+        res.render("./operation/operation_sheet.html", { type_util: session.typeUtil })
     } else {
         res.redirect("/")
     }

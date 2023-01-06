@@ -15,9 +15,12 @@ const ProjetFileModel = require("../Model/ProjetFileModel")
 const moment = require("moment")
 
 const ReportingModel = require("../Model/ReportingModel");
+const ProductionModel = require("../Model/ProductionReporting");
+const FauteModel = require("../Model/FauteReporting");
 
 const ProjectSheets = require('../Model/ProjectSheets')
 
+var formidable = require('formidable');
 //Operation Sheets
 routeExp.route('/operation').get(async function (req, res) {
     var session = req.session
@@ -2229,7 +2232,6 @@ routeExp.route("/deleteAgent").post(async function (req, res) {
             )
             .then(async () => {
                 var getAgent = await AgentModel.findOne({ mcode: mcode });
-                console.log("getAgent", getAgent);
                 var historique = {
                     user: session.name,
                     model: "Delete Agent",
@@ -2881,6 +2883,30 @@ class Reporting {
         this.faute = faute;
         this.start = start;
         this.end = end;
+    }
+}
+
+class Production {
+    constructor(mcode, name, username, number, production, date, id) {
+        this.mcode = mcode;
+        this.name = name;
+        this.username = username;
+        this.production = production;
+        this.number = number;
+        this.date = date;
+        this.id = id
+    }
+}
+
+class Faute {
+    constructor(mcode, name, username, number, faute, date, id) {
+        this.mcode = mcode;
+        this.name = name;
+        this.username = username;
+        this.faute = faute;
+        this.number = number;
+        this.date = date;
+        this.id = id
     }
 }
 
@@ -3545,12 +3571,11 @@ routeExp.route("/extract-text").post(async function (req, res) {
 routeExp.route("/addReporting").post(async function (req, res) {
     var name = req.body.name;
     var mcode = req.body.mcode;
-    var production = req.body.production;
-    var faute = req.body.faute;
-    var start = req.body.start;
-    var end = req.body.end;
+    var nom = req.body.nom;
+    var number = req.body.number;
+    var params = req.body.params;
+    var date = req.body.date;
     session = req.session;
-    //console.log("end", end);
     mongoose
         .connect(
             "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
@@ -3560,38 +3585,72 @@ routeExp.route("/addReporting").post(async function (req, res) {
             }
         )
         .then(async () => {
-            if ((await ReportingModel.findOne({ name: name, mcode: mcode, production: production, faute: faute, start: start, end: end })) || mcode == "" || start == "" || end == "") {
-                res.send('error')
-            } else {
-                var dataReport = {
-                    name: name,
-                    mcode: mcode,
-                    production: production,
-                    faute: faute,
-                    start: start,
-                    end: end
-                }
-
-                var saveR = await ReportingModel(dataReport).save()
-
-                var historique = {
-                    user: session.name,
-                    model: "Ajout Reporting",
-                    date: new Date(),
-                    crud: "Ajout",
-                    old: {
-                        "Nom": name,
-                        "Mcode": mcode,
-                        "Production": production,
-                        "Faute": faute,
-                        "Début": start,
-                        "Fin": end
+            if (params == "production") {
+                if ((await ProductionModel.findOne({ name: name, mcode: mcode, nom: nom, production: req.production, date: date })) || mcode == "") {//|| start == "" || end == "") {
+                    res.send('error')
+                } else {
+                    var dataReport = {
+                        name: nom,
+                        prenom: name,
+                        mcode: mcode,
+                        production: req.body.production,
+                        number: number,
+                        date: date
                     }
-                }
-                var historie = await HistoriqueModel(historique).save()
 
-                //console.log("saeve", saveR);
-                res.send("success")
+                    var saveR = await ProductionModel(dataReport).save()
+
+                    var historique = {
+                        user: session.name,
+                        model: "Ajout Production",
+                        date: new Date(),
+                        crud: "Ajout",
+                        old: {
+                            "Nom": name,
+                            "Mcode": mcode,
+                            "Production": req.body.production,
+                            "Date": date,
+                        }
+                    }
+                    var historie = await HistoriqueModel(historique).save()
+
+                    //console.log("saeve", saveR);
+                    res.send("success")
+                }
+
+            } else {
+
+                if ((await FauteModel.findOne({ name: name, mcode: mcode, nom: nom, faute: req.faute, date: date })) || mcode == "") {//|| start == "" || end == "") {
+                    res.send('error')
+                } else {
+                    var dataReport = {
+                        name: nom,
+                        prenom: name,
+                        mcode: mcode,
+                        faute: req.body.faute,
+                        number: number,
+                        date: date
+                    }
+
+                    var saveR = await FauteModel(dataReport).save()
+
+                    var historique = {
+                        user: session.name,
+                        model: "Ajout Faute",
+                        date: new Date(),
+                        crud: "Ajout",
+                        old: {
+                            "Nom": name,
+                            "Mcode": mcode,
+                            "Faute": req.body.faute,
+                            "Date": date,
+                        }
+                    }
+                    var historie = await HistoriqueModel(historique).save()
+
+                    //console.log("saeve", saveR);
+                    res.send("success")
+                }
             }
         })
 
@@ -3634,6 +3693,109 @@ routeExp.route("/allReporting").get(async function (req, res) {
         })
 })
 
+
+
+//all Productin Reporting
+routeExp.route("/allProduction").get(async function (req, res) {
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var productionReport = await ProductionModel.aggregate([
+                {
+                    $lookup: {
+                        from: "agents",
+                        localField: "mcode",
+                        foreignField: "mcode",
+                        as: "agent"
+                    }
+                }
+            ])
+            console.log("productionReport", productionReport);
+            // var allProd = await ProductionModel.find();
+
+            var reporting = [];
+            productionReport.forEach(report => {
+                var id = report._id;
+                var name = report.name;
+                var username = report.prenom;
+                var mcode = report.mcode;
+                var number = report.number;
+                var production = report.production;
+                if (report.date) {
+                    var dateS = new Date(report.date);
+                    dateS = dateS.toLocaleDateString("fr");
+
+                } else {
+                    var dateS = null;
+                    //var dateF = null;
+                }
+                var prodRp = {
+                    id: report._id,
+                    name: report.name,
+                    username: report.prenom,
+                    mcode: report.mcode,
+                    number: report.number,
+                    production: report.production,
+                    date: dateS,
+                    projet: report.agent[0].project
+                }
+                //var faute = report.faute;
+                //var newReport = new Production(mcode, name, username, number, production, dateS, id)
+                reporting.push(prodRp)
+            })
+            console.log("reporting", reporting);
+            res.send(reporting)
+            // res.send("production")
+        })
+})
+
+
+//all Faute Reporting
+routeExp.route("/allFaute").get(async function (req, res) {
+
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var allF = await FauteModel.find();
+
+            var reporting = [];
+            allF.forEach(report => {
+                var name = report.name;
+                var id = report._id;
+                var username = report.prenom;
+                var mcode = report.mcode;
+                var number = report.number;
+                var faute = report.faute;
+                //var faute = report.faute;
+                if (report.date) {
+                    var dateS = new Date(report.date);
+                    //var dateF = new Date(report.end);
+                    dateS = dateS.toLocaleDateString("fr");
+                    //dateF = dateF.toLocaleDateString("fr");
+                } else {
+                    var dateS = null;
+                    //var dateF = null;
+                }
+                var newReport = new Faute(mcode, name, username, number, faute, dateS, id)
+                reporting.push(newReport)
+            })
+            //console.log("reporting", reporting);
+            res.send(reporting)
+        })
+})
 //reporting par mois
 routeExp.route("/allReportingMois").get(async function (req, res) {
 
@@ -3823,16 +3985,17 @@ routeExp.route("/allReportingWeek").get(async function (req, res) {
 //Update Reporting
 routeExp.route('/updateReporting').post(async function (req, res) {
     var mcodeA = req.body.mcodeA;
+    var nameA = req.body.nameA;
     var productionA = req.body.productionA;
     var fauteA = req.body.fauteA;
     var debutA = req.body.debutA;
-    var finA = req.body.finA;
     var mcode = req.body.mcode;
     var production = req.body.production;
     var faute = req.body.faute;
     var debut = req.body.start;
-    var fin = req.body.end;
     var name = req.body.name;
+    var id = req.body.id;
+    var reporting = req.body.reporting;
 
 
     mongoose
@@ -3844,48 +4007,100 @@ routeExp.route('/updateReporting').post(async function (req, res) {
             }
         )
         .then(async () => {
-            if (mcode == "" || debut == "" || fin == "") {
-                console.log("error");
-                res.send("error")
-            } else {
+            if (reporting == "production") {
+
                 var historique = {
                     user: session.name,
-                    model: "Update Reporting",
+                    model: "Update Production",
                     date: new Date(),
-                    crud: "Ajout",
+                    crud: "Update",
                     old: {
                         "Mcode": mcodeA,
+                        "Nom": nameA,
                         "Production": productionA,
-                        "Faute": fauteA,
                         "Début": debutA,
-                        "Fin": finA
+                        //"Fin": finA
                     },
                     new: {
                         "Mcode": mcode,
+                        "Nom": name,
                         "Production": production,
-                        "Faute": faute,
-                        "Début": debut,
-                        "Fin": fin
+                        "Date": debut,
+                        //"Fin": fin
                     }
                 }
                 var historie = await HistoriqueModel(historique).save()
 
-                var updateReport = await ReportingModel.findOneAndUpdate({ mcode: mcodeA, production: productionA, faute: fauteA, start: debutA, end: finA }, { mcode: mcode, name: name, production: production, faute: faute, start: debut, end: fin })
+                var userUdp = await AgentModel.findOne({ mcode: mcode })
+                //var updateReport = await ReportingModel.findOneAndUpdate({ mcode: mcodeA, production: productionA, faute: fauteA, start: debutA, end: finA }, { mcode: mcode, name: name, production: production, faute: faute, start: debut, end: fin })
+                var updatProd = await ProductionModel.findByIdAndUpdate(
+                    { _id: id },
+                    {
+                        mcode: mcode,
+                        production: production, date: debut,
+                        name: userUdp.name,
+                        prenom: userUdp.usualName,
+                        number: userUdp.number,
+                    }
+                )
+                //console.log("updateReport", updateReport);
+                res.send("succes")
+            } else {
 
+                var historique = {
+                    user: session.name,
+                    model: "Update Faute",
+                    date: new Date(),
+                    crud: "Update",
+                    old: {
+                        "Mcode": mcodeA,
+                        "Nom": nameA,
+                        "Faute": fauteA,
+                        "Début": debutA,
+                        //"Fin": finA
+                    },
+                    new: {
+                        "Mcode": mcode,
+                        "Nom": name,
+                        "Faute": faute,
+                        "Date": debut,
+                        //"Fin": fin
+                    }
+                }
+                var historie = await HistoriqueModel(historique).save()
+
+                var userUdp = await AgentModel.findOne({ mcode: mcode })
+                //var updateReport = await ReportingModel.findOneAndUpdate({ mcode: mcodeA, production: productionA, faute: fauteA, start: debutA, end: finA }, { mcode: mcode, name: name, production: production, faute: faute, start: debut, end: fin })
+                var updatProd = await FauteModel.findByIdAndUpdate(
+                    { _id: id },
+                    {
+                        mcode: mcode,
+                        faute: faute, date: debut,
+                        name: userUdp.name,
+                        prenom: userUdp.usualName,
+                        number: userUdp.number,
+                    }
+                )
                 //console.log("updateReport", updateReport);
                 res.send("succes")
             }
+            // if (mcode == "" || debut == "" || fin == "") {
+            //     console.log("error");
+            //     res.send("error")
+            // } else {
+            // }
         })
 })
 
-//delete reporting
-routeExp.route('/deleteReporting').post(async function (req, res) {
+//delete delete Production
+routeExp.route('/deleteProduction').post(async function (req, res) {
     var mcode = req.body.mcode;
     var name = req.body.name;
     var production = req.body.production;
     var faute = req.body.faute;
     var start = req.body.start;
     var end = req.body.end;
+    var id = req.body.id;
 
     //console.log("req = ", req.body.start);
     mongoose
@@ -3897,33 +4112,78 @@ routeExp.route('/deleteReporting').post(async function (req, res) {
             }
         )
         .then(async () => {
-            var getHistor = await ReportingModel.findOne({ mcode: mcode, name: name, production: production, faute: faute, start: start, end: end })
-            var startR = new Date(getHistor.start)
-            var EndR = new Date(getHistor.end)
+            var getProd = await ProductionModel.findOne({ _id: id })
+
+            var startR = new Date(getProd.date)
+            //var EndR = new Date(getProd.end)
             var historique = {
                 user: session.name,
-                model: "Delete Reporting",
+                model: "Delete Production",
                 date: new Date(),
-                crud: "Ajout",
+                crud: "Delete",
                 old: {
-                    "Mcode": getHistor.mcode,
-                    "Nom": getHistor.name,
-                    "Production": getHistor.production,
-                    "Faute": getHistor.faute,
+                    "Mcode": getProd.mcode,
+                    "Nom": getProd.name,
+                    "Production": getProd.production,
+                    //"Faute": getProd.faute,
                     "Début": startR.toLocaleDateString("fr"),
-                    "Fin": EndR.toLocaleDateString('fr')
                 }
             }
             var historie = await HistoriqueModel(historique).save()
 
-            var deleteRep = await ReportingModel.findOneAndDelete({ mcode: mcode, name: name, production: production, faute: faute, start: start, end: end })
+            var deleteRep = await ProductionModel.findByIdAndDelete({ _id: id })
             res.send("succes")
             //console.log("deleteRep", deleteRep);
         })
 
 })
 
+// delete faute deleteFaute&a
 
+routeExp.route('/deleteFaute').post(async function (req, res) {
+    var mcode = req.body.mcode;
+    var name = req.body.name;
+    var production = req.body.production;
+    var faute = req.body.faute;
+    var start = req.body.start;
+    var end = req.body.end;
+    var id = req.body.id;
+
+    //console.log("req = ", req.body.start);
+    mongoose
+        .connect(
+            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+            {
+                useUnifiedTopology: true,
+                UseNewUrlParser: true,
+            }
+        )
+        .then(async () => {
+            var getProd = await FauteModel.findOne({ _id: id })
+            console.log('getProd', getProd);
+            var startR = new Date(getProd.date)
+            //var EndR = new Date(getProd.end)
+            var historique = {
+                user: session.name,
+                model: "Delete Faute Reporting",
+                date: new Date(),
+                crud: "Delete",
+                old: {
+                    "Mcode": getProd.mcode,
+                    "Nom": getProd.name,
+                    "Faute": getProd.faute,
+                    //"Faute": getProd.faute,
+                    "Début": startR.toLocaleDateString("fr"),
+                }
+            }
+            var historie = await HistoriqueModel(historique).save()
+
+            var deleteRep = await FauteModel.findByIdAndDelete({ _id: id })
+            res.send("succes")
+            //console.log("deleteRep", deleteRep);
+        })
+
+})
 // routeExp.route('/listeUser').get(async function (req, res) {
 //     session = req.session
 //     var projet = req.params.projet
@@ -4168,45 +4428,63 @@ routeExp.route("/backup_databas").get(async function (req, res) {
 
 
 routeExp.route("/addReportingExcel").post(async function (req, res) {
+    console.log("filename", req.files);
 
-    console.log("req", req.files["file"]);
-    mongoose
-        .connect(
-            "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
-            {
-                useUnifiedTopology: true,
-                UseNewUrlParser: true,
+    //console.log("req", req.files);
+    if (req.files) {
+        //console.log(req.files);
+        var file = req.files.avatar
+        filename = file.name
+        console.log("filename", filename);
+
+        file.mv('./Vue/reportingFile/' + filename, function (err) {
+            if (err) {
+                console.log("error", err);
+                //res.send('error ', err)
+            } else {
+                mongoose
+                    .connect(
+                        "mongodb+srv://solumada:solumada@cluster0.xdzjimf.mongodb.net/?retryWrites=true&w=majority",
+                        {
+                            useUnifiedTopology: true,
+                            UseNewUrlParser: true,
+                        }
+                    )
+                    .then(async () => {
+                        const parseExcel = (filename) => {
+
+                            const excelData = XLSX.readFile(filename);
+
+                            return Object.keys(excelData.Sheets).map(name => ({
+                                name,
+                                data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
+                            }));
+                        };
+
+                        var liste = []
+                        parseExcel("./Vue/reportingFile/" + filename).forEach(element => {
+                            liste.push(element.data)
+                        });
+
+                        //console.log("liste", liste[0].length);
+                        for (let i = 0; i < liste[0].length; i++) {
+                            const element = liste[0][i];
+                            var c = {
+                                nom: element.NOM,
+                                prenom: element.PRENOM,
+                                mcode: element.MCODE,
+                                number: element.NUMBERING
+                            }
+                            console.log("lement", c);
+                            var proj = await ProductionModel(c).save()
+                            //console.log("proj", proj);
+                        }
+                        res.send("finish")
+
+                    });
             }
-        )
-        .then(async () => {
-            const parseExcel = (filename) => {
-
-                const excelData = XLSX.readFile(filename);
-
-                return Object.keys(excelData.Sheets).map(name => ({
-                    name,
-                    data: XLSX.utils.sheet_to_json(excelData.Sheets[name]),
-                }));
-            };
-
-            var liste = []
-            // parseExcel("./Vue/assets/listeCours.xlsx").forEach(element => {
-            //     liste.push(element.data)
-            // });
-
-            console.log("liste", liste[0].length);
-            // for (let i = 0; i < liste[0].length; i++) {
-            //     const element = liste[0][i].UP;
-            //     var c = {
-            //         name: element
-            //     }
-            //     console.log("lement", c);
-            //     var proj = await ProjectModel(c).save()
-            //     console.log("proj", proj);
-            // }
-            res.send("finish")
-
-        });
+        })
+    }
 })
 
 // routeExp.route("/addUserexcel").get(async function (req, res) {

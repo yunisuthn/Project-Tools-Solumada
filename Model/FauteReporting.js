@@ -3,10 +3,12 @@ const mongoose = require("mongoose");
 const reporting = mongoose.Schema({
     mcode: String,
     name: String,
-    production: String,
+    prenom: String,
+    number: String,
+    ///production: String,
     faute: String,
-    start: Date,
+    date: Date,
     //end: Date
 })
 
-module.exports = mongoose.model('Reporting', reporting)
+module.exports = mongoose.model('Faute', reporting)

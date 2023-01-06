@@ -37,6 +37,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"> -->
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 
@@ -133,17 +134,17 @@
                                         <ul class="nav nav-pills mb-3" id="myTab" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
-                                                    role="tab" aria-controls="home" aria-selected="true">Home</a>
+                                                    role="tab" aria-controls="home" aria-selected="true">Production</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
-                                                    role="tab" aria-controls="profile" aria-selected="false">Mois
+                                                    role="tab" aria-controls="profile" aria-selected="false">Faute
                                                 </a>
                                             </li>
-                                            <li class="nav-item">
+                                            <!-- <li class="nav-item">
                                                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact"
                                                     role="tab" aria-controls="contact" aria-selected="false">Semaine</a>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 </div>
@@ -156,18 +157,204 @@
                                     aria-labelledby="home-tab">
                                     <div class="col-md-12 mt-2">
                                         <div class="card">
+                                            <div class="card-header">
+                                                <!-- <form class="needs-validation" novalidate> -->
+                                                <div class="form-row">
+                                                    <div class="col-md-3 mb-3">
+                                                        <label for="validationCustom01" class="filtre">Projet</label>
+                                                        <select name="" id="filterProj" class="form-control">
+                                                            <option value="all">All Project</option>
+                                                            <option value="IA (Intelligence Artificielle)">
+                                                                IA (Intelligence Artificielle)
+                                                            </option>
+                                                            <option value="Agent Senior IA">
+                                                                Agent Senior IA
+                                                            </option>
+                                                            <option value="AGROBOX (V1)">
+                                                                AGROBOX (V1)
+                                                            </option>
+                                                            <option value="AGROBOX (V2)">
+                                                                AGROBOX (V2)
+                                                            </option>
+                                                            <option value="AGROBOX (V3)">
+                                                                AGROBOX (V3)
+                                                            </option>
+                                                            <option value="ARCO (V1)">
+                                                                ARCO (V1)
+                                                            </option>
+                                                            <option value="ARCO (V2)">
+                                                                ARCO (V2)
+                                                            </option>
+                                                            <option value="ARCO (V3)">
+                                                                ARCO (V3)
+                                                            </option>
+                                                            <option value="DPS (V1)">
+                                                                DPS (V1)
+                                                            </option>
+                                                            <option value="DPS (V2)">
+                                                                DPS (V2)
+                                                            </option>
+                                                            <option value="DPS (V3)">
+                                                                DPS (V3)
+                                                            </option>
+                                                            <option value="DUVAL">
+                                                                DUVAL
+                                                            </option>
+                                                            <option value="GAZETTE">
+                                                                GAZETTE
+                                                            </option>
+                                                            <option value="GISEUROPE">
+                                                                GISEUROPE
+                                                            </option>
+                                                            <option value="HUVEPHARMA">
+                                                                HUVEPHARMA
+                                                            </option>
+                                                            <option value="JEFACTURE">
+                                                                JEFACTURE
+                                                            </option>
+                                                            <option value="NBB">
+                                                                NBB
+                                                            </option>
+                                                            <option value="PWC (V1)">
+                                                                PWC (V1)
+                                                            </option>
+                                                            <option value="PWC (V2)">
+                                                                PWC (V2)
+                                                            </option>
+                                                            <option value="PWC (V3)">
+                                                                PWC (V3)
+                                                            </option>
+                                                            <option value="REPORTING OPERATIONNEL">
+                                                                REPORTING OPERATIONNEL
+                                                            </option>
+                                                            <option value="SPOTCHECK">
+                                                                SPOTCHECK
+                                                            </option>
+                                                            <option value="UP (Unified Post)">
+                                                                UP (Unified Post)
+                                                            </option>
+                                                            <option value="UPC">
+                                                                UPC
+                                                            </option>
+                                                            <option value="CC VANDORP">
+                                                                CC VANDORP
+                                                            </option>
+                                                            <option value="VANDORP (V1)">
+                                                                VANDORP (V1)
+                                                            </option>
+                                                            <option value="VANDORP (V2)">
+                                                                VANDORP (V2)
+                                                            </option>
+                                                            <option value="VANDORP (V3)">
+                                                                VANDORP (V3)
+                                                            </option>
+                                                            <option value="WILLEMEN (V1)">
+                                                                WILLEMEN (V1)
+                                                            </option>
+                                                            <option value="WILLEMEN (V2)">
+                                                                WILLEMEN (V2)
+                                                            </option>
+                                                            <option value="WILLEMEN (V3)">
+                                                                WILLEMEN (V3)
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <label for="validationCustom02" class="filtre">Date
+                                                            Début</label>
+
+                                                        <select name="" id="filterShift" class="form-control">
+                                                            <option value="all">All Shift</option>
+                                                            <option value="SHIFT 1">1</option>
+                                                            <option value="SHIFT 2">2</option>
+                                                            <option value="SHIFT 3">3</option>
+                                                            <option value="SHIFT WEEKEND">Weekend</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3 mb-3">
+                                                        <label for="validationCustom01" class="filtre">Date Fin</label>
+                                                        <select name="" id="filterAnnee" class="form-control">
+                                                            <option value="all">All Project</option>
+                                                            <option value="6-2022">June 2022</option>
+                                                            <option value="7-2022">July 2022</option>
+                                                            <option value="8-2022">August 2022</option>
+                                                            <option value="9-2022">September 2022</option>
+                                                            <option value="10-2022">October 2022</option>
+                                                            <option value="11-2022">November 2022</option>
+                                                            <option value="12-2022">December 2022</option>
+                                                            <option value="1-2023">January 2023</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!-- </form> -->
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <button type="button" class="add" id="addProd"
+                                                    onclick="getReporting('production')" data-toggle="modal"
+                                                    data-target="#addProduction">
+                                                    <i class="fa fa-plus"></i>
+                                                    add
+                                                </button>
+
+                                            </div>
                                             <div class="card-body">
                                                 <div class="table-responsive">
                                                     <div class="outer-wrapper">
                                                         <div class="table-wrapper">
-                                                            <table id="reportingDataTable" class="table">
+                                                            <table id="productionDataTable" class="table">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Mcode</th>
-                                                                        <th>Nom</th>
-                                                                        <th>Début</th>
-                                                                        <th>Fin</th>
+                                                                        <th>Prénom Usuel</th>
+                                                                        <th>Date</th>
+                                                                        <!-- <th>Fin</th> -->
                                                                         <th>Production</th>
+                                                                        <th>Projet</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <form ref='uploadReporting' id='uploadReporting' method='post'
+                                                    encType="multipart/form-data">
+                                                    <input type="file" name="image" id="avatar" /><br />
+                                                    <button type="submit" class="btn btn-success"
+                                                        id="saveFileRep">Enregistrer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="col-md-12 mt-2">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <button type="button" class="add" id="addF"
+                                                    onclick="getReporting('faute')" data-toggle="modal"
+                                                    data-target="#addProduction">
+                                                    <i class="fa fa-plus"></i> add
+                                                </button>
+
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <div class="outer-wrapper">
+                                                        <div class="table-wrapper">
+                                                            <table id="fauteDataTable" class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Mcode</th>
+                                                                        <th>Prénom Usuel</th>
+                                                                        <th>Projet</th>
+                                                                        <th>Date</th>
                                                                         <th>Faute</th>
                                                                         <th>Action</th>
                                                                     </tr>
@@ -178,28 +365,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            <div class="card-footer">
+                                                <form ref='uploadReporting' id='uploadReporting' method='post'
+                                                    encType="multipart/form-data">
+                                                    <input type="file" name="image" id="avatar" /><br />
+                                                    <button type="submit" class="btn btn-success"
+                                                        id="saveFileRep">Enregistrer</button>
 
-                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="col-md-12 mt-2">
-                                        <div class="card">
-                                            <div class="table-responsive-lg">
-                                                <!-- <table id="reportingDataTable" class="table"> -->
-                                                <table id="reportingDataTableMonth"
-                                                    class="table table-striped table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Mcode</th>
-                                                            <th>Nom</th>
-                                                            <th>Mois</th>
-                                                            <th>Production</th>
-                                                            <th>Faute</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody></tbody>
-                                                </table>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +381,7 @@
 
 
 
-                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                     <div class="col-md-12 mt-2">
                                         <div class="card">
                                             <div class="card-body">
@@ -231,22 +404,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="button" class="add" id="addInvent" data-toggle="modal"
-                                data-target="#addInventaire">
-                                <i class="fa fa-plus"></i> add
-                            </button>
-                            <input type="file" id="myfile" name="myfile">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="addInventaire" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+        <div class="modal fade" id="addProduction" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
             tabindex="-1">
 
             <div class="modal-dialog">
@@ -273,6 +439,15 @@
 
                             </div>
                             <div class="row form-group">
+                                <div class="col col-md-3"><label for="name" class="form-control-label">Prénom
+                                        Usuel</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="name" placeholder="" readonly class="form-control">
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div>
+                            <!-- <div class="row form-group">
                                 <div class="col col-md-3"><label for="name" class="form-control-label">Nom</label>
                                 </div>
                                 <div class="col-12 col-md-9">
@@ -281,6 +456,14 @@
                                 </div>
                             </div>
                             <div class="row form-group">
+                                <div class="col col-md-3"><label for="name" class="form-control-label">Numéro</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="number" placeholder="" readonly class="form-control">
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div> -->
+                            <div class="row form-group " id="reportingProduction">
                                 <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Production</label>
                                 </div>
@@ -289,28 +472,21 @@
                                 </div>
 
                             </div>
-                            <div class="row form-group">
+                            <div class="row form-group " id="reportingFaute">
                                 <div class="col col-md-3">
                                     <label for="name" class="form-control-label">Faute</label>
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <input type="text" name="" id="faute" class="form-control">
                                 </div>
+
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-3">
-                                    <label for="" class="form-control-label">Début</label>
+                                    <label for="" class="form-control-label">Date</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="date" name="" id="start" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="" class="form-control-label">Fin</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="date" name="" id="end" class="form-control">
+                                    <input type="date" name="" id="date" class="form-control">
                                 </div>
                             </div>
                         </form>
@@ -323,6 +499,84 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="modal fade" id="addFaute" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title modalTitre" id="staticBackdropLabel">Nouveau Faute</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateUserLevel" method="post">
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">M-Code</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <select name="" id="mcode" class="form-control standarSelect memberSelect">
+                                        <option value="" disabled selected>choisir mcode</option>
+                                        <% listAgent.forEach((listeAgent)=>{%>
+                                            <option value="<%= listeAgent.mcode %>">
+                                                <%= listeAgent.mcode %>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="name" class="form-control-label">Prénom
+                                        Usuel</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="prenom" placeholder="" readonly class="form-control">
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div>
+                            <!-- <div class="row form-group">
+                                <div class="col col-md-3"><label for="name" class="form-control-label">Nom</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="name" placeholder="" readonly class="form-control">
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="name" class="form-control-label">Numéro</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" id="number" placeholder="" readonly class="form-control">
+                                    <small id="" style="color: red; font-size: smaller; display: none;"></small>
+                                </div>
+                            </div> -- >
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="name" class="form-control-label">Faute</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="text" name="" id="faute" class="form-control">
+                                </div>
+
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3">
+                                    <label for="" class="form-control-label">Date</label>
+                                </div>
+                                <div class="col-12 col-md-9">
+                                    <input type="date" name="" id="dateFaute" class="form-control">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            id="cancelReporting">Fermer</button>
+                        <button type="button" class="btn btn-success" id="saveReporting">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
         <div class="modal fade" id="modalUpdateReporting" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
             tabindex="-1">
 
@@ -357,7 +611,7 @@
                                         class="form-control">
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <div class="row form-group productUpd">
                                 <div class="col col-md-3"><label for="name"
                                         class="form-control-label">Production</label>
                                 </div>
@@ -365,7 +619,7 @@
                                     <input type="text" id="productionUpdat" placeholder="" class="form-control">
                                 </div>
                             </div>
-                            <div class="row form-group">
+                            <div class="row form-group fauteUpd">
                                 <div class="col col-md-3"> <label for="">Faute</label></div>
                                 <div class="col-12 col-md-9">
                                     <input type="text" class="form-control" name="" id="fauteUpdat">
@@ -373,18 +627,10 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-3">
-                                    <label for="">Début</label>
+                                    <label for="">Date</label>
                                 </div>
                                 <div class="col-12 col-md-9">
                                     <input type="date" name="" id="debutUpdat" class="form-control">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3">
-                                    <label for="">Fin</label>
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <input type="date" id="finUpdat" class="form-control">
                                 </div>
                             </div>
                         </form>
